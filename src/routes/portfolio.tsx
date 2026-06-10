@@ -15,13 +15,13 @@ import aari from "@/assets/technique-aari.jpg";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio — Couture Embroidery Archive | Maison Auréline" },
+      { title: "Portfolio — Couture Embroidery Archive | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Selected couture embroidery work for global fashion houses — bridal, eveningwear, accessories.",
       },
-      { property: "og:title", content: "Portfolio — Maison Auréline" },
+      { property: "og:title", content: "Portfolio — Zardosi Atelier" },
       { property: "og:description", content: "A curated archive of luxury hand embroidery work." },
       { property: "og:url", content: "/portfolio" },
       { property: "og:image", content: p1 },

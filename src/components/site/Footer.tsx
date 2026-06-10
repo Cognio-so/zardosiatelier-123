@@ -8,7 +8,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-5">
             <span className="font-serif text-2xl tracking-[0.15em] uppercase text-ink">
-              Maison Auréline Atelier
+              Zardosi Atelier
             </span>
             <p className="mt-6 max-w-[45ch] text-xs leading-relaxed text-ink-soft uppercase tracking-wider">
               Luxury hand embroidery and fashion manufacturing for international brands, couture
@@ -40,13 +40,13 @@ export function Footer() {
               <li>
                 <span className="text-ink/40 mr-2">Instagram:</span>
                 <a className="hover:text-gold transition-colors" href="#">
-                  @maisonaureline
+                  @zardosiatelier
                 </a>
               </li>
               <li>
                 <span className="text-ink/40 mr-2">LinkedIn:</span>
                 <a className="hover:text-gold transition-colors" href="#">
-                  Maison Auréline Atelier
+                  Zardosi Atelier
                 </a>
               </li>
               <li>
@@ -100,7 +100,7 @@ export function Footer() {
         </div>
 
         <div className="mt-24 pt-12 border-t border-ink/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-[0.3em] text-ink/30">
-          <p>© {new Date().getFullYear()} Maison Auréline. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Zardosi Atelier. All Rights Reserved.</p>
           <div className="flex gap-12">
             <a href="#" className="hover:text-gold transition-colors">
               Privacy Policy

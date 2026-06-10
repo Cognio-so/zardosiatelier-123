@@ -7,13 +7,13 @@ import gown from "@/assets/collection-gown.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — The Atelier | Maison Auréline" },
+      { title: "About — The Atelier | Zardosi Atelier" },
       {
         name: "description",
         content:
-          "Maison Auréline is a luxury embroidery atelier built on multi-generational craftsmanship — serving global fashion houses.",
+          "Zardosi Atelier is a luxury embroidery atelier built on multi-generational craftsmanship — serving global fashion houses.",
       },
-      { property: "og:title", content: "About — Maison Auréline" },
+      { property: "og:title", content: "About — Zardosi Atelier" },
       {
         property: "og:description",
         content: "A luxury embroidery atelier serving global fashion houses.",
@@ -33,7 +33,7 @@ function AboutPage() {
         eyebrow="The Maison"
         title="A studio of"
         italic="hands."
-        description="Maison Auréline is built on multi-generational embroidery — restrained, considered, and held to the standards of the houses we serve."
+        description="Zardosi Atelier is built on multi-generational embroidery — restrained, considered, and held to the standards of the houses we serve."
         image={hero}
       />
       <section className="bg-ivory py-28">
@@ -44,8 +44,8 @@ function AboutPage() {
               Quiet craft. <span className="italic">Loud results.</span>
             </h2>
             <p className="mt-6 text-ink-soft leading-relaxed">
-              Founded as a small studio commissioned by independent couture ateliers, Maison
-              Auréline has grown into a 30-artisan house with dedicated pods for sampling,
+              Founded as a small studio commissioned by independent couture ateliers, Zardosi
+              Atelier has grown into a 30-artisan house with dedicated pods for sampling,
               production, and finishing. Our clients include houses in Paris, Milan, New York and
               beyond.
             </p>

@@ -22,49 +22,42 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const isLightHeader = scrolled || open;
+
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        scrolled ? "bg-ivory/85 backdrop-blur-md border-b border-ink/5" : "bg-transparent"
+        isLightHeader ? "bg-ivory/95 backdrop-blur-md border-b border-ink/5 shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:px-12">
-        {/* Left links */}
-        <nav className="hidden lg:flex items-center gap-8 text-[10px] uppercase tracking-[0.28em] text-ink/80">
-          {navLinks.slice(1, 4).map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="gold-link transition-colors hover:text-ink"
-              activeProps={{ className: "text-ink" }}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Centered Wordmark */}
-        <Link
-          to="/"
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
-        >
-          <span className="font-serif text-2xl lg:text-[28px] tracking-[0.22em] uppercase text-ink leading-none">
-            Auréline
+        {/* Left Brand logo */}
+        <Link to="/" className="flex flex-col items-start z-10">
+          <span className={`font-serif text-2xl lg:text-[28px] tracking-[0.22em] uppercase leading-none transition-colors duration-300 ${
+            isLightHeader ? "text-ink" : "text-ivory"
+          }`}>
+            Zardosi
           </span>
-          <span className="mt-1 text-[8px] uppercase tracking-[0.45em] text-ink-soft">
-            Maison · Atelier
+          <span className={`mt-1 text-[8px] uppercase tracking-[0.45em] transition-colors duration-300 ${
+            isLightHeader ? "text-ink-soft" : "text-gold-soft"
+          }`}>
+            Atelier
           </span>
         </Link>
 
         {/* Right links + CTA */}
-        <div className="flex items-center gap-6">
-          <nav className="hidden lg:flex items-center gap-8 text-[10px] uppercase tracking-[0.28em] text-ink/80">
-            {navLinks.slice(4).map((l) => (
+        <div className="flex items-center gap-6 z-10">
+          <nav className={`hidden lg:flex items-center gap-8 text-[10px] uppercase tracking-[0.28em] transition-colors duration-300 ${
+            isLightHeader ? "text-ink/80" : "text-ivory/80"
+          }`}>
+            {navLinks.slice(1).map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
-                className="gold-link transition-colors hover:text-ink"
-                activeProps={{ className: "text-ink" }}
+                className={`gold-link transition-colors ${
+                  isLightHeader ? "hover:text-ink" : "hover:text-ivory"
+                }`}
+                activeProps={{ className: isLightHeader ? "text-ink" : "text-ivory" }}
               >
                 {l.label}
               </Link>
@@ -72,7 +65,11 @@ export function Navigation() {
           </nav>
           <Link
             to="/contact"
-            className="hidden md:inline-block border border-ink bg-ink px-5 py-2.5 text-[10px] uppercase tracking-[0.28em] text-ivory transition-colors hover:bg-gold hover:border-gold"
+            className={`hidden md:inline-block border px-5 py-2.5 text-[10px] uppercase tracking-[0.28em] transition-all duration-300 ${
+              isLightHeader
+                ? "border-ink bg-ink text-ivory hover:bg-gold hover:border-gold"
+                : "border-ivory/30 bg-transparent text-ivory hover:bg-ivory hover:text-ink"
+            }`}
           >
             Request Sampling
           </Link>
@@ -84,13 +81,13 @@ export function Navigation() {
             className="lg:hidden flex flex-col gap-[5px]"
           >
             <span
-              className={`block h-px w-6 bg-ink transition-transform ${open ? "translate-y-[6px] rotate-45" : ""}`}
+              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "translate-y-[6px] rotate-45" : ""}`}
             />
             <span
-              className={`block h-px w-6 bg-ink transition-opacity ${open ? "opacity-0" : ""}`}
+              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-px w-6 bg-ink transition-transform ${open ? "-translate-y-[6px] -rotate-45" : ""}`}
+              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "-translate-y-[6px] -rotate-45" : ""}`}
             />
           </button>
         </div>

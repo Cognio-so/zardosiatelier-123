@@ -11,13 +11,13 @@ import p1 from "@/assets/portfolio-1.jpg";
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries — Who We Serve | Maison Auréline" },
+      { title: "Industries — Who We Serve | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Couture houses, bridal labels, designer menswear, accessory brands — the industries our atelier serves.",
       },
-      { property: "og:title", content: "Industries — Maison Auréline" },
+      { property: "og:title", content: "Industries — Zardosi Atelier" },
       {
         property: "og:description",
         content: "Industries served by our luxury embroidery atelier.",

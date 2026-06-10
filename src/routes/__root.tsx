@@ -77,8 +77,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses. Sampling to production-scale execution.",
       },
-      { name: "author", content: "Maison Auréline" },
-      { property: "og:site_name", content: "Maison Auréline" },
+      { name: "author", content: "Zardosi Atelier" },
+      { property: "og:site_name", content: "Zardosi Atelier" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Zardosi Atelier" },

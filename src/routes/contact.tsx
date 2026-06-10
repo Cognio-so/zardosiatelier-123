@@ -6,13 +6,13 @@ import hero from "@/assets/portfolio-6.jpg";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Request a Quote | Maison Auréline" },
+      { title: "Contact — Request a Quote | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Request a quote or book a consultation with our embroidery atelier — response within two working days.",
       },
-      { property: "og:title", content: "Contact — Maison Auréline" },
+      { property: "og:title", content: "Contact — Zardosi Atelier" },
       { property: "og:description", content: "Begin a project with our embroidery atelier." },
       { property: "og:url", content: "/contact" },
       { property: "og:image", content: hero },

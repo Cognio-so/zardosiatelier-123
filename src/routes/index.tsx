@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
@@ -167,6 +168,8 @@ const portfolio = [
 ];
 
 function HomePage() {
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+
   return (
     <SiteShell>
       {/* HERO */}
@@ -189,13 +192,13 @@ function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-ink/35 via-transparent to-ink/35" />
 
 
-        <div className="relative z-10 flex h-full items-center justify-center px-6">
-          <div className="max-w-5xl text-center">
+        <div className="relative z-10 flex h-full items-center px-6 lg:px-12 mx-auto max-w-[1600px] w-full">
+          <div className="max-w-4xl text-left">
             <p
               className="eyebrow !text-gold-soft animate-fade-up"
               style={{ animationDelay: "100ms" }}
             >
-              Maison · Atelier · Established
+              Zardosi Atelier
             </p>
             <h1
               className="mt-8 font-serif text-[40px] leading-[1.05] text-ivory sm:text-6xl lg:text-[78px] text-balance animate-fade-up"
@@ -205,14 +208,14 @@ function HomePage() {
               <span className="italic font-normal">for Global Maisons</span>
             </h1>
             <p
-              className="mx-auto mt-8 max-w-[58ch] text-base sm:text-lg text-ivory/80 leading-relaxed animate-fade-up"
+              className="mt-8 max-w-[58ch] text-base sm:text-lg text-ivory/80 leading-relaxed animate-fade-up"
               style={{ animationDelay: "500ms" }}
             >
               From couture sampling to production-scale execution, we transform fashion concepts
               into luxury embroidered masterpieces.
             </p>
             <div
-              className="mt-12 flex flex-wrap justify-center gap-4 animate-fade-up"
+              className="mt-12 flex flex-wrap gap-4 animate-fade-up"
               style={{ animationDelay: "700ms" }}
             >
               <Link
@@ -276,9 +279,10 @@ function HomePage() {
               <Reveal
                 key={c.title}
                 delay={i * 120}
-                className={`group cursor-pointer ${i === 1 ? "lg:mt-24" : ""}`}
+                className="group cursor-pointer"
+                onClick={() => setLightboxImage(c.image)}
               >
-                <div className="relative overflow-hidden aspect-[3/4] bg-linen luxury-card">
+                <div className="relative overflow-hidden aspect-[3/4] bg-linen luxury-card shadow-sm border border-ink/5">
                   <img
                     src={c.image}
                     alt={c.title}
@@ -289,11 +293,11 @@ function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
                 </div>
-                <div className="mt-6">
-                  <h3 className="font-serif text-2xl">{c.title}</h3>
-                  <p className="mt-2 text-[10px] uppercase tracking-[0.28em] text-ink-soft">
+                <div className="mt-6 border-b border-ink/10 pb-4 flex justify-between items-baseline">
+                  <h3 className="font-serif text-xl sm:text-2xl text-ink tracking-wide">{c.title}</h3>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-gold font-medium">
                     {c.caption}
-                  </p>
+                  </span>
                 </div>
               </Reveal>
             ))}
@@ -338,30 +342,154 @@ function HomePage() {
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="bg-linen py-28 sm:py-40">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="mb-20">
-            <span className="eyebrow">Why Maison Auréline</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+      {/* WHY CHOOSE US — Ultra-Premium Luxury Cards */}
+      <section style={{ background: "#F8F5EF" }} className="py-28 sm:py-40 overflow-hidden">
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+
+          {/* Section Header */}
+          <Reveal className="text-center mb-20">
+            {/* Top gold accent line */}
+            <div className="flex justify-center mb-8">
+              <div style={{ width: "60px", height: "2px", background: "#B8915F" }} className="opacity-80" />
+            </div>
+            <span
+              className="eyebrow"
+              style={{ color: "#B8915F", letterSpacing: "0.35em", fontSize: "10px" }}
+            >
+              Why Zardosi Atelier
+            </span>
+            <h2
+              className="mt-6 font-serif leading-[1.1] text-balance"
+              style={{
+                fontSize: "clamp(32px, 5vw, 56px)",
+                fontWeight: 500,
+                color: "#111111",
+              }}
+            >
               A partner built for luxury brands.
             </h2>
+            {/* Diamond ornament divider */}
+            <div className="flex items-center justify-center gap-3 mt-8">
+              <div style={{ width: "40px", height: "1px", background: "rgba(184,145,95,0.3)" }} />
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                style={{ color: "#B8915F" }}
+              >
+                <path
+                  d="M5 0L6.5 3.5L10 5L6.5 6.5L5 10L3.5 6.5L0 5L3.5 3.5Z"
+                  fill="currentColor"
+                  fillOpacity="0.6"
+                />
+              </svg>
+              <div style={{ width: "40px", height: "1px", background: "rgba(184,145,95,0.3)" }} />
+            </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {/* 5×2 Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {whyChoose.map((w, i) => (
               <Reveal
                 key={w.title}
-                delay={i * 50}
-                className="bg-ivory p-8 ring-1 ring-ink/5 flex flex-col items-start"
+                delay={i * 60}
+                className="group h-full"
               >
-                <div className="size-10 grid place-items-center bg-champagne text-gold mb-8 rounded-full">
-                  <Icon name={w.icon} className="size-5" />
+                <div
+                  className="h-full flex flex-col items-center text-center"
+                  style={{
+                    background: "#FFFFFF",
+                    borderRadius: "24px",
+                    border: "1px solid rgba(184,145,95,0.15)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
+                    padding: "40px 28px",
+                    minHeight: "300px",
+                    transition: "transform 0.4s cubic-bezier(0.19,1,0.22,1), border-color 0.4s ease, box-shadow 0.4s cubic-bezier(0.19,1,0.22,1)",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.transform = "translateY(-10px)";
+                    el.style.borderColor = "#B8915F";
+                    el.style.boxShadow = "0 20px 50px rgba(184,145,95,0.12), 0 4px 16px rgba(0,0,0,0.06)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLDivElement;
+                    el.style.transform = "translateY(0)";
+                    el.style.borderColor = "rgba(184,145,95,0.15)";
+                    el.style.boxShadow = "0 10px 30px rgba(0,0,0,0.04)";
+                  }}
+                >
+                  {/* Top accent gold line */}
+                  <div
+                    className="mb-8"
+                    style={{
+                      width: "32px",
+                      height: "1.5px",
+                      background: "linear-gradient(90deg, transparent, #B8915F, transparent)",
+                    }}
+                  />
+
+                  {/* Circular Icon Badge */}
+                  <div
+                    className="flex items-center justify-center mb-7 flex-shrink-0"
+                    style={{
+                      width: "88px",
+                      height: "88px",
+                      borderRadius: "50%",
+                      background: "rgba(184,145,95,0.08)",
+                      border: "1px solid rgba(184,145,95,0.2)",
+                    }}
+                  >
+                    <Icon
+                      name={w.icon}
+                      className="size-[30px]"
+                      style={{ color: "#B8915F", strokeWidth: 1.25 }}
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="font-serif leading-tight mb-4"
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: 500,
+                      color: "#111111",
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {w.title}
+                  </h3>
+
+                  {/* Diamond micro-divider */}
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <div style={{ width: "18px", height: "1px", background: "rgba(184,145,95,0.25)" }} />
+                    <div
+                      style={{
+                        width: "4px",
+                        height: "4px",
+                        background: "rgba(184,145,95,0.5)",
+                        transform: "rotate(45deg)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <div style={{ width: "18px", height: "1px", background: "rgba(184,145,95,0.25)" }} />
+                  </div>
+
+                  {/* Description */}
+                  <p
+                    className="font-sans uppercase tracking-widest leading-relaxed"
+                    style={{
+                      fontSize: "10px",
+                      lineHeight: 1.85,
+                      color: "rgba(17,17,17,0.58)",
+                      letterSpacing: "0.12em",
+                    }}
+                  >
+                    {w.desc}
+                  </p>
                 </div>
-                <h3 className="font-serif text-lg leading-tight mb-4">{w.title}</h3>
-                <p className="text-[11px] text-ink-soft leading-relaxed uppercase tracking-wider">
-                  {w.desc}
-                </p>
               </Reveal>
             ))}
           </div>
@@ -441,20 +569,25 @@ function HomePage() {
 
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
             {portfolio.map((p, i) => (
-              <Reveal key={i} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
+              <Reveal
+                key={i}
+                delay={(i % 3) * 100}
+                className="mb-6 break-inside-avoid cursor-pointer"
+                onClick={() => setLightboxImage(p.src)}
+              >
                 <div className="group relative overflow-hidden luxury-card">
                   <img
                     src={p.src}
                     alt={p.caption}
                     loading="lazy"
-                    className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.05]"
+                    className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
                   />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/80 via-ink/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                    <div className="p-6">
-                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/90 via-ink/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="p-6 transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0 w-full">
+                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft font-semibold">
                         {p.tag}
                       </p>
-                      <h4 className="mt-2 font-serif text-2xl text-ivory">{p.caption}</h4>
+                      <h4 className="mt-2 font-serif text-xl sm:text-2xl text-ivory tracking-wide">{p.caption}</h4>
                     </div>
                   </div>
                 </div>
@@ -494,34 +627,120 @@ function HomePage() {
 
       {/* LEAD GEN */}
       <LeadSection />
+
+      {/* Lightbox Modal Overlay */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-12 backdrop-blur-sm transition-opacity duration-300 cursor-pointer animate-fade-in"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            type="button"
+            className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors p-3 text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 z-[110]"
+            onClick={() => setLightboxImage(null)}
+          >
+            Close
+            <span className="text-3xl font-light leading-none">&times;</span>
+          </button>
+          
+          <div
+            className="relative max-h-[85vh] max-w-[90vw] overflow-hidden animate-scale-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImage}
+              alt="Preview"
+              className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl transition-transform duration-500 scale-95 hover:scale-100"
+            />
+          </div>
+        </div>
+      )}
     </SiteShell>
   );
 }
 
 function LeadSection() {
+  const [submitted, setSubmitted] = useState(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <section className="bg-ivory py-32 sm:py-48" id="quote">
+    <section className="bg-ivory py-24 sm:py-32" id="quote">
       <div className="mx-auto max-w-[1200px] px-6">
-        <Reveal className="bg-linen p-12 sm:p-24 text-center ring-1 ring-ink/5">
-          <span className="eyebrow">Begin a Commission</span>
-          <h2 className="mt-8 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.1] max-w-[20ch] mx-auto">
-            Let us translate your vision into couture-grade craftsmanship.
-          </h2>
-          <div className="mt-16 flex flex-wrap justify-center gap-6">
-            <a
-              href="https://wa.me/918826023527"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gold text-ivory px-10 py-5 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-ink flex items-center gap-3"
-            >
-              WhatsApp +91 88260 23527
-            </a>
-            <a
-              href="mailto:atelier@aureline.studio"
-              className="border border-ink/20 text-ink px-10 py-5 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-ink hover:text-ivory"
-            >
-              Email the Atelier
-            </a>
+        <Reveal className="bg-linen p-8 sm:p-16 ring-1 ring-ink/5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
+            {/* Left Info Column */}
+            <div className="lg:col-span-5 flex flex-col justify-between h-full">
+              <div>
+                <span className="eyebrow block">Begin a Commission</span>
+                <h2 className="mt-6 font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] text-ink">
+                  Let us translate your vision into couture-grade craftsmanship.
+                </h2>
+                <p className="mt-6 text-sm text-ink-soft leading-relaxed">
+                  Submit your inquiry below or connect directly with our studio director via WhatsApp.
+                </p>
+              </div>
+
+              <div className="mt-12 space-y-4">
+                <a
+                  href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-[#25D366] text-white px-8 py-4 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-[#20ba5a] flex items-center justify-center gap-3 font-medium rounded-none shadow-[0_4px_12px_rgba(37,211,102,0.15)] hover:shadow-[0_6px_16px_rgba(37,211,102,0.25)]"
+                >
+                  <svg viewBox="0 0 32 32" className="size-4" fill="currentColor">
+                    <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+
+            {/* Right Form Column */}
+            <div className="lg:col-span-7 bg-ivory p-6 sm:p-8 border border-ink/5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]">
+              {submitted ? (
+                <div className="py-16 text-center">
+                  <span className="eyebrow text-gold">Thank You</span>
+                  <h3 className="font-serif text-2xl mt-4 text-ink">Inquiry Received</h3>
+                  <p className="mt-2 text-sm text-ink-soft">Our atelier team will contact you shortly.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <Field label="Full Name" name="name" />
+                    <Field label="Email Address" name="email" type="email" />
+                  </div>
+                  <Field label="Subject" name="subject" />
+                  <div>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
+                      Project Description
+                    </label>
+                    <textarea
+                      name="message"
+                      rows={3}
+                      required
+                      className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors resize-none"
+                    />
+                  </div>
+                  <div className="pt-4 flex flex-wrap justify-between items-center gap-4">
+                    <button
+                      type="submit"
+                      className="bg-ink text-ivory px-8 py-4 text-[10px] uppercase tracking-[0.3em] transition-colors hover:bg-gold"
+                    >
+                      Submit Inquiry
+                    </button>
+                    <a
+                      href="mailto:atelier@aureline.studio"
+                      className="text-[10px] uppercase tracking-[0.3em] text-ink-soft hover:text-gold transition-colors"
+                    >
+                      Email Direct →
+                    </a>
+                  </div>
+                </form>
+              )}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -545,7 +764,7 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
   );
 }
 
-function Icon({ name, className }: { name: string; className?: string }) {
+function Icon({ name, className, style, strokeWidth }: { name: string; className?: string; style?: React.CSSProperties; strokeWidth?: number }) {
   const icons: Record<string, any> = {
     Crown,
     Layers,
@@ -559,5 +778,5 @@ function Icon({ name, className }: { name: string; className?: string }) {
     Zap,
   };
   const Component = icons[name] || Crown;
-  return <Component className={className} />;
+  return <Component className={className} style={style} strokeWidth={strokeWidth ?? 1.5} />;
 }

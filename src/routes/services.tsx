@@ -12,13 +12,13 @@ import techniqueCrystal from "@/assets/technique-crystal.jpg";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Couture Embroidery & Manufacturing | Maison Auréline" },
+      { title: "Services — Couture Embroidery & Manufacturing | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Couture embroidery sampling, hand-embroidered production, embellished panels and luxury handbag treatments for global fashion houses.",
       },
-      { property: "og:title", content: "Services — Maison Auréline" },
+      { property: "og:title", content: "Services — Zardosi Atelier" },
       {
         property: "og:description",
         content: "Couture embroidery sampling and production for luxury fashion brands.",

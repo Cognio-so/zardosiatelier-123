@@ -6,13 +6,13 @@ import hero from "@/assets/technique-aari.jpg";
 export const Route = createFileRoute("/process")({
   head: () => ({
     meta: [
-      { title: "Process — From Design to Delivery | Maison Auréline" },
+      { title: "Process — From Design to Delivery | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Our six-step embroidery process: design share, technical review, sampling, approval, production, and global delivery.",
       },
-      { property: "og:title", content: "Process — Maison Auréline" },
+      { property: "og:title", content: "Process — Zardosi Atelier" },
       {
         property: "og:description",
         content: "How we partner from design share to global delivery.",
