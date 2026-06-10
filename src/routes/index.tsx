@@ -1,6 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
+import {
+  Crown,
+  Layers,
+  Diamond,
+  Package,
+  Globe,
+  PenTool,
+  Sparkles,
+  Users,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
 import heroVideo from "@/assets/hero-video.mp4";
@@ -66,70 +84,76 @@ const collection = [
 const techniques = [
   {
     name: "Zardosi",
-    desc: "Antique gold metallic thread, hand-laid in relief.",
+    desc: "Metallic gold threadwork rooted in centuries of courtly craft.",
     image: heroEmbroidery,
   },
-  { name: "Aari", desc: "Fine hook needlework on stretched silk frames.", image: techniqueAari },
   {
     name: "Crystal Work",
-    desc: "Hand-set faceted crystals across couture surfaces.",
+    desc: "Hand-set crystals and sequins for couture light and shadow.",
     image: techniqueCrystal,
   },
   {
-    name: "3D Embroidery",
-    desc: "Dimensional silk petals, sculpted appliqués.",
+    name: "3D Floral",
+    desc: "Sculpted silk petals layered with pearl and bead cores.",
     image: technique3d,
   },
   {
     name: "Beadwork",
-    desc: "Glass beads and freshwater pearls, individually applied.",
+    desc: "Glass, pearl and seed-bead compositions stitched by hand.",
     image: techniqueBead,
-  },
-  {
-    name: "Mixed Media",
-    desc: "Composed surfaces of sequin, thread and embellishment.",
-    image: portfolio6,
   },
 ];
 
 const whyChoose = [
-  {
-    title: "30+ Master Artisans",
-    desc: "Multi-generational embroiderers led by atelier directors.",
-  },
-  { title: "Sampling to Production", desc: "From a single swatch to scaled production runs." },
-  { title: "Couture-Level Quality", desc: "Calibrated to haute couture finishing standards." },
-  { title: "Flexible Order Quantities", desc: "From bespoke editions to commercial runs." },
-  { title: "Global Export Experience", desc: "Documented logistics into Paris, Milan, New York." },
-  {
-    title: "Design Confidentiality",
-    desc: "NDA-protected studio with restricted access protocols.",
-  },
-  {
-    title: "Custom Design Execution",
-    desc: "Translation of mood boards into technical embroidery.",
-  },
-  { title: "Fast Sampling", desc: "Initial swatches within 7–14 days of brief lock." },
+  { title: "30+ Skilled Artisans", desc: "Multi-generational embroiderers led by atelier directors.", icon: "Crown" },
+  { title: "Sampling to Production", desc: "From a single swatch to scaled production runs.", icon: "Layers" },
+  { title: "Couture-Level Quality", desc: "Calibrated to haute couture finishing standards.", icon: "Diamond" },
+  { title: "Flexible Order Quantities", desc: "From bespoke editions to commercial runs.", icon: "Package" },
+  { title: "Export Experience", desc: "Documented logistics into Paris, Milan, New York.", icon: "Globe" },
+  { title: "Custom Design Execution", desc: "Translation of mood boards into technical embroidery.", icon: "PenTool" },
+  { title: "Premium Materials", desc: "Sourcing of finest silk threads, crystals, and beads.", icon: "Sparkles" },
+  { title: "Dedicated Project Support", desc: "Single point of contact for your design team.", icon: "Users" },
+  { title: "Design Confidentiality", desc: "NDA-protected studio with restricted access protocols.", icon: "ShieldCheck" },
+  { title: "Fast Sampling", desc: "Initial swatches within 7–14 days of brief lock.", icon: "Zap" },
 ];
 
 const process = [
   {
     n: "01",
-    title: "Share Design",
+    title: "SHARE DESIGN",
     desc: "Sketches, tech packs or mood boards via our secure client portal.",
   },
   {
     n: "02",
-    title: "Technical Review",
+    title: "TECHNICAL REVIEW",
     desc: "Material feasibility, stitch density, and production timing.",
   },
-  { n: "03", title: "Sampling", desc: "Precision swatches or full prototypes for approval." },
-  { n: "04", title: "Approval", desc: "Sign-off on embellishment, colour accuracy and material." },
-  { n: "05", title: "Production", desc: "Hand-executed manufacturing by dedicated artisan pods." },
+  { n: "03", title: "SAMPLING", desc: "Precision swatches or full prototypes for approval." },
+  { n: "04", title: "APPROVAL", desc: "Sign-off on embellishment, colour accuracy and material." },
+  { n: "05", title: "PRODUCTION", desc: "Hand-executed manufacturing by dedicated artisan pods." },
   {
     n: "06",
-    title: "Global Delivery",
+    title: "GLOBAL DELIVERY",
     desc: "Insured logistics directly to your studio or factory.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Do you work with luxury brands outside India?",
+    answer: "Yes, we serve global fashion houses across Paris, Milan, New York, and London, with streamlined export logistics and documented customs compliance.",
+  },
+  {
+    question: "Can you develop embroidery from design references and sketches?",
+    answer: "Absolutely. Our design team specializes in translating mood boards, sketches, and tech packs into technical embroidery swatches.",
+  },
+  {
+    question: "Do you support both low-volume sampling and larger production runs?",
+    answer: "Yes, we are built for flexibility — from single couture editions and sampling to scaled commercial production runs.",
+  },
+  {
+    question: "What kind of products can be embellished?",
+    answer: "We embroider on couture gowns, bridalwear, womenswear, menswear, accessories (bags, shoes), and individual luxury components.",
   },
 ];
 
@@ -277,81 +301,36 @@ function HomePage() {
         </div>
       </section>
 
-      {/* WHAT WE EMBROIDER */}
-      <section className="bg-champagne py-28 sm:py-40 overflow-hidden">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="max-w-3xl">
-            <span className="eyebrow">Chapter 02 — Discipline</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-              What we <span className="italic">embroider</span>.
-            </h2>
-            <p className="mt-6 max-w-[52ch] text-ink-soft">
-              Couture eveningwear, bridal, womenswear, menswear, accessories and individual luxury
-              components — finished to the standards of the ateliers we serve.
-            </p>
-          </Reveal>
-
-          <div className="mt-20 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
-            {[
-              { label: "Couture & Eveningwear", img: portfolio1, span: "row-span-2 aspect-[3/4]" },
-              { label: "Bridalwear", img: portfolio4, span: "aspect-square" },
-              { label: "Womenswear", img: portfolio6, span: "aspect-square" },
-              { label: "Menswear", img: portfolio2, span: "aspect-[3/2]" },
-              { label: "Handbags & Accessories", img: portfolio3, span: "aspect-[3/2]" },
-              { label: "Luxury Components", img: techniqueAari, span: "aspect-square" },
-              { label: "Patches & Motifs", img: techniqueCrystal, span: "aspect-square" },
-            ].map((it, i) => (
-              <Reveal
-                key={it.label}
-                delay={i * 80}
-                className={`group relative overflow-hidden ${it.span}`}
-              >
-                <img
-                  src={it.img}
-                  alt={it.label}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-105"
-                />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/70 via-ink/0 to-ink/0">
-                  <p className="p-5 text-[10px] uppercase tracking-[0.28em] text-ivory">
-                    {it.label}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* EMBROIDERY TECHNIQUES */}
       <section className="bg-ivory py-28 sm:py-40">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="text-center max-w-3xl mx-auto">
-            <span className="eyebrow">Chapter 03 — Vocabulary</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-              The vocabulary of <span className="italic">embroidery</span>.
-            </h2>
-            <div className="hairline mt-10 w-32 mx-auto" />
+          <Reveal className="flex flex-col md:flex-row justify-between items-baseline gap-6 mb-16">
+            <div>
+              <span className="eyebrow">Embroidery Techniques</span>
+              <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+                A vocabulary of luxury <br />
+                hand-craft.
+              </h2>
+            </div>
+            <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] gold-link">
+              All Services →
+            </Link>
           </Reveal>
 
-          <div className="mt-20 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {techniques.map((t, i) => (
-              <Reveal
-                key={t.name}
-                delay={(i % 3) * 100}
-                className="group relative overflow-hidden bg-ivory"
-              >
-                <div className="aspect-[5/4] overflow-hidden">
+              <Reveal key={t.name} delay={i * 100} className="group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden bg-linen mb-6 luxury-card">
                   <img
                     src={t.image}
                     alt={t.name}
                     loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.08]"
+                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
                   />
                 </div>
-                <div className="p-8">
-                  <span className="font-serif italic text-2xl text-gold">{t.name}</span>
-                  <p className="mt-3 text-sm text-ink-soft leading-relaxed">{t.desc}</p>
+                <div>
+                  <h3 className="font-serif text-2xl mb-3">{t.name}</h3>
+                  <p className="text-sm text-ink-soft leading-relaxed pr-4">{t.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -359,59 +338,88 @@ function HomePage() {
         </div>
       </section>
 
-      {/* WHY BRANDS CHOOSE US */}
+      {/* WHY CHOOSE US */}
       <section className="bg-linen py-28 sm:py-40">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-20">
-            <div className="lg:w-2/5">
-              <span className="eyebrow">Chapter 04 — Standards</span>
-              <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-                Why brands <br />
-                <span className="italic">choose us</span>.
-              </h2>
-            </div>
-            <p className="lg:w-3/5 text-lg text-ink-soft leading-relaxed lg:pt-12">
-              For over two decades our studio has translated the most demanding creative briefs into
-              surfaces that hold up to runway scrutiny — hand by hand, sample by sample, season by
-              season.
-            </p>
+          <Reveal className="mb-20">
+            <span className="eyebrow">Why Maison Auréline</span>
+            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+              A partner built for luxury brands.
+            </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {whyChoose.map((w, i) => (
-              <Reveal key={w.title} delay={(i % 4) * 80} className="group">
-                <div className="hairline w-12 mb-6" />
-                <h3 className="font-serif text-xl">{w.title}</h3>
-                <p className="mt-3 text-sm text-ink-soft leading-relaxed">{w.desc}</p>
+              <Reveal
+                key={w.title}
+                delay={i * 50}
+                className="bg-ivory p-8 ring-1 ring-ink/5 flex flex-col items-start"
+              >
+                <div className="size-10 grid place-items-center bg-champagne text-gold mb-8 rounded-full">
+                  <Icon name={w.icon} className="size-5" />
+                </div>
+                <h3 className="font-serif text-lg leading-tight mb-4">{w.title}</h3>
+                <p className="text-[11px] text-ink-soft leading-relaxed uppercase tracking-wider">
+                  {w.desc}
+                </p>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="bg-ivory border-y border-ink/5 py-32">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 items-center text-center md:text-left">
+            <Reveal delay={100} className="flex flex-col items-center">
+              <span className="font-serif text-6xl lg:text-8xl text-gold-soft mb-4">120+</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
+                Collections Supported
+              </span>
+            </Reveal>
+            <Reveal delay={200} className="flex flex-col items-center">
+              <span className="font-serif text-6xl lg:text-8xl text-gold-soft mb-4">18</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
+                Markets Served
+              </span>
+            </Reveal>
+            <Reveal delay={300} className="flex flex-col items-center">
+              <span className="font-serif text-5xl lg:text-7xl text-gold-soft mb-4 italic">
+                Fast-track
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
+                Sampling Turnaround
+              </span>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* PROCESS TIMELINE */}
-      <section className="bg-ink text-ivory py-28 sm:py-40 overflow-hidden">
+      <section className="bg-linen py-28 sm:py-40 overflow-hidden">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="text-center max-w-3xl mx-auto">
-            <span className="eyebrow">Chapter 05 — Methodology</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-ivory">
-              The path to <span className="italic">production</span>.
+          <Reveal className="mb-20">
+            <span className="eyebrow">Our Process</span>
+            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+              From sketch to ceremony.
             </h2>
           </Reveal>
 
-          <div className="mt-24 relative">
-            <div className="absolute left-0 right-0 top-[42px] hidden lg:block h-px bg-ivory/10" />
-            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6">
-              {process.map((p, i) => (
-                <Reveal key={p.n} delay={i * 100} className="relative text-center lg:px-4">
-                  <div className="mx-auto grid size-[84px] place-items-center rounded-full bg-ink ring-1 ring-ivory/15 relative z-10">
-                    <span className="font-serif text-xl text-gold italic">{p.n}</span>
-                  </div>
-                  <h4 className="mt-6 font-serif text-xl text-ivory">{p.title}</h4>
-                  <p className="mt-3 text-xs text-ivory/55 leading-relaxed">{p.desc}</p>
-                </Reveal>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+            {process.map((p, i) => (
+              <Reveal
+                key={p.n}
+                delay={i * 80}
+                className="bg-ivory p-8 ring-1 ring-ink/5 flex flex-col items-start"
+              >
+                <span className="font-serif text-2xl text-gold mb-10">{p.n}</span>
+                <h4 className="font-serif text-sm tracking-[0.15em] mb-4 uppercase">{p.title}</h4>
+                <p className="text-[11px] text-ink-soft leading-relaxed uppercase tracking-wider">
+                  {p.desc}
+                </p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -456,6 +464,34 @@ function HomePage() {
         </div>
       </section>
 
+      {/* FAQs */}
+      <section className="bg-linen py-28 sm:py-40">
+        <div className="mx-auto max-w-[1000px] px-6">
+          <Reveal className="mb-16">
+            <span className="eyebrow">Questions</span>
+            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+              Working with our <br />
+              <span className="italic">atelier</span>.
+            </h2>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((f, i) => (
+                <AccordionItem key={i} value={`item-${i}`} className="border-b border-ink/10 py-4">
+                  <AccordionTrigger className="text-left font-serif text-xl hover:no-underline hover:text-gold transition-colors">
+                    {f.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-ink-soft leading-relaxed pt-4 text-base max-w-[60ch]">
+                    {f.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Reveal>
+        </div>
+      </section>
+
       {/* LEAD GEN */}
       <LeadSection />
     </SiteShell>
@@ -464,69 +500,30 @@ function HomePage() {
 
 function LeadSection() {
   return (
-    <section className="bg-champagne py-28 sm:py-40" id="quote">
-      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-        <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
-          <Reveal>
-            <span className="eyebrow">Chapter 07 — Begin</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-balance">
-              Get a free embroidery <span className="italic">feasibility review</span>.
-            </h2>
-            <p className="mt-8 text-lg text-ink-soft leading-relaxed max-w-[48ch]">
-              Share your design and our master artisans will respond with technique guidance, cost
-              direction, and a sampling timeline — within two working days.
-            </p>
-            <ul className="mt-10 space-y-4 text-sm">
-              {[
-                "Technique recommendations",
-                "Cost guidance",
-                "Production feasibility",
-                "Sampling suggestions",
-                "Estimated timeline",
-              ].map((b) => (
-                <li key={b} className="flex items-center gap-4">
-                  <span className="w-8 h-px bg-gold" />
-                  <span className="uppercase tracking-[0.2em] text-xs text-ink-soft">{b}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          <Reveal delay={150}>
-            <form
-              className="bg-ivory p-8 sm:p-12 ring-1 ring-ink/5"
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Thank you. Our atelier will be in touch within two working days.");
-              }}
+    <section className="bg-ivory py-32 sm:py-48" id="quote">
+      <div className="mx-auto max-w-[1200px] px-6">
+        <Reveal className="bg-linen p-12 sm:p-24 text-center ring-1 ring-ink/5">
+          <span className="eyebrow">Begin a Commission</span>
+          <h2 className="mt-8 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.1] max-w-[20ch] mx-auto">
+            Let us translate your vision into couture-grade craftsmanship.
+          </h2>
+          <div className="mt-16 flex flex-wrap justify-center gap-6">
+            <a
+              href="https://wa.me/918826023527"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gold text-ivory px-10 py-5 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-ink flex items-center gap-3"
             >
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                <Field label="Full Name" name="name" />
-                <Field label="Brand / Maison" name="brand" />
-                <Field label="Country" name="country" />
-                <Field label="Email" type="email" name="email" />
-                <Field label="WhatsApp" name="whatsapp" />
-                <Field label="Upload Design" type="file" name="file" />
-                <div className="sm:col-span-2">
-                  <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
-                    Project Brief
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors"
-                  />
-                </div>
-              </div>
-              <button
-                type="submit"
-                className="mt-10 w-full border border-ink bg-ink px-10 py-4 text-[10px] uppercase tracking-[0.35em] text-ivory transition-colors hover:bg-gold hover:border-gold"
-              >
-                Request Quote
-              </button>
-            </form>
-          </Reveal>
-        </div>
+              WhatsApp +91 88260 23527
+            </a>
+            <a
+              href="mailto:atelier@aureline.studio"
+              className="border border-ink/20 text-ink px-10 py-5 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-ink hover:text-ivory"
+            >
+              Email the Atelier
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -546,4 +543,21 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
       />
     </div>
   );
+}
+
+function Icon({ name, className }: { name: string; className?: string }) {
+  const icons: Record<string, any> = {
+    Crown,
+    Layers,
+    Diamond,
+    Package,
+    Globe,
+    PenTool,
+    Sparkles,
+    Users,
+    ShieldCheck,
+    Zap,
+  };
+  const Component = icons[name] || Crown;
+  return <Component className={className} />;
 }
