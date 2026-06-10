@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 
+import heroZardosi from "@/assets/hero-zardosi.jpg";
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
 import collectionGown from "@/assets/collection-gown.jpg";
 import collectionBridal from "@/assets/collection-bridal.jpg";
@@ -16,35 +17,6 @@ import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 import portfolio5 from "@/assets/portfolio-5.jpg";
 import portfolio6 from "@/assets/portfolio-6.jpg";
-import heroVideo from "@/assets/hero-video.mp4.asset.json";
-
-// ... later in JSX
-                {heroVideo?.url ? (
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster={heroEmbroidery}
-                    className="absolute inset-0 h-full w-full object-cover opacity-70"
-                    onError={(e) => {
-                      const video = e.currentTarget as HTMLVideoElement;
-                      video.style.display = "none";
-                    }}
-                  >
-                    <source src={heroVideo.url} type="video/mp4" />
-                    {/* Fallback text */}
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <img
-                    src={heroEmbroidery}
-                    alt="Hero"
-                    className="absolute inset-0 h-full w-full object-cover opacity-70"
-                  />
-                )}
-
-// later in JSX use src={heroVideo}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -62,8 +34,8 @@ export const Route = createFileRoute("/")({
           "Couture-level hand embroidery, beadwork, zardosi and crystal work for the world's most discerning fashion houses.",
       },
       { property: "og:url", content: "/" },
-      { property: "og:image", content: heroEmbroidery },
-      { property: "twitter:image", content: heroEmbroidery },
+      { property: "og:image", content: heroZardosi },
+      { property: "twitter:image", content: heroZardosi },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -175,21 +147,17 @@ function HomePage() {
     <SiteShell>
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={heroEmbroidery}
-            className="absolute inset-0 h-full w-full object-cover opacity-70"
-            onError={(e) => {
-              const video = e.currentTarget as HTMLVideoElement;
-              video.style.display = "none";
-            }}
-          >
-            <source src={heroVideo.url} type="video/mp4" />
-          </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/70" />
+        {/* Hero background image — cinematic zardosi embroidery */}
+        <img
+          src={heroZardosi}
+          alt="Royal Indian zardosi embroidery on champagne silk"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ opacity: 0.82 }}
+        />
+
+        {/* Cinematic vignette + gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/20 to-ink/75" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/30 via-transparent to-ink/30" />
 
         <div className="relative z-10 flex h-full items-center justify-center px-6">
           <div className="max-w-5xl text-center">
