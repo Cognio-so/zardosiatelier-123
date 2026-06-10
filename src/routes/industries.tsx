@@ -12,9 +12,16 @@ export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
       { title: "Industries — Who We Serve | Maison Auréline" },
-      { name: "description", content: "Couture houses, bridal labels, designer menswear, accessory brands — the industries our atelier serves." },
+      {
+        name: "description",
+        content:
+          "Couture houses, bridal labels, designer menswear, accessory brands — the industries our atelier serves.",
+      },
       { property: "og:title", content: "Industries — Maison Auréline" },
-      { property: "og:description", content: "Industries served by our luxury embroidery atelier." },
+      {
+        property: "og:description",
+        content: "Industries served by our luxury embroidery atelier.",
+      },
       { property: "og:url", content: "/industries" },
       { property: "og:image", content: gown },
     ],
@@ -26,10 +33,26 @@ export const Route = createFileRoute("/industries")({
 const industries = [
   { label: "Haute Couture", desc: "Runway-grade embroidery for Paris and Milan shows.", img: gown },
   { label: "Bridal Labels", desc: "Heritage and contemporary bridalwear ateliers.", img: bridal },
-  { label: "Designer Womenswear", desc: "Seasonal embellishment for ready-to-wear collections.", img: p6 },
-  { label: "Designer Menswear", desc: "Tonal embroidery and patch programs for tailoring.", img: p2 },
-  { label: "Luxury Accessories", desc: "Embellished handbags, belts and headpieces.", img: handbag },
-  { label: "Costume & Editorial", desc: "Embroidery for film, opera and editorial projects.", img: p1 },
+  {
+    label: "Designer Womenswear",
+    desc: "Seasonal embellishment for ready-to-wear collections.",
+    img: p6,
+  },
+  {
+    label: "Designer Menswear",
+    desc: "Tonal embroidery and patch programs for tailoring.",
+    img: p2,
+  },
+  {
+    label: "Luxury Accessories",
+    desc: "Embellished handbags, belts and headpieces.",
+    img: handbag,
+  },
+  {
+    label: "Costume & Editorial",
+    desc: "Embroidery for film, opera and editorial projects.",
+    img: p1,
+  },
 ];
 
 function IndustriesPage() {
@@ -47,7 +70,12 @@ function IndustriesPage() {
           {industries.map((s, i) => (
             <Reveal key={s.label} delay={(i % 3) * 100} className="group">
               <div className="overflow-hidden aspect-[4/5] luxury-card">
-                <img src={s.img} alt={s.label} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]" />
+                <img
+                  src={s.img}
+                  alt={s.label}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
+                />
               </div>
               <h3 className="mt-6 font-serif text-2xl">{s.label}</h3>
               <p className="mt-3 text-sm text-ink-soft leading-relaxed">{s.desc}</p>

@@ -16,7 +16,11 @@ export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
       { title: "Portfolio — Couture Embroidery Archive | Maison Auréline" },
-      { name: "description", content: "Selected couture embroidery work for global fashion houses — bridal, eveningwear, accessories." },
+      {
+        name: "description",
+        content:
+          "Selected couture embroidery work for global fashion houses — bridal, eveningwear, accessories.",
+      },
       { property: "og:title", content: "Portfolio — Maison Auréline" },
       { property: "og:description", content: "A curated archive of luxury hand embroidery work." },
       { property: "og:url", content: "/portfolio" },
@@ -56,10 +60,17 @@ function PortfolioPage() {
             {items.map((p, i) => (
               <Reveal key={i} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
                 <div className="group relative overflow-hidden luxury-card">
-                  <img src={p.src} alt={p.caption} loading="lazy" className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.05]" />
+                  <img
+                    src={p.src}
+                    alt={p.caption}
+                    loading="lazy"
+                    className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.05]"
+                  />
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/80 via-ink/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">
                     <div className="p-6">
-                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">{p.tag}</p>
+                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">
+                        {p.tag}
+                      </p>
                       <h4 className="mt-2 font-serif text-2xl text-ivory">{p.caption}</h4>
                     </div>
                   </div>

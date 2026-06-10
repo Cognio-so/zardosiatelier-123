@@ -43,9 +43,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
       <div className="max-w-md text-center">
         <span className="eyebrow">Something Interrupted</span>
         <h1 className="mt-6 font-serif text-4xl text-ink">This page didn't load</h1>
-        <p className="mt-4 text-sm text-ink-soft">
-          Please refresh or return to the homepage.
-        </p>
+        <p className="mt-4 text-sm text-ink-soft">Please refresh or return to the homepage.</p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <button
             onClick={() => {
@@ -85,11 +83,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Zardosi Atelier" },
       { name: "twitter:title", content: "Zardosi Atelier" },
-      { name: "description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
-      { property: "og:description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
-      { name: "twitter:description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png" },
+      {
+        name: "description",
+        content:
+          "Couture Craft Studio is a premium website for luxury fashion and embroidery services.",
+      },
+      {
+        property: "og:description",
+        content:
+          "Couture Craft Studio is a premium website for luxury fashion and embroidery services.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Couture Craft Studio is a premium website for luxury fashion and embroidery services.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

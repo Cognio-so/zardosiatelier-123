@@ -19,7 +19,10 @@ export const Route = createFileRoute("/services")({
           "Couture embroidery sampling, hand-embroidered production, embellished panels and luxury handbag treatments for global fashion houses.",
       },
       { property: "og:title", content: "Services — Maison Auréline" },
-      { property: "og:description", content: "Couture embroidery sampling and production for luxury fashion brands." },
+      {
+        property: "og:description",
+        content: "Couture embroidery sampling and production for luxury fashion brands.",
+      },
       { property: "og:url", content: "/services" },
       { property: "og:image", content: collectionGown },
     ],

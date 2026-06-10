@@ -25,9 +25,7 @@ export function Navigation() {
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        scrolled
-          ? "bg-ivory/85 backdrop-blur-md border-b border-ink/5"
-          : "bg-transparent"
+        scrolled ? "bg-ivory/85 backdrop-blur-md border-b border-ink/5" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:px-12">
@@ -85,9 +83,15 @@ export function Navigation() {
             onClick={() => setOpen((s) => !s)}
             className="lg:hidden flex flex-col gap-[5px]"
           >
-            <span className={`block h-px w-6 bg-ink transition-transform ${open ? "translate-y-[6px] rotate-45" : ""}`} />
-            <span className={`block h-px w-6 bg-ink transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-px w-6 bg-ink transition-transform ${open ? "-translate-y-[6px] -rotate-45" : ""}`} />
+            <span
+              className={`block h-px w-6 bg-ink transition-transform ${open ? "translate-y-[6px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-px w-6 bg-ink transition-opacity ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-px w-6 bg-ink transition-transform ${open ? "-translate-y-[6px] -rotate-45" : ""}`}
+            />
           </button>
         </div>
       </div>

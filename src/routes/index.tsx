@@ -64,32 +64,73 @@ const collection = [
 ];
 
 const techniques = [
-  { name: "Zardosi", desc: "Antique gold metallic thread, hand-laid in relief.", image: heroEmbroidery },
+  {
+    name: "Zardosi",
+    desc: "Antique gold metallic thread, hand-laid in relief.",
+    image: heroEmbroidery,
+  },
   { name: "Aari", desc: "Fine hook needlework on stretched silk frames.", image: techniqueAari },
-  { name: "Crystal Work", desc: "Hand-set faceted crystals across couture surfaces.", image: techniqueCrystal },
-  { name: "3D Embroidery", desc: "Dimensional silk petals, sculpted appliqués.", image: technique3d },
-  { name: "Beadwork", desc: "Glass beads and freshwater pearls, individually applied.", image: techniqueBead },
-  { name: "Mixed Media", desc: "Composed surfaces of sequin, thread and embellishment.", image: portfolio6 },
+  {
+    name: "Crystal Work",
+    desc: "Hand-set faceted crystals across couture surfaces.",
+    image: techniqueCrystal,
+  },
+  {
+    name: "3D Embroidery",
+    desc: "Dimensional silk petals, sculpted appliqués.",
+    image: technique3d,
+  },
+  {
+    name: "Beadwork",
+    desc: "Glass beads and freshwater pearls, individually applied.",
+    image: techniqueBead,
+  },
+  {
+    name: "Mixed Media",
+    desc: "Composed surfaces of sequin, thread and embellishment.",
+    image: portfolio6,
+  },
 ];
 
 const whyChoose = [
-  { title: "30+ Master Artisans", desc: "Multi-generational embroiderers led by atelier directors." },
+  {
+    title: "30+ Master Artisans",
+    desc: "Multi-generational embroiderers led by atelier directors.",
+  },
   { title: "Sampling to Production", desc: "From a single swatch to scaled production runs." },
   { title: "Couture-Level Quality", desc: "Calibrated to haute couture finishing standards." },
   { title: "Flexible Order Quantities", desc: "From bespoke editions to commercial runs." },
   { title: "Global Export Experience", desc: "Documented logistics into Paris, Milan, New York." },
-  { title: "Design Confidentiality", desc: "NDA-protected studio with restricted access protocols." },
-  { title: "Custom Design Execution", desc: "Translation of mood boards into technical embroidery." },
+  {
+    title: "Design Confidentiality",
+    desc: "NDA-protected studio with restricted access protocols.",
+  },
+  {
+    title: "Custom Design Execution",
+    desc: "Translation of mood boards into technical embroidery.",
+  },
   { title: "Fast Sampling", desc: "Initial swatches within 7–14 days of brief lock." },
 ];
 
 const process = [
-  { n: "01", title: "Share Design", desc: "Sketches, tech packs or mood boards via our secure client portal." },
-  { n: "02", title: "Technical Review", desc: "Material feasibility, stitch density, and production timing." },
+  {
+    n: "01",
+    title: "Share Design",
+    desc: "Sketches, tech packs or mood boards via our secure client portal.",
+  },
+  {
+    n: "02",
+    title: "Technical Review",
+    desc: "Material feasibility, stitch density, and production timing.",
+  },
   { n: "03", title: "Sampling", desc: "Precision swatches or full prototypes for approval." },
   { n: "04", title: "Approval", desc: "Sign-off on embellishment, colour accuracy and material." },
   { n: "05", title: "Production", desc: "Hand-executed manufacturing by dedicated artisan pods." },
-  { n: "06", title: "Global Delivery", desc: "Insured logistics directly to your studio or factory." },
+  {
+    n: "06",
+    title: "Global Delivery",
+    desc: "Insured logistics directly to your studio or factory.",
+  },
 ];
 
 const portfolio = [
@@ -136,8 +177,8 @@ function HomePage() {
               className="mx-auto mt-8 max-w-[58ch] text-base sm:text-lg text-ivory/80 leading-relaxed animate-fade-up"
               style={{ animationDelay: "500ms" }}
             >
-              From couture sampling to production-scale execution, we transform
-              fashion concepts into luxury embroidered masterpieces.
+              From couture sampling to production-scale execution, we transform fashion concepts
+              into luxury embroidered masterpieces.
             </p>
             <div
               className="mt-12 flex flex-wrap justify-center gap-4 animate-fade-up"
@@ -176,9 +217,7 @@ function HomePage() {
             ].map(([k, v]) => (
               <div key={v} className="px-6 py-6 text-center">
                 <div className="font-serif italic text-lg sm:text-xl text-gold-soft">{k}</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.3em] text-ivory/60">
-                  {v}
-                </div>
+                <div className="mt-1 text-[9px] uppercase tracking-[0.3em] text-ivory/60">{v}</div>
               </div>
             ))}
           </div>
@@ -192,13 +231,11 @@ function HomePage() {
             <div className="max-w-2xl">
               <span className="eyebrow">Chapter 01 — Featured</span>
               <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-balance">
-                Couture artistry for the <br />world's finest <span className="italic">maisons</span>.
+                Couture artistry for the <br />
+                world's finest <span className="italic">maisons</span>.
               </h2>
             </div>
-            <Link
-              to="/portfolio"
-              className="text-[10px] uppercase tracking-[0.3em] gold-link"
-            >
+            <Link to="/portfolio" className="text-[10px] uppercase tracking-[0.3em] gold-link">
               View All Collections →
             </Link>
           </Reveal>
@@ -242,9 +279,8 @@ function HomePage() {
               What we <span className="italic">embroider</span>.
             </h2>
             <p className="mt-6 max-w-[52ch] text-ink-soft">
-              Couture eveningwear, bridal, womenswear, menswear, accessories and
-              individual luxury components — finished to the standards of the
-              ateliers we serve.
+              Couture eveningwear, bridal, womenswear, menswear, accessories and individual luxury
+              components — finished to the standards of the ateliers we serve.
             </p>
           </Reveal>
 
@@ -323,13 +359,14 @@ function HomePage() {
             <div className="lg:w-2/5">
               <span className="eyebrow">Chapter 04 — Standards</span>
               <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-                Why brands <br /><span className="italic">choose us</span>.
+                Why brands <br />
+                <span className="italic">choose us</span>.
               </h2>
             </div>
             <p className="lg:w-3/5 text-lg text-ink-soft leading-relaxed lg:pt-12">
-              For over two decades our studio has translated the most demanding
-              creative briefs into surfaces that hold up to runway scrutiny —
-              hand by hand, sample by sample, season by season.
+              For over two decades our studio has translated the most demanding creative briefs into
+              surfaces that hold up to runway scrutiny — hand by hand, sample by sample, season by
+              season.
             </p>
           </Reveal>
 
@@ -359,11 +396,7 @@ function HomePage() {
             <div className="absolute left-0 right-0 top-[42px] hidden lg:block h-px bg-ivory/10" />
             <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6">
               {process.map((p, i) => (
-                <Reveal
-                  key={p.n}
-                  delay={i * 100}
-                  className="relative text-center lg:px-4"
-                >
+                <Reveal key={p.n} delay={i * 100} className="relative text-center lg:px-4">
                   <div className="mx-auto grid size-[84px] place-items-center rounded-full bg-ink ring-1 ring-ivory/15 relative z-10">
                     <span className="font-serif text-xl text-gold italic">{p.n}</span>
                   </div>
@@ -403,7 +436,9 @@ function HomePage() {
                   />
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/80 via-ink/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">
                     <div className="p-6">
-                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">{p.tag}</p>
+                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">
+                        {p.tag}
+                      </p>
                       <h4 className="mt-2 font-serif text-2xl text-ivory">{p.caption}</h4>
                     </div>
                   </div>
@@ -431,9 +466,8 @@ function LeadSection() {
               Get a free embroidery <span className="italic">feasibility review</span>.
             </h2>
             <p className="mt-8 text-lg text-ink-soft leading-relaxed max-w-[48ch]">
-              Share your design and our master artisans will respond with technique
-              guidance, cost direction, and a sampling timeline — within two
-              working days.
+              Share your design and our master artisans will respond with technique guidance, cost
+              direction, and a sampling timeline — within two working days.
             </p>
             <ul className="mt-10 space-y-4 text-sm">
               {[
@@ -491,15 +525,7 @@ function LeadSection() {
   );
 }
 
-function Field({
-  label,
-  name,
-  type = "text",
-}: {
-  label: string;
-  name: string;
-  type?: string;
-}) {
+function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
       <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">

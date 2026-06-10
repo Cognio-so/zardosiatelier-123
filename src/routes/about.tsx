@@ -8,9 +8,16 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — The Atelier | Maison Auréline" },
-      { name: "description", content: "Maison Auréline is a luxury embroidery atelier built on multi-generational craftsmanship — serving global fashion houses." },
+      {
+        name: "description",
+        content:
+          "Maison Auréline is a luxury embroidery atelier built on multi-generational craftsmanship — serving global fashion houses.",
+      },
       { property: "og:title", content: "About — Maison Auréline" },
-      { property: "og:description", content: "A luxury embroidery atelier serving global fashion houses." },
+      {
+        property: "og:description",
+        content: "A luxury embroidery atelier serving global fashion houses.",
+      },
       { property: "og:url", content: "/about" },
       { property: "og:image", content: hero },
     ],
@@ -37,15 +44,15 @@ function AboutPage() {
               Quiet craft. <span className="italic">Loud results.</span>
             </h2>
             <p className="mt-6 text-ink-soft leading-relaxed">
-              Founded as a small studio commissioned by independent couture
-              ateliers, Maison Auréline has grown into a 30-artisan house with
-              dedicated pods for sampling, production, and finishing. Our
-              clients include houses in Paris, Milan, New York and beyond.
+              Founded as a small studio commissioned by independent couture ateliers, Maison
+              Auréline has grown into a 30-artisan house with dedicated pods for sampling,
+              production, and finishing. Our clients include houses in Paris, Milan, New York and
+              beyond.
             </p>
             <p className="mt-6 text-ink-soft leading-relaxed">
-              We work under NDA, in restricted-access rooms, with documented
-              quality checkpoints at every stage. The result: embroidered
-              surfaces that hold up under runway light and editorial macro.
+              We work under NDA, in restricted-access rooms, with documented quality checkpoints at
+              every stage. The result: embroidered surfaces that hold up under runway light and
+              editorial macro.
             </p>
           </Reveal>
           <Reveal delay={150} className="aspect-[4/5] overflow-hidden">

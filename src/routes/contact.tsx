@@ -7,7 +7,11 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Request a Quote | Maison Auréline" },
-      { name: "description", content: "Request a quote or book a consultation with our embroidery atelier — response within two working days." },
+      {
+        name: "description",
+        content:
+          "Request a quote or book a consultation with our embroidery atelier — response within two working days.",
+      },
       { property: "og:title", content: "Contact — Maison Auréline" },
       { property: "og:description", content: "Begin a project with our embroidery atelier." },
       { property: "og:url", content: "/contact" },
@@ -37,11 +41,23 @@ function ContactPage() {
             <div className="mt-10 space-y-8 text-sm">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Email</p>
-                <a href="mailto:atelier@aureline.studio" className="mt-2 inline-block font-serif text-xl gold-link">atelier@aureline.studio</a>
+                <a
+                  href="mailto:atelier@aureline.studio"
+                  className="mt-2 inline-block font-serif text-xl gold-link"
+                >
+                  atelier@aureline.studio
+                </a>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">WhatsApp</p>
-                <a href="https://wa.me/918826023527" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-serif text-xl gold-link">+91 88260 23527</a>
+                <a
+                  href="https://wa.me/918826023527"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block font-serif text-xl gold-link"
+                >
+                  +91 88260 23527
+                </a>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Studio</p>
@@ -68,7 +84,9 @@ function ContactPage() {
                   ["Upload Design", "file", "file"],
                 ].map(([label, name, type]) => (
                   <div key={name}>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">{label}</label>
+                    <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
+                      {label}
+                    </label>
                     <input
                       name={name}
                       type={type}
@@ -78,11 +96,20 @@ function ContactPage() {
                   </div>
                 ))}
                 <div className="sm:col-span-2">
-                  <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">Project Brief</label>
-                  <textarea rows={4} required className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors" />
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
+                    Project Brief
+                  </label>
+                  <textarea
+                    rows={4}
+                    required
+                    className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors"
+                  />
                 </div>
               </div>
-              <button type="submit" className="mt-10 w-full border border-ink bg-ink px-10 py-4 text-[10px] uppercase tracking-[0.35em] text-ivory transition-colors hover:bg-gold hover:border-gold">
+              <button
+                type="submit"
+                className="mt-10 w-full border border-ink bg-ink px-10 py-4 text-[10px] uppercase tracking-[0.35em] text-ivory transition-colors hover:bg-gold hover:border-gold"
+              >
                 Send Request
               </button>
             </form>

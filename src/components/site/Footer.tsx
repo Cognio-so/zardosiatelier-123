@@ -14,18 +14,34 @@ export function Footer() {
               Maison · Atelier
             </p>
             <p className="mt-8 max-w-[36ch] text-sm leading-relaxed text-ivory/60">
-              A luxury hand embroidery atelier in service of the world's most considered
-              fashion houses. Couture precision delivered at production scale.
+              A luxury hand embroidery atelier in service of the world's most considered fashion
+              houses. Couture precision delivered at production scale.
             </p>
           </div>
 
           <div className="md:col-span-3">
             <h4 className="eyebrow text-gold">Atelier</h4>
             <ul className="mt-6 space-y-3 text-sm">
-              <li><Link to="/services" className="gold-link hover:text-ivory">Services</Link></li>
-              <li><Link to="/portfolio" className="gold-link hover:text-ivory">Portfolio</Link></li>
-              <li><Link to="/process" className="gold-link hover:text-ivory">Process</Link></li>
-              <li><Link to="/about" className="gold-link hover:text-ivory">About</Link></li>
+              <li>
+                <Link to="/services" className="gold-link hover:text-ivory">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/portfolio" className="gold-link hover:text-ivory">
+                  Portfolio
+                </Link>
+              </li>
+              <li>
+                <Link to="/process" className="gold-link hover:text-ivory">
+                  Process
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="gold-link hover:text-ivory">
+                  About
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -47,15 +63,24 @@ export function Footer() {
                   WhatsApp +91 88260 23527
                 </a>
               </li>
-              <li><a className="gold-link hover:text-ivory" href="#">Instagram</a></li>
-              <li><a className="gold-link hover:text-ivory" href="#">LinkedIn</a></li>
+              <li>
+                <a className="gold-link hover:text-ivory" href="#">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a className="gold-link hover:text-ivory" href="#">
+                  LinkedIn
+                </a>
+              </li>
             </ul>
           </div>
 
           <div className="md:col-span-2">
             <h4 className="eyebrow text-gold">Studio</h4>
             <p className="mt-6 text-sm leading-relaxed text-ivory/60">
-              New Delhi<br />
+              New Delhi
+              <br />
               Paris · New York
             </p>
           </div>
@@ -88,8 +113,12 @@ export function Footer() {
         <div className="mt-16 flex flex-col-reverse items-start md:flex-row md:items-center md:justify-between gap-4 text-[9px] uppercase tracking-[0.3em] text-ivory/30">
           <p>© {new Date().getFullYear()} Maison Auréline. All rights reserved.</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-ivory">Privacy</a>
-            <a href="#" className="hover:text-ivory">Terms</a>
+            <a href="#" className="hover:text-ivory">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-ivory">
+              Terms
+            </a>
           </div>
         </div>
       </div>
