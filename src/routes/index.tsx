@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 
-import heroZardosi from "@/assets/hero-zardosi.jpg";
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 import collectionGown from "@/assets/collection-gown.jpg";
 import collectionBridal from "@/assets/collection-bridal.jpg";
 import collectionHandbag from "@/assets/collection-handbag.jpg";
@@ -34,8 +34,8 @@ export const Route = createFileRoute("/")({
           "Couture-level hand embroidery, beadwork, zardosi and crystal work for the world's most discerning fashion houses.",
       },
       { property: "og:url", content: "/" },
-      { property: "og:image", content: heroZardosi },
-      { property: "twitter:image", content: heroZardosi },
+      { property: "og:image", content: heroEmbroidery },
+      { property: "twitter:image", content: heroEmbroidery },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -147,17 +147,23 @@ function HomePage() {
     <SiteShell>
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-        {/* Hero background image — cinematic zardosi embroidery */}
-        <img
-          src={heroZardosi}
-          alt="Royal Indian zardosi embroidery on champagne silk"
+        {/* Hero background video — autoplay, muted, loop */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={heroEmbroidery}
           className="absolute inset-0 h-full w-full object-cover"
-          style={{ opacity: 0.82 }}
-        />
+          style={{ opacity: 0.85 }}
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
 
         {/* Cinematic vignette + gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/20 to-ink/75" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/30 via-transparent to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/20 to-ink/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/35 via-transparent to-ink/35" />
+
 
         <div className="relative z-10 flex h-full items-center justify-center px-6">
           <div className="max-w-5xl text-center">
