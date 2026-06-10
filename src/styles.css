@@ -102,7 +102,7 @@
   --gold: oklch(0.72 0.085 75);
   --gold-soft: oklch(0.84 0.055 80);
   --ink: oklch(0.165 0.008 60);
-  --ink-soft: oklch(0.38 0.008 60);
+  --ink-soft: oklch(0.26 0.008 60);
 
   --background: var(--ivory);
   --foreground: var(--ink);
@@ -143,7 +143,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-weight: 300;
+    font-weight: 350; /* Adjusted from 300 to 350 for superior clarity and quality text display */
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -217,3 +217,35 @@
     box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--ink) 25%, transparent);
   }
 }
+
+@utility luxury-silk-bg {
+  background-color: #FAF7F2;
+  position: relative;
+}
+
+@utility premium-couture-card {
+  background-color: #FAF7F2;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.04), 0 4px 12px -4px rgba(0, 0, 0, 0.02);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+              box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+              border-color 0.4s ease;
+}
+
+@utility luxury-wa-button {
+  background-color: #FAF7F2;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--ink);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  &:hover {
+    background-color: var(--ink);
+    color: var(--ivory);
+    border-color: var(--ink);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+

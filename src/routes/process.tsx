@@ -68,7 +68,7 @@ function ProcessPage() {
         description="A clear six-step path from first design share to global delivery — engineered for confidentiality, precision, and predictable timing."
         image={hero}
       />
-      <section className="bg-ivory py-28">
+      <section className="luxury-silk-bg py-16">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
           <ol className="space-y-16">
             {process.map((p, i) => (

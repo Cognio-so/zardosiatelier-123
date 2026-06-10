@@ -33,7 +33,7 @@ function ContactPage() {
         image={hero}
       />
 
-      <section className="bg-ivory py-28">
+      <section className="luxury-silk-bg py-16">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-20">
           <Reveal>
             <span className="eyebrow">Studio</span>

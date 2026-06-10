@@ -54,7 +54,7 @@ function PortfolioPage() {
         description="A curated archive of recent commissions — couture, bridal, accessories and atelier studies."
         image={p1}
       />
-      <section className="bg-ivory py-28">
+      <section className="luxury-silk-bg py-16">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
             {items.map((p, i) => (

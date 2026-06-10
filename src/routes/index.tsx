@@ -63,22 +63,31 @@ export const Route = createFileRoute("/")({
 
 const collection = [
   {
+    number: "01",
     title: "La Sérénade",
-    caption: "Couture Gowns · Gold Zardosi",
+    category: "Couture Gowns",
+    materials: "Gold Zardosi",
     image: collectionGown,
-    aspect: "3/4",
+    desc: "Exquisite hand-stitched gold metallic threadwork cascading over cream silk satin.",
+    icon: "Crown",
   },
   {
+    number: "02",
     title: "Veil of Pearls",
-    caption: "Bridal Couture · Crystal & Pearl",
+    category: "Bridal Couture",
+    materials: "Crystal & Pearl",
     image: collectionBridal,
-    aspect: "3/4",
+    desc: "Intricate bridal bodices and veils adorned with hand-set seed pearls and crystalline beads.",
+    icon: "Diamond",
   },
   {
+    number: "03",
     title: "Petit Bijou",
-    caption: "Luxury Accessories · Mixed Media",
+    category: "Luxury Accessories",
+    materials: "Mixed Media",
     image: collectionHandbag,
-    aspect: "3/4",
+    desc: "A meticulous blend of fine embroidery, semi-precious stones, and gold hardware on mini bags.",
+    icon: "Sparkles",
   },
 ];
 
@@ -259,9 +268,9 @@ function HomePage() {
       </section>
 
       {/* FEATURED COLLECTION */}
-      <section className="bg-ivory py-28 sm:py-40">
+      <section className="luxury-silk-bg py-16 sm:py-24">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-20">
+          <Reveal className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-16">
             <div className="max-w-2xl">
               <span className="eyebrow">Chapter 01 — Featured</span>
               <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-balance">
@@ -274,7 +283,7 @@ function HomePage() {
             </Link>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-14">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-14">
             {collection.map((c, i) => (
               <Reveal
                 key={c.title}
@@ -282,22 +291,70 @@ function HomePage() {
                 className="group cursor-pointer"
                 onClick={() => setLightboxImage(c.image)}
               >
-                <div className="relative overflow-hidden aspect-[3/4] bg-linen luxury-card shadow-sm border border-ink/5">
-                  <img
-                    src={c.image}
-                    alt={c.title}
-                    loading="lazy"
-                    width={1024}
-                    height={1366}
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-                </div>
-                <div className="mt-6 border-b border-ink/10 pb-4 flex justify-between items-baseline">
-                  <h3 className="font-serif text-xl sm:text-2xl text-ink tracking-wide">{c.title}</h3>
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-gold font-medium">
-                    {c.caption}
-                  </span>
+                <div
+                  className="w-full rounded-[24px] premium-couture-card flex flex-col justify-between"
+                  style={{
+                    aspectRatio: "1/1.6",
+                  }}
+                >
+                  {/* Large Image Area (75%) */}
+                  <div className="h-[75%] w-full overflow-hidden relative rounded-t-[24px] bg-[#EADBC8]/20">
+                    <img
+                      src={c.image}
+                      alt={c.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60" />
+                  </div>
+
+                  {/* Content Area (25%) */}
+                  <div className="h-[25%] w-full px-6 pb-6 pt-8 flex flex-col justify-between items-center text-center relative bg-[#FAF7F2] rounded-b-[24px]">
+                    {/* Center Badge */}
+                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 size-14 rounded-full bg-[#FAF7F2] border border-[#D4AF37]/40 flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] z-10 transition-transform duration-500 group-hover:scale-105">
+                      <div className="size-11 rounded-full bg-[#D4AF37]/5 flex items-center justify-center border border-[#D4AF37]/10">
+                        <Icon
+                          name={c.icon}
+                          className="size-[18px]"
+                          style={{ color: "#D4AF37" }}
+                          strokeWidth={1.25}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Collection number & name */}
+                    <div className="w-full">
+                      <div className="text-[10px] font-sans uppercase tracking-[0.25em] text-[#D4AF37] font-semibold mb-1">
+                        Collection {c.number}
+                      </div>
+                      <h3 className="font-serif text-2xl text-ink tracking-wide font-medium">
+                        {c.title}
+                      </h3>
+
+                      {/* Gold decorative divider */}
+                      <div className="flex items-center justify-center gap-2 my-2.5 opacity-80">
+                        <div className="w-8 h-[0.75px] bg-[#D4AF37]/35" />
+                        <div className="size-1 bg-[#D4AF37] rotate-45" />
+                        <div className="w-8 h-[0.75px] bg-[#D4AF37]/35" />
+                      </div>
+
+                      {/* Category in uppercase */}
+                      <div className="text-[9px] uppercase tracking-[0.3em] text-ink font-semibold mb-1">
+                        {c.category}
+                      </div>
+                    </div>
+
+                    {/* Small luxury description */}
+                    <p className="text-[11px] text-ink-soft leading-relaxed max-w-[32ch] font-sans tracking-wide">
+                      {c.desc}
+                    </p>
+
+                    {/* Explore Collection CTA */}
+                    <div className="mt-2.5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold group-hover:text-ink transition-colors duration-300">
+                      <span>Explore Collection</span>
+                      <span className="transition-transform duration-300 transform group-hover:translate-x-1">→</span>
+                    </div>
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -305,45 +362,141 @@ function HomePage() {
         </div>
       </section>
 
-      {/* EMBROIDERY TECHNIQUES */}
-      <section className="bg-ivory py-28 sm:py-40">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="flex flex-col md:flex-row justify-between items-baseline gap-6 mb-16">
-            <div>
-              <span className="eyebrow">Embroidery Techniques</span>
-              <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+      {/* EMBROIDERY TECHNIQUES — Ultra-Luxury Showcase */}
+      <section className="relative py-20 sm:py-28 overflow-hidden luxury-silk-bg">
+        {/* Hand-drawn floral line art in corners */}
+        <FloralCorner className="top-0 left-0" />
+        <FloralCorner className="top-0 right-0" rotation={90} />
+        <FloralCorner className="bottom-0 left-0" rotation={-90} />
+        <FloralCorner className="bottom-0 right-0" rotation={180} />
+
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-12 relative z-10">
+          
+          {/* Section Header */}
+          <Reveal className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
+            <div className="max-w-2xl">
+              <span
+                className="eyebrow"
+                style={{ color: "#D4AF37", letterSpacing: "0.35em", fontSize: "10px" }}
+              >
+                Embroidery Techniques
+              </span>
+              <h2
+                className="mt-6 font-serif leading-[1.15] text-[#1A1A1A]"
+                style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 500 }}
+              >
                 A vocabulary of luxury <br />
                 hand-craft.
               </h2>
             </div>
-            <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] gold-link">
+            <Link
+              to="/services"
+              className="text-[10px] uppercase tracking-[0.3em] font-semibold transition-colors duration-300"
+              style={{ color: "#D4AF37" }}
+            >
               All Services →
             </Link>
           </Reveal>
 
+          {/* Very Light Gold Decorative Divider */}
+          <div className="flex items-center justify-center gap-4 mb-20 opacity-60">
+            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="text-[#D4AF37]/80">
+              <path d="M5 0L6.5 3.5L10 5L6.5 6.5L5 10L3.5 6.5L0 5L3.5 3.5Z" fill="currentColor" />
+            </svg>
+            <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
+          </div>
+
+          {/* 4 Premium Vertical Showcase Cards */}
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {techniques.map((t, i) => (
-              <Reveal key={t.name} delay={i * 100} className="group cursor-pointer">
-                <div className="aspect-[4/5] overflow-hidden bg-linen mb-6 luxury-card">
-                  <img
-                    src={t.image}
-                    alt={t.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
-                  />
-                </div>
-                <div>
-                  <h3 className="font-serif text-2xl mb-3">{t.name}</h3>
-                  <p className="text-sm text-ink-soft leading-relaxed pr-4">{t.desc}</p>
-                </div>
-              </Reveal>
-            ))}
+            {techniques.map((t, i) => {
+              const techniqueIcons = ["Crown", "Diamond", "Sparkles", "Layers"];
+              return (
+                <Reveal key={t.name} delay={i * 100} className="group cursor-pointer">
+                  <div
+                    onClick={() => setLightboxImage(t.image)}
+                    className="w-full aspect-[1/1.55] rounded-[28px] overflow-hidden border border-[#D4AF37]/20 flex flex-col justify-between"
+                    style={{
+                      background: "rgba(252, 250, 247, 0.75)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      boxShadow: "0 15px 40px rgba(0, 0, 0, 0.03)",
+                      transition: "transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.5s ease, box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLDivElement;
+                      el.style.transform = "translateY(-10px)";
+                      el.style.borderColor = "rgba(212, 175, 55, 0.7)";
+                      el.style.boxShadow = "0 25px 55px rgba(212, 175, 55, 0.15), 0 5px 20px rgba(0,0,0,0.04)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLDivElement;
+                      el.style.transform = "translateY(0)";
+                      el.style.borderColor = "rgba(212, 175, 55, 0.2)";
+                      el.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.03)";
+                    }}
+                  >
+                    {/* Large Image Area (70%) */}
+                    <div className="h-[70%] w-full overflow-hidden relative bg-[#EADBC8]/20">
+                      <img
+                        src={t.image}
+                        alt={t.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.08]"
+                      />
+                      {/* Premium editorial image overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-30" />
+                    </div>
+
+                    {/* Content Area (30%) */}
+                    <div className="h-[30%] w-full px-5 pb-6 pt-8 flex flex-col justify-between items-center text-center relative border-t border-[#D4AF37]/15 bg-gradient-to-b from-[#FCFAF7]/95 to-[#FCFAF7]">
+                      {/* Luxury circular gold icon badge floating between image and content */}
+                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 size-14 rounded-full bg-[#FCFAF7] border border-[#D4AF37]/35 flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.06)] z-10 transition-transform duration-500 group-hover:scale-105">
+                        <div className="size-11 rounded-full bg-[#D4AF37]/8 flex items-center justify-center border border-[#D4AF37]/10">
+                          <Icon
+                            name={techniqueIcons[i]}
+                            className="size-[18px]"
+                            style={{ color: "#D4AF37" }}
+                            strokeWidth={1.25}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Title */}
+                      <div className="w-full">
+                        <h3 className="font-serif uppercase tracking-[0.18em] text-[#1A1A1A] font-medium text-[15px] sm:text-base leading-none">
+                          {t.name}
+                        </h3>
+
+                        {/* Gold decorative separator */}
+                        <div className="flex items-center justify-center gap-2 my-2.5 opacity-80">
+                          <div className="w-6 h-[0.75px] bg-[#D4AF37]/30" />
+                          <div className="size-1 bg-[#D4AF37] rotate-45" />
+                          <div className="w-6 h-[0.75px] bg-[#D4AF37]/30" />
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-[11px] text-[#1A1A1A]/60 leading-relaxed max-w-[28ch] font-sans tracking-wide">
+                        {t.desc}
+                      </p>
+
+                      {/* Explore Button with Animated Arrow */}
+                      <div className="mt-2.5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold group-hover:text-[#b08b22] transition-colors duration-300">
+                        <span>Explore</span>
+                        <span className="transition-transform duration-300 transform group-hover:translate-x-1">→</span>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* WHY CHOOSE US — Ultra-Premium Luxury Cards */}
-      <section style={{ background: "#F8F5EF" }} className="py-28 sm:py-40 overflow-hidden">
+      <section className="luxury-silk-bg py-16 sm:py-24 overflow-hidden">
         <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
 
           {/* Section Header */}
@@ -497,7 +650,7 @@ function HomePage() {
       </section>
 
       {/* STATS */}
-      <section className="bg-ivory border-y border-ink/5 py-32">
+      <section className="luxury-silk-bg border-y border-ink/5 py-20">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 items-center text-center md:text-left">
             <Reveal delay={100} className="flex flex-col items-center">
@@ -525,7 +678,7 @@ function HomePage() {
       </section>
 
       {/* PROCESS TIMELINE */}
-      <section className="bg-linen py-28 sm:py-40 overflow-hidden">
+      <section className="luxury-silk-bg py-16 sm:py-24 overflow-hidden">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <Reveal className="mb-20">
             <span className="eyebrow">Our Process</span>
@@ -553,7 +706,7 @@ function HomePage() {
       </section>
 
       {/* PORTFOLIO MASONRY */}
-      <section className="bg-ivory py-28 sm:py-40">
+      <section className="luxury-silk-bg py-16 sm:py-24">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <Reveal className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-20">
             <div>
@@ -598,7 +751,7 @@ function HomePage() {
       </section>
 
       {/* FAQs */}
-      <section className="bg-linen py-28 sm:py-40">
+      <section className="luxury-silk-bg py-16 sm:py-24">
         <div className="mx-auto max-w-[1000px] px-6">
           <Reveal className="mb-16">
             <span className="eyebrow">Questions</span>
@@ -667,9 +820,9 @@ function LeadSection() {
   };
 
   return (
-    <section className="bg-ivory py-24 sm:py-32" id="quote">
+    <section className="luxury-silk-bg py-16 sm:py-20" id="quote">
       <div className="mx-auto max-w-[1200px] px-6">
-        <Reveal className="bg-linen p-8 sm:p-16 ring-1 ring-ink/5">
+        <Reveal className="bg-[#FAF7F2] p-8 sm:p-12 border border-[#D4AF37]/22 rounded-[24px] shadow-[0_15px_35px_-15px_rgba(0,0,0,0.04)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
             {/* Left Info Column */}
             <div className="lg:col-span-5 flex flex-col justify-between h-full">
@@ -688,7 +841,7 @@ function LeadSection() {
                   href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-[#25D366] text-white px-8 py-4 text-[10px] uppercase tracking-[0.3em] transition-all hover:bg-[#20ba5a] flex items-center justify-center gap-3 font-medium rounded-none shadow-[0_4px_12px_rgba(37,211,102,0.15)] hover:shadow-[0_6px_16px_rgba(37,211,102,0.25)]"
+                  className="w-full sm:w-auto luxury-wa-button px-8 py-4 text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 font-semibold rounded-full border border-[#D4AF37]/40 text-ink shadow-[0_4px_12px_rgba(0,0,0,0.02)]"
                 >
                   <svg viewBox="0 0 32 32" className="size-4" fill="currentColor">
                     <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
@@ -699,7 +852,7 @@ function LeadSection() {
             </div>
 
             {/* Right Form Column */}
-            <div className="lg:col-span-7 bg-ivory p-6 sm:p-8 border border-ink/5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]">
+            <div className="lg:col-span-7 bg-[#FCFAF7] p-6 sm:p-8 border border-[#D4AF37]/15 rounded-[20px] shadow-[0_10px_25px_-10px_rgba(0,0,0,0.03)]">
               {submitted ? (
                 <div className="py-16 text-center">
                   <span className="eyebrow text-gold">Thank You</span>
@@ -780,3 +933,63 @@ function Icon({ name, className, style, strokeWidth }: { name: string; className
   const Component = icons[name] || Crown;
   return <Component className={className} style={style} strokeWidth={strokeWidth ?? 1.5} />;
 }
+
+function FloralCorner({ className, rotation = 0 }: { className: string; rotation?: number }) {
+  return (
+    <svg
+      viewBox="0 0 300 300"
+      fill="none"
+      style={{ transform: `rotate(${rotation}deg)` }}
+      className={`absolute pointer-events-none w-[200px] h-[200px] md:w-[350px] md:h-[350px] opacity-[0.12] text-[#D4AF37] z-0 ${className}`}
+    >
+      {/* Delicate vines */}
+      <path
+        d="M15 15 C 60 40, 120 30, 180 80 C 220 110, 210 160, 260 190 C 280 200, 290 240, 290 290"
+        stroke="currentColor"
+        strokeWidth="0.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15 15 C 30 90, 80 140, 110 210 C 130 250, 160 270, 290 290"
+        stroke="currentColor"
+        strokeWidth="0.5"
+        strokeLinecap="round"
+        strokeDasharray="3, 3"
+      />
+      {/* Fine leaves/stems */}
+      <path
+        d="M70 42 C 90 60, 100 85, 95 110"
+        stroke="currentColor"
+        strokeWidth="0.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M140 60 C 170 80, 190 70, 210 110"
+        stroke="currentColor"
+        strokeWidth="0.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M200 120 C 230 140, 240 170, 230 200"
+        stroke="currentColor"
+        strokeWidth="0.6"
+        strokeLinecap="round"
+      />
+      {/* Tiny floral buds */}
+      <circle cx="180" cy="80" r="3" fill="currentColor" />
+      <circle cx="110" cy="210" r="2.5" fill="currentColor" />
+      <circle cx="260" cy="190" r="3" stroke="currentColor" strokeWidth="0.6" />
+      <path
+        d="M95 110 C 105 115, 115 110, 120 100 C 110 95, 100 100, 95 110 Z"
+        fill="currentColor"
+        opacity="0.3"
+      />
+      <path
+        d="M210 110 C 220 115, 230 110, 235 100 C 225 95, 215 100, 210 110 Z"
+        fill="currentColor"
+        opacity="0.3"
+      />
+    </svg>
+  );
+}
+

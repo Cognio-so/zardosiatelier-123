@@ -74,7 +74,7 @@ function ServicesPage() {
         description="A full-spectrum embroidery offer — from a single sample to scaled production runs — held to the standards of haute couture."
         image={techniqueBead}
       />
-      <section className="bg-ivory py-28">
+      <section className="luxury-silk-bg py-16">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {services.map((s, i) => (
             <Reveal key={s.name} delay={(i % 3) * 100} className="group">
