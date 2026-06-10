@@ -73,7 +73,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Maison Auréline — Luxury Hand Embroidery & Couture Manufacturing" },
+      { title: "Zardosi Atelier" },
       {
         name: "description",
         content:
@@ -83,6 +83,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Maison Auréline" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Zardosi Atelier" },
+      { name: "twitter:title", content: "Zardosi Atelier" },
+      { name: "description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
+      { property: "og:description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
+      { name: "twitter:description", content: "Couture Craft Studio is a premium website for luxury fashion and embroidery services." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d3007cb1-89fc-4da7-b947-1eacdc1ff1fc/id-preview-2c9e4ba7--e2873867-03ab-488d-ab3a-e57e0ef13fa5.lovable.app-1781076229698.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
