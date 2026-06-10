@@ -18,6 +18,34 @@ import portfolio5 from "@/assets/portfolio-5.jpg";
 import portfolio6 from "@/assets/portfolio-6.jpg";
 import heroVideo from "@/assets/hero-video.mp4.asset.json";
 
+// ... later in JSX
+                {heroVideo?.url ? (
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster={heroEmbroidery}
+                    className="absolute inset-0 h-full w-full object-cover opacity-70"
+                    onError={(e) => {
+                      const video = e.currentTarget as HTMLVideoElement;
+                      video.style.display = "none";
+                    }}
+                  >
+                    <source src={heroVideo.url} type="video/mp4" />
+                    {/* Fallback text */}
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <img
+                    src={heroEmbroidery}
+                    alt="Hero"
+                    className="absolute inset-0 h-full w-full object-cover opacity-70"
+                  />
+                )}
+
+// later in JSX use src={heroVideo}
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -147,15 +175,20 @@ function HomePage() {
     <SiteShell>
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-        <video
-          src={heroVideo.url}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={heroEmbroidery}
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
-        />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={heroEmbroidery}
+            className="absolute inset-0 h-full w-full object-cover opacity-70"
+            onError={(e) => {
+              const video = e.currentTarget as HTMLVideoElement;
+              video.style.display = "none";
+            }}
+          >
+            <source src={heroVideo.url} type="video/mp4" />
+          </video>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/70" />
 
         <div className="relative z-10 flex h-full items-center justify-center px-6">
