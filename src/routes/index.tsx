@@ -177,8 +177,6 @@ const portfolio = [
 ];
 
 function HomePage() {
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-
   return (
     <SiteShell>
       {/* HERO */}
@@ -260,7 +258,7 @@ function HomePage() {
             ].map(([k, v]) => (
               <div key={v} className="px-6 py-6 text-center">
                 <div className="font-serif italic text-lg sm:text-xl text-gold-soft">{k}</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.3em] text-ivory/60">{v}</div>
+                <div className="mt-1 text-[9px] uppercase tracking-[0.3em] text-ivory/90">{v}</div>
               </div>
             ))}
           </div>
@@ -289,7 +287,7 @@ function HomePage() {
                 key={c.title}
                 delay={i * 120}
                 className="group cursor-pointer"
-                onClick={() => setLightboxImage(c.image)}
+                data-preview-image={c.image}
               >
                 <div
                   className="w-full rounded-[24px] premium-couture-card flex flex-col justify-between"
@@ -303,7 +301,8 @@ function HomePage() {
                       src={c.image}
                       alt={c.title}
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.05]"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.08]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60" />
                   </div>
@@ -350,7 +349,7 @@ function HomePage() {
                     </p>
 
                     {/* Explore Collection CTA */}
-                    <div className="mt-2.5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold group-hover:text-ink transition-colors duration-300">
+                    <div className="mt-4 px-5 py-2 border border-[#D4AF37]/35 rounded-full text-[9px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold transition-all duration-500 group-hover:bg-[#D4AF37] group-hover:text-ivory group-hover:border-[#D4AF37] flex items-center gap-1.5">
                       <span>Explore Collection</span>
                       <span className="transition-transform duration-300 transform group-hover:translate-x-1">→</span>
                     </div>
@@ -414,7 +413,7 @@ function HomePage() {
               return (
                 <Reveal key={t.name} delay={i * 100} className="group cursor-pointer">
                   <div
-                    onClick={() => setLightboxImage(t.image)}
+                    data-preview-image={t.image}
                     className="w-full aspect-[1/1.55] rounded-[28px] overflow-hidden border border-[#D4AF37]/20 flex flex-col justify-between"
                     style={{
                       background: "rgba(252, 250, 247, 0.75)",
@@ -442,6 +441,7 @@ function HomePage() {
                         src={t.image}
                         alt={t.name}
                         loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.08]"
                       />
                       {/* Premium editorial image overlay */}
@@ -477,7 +477,7 @@ function HomePage() {
                       </div>
 
                       {/* Description */}
-                      <p className="text-[11px] text-[#1A1A1A]/60 leading-relaxed max-w-[28ch] font-sans tracking-wide">
+                      <p className="text-[11px] text-[#1A1A1A]/80 leading-relaxed max-w-[28ch] font-sans tracking-wide">
                         {t.desc}
                       </p>
 
@@ -632,11 +632,11 @@ function HomePage() {
 
                   {/* Description */}
                   <p
-                    className="font-sans uppercase tracking-widest leading-relaxed"
+                    className="font-sans uppercase tracking-widest leading-relaxed text-balance"
                     style={{
                       fontSize: "10px",
                       lineHeight: 1.85,
-                      color: "rgba(17,17,17,0.58)",
+                      color: "rgba(17,17,17,0.8)",
                       letterSpacing: "0.12em",
                     }}
                   >
@@ -726,13 +726,14 @@ function HomePage() {
                 key={i}
                 delay={(i % 3) * 100}
                 className="mb-6 break-inside-avoid cursor-pointer"
-                onClick={() => setLightboxImage(p.src)}
+                data-preview-image={p.src}
               >
                 <div className="group relative overflow-hidden luxury-card">
                   <img
                     src={p.src}
                     alt={p.caption}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
                   />
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/90 via-ink/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
@@ -781,33 +782,7 @@ function HomePage() {
       {/* LEAD GEN */}
       <LeadSection />
 
-      {/* Lightbox Modal Overlay */}
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-12 backdrop-blur-sm transition-opacity duration-300 cursor-pointer animate-fade-in"
-          onClick={() => setLightboxImage(null)}
-        >
-          <button
-            type="button"
-            className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors p-3 text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 z-[110]"
-            onClick={() => setLightboxImage(null)}
-          >
-            Close
-            <span className="text-3xl font-light leading-none">&times;</span>
-          </button>
-          
-          <div
-            className="relative max-h-[85vh] max-w-[90vw] overflow-hidden animate-scale-up"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={lightboxImage}
-              alt="Preview"
-              className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl transition-transform duration-500 scale-95 hover:scale-100"
-            />
-          </div>
-        </div>
-      )}
+
     </SiteShell>
   );
 }
@@ -841,12 +816,14 @@ function LeadSection() {
                   href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto luxury-wa-button px-8 py-4 text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 font-semibold rounded-full border border-[#D4AF37]/40 text-ink shadow-[0_4px_12px_rgba(0,0,0,0.02)]"
+                  className="w-full sm:w-auto px-8 py-4 text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 font-semibold rounded-full border border-[#25D366]/40 text-[#25D366] bg-transparent hover:bg-[#25D366] hover:text-[#FAF7F2] hover:border-[#25D366] transition-all duration-400 shadow-[0_4px_12px_rgba(37,211,102,0.08)] hover:shadow-[0_8px_20px_rgba(37,211,102,0.2)] group"
                 >
-                  <svg viewBox="0 0 32 32" className="size-4" fill="currentColor">
-                    <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
-                  </svg>
-                  WhatsApp
+                  <span className="flex items-center justify-center size-6 rounded-full bg-[#25D366] text-[#FAF7F2] transition-colors duration-400 group-hover:bg-[#FAF7F2] group-hover:text-[#25D366] flex-shrink-0">
+                    <svg viewBox="0 0 32 32" className="size-3.5" fill="currentColor">
+                      <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
+                    </svg>
+                  </span>
+                  <span>Discuss on WhatsApp</span>
                 </a>
               </div>
             </div>

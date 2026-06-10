@@ -59,11 +59,12 @@ function PortfolioPage() {
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
             {items.map((p, i) => (
               <Reveal key={i} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
-                <div className="group relative overflow-hidden luxury-card">
+                <div className="group relative overflow-hidden luxury-card cursor-pointer" data-preview-image={p.src}>
                   <img
                     src={p.src}
                     alt={p.caption}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.05]"
                   />
                   <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/80 via-ink/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">

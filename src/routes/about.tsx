@@ -56,7 +56,7 @@ function AboutPage() {
             </p>
           </Reveal>
           <Reveal delay={150} className="aspect-[4/5] overflow-hidden">
-            <img src={gown} alt="Atelier" className="h-full w-full object-cover" />
+            <img src={gown} alt="Atelier" decoding="async" className="h-full w-full object-cover" />
           </Reveal>
         </div>
       </section>

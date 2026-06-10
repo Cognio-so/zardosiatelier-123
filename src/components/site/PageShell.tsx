@@ -18,7 +18,7 @@ export function PageHero({
 }) {
   return (
     <section className="relative h-[68vh] min-h-[480px] overflow-hidden bg-ink">
-      <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-55" />
+      <img src={image} alt="" decoding="async" className="absolute inset-0 h-full w-full object-cover opacity-55" />
       <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/70" />
       <div className="relative z-10 flex h-full items-end pb-20">
         <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-12">
