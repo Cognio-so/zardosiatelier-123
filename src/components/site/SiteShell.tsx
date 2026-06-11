@@ -11,7 +11,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
       // Check for structured preview attributes first
       const previewAttr = target.closest("[data-preview-image]");
       if (previewAttr) {

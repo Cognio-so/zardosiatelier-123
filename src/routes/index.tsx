@@ -156,7 +156,8 @@ function HomePage() {
             </h1>
             <p className="mt-6 max-w-[62ch] text-base font-semibold leading-7 text-white/92 sm:leading-8">
               We craft and export luxury embroidered pieces for couture houses, designers and
-              premium brands - every stitch finished by master karigars and checked twice before it ships.
+              premium brands - every stitch finished by master karigars and checked twice before it
+              ships.
             </p>
             <p className="mt-5 font-serif text-lg italic text-gold-soft sm:text-xl">
               Patches / Bags / Headbands / Dresses / Gowns / Abayas / Bespoke commissions
@@ -207,7 +208,9 @@ function HomePage() {
                     />
                   </div>
                   <h3 className="mt-4 font-serif text-3xl leading-tight text-ink">{item.name}</h3>
-                  <p className="mt-2 text-[15px] font-medium leading-7 text-ink-soft">{item.desc}</p>
+                  <p className="mt-2 text-[15px] font-medium leading-7 text-ink-soft">
+                    {item.desc}
+                  </p>
                 </article>
               </Reveal>
             ))}
@@ -224,7 +227,10 @@ function HomePage() {
             </h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
               {process.map((step) => (
-                <div key={step.n} className="min-h-[128px] border border-gold/40 bg-white/[0.06] px-6 py-6">
+                <div
+                  key={step.n}
+                  className="min-h-[128px] border border-gold/40 bg-white/[0.06] px-6 py-6"
+                >
                   <span className="font-serif text-2xl text-gold-soft">{step.n}</span>
                   <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-ivory/90">
                     {step.title}
@@ -245,7 +251,10 @@ function HomePage() {
             </h2>
             <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {whyChoose.map((item) => (
-                <div key={item.title} className="min-h-[112px] border border-gold/25 bg-ivory px-5 py-5">
+                <div
+                  key={item.title}
+                  className="min-h-[112px] border border-gold/25 bg-ivory px-5 py-5"
+                >
                   <Icon name={item.icon} className="size-5 text-gold" />
                   <p className="mt-6 text-sm font-medium text-ink">{item.title}</p>
                 </div>
@@ -288,7 +297,11 @@ function HomePage() {
 
             <Accordion type="single" collapsible className="mt-7 w-full">
               {faqs.map((faq, i) => (
-                <AccordionItem key={faq.question} value={`item-${i}`} className="border-b border-ink/10 py-3">
+                <AccordionItem
+                  key={faq.question}
+                  value={`item-${i}`}
+                  className="border-b border-ink/10 py-3"
+                >
                   <AccordionTrigger className="text-left font-serif text-2xl hover:text-gold hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
@@ -353,7 +366,9 @@ function LeadSection() {
                 <div className="py-16 text-center">
                   <span className="eyebrow">Thank You</span>
                   <h3 className="mt-4 font-serif text-3xl">Inquiry Received</h3>
-                  <p className="mt-3 text-sm text-ink-soft">Our atelier team will contact you shortly.</p>
+                  <p className="mt-3 text-sm text-ink-soft">
+                    Our atelier team will contact you shortly.
+                  </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -405,13 +420,7 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
   );
 }
 
-function Icon({
-  name,
-  className,
-}: {
-  name: string;
-  className?: string;
-}) {
+function Icon({ name, className }: { name: string; className?: string }) {
   const icons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
     Crown,
     Layers,

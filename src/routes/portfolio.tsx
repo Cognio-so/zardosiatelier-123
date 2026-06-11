@@ -59,7 +59,10 @@ function PortfolioPage() {
           <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
             {items.map((p, i) => (
               <Reveal key={i} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
-                <div className="group relative cursor-pointer overflow-hidden border border-gold/20 bg-[#FAF7F2]" data-preview-image={p.src}>
+                <div
+                  className="group relative cursor-pointer overflow-hidden border border-gold/20 bg-[#FAF7F2]"
+                  data-preview-image={p.src}
+                >
                   <img
                     src={p.src}
                     alt={p.caption}
@@ -72,7 +75,9 @@ function PortfolioPage() {
                       <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-soft">
                         {p.tag}
                       </p>
-                      <h4 className="mt-2 font-serif text-3xl leading-tight text-ivory">{p.caption}</h4>
+                      <h4 className="mt-2 font-serif text-3xl leading-tight text-ivory">
+                        {p.caption}
+                      </h4>
                     </div>
                   </div>
                 </div>

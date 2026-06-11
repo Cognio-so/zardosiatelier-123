@@ -81,7 +81,9 @@ function ProcessPage() {
                 <span className="font-serif text-5xl italic text-gold">{p.n}</span>
                 <div>
                   <h3 className="font-serif text-4xl leading-tight">{p.title}</h3>
-                  <p className="mt-3 max-w-3xl text-[15px] font-medium leading-7 text-ink-soft">{p.desc}</p>
+                  <p className="mt-3 max-w-3xl text-[15px] font-medium leading-7 text-ink-soft">
+                    {p.desc}
+                  </p>
                 </div>
               </Reveal>
             ))}

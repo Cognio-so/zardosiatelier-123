@@ -31,8 +31,16 @@ export const Route = createFileRoute("/industries")({
 });
 
 const industries = [
-  { label: "Haute Couture", desc: "Runway-grade embroidery for Paris and Milan shows, calibrated to the precise finishing standards of haute couture.", img: gown },
-  { label: "Bridal Labels", desc: "Heritage and contemporary bridalwear ateliers specializing in zardosi, crystal and pearl embellishments.", img: bridal },
+  {
+    label: "Haute Couture",
+    desc: "Runway-grade embroidery for Paris and Milan shows, calibrated to the precise finishing standards of haute couture.",
+    img: gown,
+  },
+  {
+    label: "Bridal Labels",
+    desc: "Heritage and contemporary bridalwear ateliers specializing in zardosi, crystal and pearl embellishments.",
+    img: bridal,
+  },
   {
     label: "Designer Womenswear",
     desc: "Seasonal embellishment programs for ready-to-wear collections across global fashion markets.",
@@ -65,17 +73,15 @@ function IndustriesPage() {
             Categories we serve.
           </h1>
           <p className="mt-4 max-w-3xl text-[16px] font-medium leading-7 text-ink-soft">
-            From haute couture to designer menswear and luxury accessories, our studio partners
-            with brands held to the highest finishing standards.
+            From haute couture to designer menswear and luxury accessories, our studio partners with
+            brands held to the highest finishing standards.
           </p>
         </div>
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-5 px-5 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
           {industries.map((s, i) => (
             <Reveal key={s.label} delay={(i % 3) * 100} className="group">
               {/* Unified premium couture card */}
-              <div
-                className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60"
-              >
+              <div className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60">
                 {/* Image section — clickable preview */}
                 <div
                   className="overflow-hidden aspect-[4/3] cursor-pointer"
@@ -112,7 +118,9 @@ function IndustriesPage() {
                     className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-[#D4AF37]/55 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] transition-all duration-400 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#120c09] sm:w-auto"
                   >
                     View Projects
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
                   </Link>
                 </div>
               </div>

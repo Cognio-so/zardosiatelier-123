@@ -79,9 +79,7 @@ function ServicesPage() {
           {services.map((s, i) => (
             <Reveal key={s.name} delay={(i % 3) * 100} className="group">
               {/* Unified premium couture card */}
-              <div
-                className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60"
-              >
+              <div className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60">
                 {/* Image section — clickable preview */}
                 <div
                   className="overflow-hidden aspect-[4/3] cursor-pointer"
@@ -118,7 +116,9 @@ function ServicesPage() {
                     className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-[#D4AF37]/55 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] transition-all duration-400 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#120c09] sm:w-auto"
                   >
                     Request Sampling
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
                   </Link>
                 </div>
               </div>

@@ -33,23 +33,29 @@ export function Navigation() {
       <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:px-12">
         {/* Left Brand logo */}
         <Link to="/" className="flex flex-col items-start z-10">
-          <span className={`font-serif text-2xl lg:text-[28px] tracking-[0.22em] uppercase leading-none transition-colors duration-300 ${
-            isLightHeader ? "text-ink" : "text-ivory"
-          }`}>
+          <span
+            className={`font-serif text-2xl lg:text-[28px] tracking-[0.22em] uppercase leading-none transition-colors duration-300 ${
+              isLightHeader ? "text-ink" : "text-ivory"
+            }`}
+          >
             Zardosi
           </span>
-          <span className={`mt-1 text-[8px] uppercase tracking-[0.45em] transition-colors duration-300 ${
-            isLightHeader ? "text-ink-soft" : "text-gold-soft"
-          }`}>
+          <span
+            className={`mt-1 text-[8px] uppercase tracking-[0.45em] transition-colors duration-300 ${
+              isLightHeader ? "text-ink-soft" : "text-gold-soft"
+            }`}
+          >
             Atelier
           </span>
         </Link>
 
         {/* Right links + CTA */}
         <div className="flex items-center gap-6 z-10">
-          <nav className={`hidden lg:flex items-center gap-8 text-[10px] uppercase tracking-[0.28em] transition-colors duration-300 ${
-            isLightHeader ? "text-ink/80" : "text-ivory/80"
-          }`}>
+          <nav
+            className={`hidden lg:flex items-center gap-8 text-[10px] uppercase tracking-[0.28em] transition-colors duration-300 ${
+              isLightHeader ? "text-ink/80" : "text-ivory/80"
+            }`}
+          >
             {navLinks.slice(1).map((l) => (
               <Link
                 key={l.to}
