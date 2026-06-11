@@ -22,12 +22,14 @@ import {
 } from "@/components/ui/accordion";
 
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
 import collectionGown from "@/assets/collection-gown.jpg";
 import collectionBridal from "@/assets/collection-bridal.jpg";
 import collectionHandbag from "@/assets/collection-handbag.jpg";
-import techniqueCrystal from "@/assets/technique-crystal.jpg";
-import technique3d from "@/assets/technique-3d.jpg";
-import techniqueBead from "@/assets/technique-bead.jpg";
+import techniqueZardosiNew from "@/assets/technique-zardosi-new.png";
+import techniqueCrystalNew from "@/assets/technique-crystal-new.png";
+import technique3dNew from "@/assets/technique-3d-new.png";
+import techniqueBeadworkNew from "@/assets/technique-beadwork-new.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,22 +77,22 @@ const techniques = [
   {
     name: "Zardosi",
     desc: "Metallic gold threadwork rooted in centuries of courtly craft.",
-    image: heroEmbroidery,
+    image: techniqueZardosiNew,
   },
   {
     name: "Crystal Work",
     desc: "Hand-set crystals and sequins for couture light and shadow.",
-    image: techniqueCrystal,
+    image: techniqueCrystalNew,
   },
   {
     name: "3D Floral",
     desc: "Sculpted silk petals layered with pearl and bead cores.",
-    image: technique3d,
+    image: technique3dNew,
   },
   {
     name: "Beadwork",
     desc: "Glass, pearl and seed-bead compositions stitched by hand.",
-    image: techniqueBead,
+    image: techniqueBeadworkNew,
   },
 ];
 
@@ -142,16 +144,22 @@ const faqs = [
 function HomePage() {
   return (
     <SiteShell>
-      <section className="relative min-h-[760px] overflow-hidden bg-[#120c09] pt-28 text-ivory">
-        <img
-          src={heroEmbroidery}
-          alt="Gold zardosi embroidery detail"
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#120c09_0%,rgba(18,12,9,0.94)_42%,rgba(18,12,9,0.76)_100%)]" />
-        <div className="absolute -right-24 top-28 h-[680px] w-[980px] rotate-[-18deg] rounded-[50%] border border-dashed border-gold/45" />
-        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#120c09]/75">
-          <div className="mx-auto grid max-w-[1220px] gap-4 px-6 py-6 text-[10px] uppercase tracking-[0.32em] text-gold-soft md:grid-cols-4">
+      <section className="relative min-h-[760px] overflow-hidden bg-[#3d2b20] pt-28 text-ivory">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={heroEmbroidery}
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#160f0b]/45 via-[#160f0b]/12 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#160f0b]/20 via-transparent to-[#160f0b]/38" />
+        <div className="absolute -right-24 top-28 h-[680px] w-[980px] rotate-[-18deg] rounded-[50%] border border-dashed border-gold/35" />
+        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#160f0b]/34 backdrop-blur-[2px]">
+          <div className="mx-auto grid max-w-[1220px] gap-4 px-6 py-6 text-[10px] uppercase tracking-[0.32em] text-ivory md:grid-cols-4">
             <span>Low MOQ & Sampling</span>
             <span>Artwork Development</span>
             <span>In-House Design & QC</span>
@@ -160,23 +168,25 @@ function HomePage() {
         </div>
 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-[1220px] items-center px-6">
-          <div className="max-w-[760px]">
-            <p className="eyebrow !text-gold-soft">Haute Couture Embroidery - Export Atelier - India</p>
-            <h1 className="mt-10 font-serif text-[52px] leading-[0.98] sm:text-[78px] lg:text-[96px]">
+          <div className="max-w-[780px] rounded-sm border border-ivory/12 bg-[#170f0a]/24 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.22)] backdrop-blur-[1px] sm:p-8 lg:-ml-8 lg:p-10">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.36em] text-gold-soft drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+              Haute Couture Embroidery - Export Atelier - India
+            </p>
+            <h1 className="mt-8 font-serif text-[48px] leading-[0.98] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.55)] sm:text-[74px] lg:text-[92px]">
               Hand embroidery for the world's{" "}
               <span className="italic text-gold-soft">finest labels.</span>
             </h1>
-            <p className="mt-10 max-w-[62ch] text-base leading-8 text-ivory/78">
+            <p className="mt-8 max-w-[62ch] text-base font-medium leading-8 text-white/88 drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)]">
               We craft and export luxury embroidered pieces for couture houses, designers and
               premium brands - every stitch finished by master karigars and checked twice before it ships.
             </p>
-            <p className="mt-8 font-serif text-xl italic text-gold-soft">
+            <p className="mt-7 font-serif text-xl italic text-gold-soft drop-shadow-[0_2px_14px_rgba(0,0,0,0.5)]">
               Patches / Bags / Headbands / Dresses / Gowns / Abayas / Bespoke commissions
             </p>
-            <div className="mt-12 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 to="/contact"
-                className="border border-gold bg-gold px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-[#120c09] transition hover:bg-transparent hover:text-gold-soft"
+                className="border border-gold bg-gold px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#120c09] shadow-[0_12px_32px_rgba(0,0,0,0.24)] transition hover:bg-ivory hover:border-ivory"
               >
                 Start With a Sample
               </Link>
@@ -184,7 +194,7 @@ function HomePage() {
                 href="https://wa.me/918826023527"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-gold/45 px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition hover:bg-ivory hover:text-[#120c09]"
+                className="border border-ivory/55 bg-[#120c09]/24 px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-ivory shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-[2px] transition hover:bg-ivory hover:text-[#120c09]"
               >
                 WhatsApp the Atelier
               </a>
