@@ -27,7 +27,7 @@ export function Navigation() {
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        isLightHeader ? "bg-ivory/95 backdrop-blur-md border-b border-ink/5 shadow-sm" : "bg-transparent"
+        isLightHeader ? "bg-ivory/95 backdrop-blur-md border-b border-ink/5" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:px-12">

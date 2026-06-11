@@ -2,11 +2,11 @@ import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#D4AF37]/15 bg-[#FCFAF7] text-[#4A4A4A]">
+    <footer className="border-t border-gold/20 bg-[#120c09] text-ivory/72">
       <div className="mx-auto max-w-[1400px] px-6 py-16 lg:px-12">
-        <div className="grid gap-12 border-x border-[#D4AF37]/15 px-6 py-12 sm:px-10 lg:grid-cols-[1.2fr_0.8fr_0.7fr]">
+        <div className="grid gap-12 border-x border-gold/20 px-6 py-12 sm:px-10 lg:grid-cols-[1.2fr_0.8fr_0.7fr]">
           <div>
-            <span className="font-serif text-2xl uppercase tracking-[0.24em] text-[#1A1A1A]">
+            <span className="font-serif text-2xl uppercase tracking-[0.24em] text-ivory">
               Zardosi Atelier
             </span>
             <p className="mt-6 max-w-[48ch] text-sm leading-7">
@@ -16,7 +16,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-[#1A1A1A]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
               Contact
             </h4>
             <ul className="space-y-3 text-sm leading-6">
@@ -29,7 +29,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-[#1A1A1A]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
               Explore
             </h4>
             <ul className="space-y-3 text-sm">
@@ -52,7 +52,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-x border-b border-[#D4AF37]/15 px-6 py-6 text-[11px] uppercase tracking-[0.24em] text-[#4A4A4A]/70 sm:px-10">
+        <div className="border-x border-b border-gold/20 px-6 py-6 text-[11px] uppercase tracking-[0.24em] text-ivory/48 sm:px-10">
           © {new Date().getFullYear()} Zardosi Atelier. All rights reserved.
         </div>
       </div>

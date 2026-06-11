@@ -5,7 +5,7 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full bg-[#25D366] px-5 py-3 shadow-[0_8px_24px_rgba(37,211,102,0.35)] border border-[#25D366] transition-all duration-400 hover:bg-[#20ba5a] hover:shadow-[0_12px_32px_rgba(37,211,102,0.45)] hover:scale-105"
+      className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-[#25D366] bg-[#25D366] px-5 py-3 transition-all duration-400 hover:bg-[#20ba5a] hover:scale-105"
     >
       {/* White icon badge */}
       <span className="grid size-9 place-items-center rounded-full bg-white/20 text-white transition-colors duration-400 group-hover:bg-white/30 flex-shrink-0">
