@@ -36,26 +36,26 @@ function AboutPage() {
         description="Zardosi Atelier is built on multi-generational embroidery — restrained, considered, and held to the standards of the houses we serve."
         image={hero}
       />
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1200px] px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-8 px-5 sm:px-6 lg:grid-cols-2 lg:px-10">
           <Reveal>
             <span className="eyebrow">Our Approach</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl leading-[1.1]">
+            <h2 className="mt-3 font-serif text-4xl leading-[1.05] sm:text-5xl">
               Quiet craft. <span className="italic">Loud results.</span>
             </h2>
-            <p className="mt-6 text-ink-soft leading-relaxed text-[15px]">
+            <p className="mt-5 text-[16px] font-medium leading-7 text-ink-soft">
               Founded as a small studio commissioned by independent couture ateliers, Zardosi
               Atelier has grown into a 30-artisan house with dedicated pods for sampling,
               production, and finishing. Our clients include houses in Paris, Milan, New York and
               beyond.
             </p>
-            <p className="mt-6 text-ink-soft leading-relaxed text-[15px]">
+            <p className="mt-4 text-[16px] font-medium leading-7 text-ink-soft">
               We work under NDA, in restricted-access rooms, with documented quality checkpoints at
               every stage. The result: embroidered surfaces that hold up under runway light and
               editorial macro.
             </p>
           </Reveal>
-          <Reveal delay={150} className="aspect-[4/5] overflow-hidden">
+          <Reveal delay={150} className="aspect-[4/5] overflow-hidden border border-gold/20">
             <img src={gown} alt="Atelier" decoding="async" className="h-full w-full object-cover" />
           </Reveal>
         </div>

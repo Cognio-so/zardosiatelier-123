@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
+import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import gown from "@/assets/collection-gown.jpg";
 import bridal from "@/assets/collection-bridal.jpg";
@@ -11,16 +11,16 @@ import p1 from "@/assets/portfolio-1.jpg";
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Industries — Who We Serve | Zardosi Atelier" },
+      { title: "Category — Who We Serve | Zardosi Atelier" },
       {
         name: "description",
         content:
-          "Couture houses, bridal labels, designer menswear, accessory brands — the industries our atelier serves.",
+          "Couture houses, bridal labels, designer menswear, accessory brands — the categories our atelier serves.",
       },
-      { property: "og:title", content: "Industries — Zardosi Atelier" },
+      { property: "og:title", content: "Category — Zardosi Atelier" },
       {
         property: "og:description",
-        content: "Industries served by our luxury embroidery atelier.",
+        content: "Categories served by our luxury embroidery atelier.",
       },
       { property: "og:url", content: "/industries" },
       { property: "og:image", content: gown },
@@ -58,20 +58,23 @@ const industries = [
 function IndustriesPage() {
   return (
     <PageShell>
-      <PageHero
-        eyebrow="Atelier · Industries"
-        title="Who we"
-        italic="serve."
-        description="From haute couture to designer menswear and luxury accessories, our studio partners with brands held to the highest finishing standards."
-        image={gown}
-      />
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <section className="luxury-silk-bg py-10 pt-28 sm:py-12 sm:pt-32">
+        <div className="mx-auto mb-8 max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <span className="eyebrow">Category</span>
+          <h1 className="mt-3 font-serif text-4xl leading-tight text-ink sm:text-6xl">
+            Categories we serve.
+          </h1>
+          <p className="mt-4 max-w-3xl text-[16px] font-medium leading-7 text-ink-soft">
+            From haute couture to designer menswear and luxury accessories, our studio partners
+            with brands held to the highest finishing standards.
+          </p>
+        </div>
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-5 px-5 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
           {industries.map((s, i) => (
             <Reveal key={s.label} delay={(i % 3) * 100} className="group">
               {/* Unified premium couture card */}
               <div
-                className="flex flex-col overflow-hidden rounded-[24px] border border-[#D4AF37]/20 bg-[#FAF7F2] shadow-[0_12px_32px_-12px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:shadow-[0_24px_48px_-12px_rgba(212,175,55,0.12)] group-hover:-translate-y-2 group-hover:border-[#D4AF37]/50"
+                className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60"
               >
                 {/* Image section — clickable preview */}
                 <div
@@ -96,17 +99,17 @@ function IndustriesPage() {
                     <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
                   </div>
 
-                  <h3 className="font-serif text-[22px] leading-snug text-[#1A1A1A] font-medium mb-3">
+                  <h3 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
                     {s.label}
                   </h3>
-                  <p className="text-[13px] text-[#4A4A4A] leading-relaxed flex-1">
+                  <p className="flex-1 text-[15px] font-medium leading-7 text-[#2B2722]">
                     {s.desc}
                   </p>
 
                   {/* Pill CTA */}
                   <Link
                     to="/contact"
-                    className="mt-5 self-start inline-flex items-center gap-2 border border-[#D4AF37]/35 rounded-full px-5 py-2 text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold transition-all duration-400 hover:bg-[#D4AF37] hover:text-[#FAF7F2] hover:border-[#D4AF37]"
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-[#D4AF37]/55 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] transition-all duration-400 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#120c09] sm:w-auto"
                   >
                     View Projects
                     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

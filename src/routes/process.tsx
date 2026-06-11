@@ -68,21 +68,20 @@ function ProcessPage() {
         description="A clear six-step path from first design share to global delivery — engineered for confidentiality, precision, and predictable timing."
         image={hero}
       />
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-          <ol className="space-y-16">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto max-w-[1100px] px-5 sm:px-6 lg:px-10">
+          <ol className="space-y-8 sm:space-y-10">
             {process.map((p, i) => (
               <Reveal
                 key={p.n}
                 delay={i * 80}
                 as="li"
-                className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-8 items-baseline"
+                className="grid grid-cols-1 items-baseline gap-4 border-b border-ink/10 pb-8 md:grid-cols-[96px_1fr]"
               >
-                <span className="font-serif italic text-5xl text-gold/70">{p.n}</span>
+                <span className="font-serif text-5xl italic text-gold">{p.n}</span>
                 <div>
-                  <h3 className="font-serif text-3xl">{p.title}</h3>
-                  <p className="mt-3 text-ink-soft leading-relaxed max-w-2xl">{p.desc}</p>
-                  <div className="hairline mt-8 w-full" />
+                  <h3 className="font-serif text-4xl leading-tight">{p.title}</h3>
+                  <p className="mt-3 max-w-3xl text-[15px] font-medium leading-7 text-ink-soft">{p.desc}</p>
                 </div>
               </Reveal>
             ))}

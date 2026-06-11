@@ -54,12 +54,12 @@ function PortfolioPage() {
         description="A curated archive of recent commissions — couture, bridal, accessories and atelier studies."
         image={p1}
       />
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
             {items.map((p, i) => (
               <Reveal key={i} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
-                <div className="group relative overflow-hidden luxury-card cursor-pointer" data-preview-image={p.src}>
+                <div className="group relative cursor-pointer overflow-hidden border border-gold/20 bg-[#FAF7F2]" data-preview-image={p.src}>
                   <img
                     src={p.src}
                     alt={p.caption}
@@ -67,12 +67,12 @@ function PortfolioPage() {
                     decoding="async"
                     className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.05]"
                   />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/80 via-ink/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                    <div className="p-6">
-                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft">
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/86 via-ink/10 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100">
+                    <div className="p-5 sm:p-6">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold-soft">
                         {p.tag}
                       </p>
-                      <h4 className="mt-2 font-serif text-2xl text-ivory">{p.caption}</h4>
+                      <h4 className="mt-2 font-serif text-3xl leading-tight text-ivory">{p.caption}</h4>
                     </div>
                   </div>
                 </div>

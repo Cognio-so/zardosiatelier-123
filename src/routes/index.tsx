@@ -56,22 +56,22 @@ const techniques = [
   {
     name: "Zardosi",
     desc: "Metallic gold threadwork rooted in centuries of courtly craft.",
-    image: techniqueZardosiNew,
+    image: techniqueBeadworkNew,
   },
   {
     name: "Crystal Work",
     desc: "Hand-set crystals and sequins for couture light and shadow.",
-    image: techniqueCrystalNew,
+    image: technique3dNew,
   },
   {
     name: "3D Floral",
     desc: "Sculpted silk petals layered with pearl and bead cores.",
-    image: technique3dNew,
+    image: techniqueCrystalNew,
   },
   {
     name: "Beadwork",
     desc: "Glass, pearl and seed-bead compositions stitched by hand.",
-    image: techniqueBeadworkNew,
+    image: techniqueZardosiNew,
   },
 ];
 
@@ -123,7 +123,7 @@ const faqs = [
 function HomePage() {
   return (
     <SiteShell>
-      <section className="relative min-h-[760px] overflow-hidden bg-[#3d2b20] pt-28 text-ivory">
+      <section className="relative min-h-[680px] overflow-hidden bg-[#3d2b20] pt-24 text-ivory sm:min-h-[720px]">
         <video
           autoPlay
           muted
@@ -136,8 +136,8 @@ function HomePage() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#160f0b]/45 via-[#160f0b]/12 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#160f0b]/20 via-transparent to-[#160f0b]/38" />
-        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#160f0b]/30">
-          <div className="mx-auto grid max-w-[1220px] gap-4 px-6 py-6 text-[10px] uppercase tracking-[0.32em] text-ivory md:grid-cols-4">
+        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#160f0b]/40">
+          <div className="mx-auto grid max-w-[1220px] gap-3 px-5 py-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory sm:px-6 md:grid-cols-4">
             <span>Low MOQ & Sampling</span>
             <span>Artwork Development</span>
             <span>In-House Design & QC</span>
@@ -145,26 +145,26 @@ function HomePage() {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[620px] max-w-[1220px] items-center px-6 pb-32">
+        <div className="relative z-10 mx-auto flex min-h-[560px] max-w-[1220px] items-center px-5 pb-28 sm:px-6 sm:pb-32">
           <div className="max-w-[780px] p-0 lg:-ml-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.36em] text-gold-soft">
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-gold-soft">
               Haute Couture Embroidery - Export Atelier - India
             </p>
-            <h1 className="mt-8 font-serif text-[48px] leading-[0.98] text-white sm:text-[74px] lg:text-[92px]">
+            <h1 className="mt-5 font-serif text-[42px] leading-[0.98] text-white sm:text-[68px] lg:text-[88px]">
               Hand embroidery for the world's{" "}
               <span className="italic text-gold-soft">finest labels.</span>
             </h1>
-            <p className="mt-8 max-w-[62ch] text-base font-medium leading-8 text-white/88">
+            <p className="mt-6 max-w-[62ch] text-base font-semibold leading-7 text-white/92 sm:leading-8">
               We craft and export luxury embroidered pieces for couture houses, designers and
               premium brands - every stitch finished by master karigars and checked twice before it ships.
             </p>
-            <p className="mt-7 font-serif text-xl italic text-gold-soft">
+            <p className="mt-5 font-serif text-lg italic text-gold-soft sm:text-xl">
               Patches / Bags / Headbands / Dresses / Gowns / Abayas / Bespoke commissions
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 to="/contact"
-                className="border border-gold bg-gold px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#120c09] transition hover:border-ivory hover:bg-ivory"
+                className="w-full border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:border-ivory hover:bg-ivory sm:w-auto"
               >
                 Start With a Sample
               </Link>
@@ -172,7 +172,7 @@ function HomePage() {
                 href="https://wa.me/918826023527"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-ivory/65 bg-ivory/10 px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-ivory transition hover:bg-ivory hover:text-[#120c09]"
+                className="w-full border border-ivory/70 bg-[#120c09]/25 px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-ivory transition hover:bg-ivory hover:text-[#120c09] sm:w-auto"
               >
                 WhatsApp the Atelier
               </a>
@@ -181,12 +181,12 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="luxury-silk-bg py-20 sm:py-28">
-        <div className="mx-auto max-w-[1220px] px-6">
-          <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <section className="bg-[#EFE8DD] py-12 sm:py-16">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <Reveal className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <span className="eyebrow">Embroidery Techniques</span>
-              <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-6xl">
+              <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-6xl">
                 A vocabulary of luxury hand-craft.
               </h2>
             </div>
@@ -195,19 +195,19 @@ function HomePage() {
             </Link>
           </Reveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {techniques.map((item, i) => (
               <Reveal key={item.name} delay={i * 80}>
                 <article className="group">
-                  <div className="aspect-[3/4] overflow-hidden bg-linen">
+                  <div className="aspect-[4/5] overflow-hidden bg-[#E5D8C8]">
                     <img
                       src={item.image}
                       alt={item.name}
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="mt-5 font-serif text-2xl">{item.name}</h3>
-                  <p className="mt-2 text-sm leading-6 text-ink-soft">{item.desc}</p>
+                  <h3 className="mt-4 font-serif text-3xl leading-tight text-ink">{item.name}</h3>
+                  <p className="mt-2 text-[15px] font-medium leading-7 text-ink-soft">{item.desc}</p>
                 </article>
               </Reveal>
             ))}
@@ -215,18 +215,18 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#120c09] py-20 text-ivory">
-        <div className="mx-auto max-w-[1220px] px-6">
+      <section className="bg-[#1A100B] py-12 text-ivory sm:py-16">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
           <Reveal>
             <span className="eyebrow !text-gold-soft">Our Process</span>
-            <h2 className="mt-5 font-serif text-4xl leading-tight text-white sm:text-5xl">
+            <h2 className="mt-3 font-serif text-4xl leading-tight text-white sm:text-5xl">
               From sketch to ceremony.
             </h2>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
               {process.map((step) => (
-                <div key={step.n} className="border border-gold/35 bg-white/[0.04] px-6 py-7">
+                <div key={step.n} className="min-h-[128px] border border-gold/40 bg-white/[0.06] px-6 py-6">
                   <span className="font-serif text-2xl text-gold-soft">{step.n}</span>
-                  <p className="mt-4 text-[11px] uppercase tracking-[0.24em] text-ivory/78">
+                  <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-ivory/90">
                     {step.title}
                   </p>
                 </div>
@@ -236,16 +236,16 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1220px] px-6">
-          <Reveal className="px-0 py-12">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <Reveal className="px-0 py-8">
             <span className="eyebrow">Why Zardosi Atelier</span>
-            <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
+            <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
               A partner built for luxury brands.
             </h2>
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {whyChoose.map((item) => (
-                <div key={item.title} className="border border-gold/20 bg-ivory px-5 py-6">
+                <div key={item.title} className="min-h-[112px] border border-gold/25 bg-ivory px-5 py-5">
                   <Icon name={item.icon} className="size-5 text-gold" />
                   <p className="mt-6 text-sm font-medium text-ink">{item.title}</p>
                 </div>
@@ -253,23 +253,23 @@ function HomePage() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="mt-8 px-0 py-14">
-            <div className="grid gap-12 border-y border-ink/10 py-12 text-center md:grid-cols-3">
+          <Reveal delay={120} className="mt-4 px-0 py-8">
+            <div className="grid gap-8 border-y border-ink/10 py-8 text-center md:grid-cols-3">
               <div>
                 <p className="font-serif text-5xl text-gold sm:text-6xl">120+</p>
-                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Collections Supported
                 </p>
               </div>
               <div>
                 <p className="font-serif text-5xl text-gold sm:text-6xl">18</p>
-                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Markets Served
                 </p>
               </div>
               <div>
                 <p className="font-serif text-5xl italic text-gold sm:text-6xl">Fast-track</p>
-                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Sampling Turnaround
                 </p>
               </div>
@@ -278,21 +278,21 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="luxury-silk-bg py-16 sm:py-24">
-        <div className="mx-auto max-w-[1220px] px-6">
-          <Reveal className="px-0 py-12">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <Reveal className="px-0 py-8">
             <span className="eyebrow">Questions</span>
-            <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
+            <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
               Working with our atelier.
             </h2>
 
-            <Accordion type="single" collapsible className="mt-10 w-full">
+            <Accordion type="single" collapsible className="mt-7 w-full">
               {faqs.map((faq, i) => (
                 <AccordionItem key={faq.question} value={`item-${i}`} className="border-b border-ink/10 py-3">
-                  <AccordionTrigger className="text-left font-serif text-xl hover:text-gold hover:no-underline">
+                  <AccordionTrigger className="text-left font-serif text-2xl hover:text-gold hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="max-w-[70ch] pt-3 text-sm leading-7 text-ink-soft">
+                  <AccordionContent className="max-w-[70ch] pt-3 text-[15px] font-medium leading-7 text-ink-soft">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -316,33 +316,33 @@ function LeadSection() {
   };
 
   return (
-    <section className="luxury-silk-bg pb-20 sm:pb-28" id="quote">
-      <div className="mx-auto max-w-[1220px] px-6">
-        <Reveal className="border border-gold/20 bg-[#fffdf9] px-6 py-12 sm:px-10 lg:px-16">
+    <section className="luxury-silk-bg pb-12 sm:pb-16" id="quote">
+      <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+        <Reveal className="border border-gold/25 bg-[#fffdf9] px-5 py-8 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-3xl text-center">
             <span className="eyebrow">Begin a Commission</span>
-            <h2 className="mt-6 font-serif text-4xl leading-tight sm:text-5xl">
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
               Let us translate your vision into couture-grade craftsmanship.
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
               <a
                 href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] uppercase tracking-[0.3em] text-[#120c09] transition hover:bg-transparent"
+                className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:bg-transparent"
               >
                 WhatsApp +91 88260 23527
               </a>
               <a
                 href="mailto:atelier@zardosiatelier.com"
-                className="block border border-ink/15 px-8 py-4 text-center text-[10px] uppercase tracking-[0.3em] text-ink transition hover:border-gold hover:text-gold"
+                className="block border border-ink/25 px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-ink transition hover:border-gold hover:text-gold"
               >
                 Email the Atelier
               </a>
-              <p className="text-center text-sm leading-7 text-ink-soft lg:text-left">
+              <p className="text-center text-[15px] font-medium leading-7 text-ink-soft lg:text-left">
                 Send your sketches, references, quantity range and timeline. We will reply with the
                 right sampling route for your project.
               </p>

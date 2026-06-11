@@ -74,13 +74,13 @@ function ServicesPage() {
         description="A full-spectrum embroidery offer — from a single sample to scaled production runs — held to the standards of haute couture."
         image={techniqueBead}
       />
-      <section className="luxury-silk-bg py-16">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <section className="luxury-silk-bg py-10 sm:py-12">
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-5 px-5 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
           {services.map((s, i) => (
             <Reveal key={s.name} delay={(i % 3) * 100} className="group">
               {/* Unified premium couture card */}
               <div
-                className="flex flex-col overflow-hidden rounded-[24px] border border-[#D4AF37]/20 bg-[#FAF7F2] shadow-[0_12px_32px_-12px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:shadow-[0_24px_48px_-12px_rgba(212,175,55,0.12)] group-hover:-translate-y-2 group-hover:border-[#D4AF37]/50"
+                className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60"
               >
                 {/* Image section — clickable preview */}
                 <div
@@ -105,17 +105,17 @@ function ServicesPage() {
                     <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
                   </div>
 
-                  <h3 className="font-serif text-[22px] leading-snug text-[#1A1A1A] font-medium mb-3">
+                  <h3 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
                     {s.name}
                   </h3>
-                  <p className="text-[13px] text-[#4A4A4A] leading-relaxed flex-1">
+                  <p className="flex-1 text-[15px] font-medium leading-7 text-[#2B2722]">
                     {s.desc}
                   </p>
 
                   {/* Pill CTA */}
                   <Link
                     to="/contact"
-                    className="mt-5 self-start inline-flex items-center gap-2 border border-[#D4AF37]/35 rounded-full px-5 py-2 text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold transition-all duration-400 hover:bg-[#D4AF37] hover:text-[#FAF7F2] hover:border-[#D4AF37]"
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-[#D4AF37]/55 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] transition-all duration-400 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#120c09] sm:w-auto"
                   >
                     Request Sampling
                     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

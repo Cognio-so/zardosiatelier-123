@@ -102,7 +102,7 @@
   --gold: oklch(0.72 0.085 75);
   --gold-soft: oklch(0.84 0.055 80);
   --ink: oklch(0.165 0.008 60);
-  --ink-soft: oklch(0.26 0.008 60);
+  --ink-soft: oklch(0.22 0.01 60);
 
   --background: var(--ivory);
   --foreground: var(--ink);
@@ -143,7 +143,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-weight: 350; /* Adjusted from 300 to 350 for superior clarity and quality text display */
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -171,8 +171,18 @@
   h4,
   h5 {
     font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  p,
+  li,
+  label,
+  input,
+  textarea,
+  button,
+  a {
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -184,9 +194,9 @@
 @utility eyebrow {
   font-size: 0.6875rem;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.24em;
   color: var(--gold);
-  font-weight: 500;
+  font-weight: 700;
 }
 
 @utility hairline {
@@ -222,26 +232,22 @@
 @utility luxury-card {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
   background: #FAF7F2;
   border: 1px solid rgba(212, 175, 55, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   transition:
     transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-    border-color 0.6s ease,
-    box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    border-color 0.6s ease;
 
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     border-color: rgba(212, 175, 55, 0.6);
-    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.1), 0 8px 20px rgba(0, 0, 0, 0.05);
   }
 }
 
 @utility footer-link {
   position: relative;
   display: inline-block;
-  color: #4A4A4A;
+  color: currentColor;
   transition: color 0.4s ease;
 
   &::after {
@@ -256,7 +262,7 @@
   }
 
   &:hover {
-    color: #1A1A1A;
+    color: var(--gold-soft);
   }
 
   &:hover::after {
@@ -266,24 +272,20 @@
 
 
 @utility luxury-silk-bg {
-  background-color: #FAF7F2;
+  background-color: #F4EFE7;
   position: relative;
 }
 
 @utility premium-couture-card {
   background-color: #FAF7F2;
   border: 1px solid rgba(212, 175, 55, 0.22);
-  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.04), 0 4px 12px -4px rgba(0, 0, 0, 0.02);
   transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-               box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1),
                border-color 0.6s ease;
 
   &:hover {
-    transform: translateY(-12px);
+    transform: translateY(-4px);
     border-color: rgba(212, 175, 55, 0.7);
-    box-shadow: 0 25px 60px -15px rgba(212, 175, 55, 0.12), 0 12px 24px -10px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -292,13 +294,10 @@
   border: 1px solid rgba(212, 175, 55, 0.4);
   color: var(--ink);
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 
   &:hover {
     background-color: var(--ink);
     color: var(--ivory);
     border-color: var(--ink);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
 }
-
