@@ -22,35 +22,27 @@ import {
 } from "@/components/ui/accordion";
 
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
-import heroVideo from "@/assets/hero-video.mp4";
 import collectionGown from "@/assets/collection-gown.jpg";
 import collectionBridal from "@/assets/collection-bridal.jpg";
 import collectionHandbag from "@/assets/collection-handbag.jpg";
-import techniqueAari from "@/assets/technique-aari.jpg";
 import techniqueCrystal from "@/assets/technique-crystal.jpg";
 import technique3d from "@/assets/technique-3d.jpg";
 import techniqueBead from "@/assets/technique-bead.jpg";
-import portfolio1 from "@/assets/portfolio-1.jpg";
-import portfolio2 from "@/assets/portfolio-2.jpg";
-import portfolio3 from "@/assets/portfolio-3.jpg";
-import portfolio4 from "@/assets/portfolio-4.jpg";
-import portfolio5 from "@/assets/portfolio-5.jpg";
-import portfolio6 from "@/assets/portfolio-6.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Maison Auréline — Luxury Hand Embroidery & Couture Manufacturing" },
+      { title: "Zardosi Atelier - Luxury Hand Embroidery & Export Atelier" },
       {
         name: "description",
         content:
-          "Maison Auréline is a luxury hand embroidery atelier serving global fashion houses — from couture sampling to production-scale execution.",
+          "Zardosi Atelier creates couture-grade hand embroidery, zardosi, crystal work and beadwork for luxury brands, couture designers and bridal houses.",
       },
-      { property: "og:title", content: "Maison Auréline — Luxury Hand Embroidery Atelier" },
+      { property: "og:title", content: "Zardosi Atelier - Luxury Hand Embroidery" },
       {
         property: "og:description",
         content:
-          "Couture-level hand embroidery, beadwork, zardosi and crystal work for the world's most discerning fashion houses.",
+          "Hand embroidery for the world's finest labels - from sampling to production and global delivery.",
       },
       { property: "og:url", content: "/" },
       { property: "og:image", content: heroEmbroidery },
@@ -63,31 +55,19 @@ export const Route = createFileRoute("/")({
 
 const collection = [
   {
-    number: "01",
-    title: "La Sérénade",
-    category: "Couture Gowns",
-    materials: "Gold Zardosi",
+    title: "Couture Gowns",
     image: collectionGown,
-    desc: "Exquisite hand-stitched gold metallic threadwork cascading over cream silk satin.",
-    icon: "Crown",
+    desc: "Gold zardosi, sequin and threadwork built for eveningwear and couture silhouettes.",
   },
   {
-    number: "02",
-    title: "Veil of Pearls",
-    category: "Bridal Couture",
-    materials: "Crystal & Pearl",
+    title: "Bridal Embroidery",
     image: collectionBridal,
-    desc: "Intricate bridal bodices and veils adorned with hand-set seed pearls and crystalline beads.",
-    icon: "Diamond",
+    desc: "Pearl, crystal and bead compositions for bridal bodices, veils and ceremony pieces.",
   },
   {
-    number: "03",
-    title: "Petit Bijou",
-    category: "Luxury Accessories",
-    materials: "Mixed Media",
+    title: "Luxury Accessories",
     image: collectionHandbag,
-    desc: "A meticulous blend of fine embroidery, semi-precious stones, and gold hardware on mini bags.",
-    icon: "Sparkles",
+    desc: "Embellished bags, patches and small-format components finished with atelier precision.",
   },
 ];
 
@@ -115,244 +95,132 @@ const techniques = [
 ];
 
 const whyChoose = [
-  { title: "30+ Skilled Artisans", desc: "Multi-generational embroiderers led by atelier directors.", icon: "Crown" },
-  { title: "Sampling to Production", desc: "From a single swatch to scaled production runs.", icon: "Layers" },
-  { title: "Couture-Level Quality", desc: "Calibrated to haute couture finishing standards.", icon: "Diamond" },
-  { title: "Flexible Order Quantities", desc: "From bespoke editions to commercial runs.", icon: "Package" },
-  { title: "Export Experience", desc: "Documented logistics into Paris, Milan, New York.", icon: "Globe" },
-  { title: "Custom Design Execution", desc: "Translation of mood boards into technical embroidery.", icon: "PenTool" },
-  { title: "Premium Materials", desc: "Sourcing of finest silk threads, crystals, and beads.", icon: "Sparkles" },
-  { title: "Dedicated Project Support", desc: "Single point of contact for your design team.", icon: "Users" },
-  { title: "Design Confidentiality", desc: "NDA-protected studio with restricted access protocols.", icon: "ShieldCheck" },
-  { title: "Fast Sampling", desc: "Initial swatches within 7–14 days of brief lock.", icon: "Zap" },
+  { title: "30+ Skilled Artisans", icon: "Crown" },
+  { title: "Sampling to Production", icon: "Layers" },
+  { title: "Couture-Level Quality", icon: "Diamond" },
+  { title: "Flexible Order Quantities", icon: "Package" },
+  { title: "Export Experience", icon: "Globe" },
+  { title: "Custom Design Execution", icon: "PenTool" },
+  { title: "Premium Materials", icon: "Sparkles" },
+  { title: "Dedicated Project Support", icon: "Users" },
+  { title: "Design Confidentiality", icon: "ShieldCheck" },
+  { title: "Fast Sampling", icon: "Zap" },
 ];
 
 const process = [
-  {
-    n: "01",
-    title: "SHARE DESIGN",
-    desc: "Sketches, tech packs or mood boards via our secure client portal.",
-  },
-  {
-    n: "02",
-    title: "TECHNICAL REVIEW",
-    desc: "Material feasibility, stitch density, and production timing.",
-  },
-  { n: "03", title: "SAMPLING", desc: "Precision swatches or full prototypes for approval." },
-  { n: "04", title: "APPROVAL", desc: "Sign-off on embellishment, colour accuracy and material." },
-  { n: "05", title: "PRODUCTION", desc: "Hand-executed manufacturing by dedicated artisan pods." },
-  {
-    n: "06",
-    title: "GLOBAL DELIVERY",
-    desc: "Insured logistics directly to your studio or factory.",
-  },
+  { n: "01", title: "Share Design" },
+  { n: "02", title: "Technical Review" },
+  { n: "03", title: "Sampling" },
+  { n: "04", title: "Approval" },
+  { n: "05", title: "Production" },
+  { n: "06", title: "Global Delivery" },
 ];
 
 const faqs = [
   {
     question: "Do you work with luxury brands outside India?",
-    answer: "Yes, we serve global fashion houses across Paris, Milan, New York, and London, with streamlined export logistics and documented customs compliance.",
+    answer:
+      "Yes. We support international fashion houses, couture designers and bridal studios with export-ready communication, sampling and delivery.",
   },
   {
     question: "Can you develop embroidery from design references and sketches?",
-    answer: "Absolutely. Our design team specializes in translating mood boards, sketches, and tech packs into technical embroidery swatches.",
+    answer:
+      "Yes. Share sketches, mood boards, tech packs or references and our team will translate them into workable embroidery samples.",
   },
   {
     question: "Do you support both low-volume sampling and larger production runs?",
-    answer: "Yes, we are built for flexibility — from single couture editions and sampling to scaled commercial production runs.",
+    answer:
+      "Yes. We can begin with swatches or prototypes, then scale the approved technique into controlled production.",
   },
   {
     question: "What kind of products can be embellished?",
-    answer: "We embroider on couture gowns, bridalwear, womenswear, menswear, accessories (bags, shoes), and individual luxury components.",
+    answer:
+      "We work on gowns, bridalwear, womenswear, menswear, bags, headbands, patches, borders and bespoke couture components.",
   },
-];
-
-const portfolio = [
-  { src: portfolio1, tag: "Couture · Zardosi", caption: "Embroidered Evening Cape" },
-  { src: portfolio4, tag: "Bridal · Lace Border", caption: "Lace-Bordered Bridal Veil" },
-  { src: portfolio6, tag: "Couture · 3D Florals", caption: "Cascading Petal Skirt" },
-  { src: portfolio5, tag: "Atelier · Process", caption: "Hand-set Gold Thread Study" },
-  { src: portfolio3, tag: "Accessory · Crystal", caption: "All-Over Crystal Minaudière" },
-  { src: portfolio2, tag: "Menswear · Tonal", caption: "Tonal Lapel Detail" },
 ];
 
 function HomePage() {
   return (
     <SiteShell>
-      {/* HERO */}
-      <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-        {/* Hero background video — autoplay, muted, loop */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={heroEmbroidery}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ opacity: 0.85 }}
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-
-        {/* Cinematic vignette + gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/20 to-ink/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/35 via-transparent to-ink/35" />
-
-
-        <div className="relative z-10 flex h-full items-center px-6 lg:px-12 mx-auto max-w-[1600px] w-full">
-          <div className="max-w-4xl text-left">
-            <p
-              className="eyebrow !text-gold-soft animate-fade-up"
-              style={{ animationDelay: "100ms" }}
-            >
-              Zardosi Atelier
-            </p>
-            <h1
-              className="mt-8 font-serif text-[40px] leading-[1.05] text-ivory sm:text-6xl lg:text-[78px] text-balance animate-fade-up"
-              style={{ animationDelay: "300ms" }}
-            >
-              Luxury Hand Embroidery <br className="hidden sm:block" />
-              <span className="italic font-normal">for Global Maisons</span>
-            </h1>
-            <p
-              className="mt-8 max-w-[58ch] text-base sm:text-lg text-ivory/80 leading-relaxed animate-fade-up"
-              style={{ animationDelay: "500ms" }}
-            >
-              From couture sampling to production-scale execution, we transform fashion concepts
-              into luxury embroidered masterpieces.
-            </p>
-            <div
-              className="mt-12 flex flex-wrap gap-4 animate-fade-up"
-              style={{ animationDelay: "700ms" }}
-            >
-              <Link
-                to="/contact"
-                className="border border-gold bg-gold px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition-all duration-500 hover:bg-transparent hover:text-ivory"
-              >
-                Request Quote
-              </Link>
-              <Link
-                to="/contact"
-                className="border border-ivory/40 px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition-colors duration-500 hover:bg-ivory hover:text-ink"
-              >
-                Send Your Design
-              </Link>
-              <Link
-                to="/portfolio"
-                className="px-2 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory gold-link"
-              >
-                View Portfolio
-              </Link>
-            </div>
+      <section className="relative min-h-[760px] overflow-hidden bg-[#120c09] pt-28 text-ivory">
+        <img
+          src={heroEmbroidery}
+          alt="Gold zardosi embroidery detail"
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#120c09_0%,rgba(18,12,9,0.94)_42%,rgba(18,12,9,0.76)_100%)]" />
+        <div className="absolute -right-24 top-28 h-[680px] w-[980px] rotate-[-18deg] rounded-[50%] border border-dashed border-gold/45" />
+        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#120c09]/75">
+          <div className="mx-auto grid max-w-[1220px] gap-4 px-6 py-6 text-[10px] uppercase tracking-[0.32em] text-gold-soft md:grid-cols-4">
+            <span>Low MOQ & Sampling</span>
+            <span>Artwork Development</span>
+            <span>In-House Design & QC</span>
+            <span>Express Worldwide Shipping</span>
           </div>
         </div>
 
-        {/* Trust bar */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-ivory/15 bg-ink/30 backdrop-blur-sm">
-          <div className="mx-auto grid max-w-[1600px] grid-cols-2 gap-px md:grid-cols-4">
-            {[
-              ["30+", "Master Artisans"],
-              ["Sampling", "To Production"],
-              ["Global", "Export Standards"],
-              ["Couture", "Quality Controlled"],
-            ].map(([k, v]) => (
-              <div key={v} className="px-6 py-6 text-center">
-                <div className="font-serif italic text-lg sm:text-xl text-gold-soft">{k}</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[0.3em] text-ivory/90">{v}</div>
-              </div>
-            ))}
+        <div className="relative z-10 mx-auto flex min-h-[620px] max-w-[1220px] items-center px-6">
+          <div className="max-w-[760px]">
+            <p className="eyebrow !text-gold-soft">Haute Couture Embroidery - Export Atelier - India</p>
+            <h1 className="mt-10 font-serif text-[52px] leading-[0.98] sm:text-[78px] lg:text-[96px]">
+              Hand embroidery for the world's{" "}
+              <span className="italic text-gold-soft">finest labels.</span>
+            </h1>
+            <p className="mt-10 max-w-[62ch] text-base leading-8 text-ivory/78">
+              We craft and export luxury embroidered pieces for couture houses, designers and
+              premium brands - every stitch finished by master karigars and checked twice before it ships.
+            </p>
+            <p className="mt-8 font-serif text-xl italic text-gold-soft">
+              Patches / Bags / Headbands / Dresses / Gowns / Abayas / Bespoke commissions
+            </p>
+            <div className="mt-12 flex flex-wrap gap-4">
+              <Link
+                to="/contact"
+                className="border border-gold bg-gold px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-[#120c09] transition hover:bg-transparent hover:text-gold-soft"
+              >
+                Start With a Sample
+              </Link>
+              <a
+                href="https://wa.me/918826023527"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gold/45 px-10 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition hover:bg-ivory hover:text-[#120c09]"
+              >
+                WhatsApp the Atelier
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FEATURED COLLECTION */}
-      <section className="luxury-silk-bg py-16 sm:py-24">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-16">
-            <div className="max-w-2xl">
-              <span className="eyebrow">Chapter 01 — Featured</span>
-              <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-balance">
-                Couture artistry for the <br />
-                world's finest <span className="italic">maisons</span>.
+      <section className="luxury-silk-bg py-20 sm:py-28">
+        <div className="mx-auto max-w-[1220px] px-6">
+          <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <span className="eyebrow">Featured Collections</span>
+              <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-6xl">
+                Couture pieces ready for luxury labels.
               </h2>
             </div>
-            <Link to="/portfolio" className="text-[10px] uppercase tracking-[0.3em] gold-link">
-              View All Collections →
+            <Link to="/portfolio" className="gold-link text-[10px] uppercase tracking-[0.3em]">
+              View Collections
             </Link>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-14">
-            {collection.map((c, i) => (
-              <Reveal
-                key={c.title}
-                delay={i * 120}
-                className="group cursor-pointer"
-                data-preview-image={c.image}
-              >
-                <div
-                  className="w-full rounded-[24px] premium-couture-card flex flex-col justify-between"
-                  style={{
-                    aspectRatio: "1/1.6",
-                  }}
-                >
-                  {/* Large Image Area (75%) */}
-                  <div className="h-[75%] w-full overflow-hidden relative rounded-t-[24px] bg-[#EADBC8]/20">
+          <div className="grid gap-7 md:grid-cols-3">
+            {collection.map((item, i) => (
+              <Reveal key={item.title} delay={i * 90} className="group">
+                <div className="overflow-hidden border border-ink/10 bg-[#fffdf9]">
+                  <div className="aspect-[4/5] overflow-hidden">
                     <img
-                      src={c.image}
-                      alt={c.title}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.08]"
+                      src={item.image}
+                      alt={item.title}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60" />
                   </div>
-
-                  {/* Content Area (25%) */}
-                  <div className="h-[25%] w-full px-6 pb-6 pt-8 flex flex-col justify-between items-center text-center relative bg-[#FAF7F2] rounded-b-[24px]">
-                    {/* Center Badge */}
-                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 size-14 rounded-full bg-[#FAF7F2] border border-[#D4AF37]/40 flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] z-10 transition-transform duration-500 group-hover:scale-105">
-                      <div className="size-11 rounded-full bg-[#D4AF37]/5 flex items-center justify-center border border-[#D4AF37]/10">
-                        <Icon
-                          name={c.icon}
-                          className="size-[18px]"
-                          style={{ color: "#D4AF37" }}
-                          strokeWidth={1.25}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Collection number & name */}
-                    <div className="w-full">
-                      <div className="text-[10px] font-sans uppercase tracking-[0.25em] text-[#D4AF37] font-semibold mb-1">
-                        Collection {c.number}
-                      </div>
-                      <h3 className="font-serif text-2xl text-ink tracking-wide font-medium">
-                        {c.title}
-                      </h3>
-
-                      {/* Gold decorative divider */}
-                      <div className="flex items-center justify-center gap-2 my-2.5 opacity-80">
-                        <div className="w-8 h-[0.75px] bg-[#D4AF37]/35" />
-                        <div className="size-1 bg-[#D4AF37] rotate-45" />
-                        <div className="w-8 h-[0.75px] bg-[#D4AF37]/35" />
-                      </div>
-
-                      {/* Category in uppercase */}
-                      <div className="text-[9px] uppercase tracking-[0.3em] text-ink font-semibold mb-1">
-                        {c.category}
-                      </div>
-                    </div>
-
-                    {/* Small luxury description */}
-                    <p className="text-[11px] text-ink-soft leading-relaxed max-w-[32ch] font-sans tracking-wide">
-                      {c.desc}
-                    </p>
-
-                    {/* Explore Collection CTA */}
-                    <div className="mt-4 px-5 py-2 border border-[#D4AF37]/35 rounded-full text-[9px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold transition-all duration-500 group-hover:bg-[#D4AF37] group-hover:text-ivory group-hover:border-[#D4AF37] flex items-center gap-1.5">
-                      <span>Explore Collection</span>
-                      <span className="transition-transform duration-300 transform group-hover:translate-x-1">→</span>
-                    </div>
+                  <div className="p-6">
+                    <h3 className="font-serif text-2xl">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-ink-soft">{item.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -361,416 +229,117 @@ function HomePage() {
         </div>
       </section>
 
-      {/* EMBROIDERY TECHNIQUES — Ultra-Luxury Showcase */}
-      <section className="relative py-20 sm:py-28 overflow-hidden luxury-silk-bg">
-        {/* Hand-drawn floral line art in corners */}
-        <FloralCorner className="top-0 left-0" />
-        <FloralCorner className="top-0 right-0" rotation={90} />
-        <FloralCorner className="bottom-0 left-0" rotation={-90} />
-        <FloralCorner className="bottom-0 right-0" rotation={180} />
-
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-12 relative z-10">
-          
-          {/* Section Header */}
-          <Reveal className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
-            <div className="max-w-2xl">
-              <span
-                className="eyebrow"
-                style={{ color: "#D4AF37", letterSpacing: "0.35em", fontSize: "10px" }}
-              >
-                Embroidery Techniques
-              </span>
-              <h2
-                className="mt-6 font-serif leading-[1.15] text-[#1A1A1A]"
-                style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 500 }}
-              >
-                A vocabulary of luxury <br />
-                hand-craft.
+      <section className="luxury-silk-bg py-20 sm:py-28">
+        <div className="mx-auto max-w-[1220px] px-6">
+          <Reveal className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <span className="eyebrow">Embroidery Techniques</span>
+              <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-6xl">
+                A vocabulary of luxury hand-craft.
               </h2>
             </div>
-            <Link
-              to="/services"
-              className="text-[10px] uppercase tracking-[0.3em] font-semibold transition-colors duration-300"
-              style={{ color: "#D4AF37" }}
-            >
-              All Services →
+            <Link to="/services" className="gold-link text-[10px] uppercase tracking-[0.3em]">
+              All Services
             </Link>
           </Reveal>
 
-          {/* Very Light Gold Decorative Divider */}
-          <div className="flex items-center justify-center gap-4 mb-20 opacity-60">
-            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-[#D4AF37]/30" />
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="text-[#D4AF37]/80">
-              <path d="M5 0L6.5 3.5L10 5L6.5 6.5L5 10L3.5 6.5L0 5L3.5 3.5Z" fill="currentColor" />
-            </svg>
-            <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-[#D4AF37]/30" />
-          </div>
-
-          {/* 4 Premium Vertical Showcase Cards */}
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {techniques.map((t, i) => {
-              const techniqueIcons = ["Crown", "Diamond", "Sparkles", "Layers"];
-              return (
-                <Reveal key={t.name} delay={i * 100} className="group cursor-pointer">
-                  <div
-                    data-preview-image={t.image}
-                    className="w-full aspect-[1/1.55] rounded-[28px] overflow-hidden border border-[#D4AF37]/20 flex flex-col justify-between"
-                    style={{
-                      background: "rgba(252, 250, 247, 0.75)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      boxShadow: "0 15px 40px rgba(0, 0, 0, 0.03)",
-                      transition: "transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.5s ease, box-shadow 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
-                    }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLDivElement;
-                      el.style.transform = "translateY(-10px)";
-                      el.style.borderColor = "rgba(212, 175, 55, 0.7)";
-                      el.style.boxShadow = "0 25px 55px rgba(212, 175, 55, 0.15), 0 5px 20px rgba(0,0,0,0.04)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLDivElement;
-                      el.style.transform = "translateY(0)";
-                      el.style.borderColor = "rgba(212, 175, 55, 0.2)";
-                      el.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.03)";
-                    }}
-                  >
-                    {/* Large Image Area (70%) */}
-                    <div className="h-[70%] w-full overflow-hidden relative bg-[#EADBC8]/20">
-                      <img
-                        src={t.image}
-                        alt={t.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.08]"
-                      />
-                      {/* Premium editorial image overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-30" />
-                    </div>
-
-                    {/* Content Area (30%) */}
-                    <div className="h-[30%] w-full px-5 pb-6 pt-8 flex flex-col justify-between items-center text-center relative border-t border-[#D4AF37]/15 bg-gradient-to-b from-[#FCFAF7]/95 to-[#FCFAF7]">
-                      {/* Luxury circular gold icon badge floating between image and content */}
-                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 size-14 rounded-full bg-[#FCFAF7] border border-[#D4AF37]/35 flex items-center justify-center shadow-[0_5px_15px_rgba(0,0,0,0.06)] z-10 transition-transform duration-500 group-hover:scale-105">
-                        <div className="size-11 rounded-full bg-[#D4AF37]/8 flex items-center justify-center border border-[#D4AF37]/10">
-                          <Icon
-                            name={techniqueIcons[i]}
-                            className="size-[18px]"
-                            style={{ color: "#D4AF37" }}
-                            strokeWidth={1.25}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <div className="w-full">
-                        <h3 className="font-serif uppercase tracking-[0.18em] text-[#1A1A1A] font-medium text-[15px] sm:text-base leading-none">
-                          {t.name}
-                        </h3>
-
-                        {/* Gold decorative separator */}
-                        <div className="flex items-center justify-center gap-2 my-2.5 opacity-80">
-                          <div className="w-6 h-[0.75px] bg-[#D4AF37]/30" />
-                          <div className="size-1 bg-[#D4AF37] rotate-45" />
-                          <div className="w-6 h-[0.75px] bg-[#D4AF37]/30" />
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-[11px] text-[#1A1A1A]/80 leading-relaxed max-w-[28ch] font-sans tracking-wide">
-                        {t.desc}
-                      </p>
-
-                      {/* Explore Button with Animated Arrow */}
-                      <div className="mt-2.5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold group-hover:text-[#b08b22] transition-colors duration-300">
-                        <span>Explore</span>
-                        <span className="transition-transform duration-300 transform group-hover:translate-x-1">→</span>
-                      </div>
-                    </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {techniques.map((item, i) => (
+              <Reveal key={item.name} delay={i * 80}>
+                <article className="group">
+                  <div className="aspect-[3/4] overflow-hidden bg-linen">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
                   </div>
-                </Reveal>
-              );
-            })}
+                  <h3 className="mt-5 font-serif text-2xl">{item.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-ink-soft">{item.desc}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* WHY CHOOSE US — Ultra-Premium Luxury Cards */}
-      <section className="luxury-silk-bg py-16 sm:py-24 overflow-hidden">
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-
-          {/* Section Header */}
-          <Reveal className="text-center mb-20">
-            {/* Top gold accent line */}
-            <div className="flex justify-center mb-8">
-              <div style={{ width: "60px", height: "2px", background: "#B8915F" }} className="opacity-80" />
-            </div>
-            <span
-              className="eyebrow"
-              style={{ color: "#B8915F", letterSpacing: "0.35em", fontSize: "10px" }}
-            >
-              Why Zardosi Atelier
-            </span>
-            <h2
-              className="mt-6 font-serif leading-[1.1] text-balance"
-              style={{
-                fontSize: "clamp(32px, 5vw, 56px)",
-                fontWeight: 500,
-                color: "#111111",
-              }}
-            >
-              A partner built for luxury brands.
-            </h2>
-            {/* Diamond ornament divider */}
-            <div className="flex items-center justify-center gap-3 mt-8">
-              <div style={{ width: "40px", height: "1px", background: "rgba(184,145,95,0.3)" }} />
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                style={{ color: "#B8915F" }}
-              >
-                <path
-                  d="M5 0L6.5 3.5L10 5L6.5 6.5L5 10L3.5 6.5L0 5L3.5 3.5Z"
-                  fill="currentColor"
-                  fillOpacity="0.6"
-                />
-              </svg>
-              <div style={{ width: "40px", height: "1px", background: "rgba(184,145,95,0.3)" }} />
-            </div>
-          </Reveal>
-
-          {/* 5×2 Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-            {whyChoose.map((w, i) => (
-              <Reveal
-                key={w.title}
-                delay={i * 60}
-                className="group h-full"
-              >
-                <div
-                  className="h-full flex flex-col items-center text-center"
-                  style={{
-                    background: "#FFFFFF",
-                    borderRadius: "24px",
-                    border: "1px solid rgba(184,145,95,0.15)",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
-                    padding: "40px 28px",
-                    minHeight: "300px",
-                    transition: "transform 0.4s cubic-bezier(0.19,1,0.22,1), border-color 0.4s ease, box-shadow 0.4s cubic-bezier(0.19,1,0.22,1)",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLDivElement;
-                    el.style.transform = "translateY(-10px)";
-                    el.style.borderColor = "#B8915F";
-                    el.style.boxShadow = "0 20px 50px rgba(184,145,95,0.12), 0 4px 16px rgba(0,0,0,0.06)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLDivElement;
-                    el.style.transform = "translateY(0)";
-                    el.style.borderColor = "rgba(184,145,95,0.15)";
-                    el.style.boxShadow = "0 10px 30px rgba(0,0,0,0.04)";
-                  }}
-                >
-                  {/* Top accent gold line */}
-                  <div
-                    className="mb-8"
-                    style={{
-                      width: "32px",
-                      height: "1.5px",
-                      background: "linear-gradient(90deg, transparent, #B8915F, transparent)",
-                    }}
-                  />
-
-                  {/* Circular Icon Badge */}
-                  <div
-                    className="flex items-center justify-center mb-7 flex-shrink-0"
-                    style={{
-                      width: "88px",
-                      height: "88px",
-                      borderRadius: "50%",
-                      background: "rgba(184,145,95,0.08)",
-                      border: "1px solid rgba(184,145,95,0.2)",
-                    }}
-                  >
-                    <Icon
-                      name={w.icon}
-                      className="size-[30px]"
-                      style={{ color: "#B8915F", strokeWidth: 1.25 }}
-                    />
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className="font-serif leading-tight mb-4"
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: 500,
-                      color: "#111111",
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
-                    {w.title}
-                  </h3>
-
-                  {/* Diamond micro-divider */}
-                  <div className="flex items-center justify-center gap-2 mb-4">
-                    <div style={{ width: "18px", height: "1px", background: "rgba(184,145,95,0.25)" }} />
-                    <div
-                      style={{
-                        width: "4px",
-                        height: "4px",
-                        background: "rgba(184,145,95,0.5)",
-                        transform: "rotate(45deg)",
-                        flexShrink: 0,
-                      }}
-                    />
-                    <div style={{ width: "18px", height: "1px", background: "rgba(184,145,95,0.25)" }} />
-                  </div>
-
-                  {/* Description */}
-                  <p
-                    className="font-sans uppercase tracking-widest leading-relaxed text-balance"
-                    style={{
-                      fontSize: "10px",
-                      lineHeight: 1.85,
-                      color: "rgba(17,17,17,0.8)",
-                      letterSpacing: "0.12em",
-                    }}
-                  >
-                    {w.desc}
+      <section className="luxury-silk-bg py-16">
+        <div className="mx-auto max-w-[1220px] px-6">
+          <Reveal className="border border-ink/10 bg-[#fffdf9] px-6 py-12 sm:px-10">
+            <span className="eyebrow">Our Process</span>
+            <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">From sketch to ceremony.</h2>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+              {process.map((step) => (
+                <div key={step.n} className="border border-gold/25 bg-ivory px-6 py-7">
+                  <span className="font-serif text-2xl text-gold">{step.n}</span>
+                  <p className="mt-4 text-[11px] uppercase tracking-[0.24em] text-ink-soft">
+                    {step.title}
                   </p>
                 </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section className="luxury-silk-bg border-y border-ink/5 py-20">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 items-center text-center md:text-left">
-            <Reveal delay={100} className="flex flex-col items-center">
-              <span className="font-serif text-6xl lg:text-8xl text-gold-soft mb-4">120+</span>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
-                Collections Supported
-              </span>
-            </Reveal>
-            <Reveal delay={200} className="flex flex-col items-center">
-              <span className="font-serif text-6xl lg:text-8xl text-gold-soft mb-4">18</span>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
-                Markets Served
-              </span>
-            </Reveal>
-            <Reveal delay={300} className="flex flex-col items-center">
-              <span className="font-serif text-5xl lg:text-7xl text-gold-soft mb-4 italic">
-                Fast-track
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-ink-soft">
-                Sampling Turnaround
-              </span>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS TIMELINE */}
-      <section className="luxury-silk-bg py-16 sm:py-24 overflow-hidden">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="mb-20">
-            <span className="eyebrow">Our Process</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-              From sketch to ceremony.
-            </h2>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
-            {process.map((p, i) => (
-              <Reveal
-                key={p.n}
-                delay={i * 80}
-                className="bg-ivory p-8 ring-1 ring-ink/5 flex flex-col items-start"
-              >
-                <span className="font-serif text-2xl text-gold mb-10">{p.n}</span>
-                <h4 className="font-serif text-sm tracking-[0.15em] mb-4 uppercase">{p.title}</h4>
-                <p className="text-[11px] text-ink-soft leading-relaxed uppercase tracking-wider">
-                  {p.desc}
-                </p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PORTFOLIO MASONRY */}
-      <section className="luxury-silk-bg py-16 sm:py-24">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <Reveal className="flex flex-col lg:flex-row justify-between items-end gap-10 mb-20">
-            <div>
-              <span className="eyebrow">Chapter 06 — Portfolio</span>
-              <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-                Selected <span className="italic">work</span>.
-              </h2>
+              ))}
             </div>
-            <Link to="/portfolio" className="text-[10px] uppercase tracking-[0.3em] gold-link">
-              Full Archive →
-            </Link>
           </Reveal>
-
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
-            {portfolio.map((p, i) => (
-              <Reveal
-                key={i}
-                delay={(i % 3) * 100}
-                className="mb-6 break-inside-avoid cursor-pointer"
-                data-preview-image={p.src}
-              >
-                <div className="group relative overflow-hidden luxury-card">
-                  <img
-                    src={p.src}
-                    alt={p.caption}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-auto object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.06]"
-                  />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/90 via-ink/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div className="p-6 transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0 w-full">
-                      <p className="text-[9px] uppercase tracking-[0.3em] text-gold-soft font-semibold">
-                        {p.tag}
-                      </p>
-                      <h4 className="mt-2 font-serif text-xl sm:text-2xl text-ivory tracking-wide">{p.caption}</h4>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* FAQs */}
-      <section className="luxury-silk-bg py-16 sm:py-24">
-        <div className="mx-auto max-w-[1000px] px-6">
-          <Reveal className="mb-16">
-            <span className="eyebrow">Questions</span>
-            <h2 className="mt-5 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
-              Working with our <br />
-              <span className="italic">atelier</span>.
+      <section className="luxury-silk-bg py-16">
+        <div className="mx-auto max-w-[1220px] px-6">
+          <Reveal className="border border-ink/10 bg-[#fffdf9] px-6 py-12 sm:px-10">
+            <span className="eyebrow">Why Zardosi Atelier</span>
+            <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
+              A partner built for luxury brands.
             </h2>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {whyChoose.map((item) => (
+                <div key={item.title} className="border border-gold/20 bg-ivory px-5 py-6">
+                  <Icon name={item.icon} className="size-5 text-gold" />
+                  <p className="mt-6 text-sm font-medium text-ink">{item.title}</p>
+                </div>
+              ))}
+            </div>
           </Reveal>
 
-          <Reveal delay={150}>
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-b border-ink/10 py-4">
-                  <AccordionTrigger className="text-left font-serif text-xl hover:no-underline hover:text-gold transition-colors">
-                    {f.question}
+          <Reveal delay={120} className="mt-8 border border-ink/10 bg-[#fffdf9] px-6 py-14 sm:px-10">
+            <div className="grid gap-12 border-y border-ink/10 py-12 text-center md:grid-cols-3">
+              <div>
+                <p className="font-serif text-5xl text-gold sm:text-6xl">120+</p>
+                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                  Collections Supported
+                </p>
+              </div>
+              <div>
+                <p className="font-serif text-5xl text-gold sm:text-6xl">18</p>
+                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                  Markets Served
+                </p>
+              </div>
+              <div>
+                <p className="font-serif text-5xl italic text-gold sm:text-6xl">Fast-track</p>
+                <p className="mt-4 text-[10px] uppercase tracking-[0.36em] text-ink-soft">
+                  Sampling Turnaround
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="luxury-silk-bg py-16 sm:py-24">
+        <div className="mx-auto max-w-[1220px] px-6">
+          <Reveal className="border border-ink/10 bg-[#fffdf9] px-6 py-12 sm:px-10">
+            <span className="eyebrow">Questions</span>
+            <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
+              Working with our atelier.
+            </h2>
+
+            <Accordion type="single" collapsible className="mt-10 w-full">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={faq.question} value={`item-${i}`} className="border-b border-ink/10 py-3">
+                  <AccordionTrigger className="text-left font-serif text-xl hover:text-gold hover:no-underline">
+                    {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-ink-soft leading-relaxed pt-4 text-base max-w-[60ch]">
-                    {f.answer}
+                  <AccordionContent className="max-w-[70ch] pt-3 text-sm leading-7 text-ink-soft">
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -779,95 +348,83 @@ function HomePage() {
         </div>
       </section>
 
-      {/* LEAD GEN */}
       <LeadSection />
-
-
     </SiteShell>
   );
 }
 
 function LeadSection() {
   const [submitted, setSubmitted] = useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
   return (
-    <section className="luxury-silk-bg py-16 sm:py-20" id="quote">
-      <div className="mx-auto max-w-[1200px] px-6">
-        <Reveal className="bg-[#FAF7F2] p-8 sm:p-12 border border-[#D4AF37]/22 rounded-[24px] shadow-[0_15px_35px_-15px_rgba(0,0,0,0.04)]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
-            {/* Left Info Column */}
-            <div className="lg:col-span-5 flex flex-col justify-between h-full">
-              <div>
-                <span className="eyebrow block">Begin a Commission</span>
-                <h2 className="mt-6 font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] text-ink">
-                  Let us translate your vision into couture-grade craftsmanship.
-                </h2>
-                <p className="mt-6 text-sm text-ink-soft leading-relaxed">
-                  Submit your inquiry below or connect directly with our studio director via WhatsApp.
-                </p>
-              </div>
+    <section className="luxury-silk-bg pb-20 sm:pb-28" id="quote">
+      <div className="mx-auto max-w-[1220px] px-6">
+        <Reveal className="border border-gold/20 bg-[#fffdf9] px-6 py-12 shadow-[0_30px_80px_rgba(31,22,14,0.06)] sm:px-10 lg:px-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="eyebrow">Begin a Commission</span>
+            <h2 className="mt-6 font-serif text-4xl leading-tight sm:text-5xl">
+              Let us translate your vision into couture-grade craftsmanship.
+            </h2>
+          </div>
 
-              <div className="mt-12 space-y-4">
-                <a
-                  href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-4 text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 font-semibold rounded-full border border-[#25D366]/40 text-[#25D366] bg-transparent hover:bg-[#25D366] hover:text-[#FAF7F2] hover:border-[#25D366] transition-all duration-400 shadow-[0_4px_12px_rgba(37,211,102,0.08)] hover:shadow-[0_8px_20px_rgba(37,211,102,0.2)] group"
-                >
-                  <span className="flex items-center justify-center size-6 rounded-full bg-[#25D366] text-[#FAF7F2] transition-colors duration-400 group-hover:bg-[#FAF7F2] group-hover:text-[#25D366] flex-shrink-0">
-                    <svg viewBox="0 0 32 32" className="size-3.5" fill="currentColor">
-                      <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
-                    </svg>
-                  </span>
-                  <span>Discuss on WhatsApp</span>
-                </a>
-              </div>
+          <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="space-y-5">
+              <a
+                href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] uppercase tracking-[0.3em] text-[#120c09] transition hover:bg-transparent"
+              >
+                WhatsApp +91 88260 23527
+              </a>
+              <a
+                href="mailto:atelier@zardosiatelier.com"
+                className="block border border-ink/15 px-8 py-4 text-center text-[10px] uppercase tracking-[0.3em] text-ink transition hover:border-gold hover:text-gold"
+              >
+                Email the Atelier
+              </a>
+              <p className="text-center text-sm leading-7 text-ink-soft lg:text-left">
+                Send your sketches, references, quantity range and timeline. We will reply with the
+                right sampling route for your project.
+              </p>
             </div>
 
-            {/* Right Form Column */}
-            <div className="lg:col-span-7 bg-[#FCFAF7] p-6 sm:p-8 border border-[#D4AF37]/15 rounded-[20px] shadow-[0_10px_25px_-10px_rgba(0,0,0,0.03)]">
+            <div className="border border-ink/10 bg-ivory p-6 sm:p-8">
               {submitted ? (
                 <div className="py-16 text-center">
-                  <span className="eyebrow text-gold">Thank You</span>
-                  <h3 className="font-serif text-2xl mt-4 text-ink">Inquiry Received</h3>
-                  <p className="mt-2 text-sm text-ink-soft">Our atelier team will contact you shortly.</p>
+                  <span className="eyebrow">Thank You</span>
+                  <h3 className="mt-4 font-serif text-3xl">Inquiry Received</h3>
+                  <p className="mt-3 text-sm text-ink-soft">Our atelier team will contact you shortly.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="grid gap-6 sm:grid-cols-2">
                     <Field label="Full Name" name="name" />
                     <Field label="Email Address" name="email" type="email" />
                   </div>
-                  <Field label="Subject" name="subject" />
+                  <Field label="Project Type" name="subject" />
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
-                      Project Description
+                    <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
+                      Project Details
                     </label>
                     <textarea
                       name="message"
-                      rows={3}
+                      rows={4}
                       required
-                      className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors resize-none"
+                      className="w-full resize-none border-b border-ink/15 bg-transparent py-2 text-sm outline-none transition focus:border-gold"
                     />
                   </div>
-                  <div className="pt-4 flex flex-wrap justify-between items-center gap-4">
-                    <button
-                      type="submit"
-                      className="bg-ink text-ivory px-8 py-4 text-[10px] uppercase tracking-[0.3em] transition-colors hover:bg-gold"
-                    >
-                      Submit Inquiry
-                    </button>
-                    <a
-                      href="mailto:atelier@aureline.studio"
-                      className="text-[10px] uppercase tracking-[0.3em] text-ink-soft hover:text-gold transition-colors"
-                    >
-                      Email Direct →
-                    </a>
-                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-ink px-8 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition hover:bg-gold hover:text-[#120c09] sm:w-auto"
+                  >
+                    Submit Inquiry
+                  </button>
                 </form>
               )}
             </div>
@@ -881,21 +438,27 @@ function LeadSection() {
 function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
-      <label className="text-[10px] uppercase tracking-[0.3em] text-ink-soft block mb-2">
+      <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
         {label}
       </label>
       <input
         name={name}
         type={type}
-        required={type !== "file"}
-        className="w-full border-b border-ink/15 bg-transparent py-2 text-sm focus:border-gold focus:outline-none transition-colors file:mr-3 file:border-0 file:bg-transparent file:text-[10px] file:uppercase file:tracking-[0.2em] file:text-gold"
+        required
+        className="w-full border-b border-ink/15 bg-transparent py-2 text-sm outline-none transition focus:border-gold"
       />
     </div>
   );
 }
 
-function Icon({ name, className, style, strokeWidth }: { name: string; className?: string; style?: React.CSSProperties; strokeWidth?: number }) {
-  const icons: Record<string, any> = {
+function Icon({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) {
+  const icons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
     Crown,
     Layers,
     Diamond,
@@ -908,65 +471,5 @@ function Icon({ name, className, style, strokeWidth }: { name: string; className
     Zap,
   };
   const Component = icons[name] || Crown;
-  return <Component className={className} style={style} strokeWidth={strokeWidth ?? 1.5} />;
+  return <Component className={className} strokeWidth={1.5} />;
 }
-
-function FloralCorner({ className, rotation = 0 }: { className: string; rotation?: number }) {
-  return (
-    <svg
-      viewBox="0 0 300 300"
-      fill="none"
-      style={{ transform: `rotate(${rotation}deg)` }}
-      className={`absolute pointer-events-none w-[200px] h-[200px] md:w-[350px] md:h-[350px] opacity-[0.12] text-[#D4AF37] z-0 ${className}`}
-    >
-      {/* Delicate vines */}
-      <path
-        d="M15 15 C 60 40, 120 30, 180 80 C 220 110, 210 160, 260 190 C 280 200, 290 240, 290 290"
-        stroke="currentColor"
-        strokeWidth="0.8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M15 15 C 30 90, 80 140, 110 210 C 130 250, 160 270, 290 290"
-        stroke="currentColor"
-        strokeWidth="0.5"
-        strokeLinecap="round"
-        strokeDasharray="3, 3"
-      />
-      {/* Fine leaves/stems */}
-      <path
-        d="M70 42 C 90 60, 100 85, 95 110"
-        stroke="currentColor"
-        strokeWidth="0.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M140 60 C 170 80, 190 70, 210 110"
-        stroke="currentColor"
-        strokeWidth="0.6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M200 120 C 230 140, 240 170, 230 200"
-        stroke="currentColor"
-        strokeWidth="0.6"
-        strokeLinecap="round"
-      />
-      {/* Tiny floral buds */}
-      <circle cx="180" cy="80" r="3" fill="currentColor" />
-      <circle cx="110" cy="210" r="2.5" fill="currentColor" />
-      <circle cx="260" cy="190" r="3" stroke="currentColor" strokeWidth="0.6" />
-      <path
-        d="M95 110 C 105 115, 115 110, 120 100 C 110 95, 100 100, 95 110 Z"
-        fill="currentColor"
-        opacity="0.3"
-      />
-      <path
-        d="M210 110 C 220 115, 230 110, 235 100 C 225 95, 215 100, 210 110 Z"
-        fill="currentColor"
-        opacity="0.3"
-      />
-    </svg>
-  );
-}
-
