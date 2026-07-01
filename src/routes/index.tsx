@@ -123,7 +123,7 @@ const faqs = [
 function HomePage() {
   return (
     <SiteShell>
-      <section className="relative h-screen w-full overflow-hidden bg-[#160f0b]">
+      <section className="relative min-h-screen w-full overflow-hidden bg-[#160f0b]">
         {/* Full-screen cinematic video */}
         <video
           autoPlay
@@ -145,9 +145,9 @@ function HomePage() {
         />
 
         {/* Content Area with Glass Panel */}
-        <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-center px-6">
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 pb-28 pt-32 sm:pt-36 lg:pt-32">
           <div 
-            className="w-full max-w-[700px] border border-white/10 p-10 backdrop-blur-[12px] sm:p-14 lg:p-16 animate-fade-in"
+            className="w-full max-w-[700px] border border-white/10 p-8 backdrop-blur-[12px] sm:p-12 lg:p-12 animate-fade-in"
             style={{ 
               backgroundColor: "rgba(15,15,15,0.28)",
             }}
@@ -156,11 +156,11 @@ function HomePage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
                 Haute Couture Embroidery — India
               </p>
-              <h1 className="mt-8 font-serif text-[48px] leading-[1.02] text-white sm:text-[68px] lg:text-[84px]">
+              <h1 className="mt-6 font-serif text-[46px] leading-[1.02] text-white sm:text-[64px] lg:text-[76px]">
                 Hand embroidery for the world's{" "}
                 <span className="italic text-gold-soft">finest labels.</span>
               </h1>
-              <p className="mt-10 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
+              <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
                 premium brands — every stitch finished by master karigars and checked twice before it
                 ships.
@@ -168,7 +168,7 @@ function HomePage() {
               <p className="mt-6 font-serif text-lg italic text-gold-soft/90">
                 Patches / Bags / Headbands / Gowns / Bespoke commissions
               </p>
-              <div className="mt-12 flex flex-wrap gap-5">
+              <div className="mt-10 flex flex-wrap gap-5">
                 <Link
                   to="/contact"
                   className="w-full border border-gold bg-gold px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-[#120c09] transition-all hover:bg-transparent hover:text-white sm:w-auto"
@@ -453,3 +453,4 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
