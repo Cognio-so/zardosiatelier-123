@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import categoryHero from "@/assets/category-hero.png";
 import gown from "@/assets/collection-gown.jpg";
 import bridal from "@/assets/collection-bridal.jpg";
 import handbag from "@/assets/collection-handbag.jpg";
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/industries")({
         content: "Categories served by our luxury embroidery atelier.",
       },
       { property: "og:url", content: "/industries" },
-      { property: "og:image", content: gown },
+      { property: "og:image", content: categoryHero },
     ],
     links: [{ rel: "canonical", href: "/industries" }],
   }),
@@ -63,6 +64,106 @@ const industries = [
   },
 ];
 
+/** Reusable hover-enhanced category card */
+function CategoryCard({ s }: { s: (typeof industries)[number] }) {
+  return (
+    <div
+      className="flex h-full flex-col overflow-hidden bg-[#FAF7F2]"
+      style={{
+        border: "1px solid rgba(212,175,55,0.20)",
+        transition: "border-color 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.7s cubic-bezier(0.4,0,0.2,1)",
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "rgba(212,175,55,0.72)";
+        el.style.boxShadow = "0 0 0 1px rgba(212,175,55,0.38), 0 12px 48px rgba(0,0,0,0.18)";
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = "rgba(212,175,55,0.20)";
+        el.style.boxShadow = "none";
+      }}
+    >
+      {/* Image with zoom + overlay */}
+      <div
+        className="relative overflow-hidden"
+        style={{ aspectRatio: "4/3", cursor: "pointer" }}
+        data-preview-image={s.img}
+      >
+        <img
+          src={s.img}
+          alt={s.label}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+          style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.transform = "scale(1.08)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.transform = "scale(1)";
+          }}
+        />
+        {/* Gradient overlay on image section */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "linear-gradient(to top, rgba(8,5,3,0.62) 0%, transparent 55%)",
+            opacity: 0,
+            transition: "opacity 0.65s cubic-bezier(0.4,0,0.2,1)",
+          }}
+          ref={(el) => {
+            if (!el) return;
+            const parent = el.parentElement!;
+            const show = () => (el.style.opacity = "1");
+            const hide = () => (el.style.opacity = "0");
+            parent.addEventListener("mouseenter", show);
+            parent.addEventListener("mouseleave", hide);
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 p-6 pt-5">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
+          <div className="size-1 bg-[#D4AF37] rotate-45 opacity-60" />
+          <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
+        </div>
+
+        <h3 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
+          {s.label}
+        </h3>
+        <p className="flex-1 text-[15px] font-medium leading-7 text-[#2B2722]">{s.desc}</p>
+
+        <Link
+          to="/contact"
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] sm:w-auto"
+          style={{
+            border: "1px solid rgba(212,175,55,0.50)",
+            transition: "background 0.4s ease, color 0.4s ease, border-color 0.4s ease",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = "#D4AF37";
+            el.style.color = "#120C09";
+            el.style.borderColor = "#D4AF37";
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = "transparent";
+            el.style.color = "#8A672C";
+            el.style.borderColor = "rgba(212,175,55,0.50)";
+          }}
+        >
+          View Projects
+          <span style={{ transition: "transform 0.3s ease" }}>→</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function IndustriesPage() {
   return (
     <PageShell>
@@ -77,53 +178,43 @@ function IndustriesPage() {
             brands held to the highest finishing standards.
           </p>
         </div>
+
+        {/* Featured flat-lay hero image for the category page */}
+        <div className="mx-auto mb-10 max-w-[1320px] px-5 sm:px-6 lg:px-10">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              border: "1px solid rgba(212,175,55,0.22)",
+              maxHeight: "340px",
+            }}
+          >
+            <img
+              src={categoryHero}
+              alt="Bridal lehenga fabric with 3D floral embroidery — flat-lay"
+              className="w-full object-cover object-center"
+              style={{ maxHeight: "340px" }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(to right, rgba(0,0,0,0.45) 0%, transparent 50%, rgba(0,0,0,0.45) 100%)",
+              }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
+                Bridal · 3D Floral Embroidery
+              </p>
+              <h2 className="mt-2 font-serif text-3xl leading-tight text-white sm:text-4xl">
+                Couture flat-lay — <span className="italic">lehenga fabric.</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-5 px-5 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
           {industries.map((s, i) => (
             <Reveal key={s.label} delay={(i % 3) * 100} className="group">
-              {/* Unified premium couture card */}
-              <div className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60">
-                {/* Image section — clickable preview */}
-                <div
-                  className="overflow-hidden aspect-[4/3] cursor-pointer"
-                  data-preview-image={s.img}
-                >
-                  <img
-                    src={s.img}
-                    alt={s.label}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.08]"
-                  />
-                </div>
-
-                {/* Content section */}
-                <div className="flex flex-col flex-1 p-6 pt-5">
-                  {/* Gold separator */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
-                    <div className="size-1 bg-[#D4AF37] rotate-45 opacity-60" />
-                    <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
-                  </div>
-
-                  <h3 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
-                    {s.label}
-                  </h3>
-                  <p className="flex-1 text-[15px] font-medium leading-7 text-[#2B2722]">
-                    {s.desc}
-                  </p>
-
-                  {/* Pill CTA */}
-                  <Link
-                    to="/contact"
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-[#D4AF37]/55 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A672C] transition-all duration-400 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#120c09] sm:w-auto"
-                  >
-                    View Projects
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </Link>
-                </div>
-              </div>
+              <CategoryCard s={s} />
             </Reveal>
           ))}
         </div>

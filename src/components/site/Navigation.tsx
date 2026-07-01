@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -11,103 +11,288 @@ const navLinks = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+/**
+ * Per-route navbar theme — each section gets its own tonal dark variation.
+ * All colours are kept inside the dark-charcoal family so the luxury feel is preserved.
+ */
+type NavTheme = {
+  bg: string;               // CSS background value for the header
+  border: string;           // bottom border colour
+  logoText: string;         // "Zardosi" word colour
+  logoSub: string;          // "Atelier" sub-label colour
+  linkText: string;         // default nav link colour
+  linkHover: string;        // hover colour (always gold)
+  ctaBorder: string;        // CTA button border
+  ctaText: string;          // CTA button text
+  ctaHoverBg: string;       // CTA button hover bg
+  ctaHoverText: string;     // CTA button hover text
+  hamburgerColor: string;   // mobile hamburger line colour
+};
+
+const themes: Record<string, NavTheme> = {
+  "/": {
+    bg: "rgba(0,0,0,0)",
+    border: "rgba(255,255,255,0.06)",
+    logoText: "#FFFFFF",
+    logoSub: "#C9A84C",
+    linkText: "rgba(255,255,255,0.88)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(255,255,255,0.28)",
+    ctaText: "#FFFFFF",
+    ctaHoverBg: "#FFFFFF",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#F5F0E8",
+  },
+  "/portfolio": {
+    bg: "rgba(18,14,11,0.82)",
+    border: "rgba(212,175,55,0.12)",
+    logoText: "#FFFFFF",
+    logoSub: "#C9A84C",
+    linkText: "rgba(245,240,232,0.82)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(212,175,55,0.4)",
+    ctaText: "rgba(245,240,232,0.9)",
+    ctaHoverBg: "#D4AF37",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#F5F0E8",
+  },
+  "/industries": {
+    // warm deep brown-black — pairs with the linen bg of the category page
+    bg: "rgba(26,16,11,0.80)",
+    border: "rgba(212,175,55,0.10)",
+    logoText: "#FFFFFF",
+    logoSub: "#C9A84C",
+    linkText: "rgba(245,240,232,0.80)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(212,175,55,0.35)",
+    ctaText: "rgba(245,240,232,0.88)",
+    ctaHoverBg: "#D4AF37",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#F5F0E8",
+  },
+  "/about": {
+    // pure charcoal — matches about hero darkness
+    bg: "rgba(14,14,14,0.84)",
+    border: "rgba(255,255,255,0.08)",
+    logoText: "#FFFFFF",
+    logoSub: "#C9A84C",
+    linkText: "rgba(240,235,225,0.84)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(255,255,255,0.25)",
+    ctaText: "#FFFFFF",
+    ctaHoverBg: "#FFFFFF",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#F5F0E8",
+  },
+  "/process": {
+    // deep matte black — matches process matte-black table image
+    bg: "rgba(10,10,10,0.88)",
+    border: "rgba(212,175,55,0.15)",
+    logoText: "#FFFFFF",
+    logoSub: "#D4AF37",
+    linkText: "rgba(235,230,218,0.82)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(212,175,55,0.4)",
+    ctaText: "rgba(235,230,218,0.9)",
+    ctaHoverBg: "#D4AF37",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#EBE6DA",
+  },
+  "/contact": {
+    // warm dark wood — matches contact hero dark wooden table
+    bg: "rgba(22,12,8,0.86)",
+    border: "rgba(212,175,55,0.14)",
+    logoText: "#FFFFFF",
+    logoSub: "#C9A84C",
+    linkText: "rgba(245,238,225,0.82)",
+    linkHover: "#D4AF37",
+    ctaBorder: "rgba(212,175,55,0.38)",
+    ctaText: "rgba(245,238,225,0.9)",
+    ctaHoverBg: "#D4AF37",
+    ctaHoverText: "#120C09",
+    hamburgerColor: "#F5EEE1",
+  },
+};
+
+const scrolledTheme: NavTheme = {
+  bg: "rgba(10,8,7,0.78)",
+  border: "rgba(212,175,55,0.15)",
+  logoText: "#FFFFFF",
+  logoSub: "#C9A84C",
+  linkText: "rgba(245,240,232,0.85)",
+  linkHover: "#D4AF37",
+  ctaBorder: "rgba(212,175,55,0.4)",
+  ctaText: "rgba(245,240,232,0.9)",
+  ctaHoverBg: "#D4AF37",
+  ctaHoverText: "#120C09",
+  hamburgerColor: "#F5F0E8",
+};
+
+function getTheme(pathname: string, scrolled: boolean): NavTheme {
+  if (scrolled) return scrolledTheme;
+  return themes[pathname] ?? scrolledTheme;
+}
+
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
+  // Displayed theme with smooth interpolation via CSS transitions
+  const theme = getTheme(pathname, scrolled || open);
+
+  // Track scroll
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const isLightHeader = scrolled || open;
+  // Close mobile menu on route change
+  const prevPathRef = useRef(pathname);
+  useEffect(() => {
+    if (prevPathRef.current !== pathname) {
+      setOpen(false);
+      prevPathRef.current = pathname;
+    }
+  }, [pathname]);
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-700 ${
-        isLightHeader ? "bg-black/60 backdrop-blur-xl border-b border-white/10" : "bg-transparent"
-      }`}
+      style={{
+        background: theme.bg,
+        borderBottomColor: theme.border,
+        backdropFilter: "blur(18px) saturate(140%)",
+        WebkitBackdropFilter: "blur(18px) saturate(140%)",
+        transition:
+          "background 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
+      }}
+      className="fixed top-0 z-50 w-full border-b"
     >
       <div className="mx-auto flex h-24 max-w-[1600px] items-center justify-between px-8 lg:px-12">
-        {/* Left Brand logo */}
+
+        {/* Brand logo */}
         <Link to="/" className="flex flex-col items-start z-10 group">
           <span
-            className={`font-serif text-2xl lg:text-[32px] tracking-[0.25em] uppercase leading-none transition-colors duration-500 text-white`}
+            className="font-serif text-2xl lg:text-[32px] tracking-[0.25em] uppercase leading-none"
+            style={{
+              color: theme.logoText,
+              transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
+            }}
           >
             Zardosi
           </span>
           <span
-            className={`mt-1.5 text-[9px] font-bold uppercase tracking-[0.55em] transition-colors duration-500 text-gold-soft`}
+            className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.55em]"
+            style={{
+              color: theme.logoSub,
+              transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
+            }}
           >
             Atelier
           </span>
         </Link>
 
-        {/* Right links + CTA */}
+        {/* Desktop nav links + CTA */}
         <div className="flex items-center gap-10 z-10">
-          <nav
-            className={`hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em] transition-colors duration-500 text-white/90`}
-          >
-            {navLinks.slice(1).map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className={`transition-colors hover:text-gold`}
-                activeProps={{ className: "text-gold" }}
-              >
-                {l.label}
-              </Link>
-            ))}
+          <nav className="hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em]">
+            {navLinks.slice(1).map((l) => {
+              const isActive = pathname === l.to;
+              return (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  style={{
+                    color: isActive ? "#D4AF37" : theme.linkText,
+                    transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
+                    fontWeight: isActive ? "800" : "700",
+                    borderBottom: isActive ? "1.5px solid #D4AF37" : "1.5px solid transparent",
+                    paddingBottom: "2px",
+                  }}
+                  className="transition-all duration-700 hover:!text-[#D4AF37]"
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
           </nav>
+
+          {/* CTA button */}
           <Link
             to="/contact"
-            className={`hidden md:inline-block border border-white/30 bg-white/5 px-8 py-3 text-[10px] font-bold uppercase tracking-[0.3em] text-white backdrop-blur-md transition-all duration-500 hover:bg-white hover:text-black`}
+            className="hidden md:inline-block px-8 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500"
+            style={{
+              border: `1px solid ${theme.ctaBorder}`,
+              color: theme.ctaText,
+              background: "rgba(255,255,255,0.03)",
+              transition:
+                "color 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.background = theme.ctaHoverBg;
+              (e.currentTarget as HTMLElement).style.color = theme.ctaHoverText;
+              (e.currentTarget as HTMLElement).style.borderColor = theme.ctaHoverBg;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+              (e.currentTarget as HTMLElement).style.color = theme.ctaText;
+              (e.currentTarget as HTMLElement).style.borderColor = theme.ctaBorder;
+            }}
           >
             Request Sampling
           </Link>
 
+          {/* Hamburger */}
           <button
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
             className="lg:hidden flex flex-col gap-[5px]"
           >
-            <span
-              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "translate-y-[6px] rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-px w-6 transition-all duration-300 ${isLightHeader ? "bg-ink" : "bg-ivory"} ${open ? "-translate-y-[6px] -rotate-45" : ""}`}
-            />
+            {[
+              open ? "translate-y-[6px] rotate-45" : "",
+              open ? "opacity-0" : "",
+              open ? "-translate-y-[6px] -rotate-45" : "",
+            ].map((extra, idx) => (
+              <span
+                key={idx}
+                className={`block h-px w-6 transition-all duration-300 ${extra}`}
+                style={{
+                  backgroundColor: theme.hamburgerColor,
+                  transition: "background-color 0.7s cubic-bezier(0.4,0,0.2,1)",
+                }}
+              />
+            ))}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       <div
-        className={`lg:hidden overflow-hidden bg-ivory transition-[max-height] duration-500 ease-out border-t border-ink/5 ${
+        className={`lg:hidden overflow-hidden bg-[#0a0806] transition-[max-height] duration-500 ease-out border-t border-white/5 ${
           open ? "max-h-[600px]" : "max-h-0"
         }`}
       >
         <nav className="flex flex-col px-6 py-8 gap-5">
-          {navLinks.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              onClick={() => setOpen(false)}
-              className="font-serif text-2xl text-ink"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const isActive = pathname === l.to;
+            return (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                className="font-serif text-2xl transition-colors duration-300"
+                style={{ color: isActive ? "#D4AF37" : "#F5F0E8" }}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
-            className="mt-4 inline-block border border-ink bg-ink px-5 py-3 text-center text-[10px] uppercase tracking-[0.28em] text-ivory"
+            className="mt-4 inline-block border border-gold bg-gold px-5 py-3 text-center text-[10px] uppercase tracking-[0.28em] text-[#120C09]"
           >
             Book Consultation
           </Link>

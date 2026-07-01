@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import hero from "@/assets/portfolio-6.jpg";
+
+// Hero: overhead flat-lay — ivory silk on dark walnut table with invitation card
+import contactHeroV2 from "@/assets/contact-hero-v2.png";
+
+// Second section: dark moody still-life — fountain pen, wax seal, silk swatch
+// (uses the previous contact-hero which is the embroidered bridal cloth + pen still-life)
+import contactSecond from "@/assets/contact-hero.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -15,7 +21,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact — Zardosi Atelier" },
       { property: "og:description", content: "Begin a project with our embroidery atelier." },
       { property: "og:url", content: "/contact" },
-      { property: "og:image", content: hero },
+      { property: "og:image", content: contactHeroV2 },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
   }),
@@ -25,14 +31,70 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   return (
     <PageShell>
+      {/* ─── HERO: Overhead flat-lay — ivory silk + gold zardosi + invitation card ─── */}
       <PageHero
         eyebrow="Begin"
         title="Request a"
         italic="feasibility review."
         description="Share your project and our atelier will respond within two working days with a tailored proposal."
-        image={hero}
+        image={contactHeroV2}
       />
 
+      {/* ─── SECOND SECTION: Dark moody still-life — pen + wax seal + embroidered swatch ─── */}
+      <section style={{ background: "#F4EFE7" }}>
+        <Reveal>
+          <div
+            className="relative overflow-hidden mx-auto max-w-[1320px]"
+            style={{
+              borderBottom: "1px solid rgba(212,175,55,0.18)",
+              transition: "box-shadow 0.7s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "0 0 0 1px rgba(212,175,55,0.32)";
+              const img = el.querySelector("img") as HTMLElement | null;
+              if (img) img.style.transform = "scale(1.04)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "none";
+              const img = el.querySelector("img") as HTMLElement | null;
+              if (img) img.style.transform = "scale(1)";
+            }}
+          >
+            <img
+              src={contactSecond}
+              alt="Fountain pen, wax seal and gold-embroidered silk swatch — luxury atelier still-life"
+              className="w-full object-cover"
+              style={{
+                maxHeight: "360px",
+                objectPosition: "center center",
+                transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
+                display: "block",
+              }}
+            />
+            {/* Moody dark overlay — from both sides, matching the dark studio lighting */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(6,3,1,0.68) 0%, rgba(0,0,0,0.15) 45%, rgba(6,3,1,0.55) 100%)",
+              }}
+            />
+            <div className="absolute bottom-0 left-0 p-6 sm:p-10">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
+                Begin · Your Commission
+              </p>
+              <h2 className="mt-2 font-serif text-3xl leading-tight text-white sm:text-4xl">
+                Every great piece begins{" "}
+                <span className="italic">with a letter.</span>
+              </h2>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ─── CONTACT FORM + DETAILS ─── */}
       <section className="luxury-silk-bg py-10 sm:py-12">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-8 px-5 sm:px-6 lg:grid-cols-[1fr_1.35fr] lg:px-10">
           <Reveal>

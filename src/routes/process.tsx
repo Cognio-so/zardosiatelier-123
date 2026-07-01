@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import hero from "@/assets/technique-aari.jpg";
+import processHero from "@/assets/process-hero.png";
 
 export const Route = createFileRoute("/process")({
   head: () => ({
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/process")({
         content: "How we partner from design share to global delivery.",
       },
       { property: "og:url", content: "/process" },
-      { property: "og:image", content: hero },
+      { property: "og:image", content: processHero },
     ],
     links: [{ rel: "canonical", href: "/process" }],
   }),
@@ -66,8 +66,62 @@ function ProcessPage() {
         title="The path to"
         italic="production."
         description="A clear six-step path from first design share to global delivery — engineered for confidentiality, precision, and predictable timing."
-        image={hero}
+        image={processHero}
       />
+
+      {/* Process materials hero image */}
+      <section
+        className="py-0"
+        style={{ background: "#F4EFE7" }}
+      >
+        <Reveal>
+          <div
+            className="relative overflow-hidden mx-auto max-w-[1320px]"
+            style={{
+              borderBottom: "1px solid rgba(212,175,55,0.18)",
+              transition: "box-shadow 0.7s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "0 0 0 1px rgba(212,175,55,0.30)";
+              const img = el.querySelector("img") as HTMLElement | null;
+              if (img) img.style.transform = "scale(1.04)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "none";
+              const img = el.querySelector("img") as HTMLElement | null;
+              if (img) img.style.transform = "scale(1)";
+            }}
+          >
+            <img
+              src={processHero}
+              alt="Embroidery sampling process — zari spools, crystals and silk swatch flat-lay"
+              className="w-full object-cover object-center"
+              style={{
+                maxHeight: "420px",
+                transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
+                display: "block",
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(to bottom, transparent 40%, rgba(6,4,2,0.70) 100%)",
+              }}
+            />
+            <div className="absolute bottom-0 right-0 p-6 sm:p-10 text-right">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
+                Process · Sampling Studio
+              </p>
+              <h2 className="mt-2 font-serif text-3xl leading-tight text-white">
+                Materials before <span className="italic">the needle.</span>
+              </h2>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
       <section className="luxury-silk-bg py-10 sm:py-12">
         <div className="mx-auto max-w-[1100px] px-5 sm:px-6 lg:px-10">
           <ol className="space-y-8 sm:space-y-10">
