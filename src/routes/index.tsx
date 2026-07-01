@@ -123,7 +123,8 @@ const faqs = [
 function HomePage() {
   return (
     <SiteShell>
-      <section className="relative min-h-[680px] overflow-hidden bg-[#3d2b20] pt-24 text-ivory sm:min-h-[720px]">
+      <section className="relative h-screen w-full overflow-hidden bg-[#160f0b]">
+        {/* Full-screen cinematic video */}
         <video
           autoPlay
           muted
@@ -134,50 +135,66 @@ function HomePage() {
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#160f0b]/45 via-[#160f0b]/12 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#160f0b]/20 via-transparent to-[#160f0b]/38" />
-        <div className="absolute bottom-0 left-0 right-0 border-y border-gold/20 bg-[#160f0b]/40">
-          <div className="mx-auto grid max-w-[1220px] gap-3 px-5 py-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory sm:px-6 md:grid-cols-4">
-            <span>Low MOQ & Sampling</span>
-            <span>Artwork Development</span>
-            <span>In-House Design & QC</span>
-            <span>Express Worldwide Shipping</span>
+
+        {/* Cinematic Dark Gradient Overlay */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{ 
+            background: "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.85) 100%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 40%, rgba(0,0,0,0.7) 100%)" 
+          }} 
+        />
+
+        {/* Content Area with Glass Panel */}
+        <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-center px-6">
+          <div 
+            className="w-full max-w-[700px] border border-white/10 p-10 backdrop-blur-[12px] sm:p-14 lg:p-16 animate-fade-in"
+            style={{ 
+              backgroundColor: "rgba(15,15,15,0.28)",
+            }}
+          >
+            <Reveal>
+              <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
+                Haute Couture Embroidery — India
+              </p>
+              <h1 className="mt-8 font-serif text-[48px] leading-[1.02] text-white sm:text-[68px] lg:text-[84px]">
+                Hand embroidery for the world's{" "}
+                <span className="italic text-gold-soft">finest labels.</span>
+              </h1>
+              <p className="mt-10 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
+                We craft and export luxury embroidered pieces for couture houses, designers and
+                premium brands — every stitch finished by master karigars and checked twice before it
+                ships.
+              </p>
+              <p className="mt-6 font-serif text-lg italic text-gold-soft/90">
+                Patches / Bags / Headbands / Gowns / Bespoke commissions
+              </p>
+              <div className="mt-12 flex flex-wrap gap-5">
+                <Link
+                  to="/contact"
+                  className="w-full border border-gold bg-gold px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-[#120c09] transition-all hover:bg-transparent hover:text-white sm:w-auto"
+                >
+                  Start With a Sample
+                </Link>
+                <a
+                  href="https://wa.me/918826023527"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full border border-white/40 bg-white/5 px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all hover:bg-white hover:text-[#120c09] sm:w-auto"
+                >
+                  WhatsApp the Atelier
+                </a>
+              </div>
+            </Reveal>
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[560px] max-w-[1220px] items-center px-5 pb-28 sm:px-6 sm:pb-32">
-          <div className="max-w-[780px] p-0 lg:-ml-8">
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-gold-soft">
-              Haute Couture Embroidery - Export Atelier - India
-            </p>
-            <h1 className="mt-5 font-serif text-[42px] leading-[0.98] text-white sm:text-[68px] lg:text-[88px]">
-              Hand embroidery for the world's{" "}
-              <span className="italic text-gold-soft">finest labels.</span>
-            </h1>
-            <p className="mt-6 max-w-[62ch] text-base font-semibold leading-7 text-white/92 sm:leading-8">
-              We craft and export luxury embroidered pieces for couture houses, designers and
-              premium brands - every stitch finished by master karigars and checked twice before it
-              ships.
-            </p>
-            <p className="mt-5 font-serif text-lg italic text-gold-soft sm:text-xl">
-              Patches / Bags / Headbands / Dresses / Gowns / Abayas / Bespoke commissions
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                to="/contact"
-                className="w-full border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:border-ivory hover:bg-ivory sm:w-auto"
-              >
-                Start With a Sample
-              </Link>
-              <a
-                href="https://wa.me/918826023527"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full border border-ivory/70 bg-[#120c09]/25 px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-ivory transition hover:bg-ivory hover:text-[#120c09] sm:w-auto"
-              >
-                WhatsApp the Atelier
-              </a>
-            </div>
+        {/* Bottom ticker bar */}
+        <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-black/40 py-5 backdrop-blur-md">
+          <div className="mx-auto flex max-w-[1400px] flex-wrap justify-between gap-6 px-6 text-[9px] font-bold uppercase tracking-[0.35em] text-ivory/80">
+            <span>Low MOQ & Sampling</span>
+            <span className="hidden sm:inline">Artwork Development</span>
+            <span className="hidden md:inline">In-House Design & QC</span>
+            <span>Express Worldwide Shipping</span>
           </div>
         </div>
       </section>

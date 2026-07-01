@@ -1,0 +1,13 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { PageShell } from "@/components/site/PageShell";
+import { Reveal } from "@/components/site/Reveal";
+import { useState } from "react";
+import { User, Package, Settings, LogOut, ChevronRight } from "lucide-react";
+
+export const Route = createFileRoute("/about")({ // Reusing 'about' path temporarily or should I create a new one?
+  // Actually, I should check where to put it. The user said "make a my account".
+  // I'll create a new file src/routes/account.tsx
+  component: AccountPage,
+});
+
+// Wait, I'll just write it to a new file instead of hijacking about.
