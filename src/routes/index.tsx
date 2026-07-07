@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { TypingAnimation } from "@/registry/magicui/typing-animation";
+import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import {
   Crown,
   Layers,
@@ -209,9 +210,17 @@ function HomePage() {
           <Reveal className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <span className="eyebrow">Embroidery Techniques</span>
-              <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-6xl">
+              <Text3DFlip
+                className="mt-3 font-serif text-4xl leading-tight sm:text-6xl text-ink"
+                textClassName="text-ink"
+                flipTextClassName="text-gold-soft"
+                rotateDirection="top"
+                staggerDuration={0.03}
+                staggerFrom="first"
+                transition={{ type: "spring", damping: 25, stiffness: 160 }}
+              >
                 A vocabulary of luxury hand-craft.
-              </h2>
+              </Text3DFlip>
             </div>
             <Link to="/services" className="gold-link text-[10px] uppercase tracking-[0.3em]">
               All Services
