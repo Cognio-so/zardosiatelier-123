@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { AnimatedThemeToggler } from "@/registry/magicui/animated-theme-toggler";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -217,6 +218,9 @@ export function Navigation() {
               );
             })}
           </nav>
+
+          {/* Theme Toggler */}
+          <AnimatedThemeToggler />
 
           {/* CTA button */}
           <Link
