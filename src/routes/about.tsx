@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import aboutHero from "@/assets/about-hero.png";
-import gown from "@/assets/collection-gown.jpg";
+import aboutHero from "@/assets/about-hero.webp";
+import gown from "@/assets/collection-gown.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/about")({
       { property: "og:url", content: "/about" },
       { property: "og:image", content: aboutHero },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/about" }],
   }),
   component: AboutPage,
 });

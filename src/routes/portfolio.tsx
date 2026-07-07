@@ -2,17 +2,17 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import portfolioHero from "@/assets/portfolio-hero.png";
-import p1 from "@/assets/portfolio-1.jpg";
-import p2 from "@/assets/portfolio-2.jpg";
-import p3 from "@/assets/portfolio-3.jpg";
-import p4 from "@/assets/portfolio-4.jpg";
-import p5 from "@/assets/portfolio-5.jpg";
-import p6 from "@/assets/portfolio-6.jpg";
-import gown from "@/assets/collection-gown.jpg";
-import bridal from "@/assets/collection-bridal.jpg";
-import handbag from "@/assets/collection-handbag.jpg";
-import aari from "@/assets/technique-aari.jpg";
+import portfolioHero from "@/assets/portfolio-hero.webp";
+import p1 from "@/assets/portfolio-1.webp";
+import p2 from "@/assets/portfolio-2.webp";
+import p3 from "@/assets/portfolio-3.webp";
+import p4 from "@/assets/portfolio-4.webp";
+import p5 from "@/assets/portfolio-5.webp";
+import p6 from "@/assets/portfolio-6.webp";
+import gown from "@/assets/collection-gown.webp";
+import bridal from "@/assets/collection-bridal.webp";
+import handbag from "@/assets/collection-handbag.webp";
+import aari from "@/assets/technique-aari.webp";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/portfolio")({
       { property: "og:url", content: "/portfolio" },
       { property: "og:image", content: portfolioHero },
     ],
-    links: [{ rel: "canonical", href: "/portfolio" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/portfolio" }],
   }),
   component: PortfolioPage,
 });
@@ -146,9 +146,9 @@ function PortfolioPage() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">
                       {p.tag}
                     </p>
-                    <h4 className="mt-2 font-serif text-3xl leading-tight text-[#F5F0E8]">
+                    <h2 className="mt-2 font-serif text-3xl leading-tight text-[#F5F0E8]">
                       {p.caption}
-                    </h4>
+                    </h2>
                   </div>
                 </div>
               </Reveal>

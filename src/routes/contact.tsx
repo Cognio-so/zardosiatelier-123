@@ -3,11 +3,11 @@ import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 
 // Hero: overhead flat-lay — ivory silk on dark walnut table with invitation card
-import contactHeroV2 from "@/assets/contact-hero-v2.png";
+import contactHeroV2 from "@/assets/contact-hero-v2.webp";
 
 // Second section: dark moody still-life — fountain pen, wax seal, silk swatch
 // (uses the previous contact-hero which is the embroidered bridal cloth + pen still-life)
-import contactSecond from "@/assets/contact-hero.png";
+import contactSecond from "@/assets/contact-hero.webp";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:url", content: "/contact" },
       { property: "og:image", content: contactHeroV2 },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/contact" }],
   }),
   component: ContactPage,
 });
@@ -146,10 +146,14 @@ function ContactPage() {
                   ["Upload Design", "file", "file"],
                 ].map(([label, name, type]) => (
                   <div key={name}>
-                    <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft">
+                    <label 
+                      htmlFor={`input-${name}`}
+                      className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft"
+                    >
                       {label}
                     </label>
                     <input
+                      id={`input-${name}`}
                       name={name}
                       type={type}
                       required={type !== "file"}
@@ -158,10 +162,14 @@ function ContactPage() {
                   </div>
                 ))}
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft">
+                  <label 
+                    htmlFor="input-brief"
+                    className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft"
+                  >
                     Project Brief
                   </label>
                   <textarea
+                    id="input-brief"
                     rows={4}
                     required
                     className="w-full border-b border-ink/25 bg-transparent py-2 text-[15px] font-medium transition-colors focus:border-gold focus:outline-none"

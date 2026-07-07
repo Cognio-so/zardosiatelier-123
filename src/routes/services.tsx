@@ -2,13 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import heroEmbroidery from "@/assets/hero-embroidery.jpg";
-import collectionGown from "@/assets/collection-gown.jpg";
-import collectionBridal from "@/assets/collection-bridal.jpg";
-import collectionHandbag from "@/assets/collection-handbag.jpg";
-import technique3d from "@/assets/technique-3d.jpg";
-import techniqueBead from "@/assets/technique-bead.jpg";
-import techniqueCrystal from "@/assets/technique-crystal.jpg";
+import heroEmbroidery from "@/assets/hero-embroidery.webp";
+import collectionGown from "@/assets/collection-gown.webp";
+import collectionBridal from "@/assets/collection-bridal.webp";
+import collectionHandbag from "@/assets/collection-handbag.webp";
+import technique3d from "@/assets/technique-3d.webp";
+import techniqueBead from "@/assets/technique-bead.webp";
+import techniqueCrystal from "@/assets/technique-crystal.webp";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/services")({
       { property: "og:url", content: "/services" },
       { property: "og:image", content: collectionGown },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/services" }],
   }),
   component: ServicesPage,
 });
@@ -106,9 +106,9 @@ function ServicesPage() {
                     <div className="w-6 h-[0.75px] bg-[#D4AF37]/40" />
                   </div>
 
-                  <h3 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
+                  <h2 className="mb-3 font-serif text-[26px] leading-tight text-[#1A1A1A]">
                     {s.name}
-                  </h3>
+                  </h2>
                   <p className="flex-1 text-[15px] font-medium leading-7 text-[#2B2722]">
                     {s.desc}
                   </p>

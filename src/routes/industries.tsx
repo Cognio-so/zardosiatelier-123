@@ -2,13 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import categoryHero from "@/assets/category-hero.png";
-import gown from "@/assets/collection-gown.jpg";
-import bridal from "@/assets/collection-bridal.jpg";
-import handbag from "@/assets/collection-handbag.jpg";
-import p2 from "@/assets/portfolio-2.jpg";
-import p6 from "@/assets/portfolio-6.jpg";
-import p1 from "@/assets/portfolio-1.jpg";
+import categoryHero from "@/assets/category-hero.webp";
+import gown from "@/assets/collection-gown.webp";
+import bridal from "@/assets/collection-bridal.webp";
+import handbag from "@/assets/collection-handbag.webp";
+import p2 from "@/assets/portfolio-2.webp";
+import p6 from "@/assets/portfolio-6.webp";
+import p1 from "@/assets/portfolio-1.webp";
 
 export const Route = createFileRoute("/industries")({
   head: () => ({
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/industries")({
       { property: "og:url", content: "/industries" },
       { property: "og:image", content: categoryHero },
     ],
-    links: [{ rel: "canonical", href: "/industries" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/industries" }],
   }),
   component: IndustriesPage,
 });

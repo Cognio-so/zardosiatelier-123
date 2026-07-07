@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import processHero from "@/assets/process-hero.png";
+import processHero from "@/assets/process-hero.webp";
 
 export const Route = createFileRoute("/process")({
   head: () => ({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/process")({
       { property: "og:url", content: "/process" },
       { property: "og:image", content: processHero },
     ],
-    links: [{ rel: "canonical", href: "/process" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/process" }],
   }),
   component: ProcessPage,
 });

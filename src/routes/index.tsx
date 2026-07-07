@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
@@ -24,12 +24,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import heroEmbroidery from "@/assets/hero-embroidery.jpg";
+import heroEmbroidery from "@/assets/hero-embroidery.webp";
 import heroVideo from "@/assets/hero-video.mp4";
-import techniqueZardosiNew from "@/assets/technique-zardosi-new.png";
-import techniqueCrystalNew from "@/assets/technique-crystal-new.png";
-import technique3dNew from "@/assets/technique-3d-new.png";
-import techniqueBeadworkNew from "@/assets/technique-beadwork-new.png";
+import techniqueZardosiNew from "@/assets/technique-zardosi-new.webp";
+import techniqueCrystalNew from "@/assets/technique-crystal-new.webp";
+import technique3dNew from "@/assets/technique-3d-new.webp";
+import techniqueBeadworkNew from "@/assets/technique-beadwork-new.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: heroEmbroidery },
       { property: "twitter:image", content: heroEmbroidery },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/" }],
   }),
   component: HomePage,
 });
@@ -124,20 +124,41 @@ const faqs = [
 ];
 
 function HomePage() {
+  const [loadVideo, setLoadVideo] = useState(false);
+
+  useEffect(() => {
+    // Only load the heavy video after mount to avoid blocking FCP/LCP
+    const timer = setTimeout(() => {
+      setLoadVideo(true);
+    }, 1500); // 1.5s delay allows initial paint to finish cleanly
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <SiteShell>
       <section className="relative min-h-screen w-full overflow-hidden bg-[#160f0b]">
-        {/* Full-screen cinematic video */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={heroEmbroidery}
-          className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
+        {/* Full-screen cinematic video / Poster placeholder */}
+        {loadVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={heroEmbroidery}
+            className="absolute inset-0 h-full w-full object-cover animate-fade-in"
+            aria-hidden="true"
+          >
+            <source src={heroVideo} type="video/mp4" />
+            <track kind="captions" src="" label="No captions available" default />
+          </video>
+        ) : (
+          <img
+            src={heroEmbroidery}
+            alt="Hand embroidery craftsmanship header background"
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover opacity-80"
+          />
+        )}
 
         {/* Cinematic Dark Gradient Overlay */}
         <div 
@@ -442,10 +463,14 @@ function LeadSection() {
 function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
+      <label 
+        htmlFor={`field-${name}`}
+        className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft"
+      >
         {label}
       </label>
       <input
+        id={`field-${name}`}
         name={name}
         type={type}
         required

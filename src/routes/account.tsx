@@ -5,6 +5,13 @@ import { useState } from "react";
 import { User, Package, Settings, LogOut, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
+  head: () => ({
+    meta: [
+      { title: "Account — Client Portal | Zardosi Atelier" },
+      { name: "description", content: "Client portal for Zardosi Atelier — view your hand embroidery commissions, samples and orders." },
+    ],
+    links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/account" }],
+  }),
   component: AccountPage,
 });
 
@@ -32,20 +39,28 @@ function AccountPage() {
                     }}
                   >
                     <div>
-                      <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft">
+                      <label 
+                        htmlFor="login-email"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft"
+                      >
                         Email Address
                       </label>
                       <input 
+                        id="login-email"
                         type="email" 
                         required
                         className="w-full border-b border-ink/20 bg-transparent py-3 text-sm outline-none transition focus:border-gold"
                       />
                     </div>
                     <div>
-                      <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft">
+                      <label 
+                        htmlFor="login-password"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft"
+                      >
                         Password
                       </label>
                       <input 
+                        id="login-password"
                         type="password" 
                         required
                         className="w-full border-b border-ink/20 bg-transparent py-3 text-sm outline-none transition focus:border-gold"
