@@ -4,6 +4,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { TypingAnimation } from "@/registry/magicui/typing-animation";
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
+import { Lens } from "@/registry/magicui/lens";
 import {
   Crown,
   Layers,
@@ -211,6 +212,7 @@ function HomePage() {
             <div>
               <span className="eyebrow">Embroidery Techniques</span>
               <Text3DFlip
+                as="h2"
                 className="mt-3 font-serif text-4xl leading-tight sm:text-6xl text-ink"
                 textClassName="text-ink"
                 flipTextClassName="text-gold-soft"
@@ -232,11 +234,13 @@ function HomePage() {
               <Reveal key={item.name} delay={i * 80}>
                 <article className="group">
                   <div className="aspect-[4/5] overflow-hidden bg-[#E5D8C8]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                    />
+                    <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      />
+                    </Lens>
                   </div>
                   <h3 className="mt-4 font-serif text-3xl leading-tight text-ink">{item.name}</h3>
                   <p className="mt-2 text-[15px] font-medium leading-7 text-ink-soft">

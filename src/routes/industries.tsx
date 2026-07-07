@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import categoryHero from "@/assets/category-hero.png";
 import gown from "@/assets/collection-gown.jpg";
 import bridal from "@/assets/collection-bridal.jpg";
@@ -90,20 +91,22 @@ function CategoryCard({ s }: { s: (typeof industries)[number] }) {
         style={{ aspectRatio: "4/3", cursor: "pointer" }}
         data-preview-image={s.img}
       >
-        <img
-          src={s.img}
-          alt={s.label}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover"
-          style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.transform = "scale(1.08)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-          }}
-        />
+        <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+          <img
+            src={s.img}
+            alt={s.label}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover"
+            style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.transform = "scale(1.08)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.transform = "scale(1)";
+            }}
+          />
+        </Lens>
         {/* Gradient overlay on image section */}
         <div
           className="absolute inset-0 pointer-events-none"

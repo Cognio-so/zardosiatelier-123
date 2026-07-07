@@ -13,6 +13,7 @@ interface Text3DFlipProps {
   staggerDuration?: number;
   staggerFrom?: "first" | "last" | "center" | "random";
   transition?: any;
+  as?: React.ElementType;
 }
 
 export default function Text3DFlip({
@@ -24,6 +25,7 @@ export default function Text3DFlip({
   staggerDuration = 0.03,
   staggerFrom = "first",
   transition = { type: "spring", damping: 25, stiffness: 160 },
+  as: Component = "span",
 }: Text3DFlipProps) {
   const chars = children.split("");
   const total = chars.length;
@@ -77,9 +79,11 @@ export default function Text3DFlip({
     }),
   };
 
+  const MotionComponent = motion(Component);
+
   return (
-    <motion.span
-      className={cn("inline-flex flex-wrap cursor-pointer", className)}
+    <MotionComponent
+      className={cn("flex flex-wrap cursor-pointer", className)}
       initial="initial"
       whileHover="hover"
     >
@@ -128,6 +132,6 @@ export default function Text3DFlip({
           </span>
         );
       })}
-    </motion.span>
+    </MotionComponent>
   );
 }

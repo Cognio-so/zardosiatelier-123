@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import aboutHero from "@/assets/about-hero.png";
 import gown from "@/assets/collection-gown.jpg";
 
@@ -79,13 +80,15 @@ function AboutPage() {
                 if (img) img.style.transform = "scale(1)";
               }}
             >
-              <img
-                src={aboutHero}
-                alt="Artisan hands hand-stitching zardosi embroidery on an adda frame"
-                decoding="async"
-                className="h-full w-full object-cover"
-                style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
-              />
+              <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+                <img
+                  src={aboutHero}
+                  alt="Artisan hands hand-stitching zardosi embroidery on an adda frame"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                  style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
+                />
+              </Lens>
             </div>
           </Reveal>
         </div>
@@ -114,17 +117,19 @@ function AboutPage() {
                 if (img) img.style.transform = "scale(1)";
               }}
             >
-              <img
-                src={gown}
-                alt="Atelier couture gown embroidery"
-                decoding="async"
-                className="w-full object-cover"
-                style={{
-                  maxHeight: "440px",
-                  objectPosition: "center top",
-                  transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)",
-                }}
-              />
+              <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+                <img
+                  src={gown}
+                  alt="Atelier couture gown embroidery"
+                  decoding="async"
+                  className="w-full object-cover"
+                  style={{
+                    maxHeight: "440px",
+                    objectPosition: "center top",
+                    transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)",
+                  }}
+                />
+              </Lens>
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{

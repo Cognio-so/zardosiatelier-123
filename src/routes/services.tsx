@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import heroEmbroidery from "@/assets/hero-embroidery.jpg";
 import collectionGown from "@/assets/collection-gown.jpg";
 import collectionBridal from "@/assets/collection-bridal.jpg";
@@ -85,13 +86,15 @@ function ServicesPage() {
                   className="overflow-hidden aspect-[4/3] cursor-pointer"
                   data-preview-image={s.image}
                 >
-                  <img
-                    src={s.image}
-                    alt={s.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.08]"
-                  />
+                  <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+                    <img
+                      src={s.image}
+                      alt={s.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.19,1,.22,1)] group-hover:scale-[1.08]"
+                    />
+                  </Lens>
                 </div>
 
                 {/* Content section */}

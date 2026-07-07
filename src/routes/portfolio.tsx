@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import portfolioHero from "@/assets/portfolio-hero.png";
 import p1 from "@/assets/portfolio-1.jpg";
 import p2 from "@/assets/portfolio-2.jpg";
@@ -81,23 +82,25 @@ function PortfolioPage() {
                   }}
                 >
                   {/* Zoom image */}
-                  <img
-                    src={p.src}
-                    alt={p.caption}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-auto object-cover"
-                    style={{
-                      transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
-                      display: "block",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.transform = "scale(1.07)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-                    }}
-                  />
+                  <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+                    <img
+                      src={p.src}
+                      alt={p.caption}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-auto object-cover"
+                      style={{
+                        transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
+                        display: "block",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.transform = "scale(1.07)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.transform = "scale(1)";
+                      }}
+                    />
+                  </Lens>
 
                   {/* Dark gradient overlay — fades in on hover */}
                   <div

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import processHero from "@/assets/process-hero.png";
 
 export const Route = createFileRoute("/process")({
@@ -94,16 +95,18 @@ function ProcessPage() {
               if (img) img.style.transform = "scale(1)";
             }}
           >
-            <img
-              src={processHero}
-              alt="Embroidery sampling process — zari spools, crystals and silk swatch flat-lay"
-              className="w-full object-cover object-center"
-              style={{
-                maxHeight: "420px",
-                transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
-                display: "block",
-              }}
-            />
+            <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+              <img
+                src={processHero}
+                alt="Embroidery sampling process — zari spools, crystals and silk swatch flat-lay"
+                className="w-full object-cover object-center"
+                style={{
+                  maxHeight: "420px",
+                  transition: "transform 1.4s cubic-bezier(0.19,1,0.22,1)",
+                  display: "block",
+                }}
+              />
+            </Lens>
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
