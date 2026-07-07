@@ -156,10 +156,14 @@ function HomePage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
                 Haute Couture Embroidery — India
               </p>
-              <h1 className="mt-6 font-serif text-[46px] leading-[1.02] text-white sm:text-[64px] lg:text-[76px]">
-                Hand embroidery for the world's{" "}
-                <span className="italic text-gold-soft">finest labels.</span>
-              </h1>
+              <TypingAnimation
+                as="h1"
+                duration={40}
+                delay={200}
+                className="mt-6 font-serif text-[46px] leading-[1.02] text-white sm:text-[64px] lg:text-[76px] font-normal tracking-normal text-left"
+              >
+                Hand embroidery for the world's *finest labels.*
+              </TypingAnimation>
               <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
                 premium brands — every stitch finished by master karigars and checked twice before it

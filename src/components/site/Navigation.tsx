@@ -44,7 +44,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#F5F0E8",
   },
   "/portfolio": {
-    bg: "rgba(18,14,11,0.82)",
+    bg: "rgba(18,14,11,0.98)",
     border: "rgba(212,175,55,0.12)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
@@ -58,7 +58,7 @@ const themes: Record<string, NavTheme> = {
   },
   "/industries": {
     // warm deep brown-black — pairs with the linen bg of the category page
-    bg: "rgba(26,16,11,0.80)",
+    bg: "rgba(26,16,11,0.98)",
     border: "rgba(212,175,55,0.10)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
@@ -72,7 +72,7 @@ const themes: Record<string, NavTheme> = {
   },
   "/about": {
     // pure charcoal — matches about hero darkness
-    bg: "rgba(14,14,14,0.84)",
+    bg: "rgba(14,14,14,0.98)",
     border: "rgba(255,255,255,0.08)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
@@ -86,7 +86,7 @@ const themes: Record<string, NavTheme> = {
   },
   "/process": {
     // deep matte black — matches process matte-black table image
-    bg: "rgba(10,10,10,0.88)",
+    bg: "rgba(10,10,10,0.98)",
     border: "rgba(212,175,55,0.15)",
     logoText: "#FFFFFF",
     logoSub: "#D4AF37",
@@ -100,7 +100,7 @@ const themes: Record<string, NavTheme> = {
   },
   "/contact": {
     // warm dark wood — matches contact hero dark wooden table
-    bg: "rgba(22,12,8,0.86)",
+    bg: "rgba(22,12,8,0.98)",
     border: "rgba(212,175,55,0.14)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
@@ -115,7 +115,7 @@ const themes: Record<string, NavTheme> = {
 };
 
 const scrolledTheme: NavTheme = {
-  bg: "rgba(10,8,7,0.78)",
+  bg: "rgba(18,14,11,0.98)",
   border: "rgba(212,175,55,0.15)",
   logoText: "#FFFFFF",
   logoSub: "#C9A84C",
