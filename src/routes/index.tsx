@@ -35,6 +35,7 @@ import zardoziPaisley from "@/assets/zardozi-paisley.jpeg";
 import reshamZari1 from "@/assets/resham-zari-1.jpeg";
 import reshamZariCard from "@/assets/resham-zari-card.png";
 import pearlWorkCard from "@/assets/pearl-work-card.jpg";
+import crystalCard from "@/assets/crystal-1.jpeg";
 import sequin1 from "@/assets/sequin-1.jpg";
 import sequin2 from "@/assets/sequin-2.jpg";
 import sequin3 from "@/assets/sequin-3.jpeg";
@@ -84,8 +85,9 @@ const techniques = [
   {
     name: "Crystal & Stone Work",
     desc: "Hand-set crystals and stones for couture brilliance and shadow play.",
-    image: reshamZari1,
+    image: crystalCard,
     images: null,
+    href: "/crystal-stone" as const,
   },
   {
     name: "Resham & Zari",

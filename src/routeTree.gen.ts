@@ -17,6 +17,7 @@ import { Route as ProcessRouteImport } from './routes/process'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as PearlWorkRouteImport } from './routes/pearl-work'
 import { Route as IndustriesRouteImport } from './routes/industries'
+import { Route as CrystalStoneRouteImport } from './routes/crystal-stone'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as AboutRouteImport } from './routes/about'
@@ -62,6 +63,11 @@ const IndustriesRoute = IndustriesRouteImport.update({
   path: '/industries',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CrystalStoneRoute = CrystalStoneRouteImport.update({
+  id: '/crystal-stone',
+  path: '/crystal-stone',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
+  '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
+  '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
+  '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/account'
     | '/contact'
+    | '/crystal-stone'
     | '/industries'
     | '/pearl-work'
     | '/portfolio'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/account'
     | '/contact'
+    | '/crystal-stone'
     | '/industries'
     | '/pearl-work'
     | '/portfolio'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/account'
     | '/contact'
+    | '/crystal-stone'
     | '/industries'
     | '/pearl-work'
     | '/portfolio'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
   ContactRoute: typeof ContactRoute
+  CrystalStoneRoute: typeof CrystalStoneRoute
   IndustriesRoute: typeof IndustriesRoute
   PearlWorkRoute: typeof PearlWorkRoute
   PortfolioRoute: typeof PortfolioRoute
@@ -244,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndustriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/crystal-stone': {
+      id: '/crystal-stone'
+      path: '/crystal-stone'
+      fullPath: '/crystal-stone'
+      preLoaderRoute: typeof CrystalStoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
   ContactRoute: ContactRoute,
+  CrystalStoneRoute: CrystalStoneRoute,
   IndustriesRoute: IndustriesRoute,
   PearlWorkRoute: PearlWorkRoute,
   PortfolioRoute: PortfolioRoute,
