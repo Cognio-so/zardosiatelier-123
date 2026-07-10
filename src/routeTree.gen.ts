@@ -9,18 +9,37 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ZardoziRouteImport } from './routes/zardozi'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SequinRouteImport } from './routes/sequin'
+import { Route as ReshamZariRouteImport } from './routes/resham-zari'
 import { Route as ProcessRouteImport } from './routes/process'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as PearlWorkRouteImport } from './routes/pearl-work'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ZardoziRoute = ZardoziRouteImport.update({
+  id: '/zardozi',
+  path: '/zardozi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SequinRoute = SequinRouteImport.update({
+  id: '/sequin',
+  path: '/sequin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReshamZariRoute = ReshamZariRouteImport.update({
+  id: '/resham-zari',
+  path: '/resham-zari',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProcessRoute = ProcessRouteImport.update({
@@ -31,6 +50,11 @@ const ProcessRoute = ProcessRouteImport.update({
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PearlWorkRoute = PearlWorkRouteImport.update({
+  id: '/pearl-work',
+  path: '/pearl-work',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndustriesRoute = IndustriesRouteImport.update({
@@ -65,9 +89,13 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
+  '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
   '/process': typeof ProcessRoute
+  '/resham-zari': typeof ReshamZariRoute
+  '/sequin': typeof SequinRoute
   '/services': typeof ServicesRoute
+  '/zardozi': typeof ZardoziRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,9 +103,13 @@ export interface FileRoutesByTo {
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
+  '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
   '/process': typeof ProcessRoute
+  '/resham-zari': typeof ReshamZariRoute
+  '/sequin': typeof SequinRoute
   '/services': typeof ServicesRoute
+  '/zardozi': typeof ZardoziRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,9 +118,13 @@ export interface FileRoutesById {
   '/account': typeof AccountRoute
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
+  '/pearl-work': typeof PearlWorkRoute
   '/portfolio': typeof PortfolioRoute
   '/process': typeof ProcessRoute
+  '/resham-zari': typeof ReshamZariRoute
+  '/sequin': typeof SequinRoute
   '/services': typeof ServicesRoute
+  '/zardozi': typeof ZardoziRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,9 +134,13 @@ export interface FileRouteTypes {
     | '/account'
     | '/contact'
     | '/industries'
+    | '/pearl-work'
     | '/portfolio'
     | '/process'
+    | '/resham-zari'
+    | '/sequin'
     | '/services'
+    | '/zardozi'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,9 +148,13 @@ export interface FileRouteTypes {
     | '/account'
     | '/contact'
     | '/industries'
+    | '/pearl-work'
     | '/portfolio'
     | '/process'
+    | '/resham-zari'
+    | '/sequin'
     | '/services'
+    | '/zardozi'
   id:
     | '__root__'
     | '/'
@@ -118,9 +162,13 @@ export interface FileRouteTypes {
     | '/account'
     | '/contact'
     | '/industries'
+    | '/pearl-work'
     | '/portfolio'
     | '/process'
+    | '/resham-zari'
+    | '/sequin'
     | '/services'
+    | '/zardozi'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -129,18 +177,43 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   ContactRoute: typeof ContactRoute
   IndustriesRoute: typeof IndustriesRoute
+  PearlWorkRoute: typeof PearlWorkRoute
   PortfolioRoute: typeof PortfolioRoute
   ProcessRoute: typeof ProcessRoute
+  ReshamZariRoute: typeof ReshamZariRoute
+  SequinRoute: typeof SequinRoute
   ServicesRoute: typeof ServicesRoute
+  ZardoziRoute: typeof ZardoziRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/zardozi': {
+      id: '/zardozi'
+      path: '/zardozi'
+      fullPath: '/zardozi'
+      preLoaderRoute: typeof ZardoziRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sequin': {
+      id: '/sequin'
+      path: '/sequin'
+      fullPath: '/sequin'
+      preLoaderRoute: typeof SequinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resham-zari': {
+      id: '/resham-zari'
+      path: '/resham-zari'
+      fullPath: '/resham-zari'
+      preLoaderRoute: typeof ReshamZariRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/process': {
@@ -155,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pearl-work': {
+      id: '/pearl-work'
+      path: '/pearl-work'
+      fullPath: '/pearl-work'
+      preLoaderRoute: typeof PearlWorkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/industries': {
@@ -201,9 +281,13 @@ const rootRouteChildren: RootRouteChildren = {
   AccountRoute: AccountRoute,
   ContactRoute: ContactRoute,
   IndustriesRoute: IndustriesRoute,
+  PearlWorkRoute: PearlWorkRoute,
   PortfolioRoute: PortfolioRoute,
   ProcessRoute: ProcessRoute,
+  ReshamZariRoute: ReshamZariRoute,
+  SequinRoute: SequinRoute,
   ServicesRoute: ServicesRoute,
+  ZardoziRoute: ZardoziRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

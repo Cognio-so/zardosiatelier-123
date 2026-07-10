@@ -24,9 +24,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
         }
       }
 
-      // Fallback: If clicking any IMG directly in the main content area (excluding nav/footer/no-preview)
+      // Fallback: If clicking any IMG directly in the main content area (excluding nav/footer/header/no-preview)
       if (
         target.tagName === "IMG" &&
+        !target.closest("header") &&
         !target.closest("nav") &&
         !target.closest("footer") &&
         !target.classList.contains("no-preview") &&

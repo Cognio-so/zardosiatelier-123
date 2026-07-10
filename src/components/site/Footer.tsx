@@ -37,9 +37,7 @@ export function Footer() {
                 ["Home", "/"],
                 ["Services", "/services"],
                 ["Portfolio", "/portfolio"],
-                ["Category", "/industries"],
                 ["About", "/about"],
-                ["Process", "/process"],
                 ["Contact", "/contact"],
               ].map(([label, to]) => (
                 <li key={label}>

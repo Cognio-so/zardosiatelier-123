@@ -1,13 +1,12 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import zaLogo from "@/assets/za-logo.png";
 
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
   { to: "/portfolio", label: "Portfolio" },
-  { to: "/industries", label: "Category" },
   { to: "/about", label: "About" },
-  { to: "/process", label: "Process" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -172,32 +171,44 @@ export function Navigation() {
     >
       <div className="mx-auto flex h-24 max-w-[1600px] items-center justify-between px-8 lg:px-12">
 
-        {/* Brand logo */}
-        <Link to="/" className="flex flex-col items-start z-10 group">
-          <span
-            className="font-serif text-2xl lg:text-[32px] tracking-[0.25em] uppercase leading-none"
-            style={{
-              color: theme.logoText,
-              transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
-            }}
-          >
-            Zardosi
-          </span>
-          <span
-            className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.55em]"
-            style={{
-              color: theme.logoSub,
-              transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
-            }}
-          >
-            Atelier
-          </span>
-        </Link>
+        {/* Brand logo — clicking logo does NOT navigate; use the Home nav link instead */}
+        <div className="flex items-center gap-3 z-10 select-none" aria-label="Zardosi Atelier">
+          {/* Logo Icon (Cropped bottom text to display high-quality monogram only) */}
+          <div className="relative overflow-hidden h-[44px] w-[83px] lg:h-[52px] lg:w-[98px] shrink-0">
+            <img
+              src={zaLogo}
+              alt="ZA Monogram"
+              className="absolute top-0 left-0 w-full h-auto no-preview"
+              style={{ filter: "brightness(1.08) drop-shadow(0 0 8px rgba(255,255,255,0.15))" }}
+            />
+          </div>
+          {/* Crisp HTML Brand Text */}
+          <div className="flex flex-col items-start">
+            <span
+              className="font-serif text-lg lg:text-xl tracking-[0.22em] uppercase leading-none font-normal"
+              style={{
+                color: theme.logoText,
+                transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
+              }}
+            >
+              Zardosi
+            </span>
+            <span
+              className="mt-1 text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.45em]"
+              style={{
+                color: theme.logoSub,
+                transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
+              }}
+            >
+              Atelier
+            </span>
+          </div>
+        </div>
 
         {/* Desktop nav links + CTA */}
         <div className="flex items-center gap-10 z-10">
           <nav className="hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em]">
-            {navLinks.slice(1).map((l) => {
+            {navLinks.map((l) => {
               const isActive = pathname === l.to;
               return (
                 <Link

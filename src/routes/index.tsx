@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
@@ -30,6 +30,17 @@ import techniqueZardosiNew from "@/assets/technique-zardosi-new.webp";
 import techniqueCrystalNew from "@/assets/technique-crystal-new.webp";
 import technique3dNew from "@/assets/technique-3d-new.webp";
 import techniqueBeadworkNew from "@/assets/technique-beadwork-new.webp";
+import techniqueSequinNew from "@/assets/technique-sequin-new.png";
+import zardoziPaisley from "@/assets/zardozi-paisley.jpeg";
+import reshamZari1 from "@/assets/resham-zari-1.jpeg";
+import reshamZariCard from "@/assets/resham-zari-card.png";
+import pearlWorkCard from "@/assets/pearl-work-card.jpg";
+import sequin1 from "@/assets/sequin-1.jpg";
+import sequin2 from "@/assets/sequin-2.jpg";
+import sequin3 from "@/assets/sequin-3.jpeg";
+import sequin4 from "@/assets/sequin-4.jpeg";
+import sequin5 from "@/assets/sequin-5.jpg";
+import sequin6 from "@/assets/sequin-6.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,24 +68,38 @@ export const Route = createFileRoute("/")({
 
 const techniques = [
   {
-    name: "Zardosi",
+    name: "Zardozi",
     desc: "Metallic gold threadwork rooted in centuries of courtly craft.",
-    image: techniqueBeadworkNew,
+    image: zardoziPaisley,
+    images: null,
+    href: "/zardozi" as const,
   },
   {
-    name: "Crystal Work",
-    desc: "Hand-set crystals and sequins for couture light and shadow.",
-    image: technique3dNew,
+    name: "Sequin",
+    desc: "Thousands of hand-stitched sequins catching couture light with every movement.",
+    image: sequin3,
+    images: null,
+    href: "/sequin" as const,
   },
   {
-    name: "3D Floral",
-    desc: "Sculpted silk petals layered with pearl and bead cores.",
-    image: techniqueCrystalNew,
+    name: "Crystal & Stone Work",
+    desc: "Hand-set crystals and stones for couture brilliance and shadow play.",
+    image: reshamZari1,
+    images: null,
   },
   {
-    name: "Beadwork",
+    name: "Resham & Zari",
+    desc: "Fine silk and gold Zari threads woven into intricate surface patterns.",
+    image: reshamZariCard,
+    images: null,
+    href: "/resham-zari" as const,
+  },
+  {
+    name: "Pearl Work",
     desc: "Glass, pearl and seed-bead compositions stitched by hand.",
-    image: techniqueZardosiNew,
+    image: pearlWorkCard,
+    images: null,
+    href: "/pearl-work" as const,
   },
 ];
 
@@ -227,14 +252,14 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#EFE8DD] py-12 sm:py-16">
+      <section className="bg-[#EFE8DD] py-8 sm:py-10">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
-          <Reveal className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <Reveal className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
             <div>
               <span className="eyebrow">Embroidery Techniques</span>
               <Text3DFlip
                 as="h2"
-                className="mt-3 font-serif text-4xl leading-tight sm:text-6xl text-ink"
+                className="mt-2 font-serif text-5xl leading-tight sm:text-7xl text-ink"
                 textClassName="text-ink"
                 flipTextClassName="text-gold-soft"
                 rotateDirection="top"
@@ -250,26 +275,46 @@ function HomePage() {
             </Link>
           </Reveal>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {techniques.map((item, i) => (
-              <Reveal key={item.name} delay={i * 80}>
-                <article className="group">
-                  <div className="aspect-[4/5] overflow-hidden bg-[#E5D8C8]">
-                    <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {techniques.map((item, i) => {
+              const cardInner = (
+                <article className="group cursor-pointer">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
+                    <Lens zoomFactor={2.2} lensSize={130} isStatic={false}>
                       <img
                         src={item.image}
                         alt={item.name}
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                       />
                     </Lens>
+                    {/* View hint for sequin card */}
+                    {"href" in item && (
+                      <div className="absolute inset-0 flex items-end justify-center pb-10 pointer-events-none">
+                        <span className="translate-y-2 text-[9px] font-bold uppercase tracking-[0.35em] text-white bg-black/50 px-3 py-1.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                          View All Images →
+                        </span>
+                      </div>
+                    )}
                   </div>
-                  <h3 className="mt-4 font-serif text-3xl leading-tight text-ink">{item.name}</h3>
-                  <p className="mt-2 text-[15px] font-medium leading-7 text-ink-soft">
+                  <h3 className="mt-2 font-serif text-xl leading-snug text-ink">{item.name}</h3>
+                  <p className="mt-1 text-[12px] font-medium leading-5 text-ink-soft">
                     {item.desc}
                   </p>
                 </article>
-              </Reveal>
-            ))}
+              );
+
+              return (
+                <Reveal key={item.name} delay={i * 70}>
+                  {"href" in item ? (
+                    <Link to={item.href} className="block">
+                      {cardInner}
+                    </Link>
+                  ) : (
+                    cardInner
+                  )}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -321,13 +366,17 @@ function HomePage() {
           <Reveal delay={120} className="mt-4 px-0 py-8">
             <div className="grid gap-8 border-y border-ink/10 py-8 text-center md:grid-cols-3">
               <div>
-                <p className="font-serif text-5xl text-gold sm:text-6xl">120+</p>
+                <p className="font-serif text-5xl text-gold sm:text-6xl">
+                  <CountUp target={120} suffix="+" duration={2000} />
+                </p>
                 <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Collections Supported
                 </p>
               </div>
               <div>
-                <p className="font-serif text-5xl text-gold sm:text-6xl">18</p>
+                <p className="font-serif text-5xl text-gold sm:text-6xl">
+                  <CountUp target={18} duration={1600} />
+                </p>
                 <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Markets Served
                 </p>
@@ -374,6 +423,101 @@ function HomePage() {
       <LeadSection />
     </SiteShell>
   );
+}
+
+function SequinCarousel({ images, name }: { images: string[]; name: string }) {
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const next = useCallback(() => {
+    setCurrent((c) => (c + 1) % images.length);
+  }, [images.length]);
+
+  useEffect(() => {
+    timerRef.current = setInterval(next, 3000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [next]);
+
+  const goTo = (idx: number) => {
+    setCurrent(idx);
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(next, 3000);
+  };
+
+  return (
+    <div className="relative h-full w-full overflow-hidden group">
+      {images.map((src, idx) => (
+        <img
+          key={idx}
+          src={src}
+          alt={`${name} ${idx + 1}`}
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+          style={{ opacity: idx === current ? 1 : 0 }}
+        />
+      ))}
+      {/* Dot indicators */}
+      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => goTo(idx)}
+            aria-label={`Go to image ${idx + 1}`}
+            className="h-1.5 rounded-full transition-all duration-300"
+            style={{
+              width: idx === current ? "20px" : "6px",
+              backgroundColor: idx === current ? "#C9A84C" : "rgba(255,255,255,0.6)",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CountUp({
+  target,
+  suffix = "",
+  duration = 1800,
+}: {
+  target: number;
+  suffix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = performance.now();
+          const step = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(eased * target));
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
 }
 
 function LeadSection() {
