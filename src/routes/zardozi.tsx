@@ -45,9 +45,9 @@ import z37 from "@/assets/zardozi-37.jpeg";
 export const Route = createFileRoute("/zardozi")({
   head: () => ({
     meta: [
-      { title: "Zardozi Embroidery — Metallic Gold Threadwork | Zardosi Atelier" },
+      { title: "Zardozi Embroidery - Metallic Gold Threadwork | Zardosi Atelier" },
       { name: "description", content: "Centuries-old zardozi metallic gold threadwork crafted by master karigars. Explore our complete gallery of zardozi embroidery for luxury couture." },
-      { property: "og:title", content: "Zardozi Embroidery — Zardosi Atelier" },
+      { property: "og:title", content: "Zardozi Embroidery - Zardosi Atelier" },
       { property: "og:url", content: "/zardozi" },
       { property: "og:image", content: z01 },
     ],
@@ -57,43 +57,43 @@ export const Route = createFileRoute("/zardozi")({
 });
 
 const galleryImages = [
-  { src: z01, alt: "Zardozi paisley motif — gold thread on white silk" },
+  { src: z01, alt: "Zardozi paisley motif - gold thread on white silk" },
   { src: z02, alt: "Zardozi embroidery detail close-up" },
-  { src: z03, alt: "Zardozi needlework — fine metallic craftsmanship" },
+  { src: z03, alt: "Zardozi needlework - fine metallic craftsmanship" },
   { src: z04, alt: "Zardozi gold threadwork panel" },
   { src: z05, alt: "Zardozi embellishment on couture fabric" },
   { src: z06, alt: "Zardozi floral motif in metallic thread" },
-  { src: z07, alt: "Zardozi hand embroidery — artisan work" },
-  { src: z08, alt: "Zardozi — intricate gold design" },
+  { src: z07, alt: "Zardozi hand embroidery - artisan work" },
+  { src: z08, alt: "Zardozi - intricate gold design" },
   { src: z09, alt: "Zardozi embroidery pattern detail" },
-  { src: z10, alt: "Zardozi metallic work — close up" },
+  { src: z10, alt: "Zardozi metallic work - close up" },
   { src: z11, alt: "Zardozi couture embroidery panel" },
   { src: z12, alt: "Zardozi silk threadwork" },
-  { src: z13, alt: "Zardozi embroidery — ornate detail" },
+  { src: z13, alt: "Zardozi embroidery - ornate detail" },
   { src: z14, alt: "Zardozi floral arrangement in gold" },
   { src: z15, alt: "Zardozi surface embroidery sample" },
-  { src: z16, alt: "Zardozi artisan work — luxury finish" },
+  { src: z16, alt: "Zardozi artisan work - luxury finish" },
   { src: z17, alt: "Zardozi gold work detail" },
-  { src: z18, alt: "Zardozi embroidery — heritage craft" },
-  { src: z19, alt: "Zardozi pattern — symmetrical motif" },
-  { src: z20, alt: "Zardozi embroidery — couture finish" },
+  { src: z18, alt: "Zardozi embroidery - heritage craft" },
+  { src: z19, alt: "Zardozi pattern - symmetrical motif" },
+  { src: z20, alt: "Zardozi embroidery - couture finish" },
   { src: z21, alt: "Zardozi detailed needlework" },
   { src: z22, alt: "Zardozi gold embroidery on fabric" },
   { src: z23, alt: "Zardozi hand-stitched panel" },
-  { src: z24, alt: "Zardozi — luxury embellishment" },
+  { src: z24, alt: "Zardozi - luxury embellishment" },
   { src: z25, alt: "Zardozi design with gemstone accents" },
-  { src: z26, alt: "Zardozi embroidery — artisan crafted" },
-  { src: z27, alt: "Zardozi surface work — export quality" },
-  { src: z28, alt: "Zardozi embroidery — fine detail" },
-  { src: z29, alt: "Zardozi embroidery — artisan detail" },
-  { src: z30, alt: "Zardozi embroidery — gold threadwork" },
-  { src: z31, alt: "Zardozi embroidery — ornate motif" },
-  { src: z32, alt: "Zardozi embroidery — couture panel" },
-  { src: z33, alt: "Zardozi embroidery — surface embellishment" },
-  { src: z34, alt: "Zardozi embroidery — heritage craft" },
-  { src: z35, alt: "Zardozi embroidery — luxury finish" },
-  { src: z36, alt: "Zardozi embroidery — karigan work" },
-  { src: z37, alt: "Zardozi embroidery — export quality" },
+  { src: z26, alt: "Zardozi embroidery - artisan crafted" },
+  { src: z27, alt: "Zardozi surface work - export quality" },
+  { src: z28, alt: "Zardozi embroidery - fine detail" },
+  { src: z29, alt: "Zardozi embroidery - artisan detail" },
+  { src: z30, alt: "Zardozi embroidery - gold threadwork" },
+  { src: z31, alt: "Zardozi embroidery - ornate motif" },
+  { src: z32, alt: "Zardozi embroidery - couture panel" },
+  { src: z33, alt: "Zardozi embroidery - surface embellishment" },
+  { src: z34, alt: "Zardozi embroidery - heritage craft" },
+  { src: z35, alt: "Zardozi embroidery - luxury finish" },
+  { src: z36, alt: "Zardozi embroidery - karigan work" },
+  { src: z37, alt: "Zardozi embroidery - export quality" },
 ];
 
 const stats = [
@@ -163,7 +163,7 @@ function ZardoziPage() {
               The Art of Metallic Gold
             </p>
             <p className="mx-auto max-w-[56ch] text-base font-medium leading-relaxed text-white/70 sm:text-lg mb-10">
-              Born in the imperial courts of the Mughal era — zardozi is the art of embroidering with metallic threads,
+              Born in the imperial courts of the Mughal era - zardozi is the art of embroidering with metallic threads,
               sequins and gemstones on rich fabrics. Each piece takes days of patient hand-craft by master karigars.
             </p>
 
@@ -206,7 +206,7 @@ function ZardoziPage() {
                 The craft, thread by thread.
               </h2>
               <p className="max-w-[55ch] text-[15px] font-medium leading-7 text-[#5C4A34]">
-                {galleryImages.length} original pieces — each stitched by hand in our atelier. Click any image to explore it in full detail.
+                {galleryImages.length} original pieces - each stitched by hand in our atelier. Click any image to explore it in full detail.
               </p>
             </div>
           </Reveal>
@@ -278,17 +278,17 @@ function ZardoziPage() {
               </div>
               <div className="space-y-5 text-[15px] font-medium leading-8 text-white/65">
                 <p>
-                  Zardozi (from Persian — zar meaning gold, dozi meaning needlework) is one of India's most refined
+                  Zardozi (from Persian - zar meaning gold, dozi meaning needlework) is one of India's most refined
                   embroidery traditions. It flourished under Mughal patronage and has since become a hallmark of luxury
                   Indian fashion worldwide.
                 </p>
                 <p>
                   Our atelier practices traditional zardozi using fine gold and silver zari wire, dabka, salma-sitara,
-                  and hand-set stones — all stitched by experienced karigars who have trained for years in this art form.
+                  and hand-set stones - all stitched by experienced karigars who have trained for years in this art form.
                 </p>
                 <p>
                   We execute zardozi commissions for couture houses, bridal labels, luxury accessory brands and
-                  contemporary designers — from a single signature motif to a fully embroidered panel.
+                  contemporary designers - from a single signature motif to a fully embroidered panel.
                 </p>
                 <Link
                   to="/contact"

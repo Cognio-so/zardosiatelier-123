@@ -9,7 +9,7 @@ export interface AdminSession {
   expiresAt: number;
 }
 
-/** Server fn — verify password, return a session token */
+/** Server fn - verify password, return a session token */
 export const loginAdmin = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string() }))
   .handler(async ({ data }) => {
@@ -23,7 +23,7 @@ export const loginAdmin = createServerFn({ method: "POST" })
     return { token, expiresAt: Date.now() + 24 * 60 * 60 * 1000 };
   });
 
-/** Server fn — verify a session token */
+/** Server fn - verify a session token */
 export const verifyAdminToken = createServerFn({ method: "POST" })
   .validator(z.object({ token: z.string(), expiresAt: z.number() }))
   .handler(async ({ data }) => {

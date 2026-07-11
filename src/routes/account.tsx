@@ -7,8 +7,8 @@ import { User, Package, Settings, LogOut, ChevronRight } from "lucide-react";
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
-      { title: "Account — Client Portal | Zardosi Atelier" },
-      { name: "description", content: "Client portal for Zardosi Atelier — view your hand embroidery commissions, samples and orders." },
+      { title: "Account - Client Portal | Zardosi Atelier" },
+      { name: "description", content: "Client portal for Zardosi Atelier - view your hand embroidery commissions, samples and orders." },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/account" }],
   }),

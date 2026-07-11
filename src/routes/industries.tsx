@@ -13,13 +13,13 @@ import p1 from "@/assets/portfolio-1.webp";
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Category — Who We Serve | Zardosi Atelier" },
+      { title: "Category - Who We Serve | Zardosi Atelier" },
       {
         name: "description",
         content:
-          "Couture houses, bridal labels, designer menswear, accessory brands — the categories our atelier serves.",
+          "Couture houses, bridal labels, designer menswear, accessory brands - the categories our atelier serves.",
       },
-      { property: "og:title", content: "Category — Zardosi Atelier" },
+      { property: "og:title", content: "Category - Zardosi Atelier" },
       {
         property: "og:description",
         content: "Categories served by our luxury embroidery atelier.",
@@ -193,7 +193,7 @@ function IndustriesPage() {
           >
             <img
               src={categoryHero}
-              alt="Bridal lehenga fabric with 3D floral embroidery — flat-lay"
+              alt="Bridal lehenga fabric with 3D floral embroidery - flat-lay"
               className="w-full object-cover object-center"
               style={{ maxHeight: "340px" }}
             />
@@ -208,7 +208,7 @@ function IndustriesPage() {
                 Bridal · 3D Floral Embroidery
               </p>
               <h2 className="mt-2 font-serif text-3xl leading-tight text-white sm:text-4xl">
-                Couture flat-lay — <span className="italic">lehenga fabric.</span>
+                Couture flat-lay - <span className="italic">lehenga fabric.</span>
               </h2>
             </div>
           </div>

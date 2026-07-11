@@ -8,13 +8,13 @@ import aboutQuality from "@/assets/about-quality.png";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Zardosi Atelier | Founded 2002, Luxury Embroidery Manufacturer" },
+      { title: "About - Zardosi Atelier | Founded 2002, Luxury Embroidery Manufacturer" },
       {
         name: "description",
         content:
-          "Founded in 2002 by Shalini and Sajal Jain, Zardosi Atelier is a trusted manufacturer and exporter of premium hand and machine embroidery — serving fashion houses, designers, and global brands for over two decades.",
+          "Founded in 2002 by Shalini and Sajal Jain, Zardosi Atelier is a trusted manufacturer and exporter of premium hand and machine embroidery - serving fashion houses, designers, and global brands for over two decades.",
       },
-      { property: "og:title", content: "About — Zardosi Atelier" },
+      { property: "og:title", content: "About - Zardosi Atelier" },
       {
         property: "og:description",
         content: "A luxury embroidery atelier founded in 2002, combining traditional Indian craft with international quality standards.",
@@ -47,17 +47,17 @@ function AboutPage() {
         eyebrow="The Maison"
         title="A studio of"
         italic="hands."
-        description="Zardosi Atelier is built on multi-generational embroidery — restrained, considered, and held to the standards of the houses we serve."
+        description="Zardosi Atelier is built on multi-generational embroidery - restrained, considered, and held to the standards of the houses we serve."
         image={aboutHero}
       />
 
       {/* ══════════════════════════════════════════
-          BLOCK 1 — The Story  (left text · right image)
+          BLOCK 1 - The Story  (left text · right image)
       ══════════════════════════════════════════ */}
       <section className="luxury-silk-bg py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
 
-          {/* Left — Text */}
+          {/* Left - Text */}
           <Reveal>
             <span className="eyebrow">Our Approach</span>
             <h2 className="mt-3 font-serif text-4xl leading-[1.05] sm:text-5xl">
@@ -71,7 +71,7 @@ function AboutPage() {
             </p>
           </Reveal>
 
-          {/* Right — Artisan Image */}
+          {/* Right - Artisan Image */}
           <Reveal delay={150}>
             <div
               className="aspect-[4/5] overflow-hidden"
@@ -109,7 +109,7 @@ function AboutPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          BLOCK 2 — Expertise & Product Range
+          BLOCK 2 - Expertise & Product Range
       ══════════════════════════════════════════ */}
       <section
         className="py-20 sm:py-28"
@@ -168,13 +168,13 @@ function AboutPage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          BLOCK 3 — Quality Promise
-          (left image · right text — reversed layout)
+          BLOCK 3 - Quality Promise
+          (left image · right text - reversed layout)
       ══════════════════════════════════════════ */}
       <section className="luxury-silk-bg py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
 
-          {/* Left — Image */}
+          {/* Left - Image */}
           <Reveal>
             <div
               className="aspect-[4/3] overflow-hidden"
@@ -209,7 +209,7 @@ function AboutPage() {
             </div>
           </Reveal>
 
-          {/* Right — Text */}
+          {/* Right - Text */}
           <Reveal delay={150}>
             <span className="eyebrow">Quality Promise</span>
             <h2 className="mt-3 font-serif text-4xl leading-[1.05] sm:text-5xl">

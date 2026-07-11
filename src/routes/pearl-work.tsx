@@ -19,7 +19,7 @@ export const Route = createFileRoute("/pearl-work")({
     meta: [
       { title: "Pearl Work & Seed Bead Embroidery | Zardosi Atelier" },
       { name: "description", content: "Intricate pearl and seed-bead compositions stitched by hand. Explore our gallery of bespoke pearl work for bridalwear and couture." },
-      { property: "og:title", content: "Pearl Work Embroidery — Zardosi Atelier" },
+      { property: "og:title", content: "Pearl Work Embroidery - Zardosi Atelier" },
       { property: "og:url", content: "/pearl-work" },
       { property: "og:image", content: p01 },
     ],

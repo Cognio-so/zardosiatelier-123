@@ -31,9 +31,9 @@ import r23 from "@/assets/resham-zari-page-23.png";
 export const Route = createFileRoute("/resham-zari")({
   head: () => ({
     meta: [
-      { title: "Resham & Zari Embroidery — Fine Silk & Metallic Threadwork | Zardosi Atelier" },
+      { title: "Resham & Zari Embroidery - Fine Silk & Metallic Threadwork | Zardosi Atelier" },
       { name: "description", content: "Explore our collection of hand-stitched Resham and Zari embroidery, blending fine silk and gold zari threads into intricate patterns." },
-      { property: "og:title", content: "Resham & Zari Embroidery — Zardosi Atelier" },
+      { property: "og:title", content: "Resham & Zari Embroidery - Zardosi Atelier" },
       { property: "og:url", content: "/resham-zari" },
       { property: "og:image", content: r01 },
     ],

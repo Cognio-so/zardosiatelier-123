@@ -14,9 +14,9 @@ import sequin6 from "@/assets/sequin-6.jpg";
 export const Route = createFileRoute("/sequin")({
   head: () => ({
     meta: [
-      { title: "Sequin Embroidery — Hand-Stitched Couture | Zardosi Atelier" },
+      { title: "Sequin Embroidery - Hand-Stitched Couture | Zardosi Atelier" },
       { name: "description", content: "Thousands of hand-stitched sequins catching couture light with every movement. Explore our sequin embroidery work at Zardosi Atelier." },
-      { property: "og:title", content: "Sequin Embroidery — Zardosi Atelier" },
+      { property: "og:title", content: "Sequin Embroidery - Zardosi Atelier" },
       { property: "og:url", content: "/sequin" },
       { property: "og:image", content: sequin1 },
     ],
@@ -26,12 +26,12 @@ export const Route = createFileRoute("/sequin")({
 });
 
 const galleryImages = [
-  { src: sequin1, alt: "Sequin embroidery — maroon gold lattice pattern 1" },
-  { src: sequin2, alt: "Sequin embroidery — maroon gold lattice pattern 2" },
-  { src: sequin3, alt: "Sequin embroidery — 3D floral sequin close-up" },
-  { src: sequin4, alt: "Sequin embroidery — full floral sequin panel" },
-  { src: sequin5, alt: "Sequin embroidery — beaded metallic floral work" },
-  { src: sequin6, alt: "Sequin embroidery — 3D floral embellishment detail" },
+  { src: sequin1, alt: "Sequin embroidery - maroon gold lattice pattern 1" },
+  { src: sequin2, alt: "Sequin embroidery - maroon gold lattice pattern 2" },
+  { src: sequin3, alt: "Sequin embroidery - 3D floral sequin close-up" },
+  { src: sequin4, alt: "Sequin embroidery - full floral sequin panel" },
+  { src: sequin5, alt: "Sequin embroidery - beaded metallic floral work" },
+  { src: sequin6, alt: "Sequin embroidery - 3D floral embellishment detail" },
 ];
 
 function SequinPage() {
@@ -53,7 +53,7 @@ function SequinPage() {
             <span className="inline-block text-[10px] font-bold uppercase tracking-[0.45em]" style={{ color: "#C9A84C" }}>Embroidery Technique</span>
             <h1 className="mt-4 font-serif text-5xl leading-tight text-white sm:text-6xl lg:text-7xl">Sequin Work</h1>
             <p className="mx-auto mt-6 max-w-[52ch] text-base font-medium leading-relaxed text-white/75 sm:text-lg">
-              Thousands of hand-stitched sequins catching couture light with every movement — crafted by master karigars for luxury fashion houses worldwide.
+              Thousands of hand-stitched sequins catching couture light with every movement - crafted by master karigars for luxury fashion houses worldwide.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link to="/contact" className="border border-[#C9A84C] bg-[#C9A84C] px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#120c09] transition hover:bg-transparent hover:text-white">Request a Sample</Link>
@@ -99,7 +99,7 @@ function SequinPage() {
                 <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">What makes our sequin work couture-grade.</h2>
               </div>
               <div className="space-y-5 text-[15px] font-medium leading-8 text-white/70">
-                <p>Each sequin is individually hand-stitched onto fabric — a painstaking process that ensures uniform coverage, texture depth, and long-term durability that machine application cannot replicate.</p>
+                <p>Each sequin is individually hand-stitched onto fabric - a painstaking process that ensures uniform coverage, texture depth, and long-term durability that machine application cannot replicate.</p>
                 <p>We work with flat, cupped, paillette and 3D sequins in metallic, matte and holographic finishes. Custom colour matching for specific house palettes is available on request.</p>
                 <p>Our sequin work is used on gowns, bridalwear, evening wear, headpieces, bags and standalone embroidered panels for global fashion brands.</p>
                 <Link to="/contact" className="mt-4 inline-block border border-[#C9A84C] px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C] transition hover:bg-[#C9A84C] hover:text-[#120c09]">Enquire About Sequin Work</Link>

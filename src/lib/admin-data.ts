@@ -311,7 +311,7 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "home",
     page: "Home",
-    metaTitle: "Zardosi Atelier — Luxury Hand Embroidery Couture",
+    metaTitle: "Zardosi Atelier - Luxury Hand Embroidery Couture",
     metaDescription: "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work and bespoke craftsmanship.",
     keywords: "zardosi, hand embroidery, couture, luxury fashion",
     ogImage: "",
@@ -321,7 +321,7 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "portfolio",
     page: "Portfolio",
-    metaTitle: "Portfolio — Zardosi Atelier | Hand Embroidery Work",
+    metaTitle: "Portfolio - Zardosi Atelier | Hand Embroidery Work",
     metaDescription: "Explore our portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture houses.",
     keywords: "portfolio, hand embroidery, zardosi, crystals, sequins, couture embellishment",
     ogImage: "",
@@ -331,7 +331,7 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "about",
     page: "About",
-    metaTitle: "About Us — Zardosi Atelier | Our Craft Legacy",
+    metaTitle: "About Us - Zardosi Atelier | Our Craft Legacy",
     metaDescription: "Discover Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses.",
     keywords: "zardosi atelier, about us, hand embroidery heritage, couture craftsmanship",
     ogImage: "",
@@ -341,7 +341,7 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "contact",
     page: "Contact",
-    metaTitle: "Contact Us — Zardosi Atelier | Get in Touch",
+    metaTitle: "Contact Us - Zardosi Atelier | Get in Touch",
     metaDescription: "Get in touch with Zardosi Atelier for custom hand embroidery, zardosi work, and couture embellishments. We partner with fashion houses worldwide.",
     keywords: "contact zardosi atelier, embroidery enquiry, couture partnership",
     ogImage: "",
@@ -351,8 +351,8 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "process",
     page: "Process",
-    metaTitle: "Our Process — Zardosi Atelier | How We Craft",
-    metaDescription: "Step inside our process — from design and sourcing to hand embroidery, quality checks, and finishing — delivering couture-grade craftsmanship.",
+    metaTitle: "Our Process - Zardosi Atelier | How We Craft",
+    metaDescription: "Step inside our process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship.",
     keywords: "zardosi process, hand embroidery process, couture manufacturing",
     ogImage: "",
     robots: "index",
@@ -361,7 +361,7 @@ const defaultSeo: SeoEntry[] = [
   {
     id: "services",
     page: "Services",
-    metaTitle: "Our Services — Zardosi Atelier | What We Offer",
+    metaTitle: "Our Services - Zardosi Atelier | What We Offer",
     metaDescription: "Zardosi Atelier offers hand embroidery, zardosi work, crystal embellishments, and custom couture manufacturing services for fashion brands globally.",
     keywords: "hand embroidery services, zardosi work, couture manufacturing, embellishment services",
     ogImage: "",
@@ -389,11 +389,11 @@ export const getSeoEntries = createServerFn({ method: "GET" }).handler(
             entry.metaDescription === "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work, hand-embellished fabrics, and bespoke craftsmanship." ||
             entry.metaDescription === "Explore our curated portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture and fashion houses." ||
             entry.metaDescription === "Discover the story behind Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses worldwide." ||
-            entry.metaDescription === "Step inside our atelier's process — from design and sourcing to hand embroidery, quality checks, and finishing — delivering couture-grade craftsmanship every time." ||
+            entry.metaDescription === "Step inside our atelier's process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship every time." ||
             entry.metaDescription === "") {
           merged[matchIndex] = {
             ...entry,
-            metaTitle: entry.metaTitle.startsWith(def.page + " —") || entry.metaTitle === def.page + " - Zardosi Atelier" ? def.metaTitle : entry.metaTitle,
+            metaTitle: entry.metaTitle.startsWith(def.page + " -") || entry.metaTitle === def.page + " - Zardosi Atelier" ? def.metaTitle : entry.metaTitle,
             metaDescription: def.metaDescription,
             keywords: entry.keywords === "zardosi, hand embroidery, couture..." || entry.keywords === "portfolio, embroidery, zardosi, crystals, sequins" || entry.keywords === "" ? def.keywords : entry.keywords
           };

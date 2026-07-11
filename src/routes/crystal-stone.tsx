@@ -35,7 +35,7 @@ export const Route = createFileRoute("/crystal-stone")({
         content:
           "Hand-set crystals, zircons, Swarovski stones and Cutdana beads for couture brilliance. Explore our gallery of bespoke crystal and stone embroidery.",
       },
-      { property: "og:title", content: "Crystal & Stone Work — Zardosi Atelier" },
+      { property: "og:title", content: "Crystal & Stone Work - Zardosi Atelier" },
       { property: "og:url", content: "/crystal-stone" },
       { property: "og:image", content: c01 },
     ],
@@ -45,27 +45,27 @@ export const Route = createFileRoute("/crystal-stone")({
 });
 
 const galleryImages = [
-  { src: c01, alt: "Crystal & Stone Work — Amethyst floral scrollwork on silk" },
-  { src: c02, alt: "Crystal & Stone Work — Multi-stone couture panel detail 2" },
-  { src: c03, alt: "Crystal & Stone Work — Gold zircon cluster motif 3" },
-  { src: c04, alt: "Crystal & Stone Work — Hand-set Swarovski embellishments 4" },
-  { src: c05, alt: "Crystal & Stone Work — Cutdana bugle bead border 5" },
-  { src: c06, alt: "Crystal & Stone Work — Dimensional crystal lattice work 6" },
-  { src: c07, alt: "Crystal & Stone Work — Scattered stone and sequin mix 7" },
-  { src: c08, alt: "Crystal & Stone Work — Stone paisley motif swatch 8" },
-  { src: c09, alt: "Crystal & Stone Work — Full panel stonework 9" },
-  { src: c10, alt: "Crystal & Stone Work — Mirror & crystal embroidery 10" },
-  { src: c11, alt: "Crystal & Stone Work — Delicate zircon overlay 11" },
-  { src: c12, alt: "Crystal & Stone Work — Symmetrical mandala stonework 12" },
-  { src: c13, alt: "Crystal & Stone Work — Couture gown embellishment 13" },
-  { src: c14, alt: "Crystal & Stone Work — Lace and stone bridal border 14" },
-  { src: c15, alt: "Crystal & Stone Work — Full-coverage crystal netting 15" },
-  { src: c16, alt: "Crystal & Stone Work — Burgundy stone inlay detail 16" },
-  { src: c17, alt: "Crystal & Stone Work — Fine crystal mesh closeup 17" },
-  { src: c18, alt: "Crystal & Stone Work — Floral stone cluster motif 18" },
-  { src: c19, alt: "Crystal & Stone Work — Emerald tone stone panel 19" },
-  { src: c20, alt: "Crystal & Stone Work — Dual-tone crystal scatter 20" },
-  { src: c21, alt: "Crystal & Stone Work — Rich jewel-tone embroidery swatch 21" },
+  { src: c01, alt: "Crystal & Stone Work - Amethyst floral scrollwork on silk" },
+  { src: c02, alt: "Crystal & Stone Work - Multi-stone couture panel detail 2" },
+  { src: c03, alt: "Crystal & Stone Work - Gold zircon cluster motif 3" },
+  { src: c04, alt: "Crystal & Stone Work - Hand-set Swarovski embellishments 4" },
+  { src: c05, alt: "Crystal & Stone Work - Cutdana bugle bead border 5" },
+  { src: c06, alt: "Crystal & Stone Work - Dimensional crystal lattice work 6" },
+  { src: c07, alt: "Crystal & Stone Work - Scattered stone and sequin mix 7" },
+  { src: c08, alt: "Crystal & Stone Work - Stone paisley motif swatch 8" },
+  { src: c09, alt: "Crystal & Stone Work - Full panel stonework 9" },
+  { src: c10, alt: "Crystal & Stone Work - Mirror & crystal embroidery 10" },
+  { src: c11, alt: "Crystal & Stone Work - Delicate zircon overlay 11" },
+  { src: c12, alt: "Crystal & Stone Work - Symmetrical mandala stonework 12" },
+  { src: c13, alt: "Crystal & Stone Work - Couture gown embellishment 13" },
+  { src: c14, alt: "Crystal & Stone Work - Lace and stone bridal border 14" },
+  { src: c15, alt: "Crystal & Stone Work - Full-coverage crystal netting 15" },
+  { src: c16, alt: "Crystal & Stone Work - Burgundy stone inlay detail 16" },
+  { src: c17, alt: "Crystal & Stone Work - Fine crystal mesh closeup 17" },
+  { src: c18, alt: "Crystal & Stone Work - Floral stone cluster motif 18" },
+  { src: c19, alt: "Crystal & Stone Work - Emerald tone stone panel 19" },
+  { src: c20, alt: "Crystal & Stone Work - Dual-tone crystal scatter 20" },
+  { src: c21, alt: "Crystal & Stone Work - Rich jewel-tone embroidery swatch 21" },
 ];
 
 const stats = [
@@ -120,7 +120,7 @@ function CrystalStonePage() {
           ))}
         </div>
 
-        {/* Radial glow overlay — amethyst/purple tone for crystal luxury */}
+        {/* Radial glow overlay - amethyst/purple tone for crystal luxury */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -151,7 +151,7 @@ function CrystalStonePage() {
             </h1>
             <p className="mx-auto max-w-[56ch] text-base leading-relaxed text-white/65 sm:text-lg mb-10">
               Each crystal and precious stone is hand-set with precision onto silk, organza and couture base fabrics. From
-              Swarovski brilliance to Cutdana bugle beads — we craft embellishments that catch light at every angle and
+              Swarovski brilliance to Cutdana bugle beads - we craft embellishments that catch light at every angle and
               hold to export-grade standards.
             </p>
 
@@ -197,7 +197,7 @@ function CrystalStonePage() {
               </h2>
               <p className="text-[14px] font-medium text-[#5A4D40] max-w-[52ch] mx-auto leading-relaxed">
                 21 hand-embroidered swatches showcasing the precision setting of crystals, zircons, Swarovski stones
-                and Cutdana beads — from delicate scatter work to full-coverage couture panels.
+                and Cutdana beads - from delicate scatter work to full-coverage couture panels.
               </p>
             </div>
           </Reveal>
@@ -260,7 +260,7 @@ function CrystalStonePage() {
                 <p className="text-white/65 leading-[1.9] text-[15px] font-medium mb-8">
                   Every crystal and stone is individually placed and secured using premium adhesives and hand-lock
                   stitching. We work with flat-back rhinestones, faceted zircons, glass stones, Cutdana beads and
-                  Swarovski elements — each matched to your design specification and base fabric for maximum brilliance.
+                  Swarovski elements - each matched to your design specification and base fabric for maximum brilliance.
                 </p>
                 <ul className="flex flex-col gap-3">
                   {features.map((f) => (

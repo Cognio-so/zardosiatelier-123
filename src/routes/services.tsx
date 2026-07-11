@@ -13,13 +13,13 @@ import techniqueCrystal from "@/assets/technique-crystal.webp";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Couture Embroidery & Manufacturing | Zardosi Atelier" },
+      { title: "Services - Couture Embroidery & Manufacturing | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Couture embroidery sampling, hand-embroidered production, embellished panels and luxury handbag treatments for global fashion houses.",
       },
-      { property: "og:title", content: "Services — Zardosi Atelier" },
+      { property: "og:title", content: "Services - Zardosi Atelier" },
       {
         property: "og:description",
         content: "Couture embroidery sampling and production for luxury fashion brands.",
@@ -35,22 +35,22 @@ export const Route = createFileRoute("/services")({
 const services = [
   {
     name: "Couture Sampling",
-    desc: "Precision swatches and prototypes for runway, lookbook and press samples — turnaround within seven to fourteen days.",
+    desc: "Precision swatches and prototypes for runway, lookbook and press samples - turnaround within seven to fourteen days.",
     image: heroEmbroidery,
   },
   {
     name: "Hand Embroidery for Fashion Brands",
-    desc: "Calibrated hand embroidery across silk, organza, tulle and wool — built for couture finish at production scale.",
+    desc: "Calibrated hand embroidery across silk, organza, tulle and wool - built for couture finish at production scale.",
     image: collectionGown,
   },
   {
     name: "Bridal Embroidery Manufacturing",
-    desc: "Heritage zardosi, crystal and pearl work for bridal ateliers — full gown embellishment to veil borders.",
+    desc: "Heritage zardosi, crystal and pearl work for bridal ateliers - full gown embellishment to veil borders.",
     image: collectionBridal,
   },
   {
     name: "Luxury Handbag Embellishment",
-    desc: "Bead, sequin and metallic work for leather and fabric handbags — production-tested for retail.",
+    desc: "Bead, sequin and metallic work for leather and fabric handbags - production-tested for retail.",
     image: collectionHandbag,
   },
   {
@@ -60,7 +60,7 @@ const services = [
   },
   {
     name: "Mixed Media & Crystal Studies",
-    desc: "Layered surfaces combining bead, crystal, sequin and thread — engineered for weight and structural integrity.",
+    desc: "Layered surfaces combining bead, crystal, sequin and thread - engineered for weight and structural integrity.",
     image: techniqueCrystal,
   },
 ];
@@ -72,7 +72,7 @@ function ServicesPage() {
         eyebrow="Atelier · Services"
         title="Couture services for"
         italic="global houses."
-        description="A full-spectrum embroidery offer — from a single sample to scaled production runs — held to the standards of haute couture."
+        description="A full-spectrum embroidery offer - from a single sample to scaled production runs - held to the standards of haute couture."
         image={techniqueBead}
       />
       <section className="luxury-silk-bg py-10 sm:py-12">
@@ -81,7 +81,7 @@ function ServicesPage() {
             <Reveal key={s.name} delay={(i % 3) * 100} className="group">
               {/* Unified premium couture card */}
               <div className="flex h-full flex-col overflow-hidden border border-[#D4AF37]/25 bg-[#FAF7F2] transition-all duration-500 group-hover:border-[#D4AF37]/60">
-                {/* Image section — clickable preview */}
+                {/* Image section - clickable preview */}
                 <div
                   className="overflow-hidden aspect-[4/3] cursor-pointer"
                   data-preview-image={s.image}

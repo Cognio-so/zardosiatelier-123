@@ -574,7 +574,7 @@
 }
 
 /* ==========================================
-   Premium SaaS Admin — Light Mode
+   Premium SaaS Admin - Light Mode
    ========================================== */
 .admin-theme,
 .admin-theme.light {
@@ -599,7 +599,7 @@
 }
 
 /* ==========================================
-   Premium SaaS Admin — Dark Mode
+   Premium SaaS Admin - Dark Mode
    ========================================== */
 .admin-theme.dark {
   --admin-ink: #f1f5f9;

@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import zaLogo from "@/assets/za-logo.png";
+import zaLogo from "@/assets/za-logo.webp";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -11,7 +11,7 @@ const navLinks = [
 ] as const;
 
 /**
- * Per-route navbar theme — each section gets its own tonal dark variation.
+ * Per-route navbar theme - each section gets its own tonal dark variation.
  * All colours are kept inside the dark-charcoal family so the luxury feel is preserved.
  */
 type NavTheme = {
@@ -56,7 +56,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#F5F0E8",
   },
   "/industries": {
-    // warm deep brown-black — pairs with the linen bg of the category page
+    // warm deep brown-black - pairs with the linen bg of the category page
     bg: "rgba(26,16,11,0.98)",
     border: "rgba(212,175,55,0.10)",
     logoText: "#FFFFFF",
@@ -70,7 +70,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#F5F0E8",
   },
   "/about": {
-    // pure charcoal — matches about hero darkness
+    // pure charcoal - matches about hero darkness
     bg: "rgba(14,14,14,0.98)",
     border: "rgba(255,255,255,0.08)",
     logoText: "#FFFFFF",
@@ -84,7 +84,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#F5F0E8",
   },
   "/process": {
-    // deep matte black — matches process matte-black table image
+    // deep matte black - matches process matte-black table image
     bg: "rgba(10,10,10,0.98)",
     border: "rgba(212,175,55,0.15)",
     logoText: "#FFFFFF",
@@ -98,7 +98,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#EBE6DA",
   },
   "/contact": {
-    // warm dark wood — matches contact hero dark wooden table
+    // warm dark wood - matches contact hero dark wooden table
     bg: "rgba(22,12,8,0.98)",
     border: "rgba(212,175,55,0.14)",
     logoText: "#FFFFFF",
@@ -171,8 +171,8 @@ export function Navigation() {
     >
       <div className="mx-auto flex h-24 max-w-[1600px] items-center justify-between px-8 lg:px-12">
 
-        {/* Brand logo — clicking logo does NOT navigate; use the Home nav link instead */}
-        <div className="flex items-center gap-3 z-10 select-none" aria-label="Zardosi Atelier">
+        {/* Brand logo - clicking logo does NOT navigate; use the Home nav link instead */}
+        <Link to="/" className="flex items-center gap-3 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl" aria-label="Zardosi Atelier homepage">
           {/* Logo Icon (Cropped bottom text to display high-quality monogram only) */}
           <div className="relative overflow-hidden h-[44px] w-[83px] lg:h-[52px] lg:w-[98px] shrink-0">
             <img
@@ -203,11 +203,11 @@ export function Navigation() {
               Atelier
             </span>
           </div>
-        </div>
+        </Link>
 
         {/* Desktop nav links + CTA */}
         <div className="flex items-center gap-10 z-10">
-          <nav className="hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em]">
+          <nav className="hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em]" aria-label="Main navigation menu">
             {navLinks.map((l) => {
               const isActive = pathname === l.to;
               return (
@@ -221,7 +221,7 @@ export function Navigation() {
                     borderBottom: isActive ? "1.5px solid #D4AF37" : "1.5px solid transparent",
                     paddingBottom: "2px",
                   }}
-                  className="transition-all duration-700 hover:!text-[#D4AF37]"
+                  className="transition-all duration-700 hover:!text-[#D4AF37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded"
                 >
                   {l.label}
                 </Link>
@@ -233,7 +233,7 @@ export function Navigation() {
           {/* CTA button */}
           <Link
             to="/contact"
-            className="hidden md:inline-block px-8 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500"
+            className="hidden md:inline-block px-8 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2"
             style={{
               border: `1px solid ${theme.ctaBorder}`,
               color: theme.ctaText,
@@ -260,7 +260,7 @@ export function Navigation() {
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
-            className="lg:hidden flex flex-col gap-[5px]"
+            className="lg:hidden flex flex-col gap-[5px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 p-1 rounded"
           >
             {[
               open ? "translate-y-[6px] rotate-45" : "",

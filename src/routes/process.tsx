@@ -7,13 +7,13 @@ import processHero from "@/assets/process-hero.webp";
 export const Route = createFileRoute("/process")({
   head: () => ({
     meta: [
-      { title: "Process — From Design to Delivery | Zardosi Atelier" },
+      { title: "Process - From Design to Delivery | Zardosi Atelier" },
       {
         name: "description",
         content:
           "Our six-step embroidery process: design share, technical review, sampling, approval, production, and global delivery.",
       },
-      { property: "og:title", content: "Process — Zardosi Atelier" },
+      { property: "og:title", content: "Process - Zardosi Atelier" },
       {
         property: "og:description",
         content: "How we partner from design share to global delivery.",
@@ -35,7 +35,7 @@ const process = [
   {
     n: "02",
     title: "Technical Review",
-    desc: "Our atelier directors review material feasibility, stitch density, and timing — and respond with a written assessment.",
+    desc: "Our atelier directors review material feasibility, stitch density, and timing - and respond with a written assessment.",
   },
   {
     n: "03",
@@ -66,7 +66,7 @@ function ProcessPage() {
         eyebrow="Methodology"
         title="The path to"
         italic="production."
-        description="A clear six-step path from first design share to global delivery — engineered for confidentiality, precision, and predictable timing."
+        description="A clear six-step path from first design share to global delivery - engineered for confidentiality, precision, and predictable timing."
         image={processHero}
       />
 
@@ -98,7 +98,7 @@ function ProcessPage() {
             <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
               <img
                 src={processHero}
-                alt="Embroidery sampling process — zari spools, crystals and silk swatch flat-lay"
+                alt="Embroidery sampling process - zari spools, crystals and silk swatch flat-lay"
                 className="w-full object-cover object-center"
                 style={{
                   maxHeight: "420px",

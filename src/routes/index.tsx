@@ -35,14 +35,14 @@ import techniqueCrystalNew from "@/assets/technique-crystal-new.webp";
 import technique3dNew from "@/assets/technique-3d-new.webp";
 import techniqueBeadworkNew from "@/assets/technique-beadwork-new.webp";
 import techniqueSequinNew from "@/assets/technique-sequin-new.png";
-import zardoziPaisley from "@/assets/zardozi-paisley.jpeg";
+import zardoziPaisley from "@/assets/zardozi-paisley.webp";
 import reshamZari1 from "@/assets/resham-zari-1.jpeg";
-import reshamZariCard from "@/assets/resham-zari-card.png";
-import pearlWorkCard from "@/assets/pearl-work-card.jpg";
-import crystalCard from "@/assets/crystal-1.jpeg";
+import reshamZariCard from "@/assets/resham-zari-card.webp";
+import pearlWorkCard from "@/assets/pearl-work-card.webp";
+import crystalCard from "@/assets/crystal-1.webp";
 import sequin1 from "@/assets/sequin-1.jpg";
 import sequin2 from "@/assets/sequin-2.jpg";
-import sequin3 from "@/assets/sequin-3.jpeg";
+import sequin3 from "@/assets/sequin-3.webp";
 import sequin4 from "@/assets/sequin-4.jpeg";
 import sequin5 from "@/assets/sequin-5.jpg";
 import sequin6 from "@/assets/sequin-6.jpg";
@@ -226,7 +226,7 @@ function HomePage() {
           >
             <Reveal>
               <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
-                Haute Couture Embroidery — India
+                Haute Couture Embroidery - India
               </p>
               <TypingAnimation
                 as="h1"
@@ -238,7 +238,7 @@ function HomePage() {
               </TypingAnimation>
               <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
-                premium brands — every stitch finished by master karigars and checked twice before it
+                premium brands - every stitch finished by master karigars and checked twice before it
                 ships.
               </p>
               <p className="mt-6 font-serif text-lg italic text-gold-soft/90">
