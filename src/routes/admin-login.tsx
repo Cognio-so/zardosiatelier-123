@@ -33,6 +33,9 @@ function AdminLoginPage() {
     try {
       const session = await loginAdmin({ data: { password } });
       saveSession(session);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("za_admin_pass", password);
+      }
       // Log the login
       try {
         await addLoginHistory({

@@ -10,12 +10,13 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
-  LogOut,
   Home,
   Users,
   Image,
-  Sparkles,
+  User,
+  LogOut,
 } from "lucide-react";
+import zaLogo from "@/assets/za-logo.png";
 import { clearSession } from "@/lib/admin-auth";
 
 interface NavItem {
@@ -36,213 +37,193 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 interface AdminSidebarProps {
-  onLogout: () => void;
+  onLogout?: () => void;
 }
 
 export function AdminSidebar({ onLogout }: AdminSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [search, setSearch] = useState("");
   const router = useRouterState();
   const pathname = router.location.pathname;
 
+  const filteredItems = NAV_ITEMS.filter((item) =>
+    search === "" || item.label.toLowerCase().includes(search.toLowerCase())
+  );
+
   const handleLogout = () => {
     clearSession();
-    onLogout();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("za_admin_pass");
+    }
+    onLogout?.();
   };
 
   return (
-    <>
-      <motion.aside
-        animate={{ width: collapsed ? 72 : 280 }}
-        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        className="relative flex flex-col h-full bg-[#111111] border-r border-[#2a2a2a] overflow-hidden shrink-0"
-      >
-        {/* Logo */}
-        <div className="flex items-center h-16 px-4 border-b border-[#2a2a2a] shrink-0">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-[#C9A227] flex items-center justify-center shrink-0">
-              <Sparkles size={16} className="text-black" />
-            </div>
-            <AnimatePresence>
-              {!collapsed && (
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="min-w-0"
-                >
-                  <p className="text-white font-semibold text-sm leading-tight truncate" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                    Zardosi Atelier
-                  </p>
-                  <p className="text-[#666] text-[10px] uppercase tracking-widest">
-                    Admin Panel
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+    <motion.aside
+      animate={{ width: collapsed ? 96 : 292 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      className="relative m-4 mr-0 flex h-[calc(100vh-2rem)] shrink-0 flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/70 shadow-[0_24px_80px_rgba(31,41,55,0.10)] backdrop-blur-2xl"
+    >
+      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
+
+      {/* Logo Header */}
+      <div className="flex h-24 items-center px-5 shrink-0">
+        <div className="flex min-w-0 items-center gap-3">
+          {/* Logo container — bigger size for HD clarity */}
+          <div className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/80 bg-white/70 shadow-inner">
+            <img
+              src={zaLogo}
+              alt="ZA Monogram"
+              className="absolute h-auto w-[145px] max-w-none no-preview"
+              style={{
+                top: "-10px",
+                left: "-43px",
+                filter: "drop-shadow(0 4px 12px rgba(16,24,40,0.12))",
+              }}
+            />
           </div>
-        </div>
-
-        {/* Search (expanded only) */}
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="px-3 py-3 border-b border-[#2a2a2a]"
-            >
-              <div className="flex items-center gap-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-3 py-2">
-                <Search size={13} className="text-[#555] shrink-0" />
-                <span className="text-[#444] text-xs">Search...</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Nav Items */}
-        <nav className="flex-1 overflow-y-auto py-3 px-2">
-          {NAV_ITEMS.map((item) => {
-            const isActive =
-              item.to === "/admin"
-                ? pathname === "/admin"
-                : pathname.startsWith(item.to);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="group flex items-center gap-3 px-3 py-2.5 rounded-xl mb-0.5 relative transition-all duration-150"
-                style={{
-                  background: isActive
-                    ? "rgba(201, 162, 39, 0.12)"
-                    : "transparent",
-                }}
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.div
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                className="min-w-0"
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="active-pill"
-                    className="absolute inset-0 rounded-xl bg-[rgba(201,162,39,0.12)]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                  />
-                )}
-                <Icon
-                  size={17}
-                  className="shrink-0 transition-colors duration-150 relative z-10"
-                  style={{ color: isActive ? "#C9A227" : "#555" }}
-                />
-                <AnimatePresence>
-                  {!collapsed && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="text-sm font-medium relative z-10 transition-colors duration-150 truncate"
-                      style={{ color: isActive ? "#C9A227" : "#888" }}
-                    >
-                      {item.label}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-[#C9A227] rounded-r-full"
-                    layoutId="active-bar"
-                  />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+                <p className="truncate text-[18px] font-bold tracking-[-0.02em] text-slate-950">
+                  Zardosi Atelier
+                </p>
+                <p className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.30em] text-slate-400">
+                  Admin Panel
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
 
-        {/* Bottom: Logout + Collapse */}
-        <div className="px-2 py-3 border-t border-[#2a2a2a] space-y-1">
-          <button
-            onClick={() => setShowLogoutConfirm(true)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#666] hover:text-red-400 hover:bg-red-500/10 transition-all duration-150"
-          >
-            <LogOut size={17} className="shrink-0" />
-            <AnimatePresence>
-              {!collapsed && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-sm font-medium"
-                >
-                  Logout
-                </motion.span>
+      {/* Search (expanded only) — functional */}
+      <AnimatePresence>
+        {!collapsed && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-4 pb-4">
+            <div className="admin-input flex items-center gap-2 px-4 py-3">
+              <Search size={15} className="shrink-0 text-slate-400" strokeWidth={1.8} />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search..."
+                className="w-full bg-transparent text-xs font-medium text-slate-700 placeholder-slate-400 outline-none"
+              />
+              {search && (
+                <button onClick={() => setSearch("")} className="text-slate-400 hover:text-slate-600">
+                  ×
+                </button>
               )}
-            </AnimatePresence>
-          </button>
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="w-full flex items-center justify-center gap-3 px-3 py-2 rounded-xl text-[#444] hover:text-[#666] hover:bg-[#1a1a1a] transition-all duration-150"
-          >
-            {collapsed ? (
-              <ChevronRight size={15} />
-            ) : (
-              <>
-                <ChevronLeft size={15} />
-                <AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <nav className="flex-1 overflow-y-auto px-3 py-1">
+        {filteredItems.map((item) => {
+          const isActive = item.to === "/admin" ? pathname === "/admin" : pathname.startsWith(item.to);
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="group relative mb-1 flex items-center gap-3 rounded-[20px] px-4 py-3 text-sm font-semibold transition-all duration-200"
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute inset-0 rounded-[20px] bg-gradient-to-r from-[#f3d98b] to-[#c9a44c] shadow-[0_14px_32px_rgba(201,164,76,0.22)]"
+                  transition={{ type: "spring", bounce: 0.18, duration: 0.45 }}
+                />
+              )}
+              {!isActive && (
+                <div className="absolute inset-0 rounded-[20px] opacity-0 transition-opacity group-hover:opacity-100 bg-white/70" />
+              )}
+              <Icon
+                size={18}
+                className={`relative z-10 shrink-0 transition-colors ${
+                  isActive ? "text-slate-950" : "text-slate-500 group-hover:text-slate-950"
+                }`}
+                strokeWidth={1.8}
+              />
+              <AnimatePresence>
+                {!collapsed && (
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-xs"
+                    className={`relative z-10 truncate tracking-[-0.01em] ${
+                      isActive ? "text-slate-950" : "text-slate-600 group-hover:text-slate-950"
+                    }`}
                   >
-                    Collapse
+                    {item.label}
                   </motion.span>
-                </AnimatePresence>
-              </>
-            )}
-          </button>
-        </div>
-      </motion.aside>
-
-      {/* Logout Confirm Dialog */}
-      <AnimatePresence>
-        {showLogoutConfirm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 10 }}
-              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl p-6 w-80 shadow-2xl"
-            >
-              <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
-                <LogOut size={18} className="text-red-400" />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-1">
-                Sign out?
-              </h3>
-              <p className="text-[#666] text-sm mb-6">
-                You'll need to re-enter your password to access the admin panel.
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowLogoutConfirm(false)}
-                  className="flex-1 py-2.5 rounded-xl border border-[#333] text-[#888] text-sm hover:border-[#444] transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="flex-1 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm hover:bg-red-500/30 transition-colors"
-                >
-                  Sign Out
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+                )}
+              </AnimatePresence>
+            </Link>
+          );
+        })}
+        {/* No results state */}
+        {filteredItems.length === 0 && !collapsed && (
+          <p className="px-4 py-3 text-xs text-slate-400">No results for "{search}"</p>
         )}
-      </AnimatePresence>
-    </>
+      </nav>
+
+      {/* Bottom Section: Admin Profile + Collapse */}
+      <div className="border-t border-white/70 p-3 space-y-2">
+        {/* Admin profile card */}
+        <Link
+          to="/admin/users"
+          className="group flex w-full items-center gap-3 rounded-[20px] px-3 py-3 transition-all hover:bg-white/80"
+        >
+          <div className="admin-gold-icon flex size-9 shrink-0 items-center justify-center rounded-xl">
+            <User size={16} strokeWidth={1.8} />
+          </div>
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="min-w-0 flex-1"
+              >
+                <p className="truncate text-sm font-bold text-slate-800">Zardosi Admin</p>
+                <p className="text-[11px] font-medium text-slate-400">Super Admin</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {!collapsed && (
+            <button
+              onClick={(e) => { e.preventDefault(); handleLogout(); }}
+              className="shrink-0 rounded-lg p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-500"
+              title="Sign Out"
+            >
+              <LogOut size={14} />
+            </button>
+          )}
+        </Link>
+
+        {/* Collapse toggle */}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="flex w-full items-center justify-center gap-3 rounded-[18px] px-4 py-2.5 text-slate-400 transition-all hover:bg-white/70 hover:text-slate-700"
+        >
+          {collapsed ? (
+            <ChevronRight size={16} />
+          ) : (
+            <>
+              <ChevronLeft size={16} />
+              <span className="text-xs font-semibold">Collapse</span>
+            </>
+          )}
+        </button>
+      </div>
+    </motion.aside>
   );
 }

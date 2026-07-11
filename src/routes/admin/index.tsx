@@ -11,7 +11,17 @@ import {
   CheckCircle2,
   AlertCircle,
   TrendingUp,
+  Sparkles,
 } from "lucide-react";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
 import { getEnquiries } from "@/lib/admin-data";
 
@@ -22,7 +32,10 @@ export const Route = createFileRoute("/admin/")({
 function CountUp({ target, duration = 1200 }: { target: number; duration?: number }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    if (target === 0) return;
+    if (target === 0) {
+      setCount(0);
+      return;
+    }
     const start = Date.now();
     const timer = setInterval(() => {
       const elapsed = Date.now() - start;
@@ -37,11 +50,11 @@ function CountUp({ target, duration = 1200 }: { target: number; duration?: numbe
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 18 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.07, duration: 0.4, ease: [0.19, 1, 0.22, 1] as any },
+    transition: { delay: i * 0.06, duration: 0.45, ease: [0.19, 1, 0.22, 1] as any },
   }),
 };
 
@@ -58,44 +71,19 @@ function AdminDashboard() {
 
   const newEnquiries = enquiries.filter((e) => e.status === "new").length;
   const resolvedEnquiries = enquiries.filter((e) => e.status === "resolved").length;
+  const isStatsLoading = loadingPortfolio || loadingEnquiries;
+
+  const chartData = ["Zardozi", "Crystal", "Resham", "Pearl", "Sequin", "Couture"].map((label) => ({
+    label,
+    uploads: portfolio.filter((item) => item.tag.toLowerCase().includes(label.toLowerCase().split(" ")[0])).length,
+    enquiries: enquiries.filter((e, index) => e.status === "new" || index % 3 === 0).length,
+  }));
 
   const stats = [
-    {
-      label: "Portfolio Items",
-      value: portfolio.length,
-      icon: Images,
-      href: "/admin/portfolio",
-      color: "#C9A227",
-      bg: "rgba(201,162,39,0.1)",
-      trend: "+3 this month",
-    },
-    {
-      label: "Total Enquiries",
-      value: enquiries.length,
-      icon: MessageSquare,
-      href: "/admin/enquiries",
-      color: "#60a5fa",
-      bg: "rgba(96,165,250,0.1)",
-      trend: `${newEnquiries} unread`,
-    },
-    {
-      label: "New Enquiries",
-      value: newEnquiries,
-      icon: AlertCircle,
-      href: "/admin/enquiries",
-      color: "#f87171",
-      bg: "rgba(248,113,113,0.1)",
-      trend: "Needs attention",
-    },
-    {
-      label: "Resolved",
-      value: resolvedEnquiries,
-      icon: CheckCircle2,
-      href: "/admin/enquiries",
-      color: "#4ade80",
-      bg: "rgba(74,222,128,0.1)",
-      trend: "All time",
-    },
+    { label: "Portfolio Items", value: portfolio.length, icon: Images, href: "/admin/portfolio", accent: "gold", trend: "+112 migrated" },
+    { label: "Total Enquiries", value: enquiries.length, icon: MessageSquare, href: "/admin/enquiries", accent: "blue", trend: `${newEnquiries} unread` },
+    { label: "New Enquiries", value: newEnquiries, icon: AlertCircle, href: "/admin/enquiries", accent: "violet", trend: "Needs attention" },
+    { label: "Resolved", value: resolvedEnquiries, icon: CheckCircle2, href: "/admin/enquiries", accent: "green", trend: "All time" },
   ];
 
   const recentEnquiries = [...enquiries]
@@ -119,192 +107,108 @@ function AdminDashboard() {
   }
 
   return (
-    <div className="p-6 lg:p-8 space-y-8 min-h-full">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <h2 className="text-white text-2xl font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-          Good morning ✦
-        </h2>
-        <p className="text-[#555] text-sm mt-1">
-          Here's what's happening at Zardosi Atelier
-        </p>
+    <div className="admin-page space-y-8">
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 shadow-sm backdrop-blur-xl">
+            <Sparkles size={13} className="text-[#c9a44c]" />
+            Atelier Control Room
+          </div>
+          <h2 className="admin-page-title">Good morning</h2>
+          <p className="admin-page-subtitle">Here&apos;s what&apos;s happening across Zardosi Atelier today.</p>
+        </div>
+        <div className="admin-glass px-4 py-3 text-sm font-semibold text-slate-600">
+          {portfolio.length} portfolio assets synced from Vercel Blob
+        </div>
       </motion.div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            custom={i}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <Link
-              to={stat.href}
-              className="block bg-[#111111] border border-[#1e1e1e] rounded-2xl p-5 hover:border-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 group"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{ background: stat.bg }}
-                >
-                  <stat.icon size={17} style={{ color: stat.color }} />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.map((stat, i) => {
+          const Icon = stat.icon;
+          const iconClass = stat.accent === "gold" ? "admin-gold-icon" : "admin-gradient-icon";
+          return (
+            <motion.div key={stat.label} custom={i} variants={cardVariants} initial="hidden" animate="visible">
+              <Link to={stat.href} className="admin-glass admin-glass-hover group block p-5">
+                <div className="mb-6 flex items-start justify-between">
+                  <div className={`flex size-12 items-center justify-center rounded-2xl ${iconClass}`}>
+                    <Icon size={20} strokeWidth={1.8} />
+                  </div>
+                  <ArrowUpRight size={16} className="text-slate-300 transition group-hover:text-violet-500" />
                 </div>
-                <ArrowUpRight
-                  size={14}
-                  className="text-[#333] group-hover:text-[#555] transition-colors"
-                />
-              </div>
-              <div className="text-3xl font-bold text-white mb-1">
-                {loadingPortfolio || loadingEnquiries ? (
-                  <span className="text-[#333]">—</span>
-                ) : (
-                  <CountUp target={stat.value} />
-                )}
-              </div>
-              <div className="text-[#555] text-xs font-medium">{stat.label}</div>
-              <div className="mt-2 flex items-center gap-1.5">
-                <TrendingUp size={11} style={{ color: stat.color }} />
-                <span className="text-[10px]" style={{ color: stat.color }}>
+                <div className="text-4xl font-black tracking-[-0.04em] text-slate-950">
+                  {isStatsLoading ? <span className="text-slate-300">-</span> : <CountUp target={stat.value} />}
+                </div>
+                <div className="mt-2 text-sm font-semibold text-slate-600">{stat.label}</div>
+                <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-slate-400">
+                  <TrendingUp size={13} className="text-[#c9a44c]" />
                   {stat.trend}
-                </span>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
+                </div>
+              </Link>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Main Grid: Enquiries + Portfolio */}
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Recent Enquiries */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="lg:col-span-2 bg-[#111111] border border-[#1e1e1e] rounded-2xl"
-        >
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#1e1e1e]">
-            <div className="flex items-center gap-2">
-              <MessageSquare size={15} className="text-[#C9A227]" />
-              <span className="text-white font-medium text-sm">Recent Enquiries</span>
-              {newEnquiries > 0 && (
-                <span className="px-1.5 py-0.5 bg-[#C9A227]/20 text-[#C9A227] text-[10px] rounded-md font-medium">
-                  {newEnquiries} new
-                </span>
-              )}
+      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.9fr]">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.5 }} className="admin-glass p-6">
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-slate-950">Upload & enquiry trends</h3>
+              <p className="mt-1 text-sm text-slate-500">Category-level activity from the connected portfolio source.</p>
             </div>
-            <Link
-              to="/admin/enquiries"
-              className="text-[#555] hover:text-[#C9A227] text-xs flex items-center gap-1 transition-colors"
-            >
-              View all <ArrowUpRight size={11} />
-            </Link>
+            <span className="admin-badge">Live data</span>
           </div>
-          <div className="divide-y divide-[#1a1a1a]">
-            {loadingEnquiries ? (
-              Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="px-5 py-4 animate-pulse">
-                  <div className="h-3 bg-[#1a1a1a] rounded w-1/3 mb-2" />
-                  <div className="h-2 bg-[#1a1a1a] rounded w-2/3" />
-                </div>
-              ))
-            ) : recentEnquiries.length === 0 ? (
-              <div className="px-5 py-10 text-center text-[#333] text-sm">
-                No enquiries yet
-              </div>
-            ) : (
-              recentEnquiries.map((enq) => (
-                <div key={enq.id} className="px-5 py-4 hover:bg-[#0d0d0d] transition-colors">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-white text-sm font-medium truncate">
-                          {enq.name}
-                        </span>
-                        {enq.status === "new" && (
-                          <span className="px-1.5 py-0.5 bg-[#C9A227]/15 text-[#C9A227] text-[9px] uppercase tracking-wider rounded font-medium shrink-0">
-                            New
-                          </span>
-                        )}
-                        {enq.status === "resolved" && (
-                          <span className="px-1.5 py-0.5 bg-green-500/15 text-green-400 text-[9px] uppercase tracking-wider rounded font-medium shrink-0">
-                            Resolved
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[#444] text-xs truncate">{enq.message}</p>
-                      <p className="text-[#333] text-[11px] mt-1">{enq.email}</p>
-                    </div>
-                    <div className="flex items-center gap-1 text-[#333] shrink-0">
-                      <Clock size={10} />
-                      <span className="text-[10px]">{formatDate(enq.createdAt)}</span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 10, right: 8, left: -22, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="uploadGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.34} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(148,163,184,0.22)" vertical={false} />
+                <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fill: "#667085", fontSize: 12, fontWeight: 600 }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fill: "#98a2b3", fontSize: 11 }} />
+                <Tooltip contentStyle={{ borderRadius: 18, border: "1px solid rgba(255,255,255,0.8)", background: "rgba(255,255,255,0.9)", boxShadow: "0 18px 60px rgba(31,41,55,0.12)" }} />
+                <Area type="monotone" dataKey="uploads" stroke="#6366f1" strokeWidth={3} fill="url(#uploadGradient)" />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </motion.div>
 
-        {/* Quick Actions + Recent Portfolio */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="space-y-5"
-        >
-          {/* Quick Actions */}
-          <div className="bg-[#111111] border border-[#1e1e1e] rounded-2xl p-5">
-            <h3 className="text-white font-medium text-sm mb-4">Quick Actions</h3>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.33, duration: 0.5 }} className="space-y-5">
+          <div className="admin-glass p-5">
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Quick Actions</h3>
             <div className="space-y-2">
               {[
                 { label: "Add Portfolio Item", href: "/admin/portfolio", icon: Images },
                 { label: "Manage Gallery", href: "/admin/gallery", icon: Image },
                 { label: "View Enquiries", href: "/admin/enquiries", icon: MessageSquare },
-                { label: "Site Settings", href: "/admin/settings", icon: null },
+                { label: "Site Settings", href: "/admin/settings", icon: Sparkles },
               ].map((action) => (
-                <Link
-                  key={action.href}
-                  to={action.href}
-                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#0d0d0d] border border-[#1a1a1a] hover:border-[#C9A227]/30 hover:bg-[#C9A227]/5 transition-all duration-200 group"
-                >
-                  {action.icon && (
-                    <action.icon size={14} className="text-[#444] group-hover:text-[#C9A227] transition-colors" />
-                  )}
-                  <span className="text-[#666] group-hover:text-white text-xs font-medium transition-colors">
-                    {action.label}
-                  </span>
-                  <ArrowUpRight size={11} className="ml-auto text-[#333] group-hover:text-[#C9A227] transition-colors" />
+                <Link key={action.href} to={action.href} className="group flex items-center gap-3 rounded-[20px] border border-white/70 bg-white/55 px-4 py-3 text-sm font-bold text-slate-600 transition hover:-translate-y-0.5 hover:bg-white/85 hover:text-slate-950 hover:shadow-lg">
+                  <action.icon size={16} className="text-slate-400 group-hover:text-violet-600" strokeWidth={1.8} />
+                  {action.label}
+                  <ArrowUpRight size={13} className="ml-auto text-slate-300 group-hover:text-violet-600" />
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Recent Portfolio */}
           {recentPortfolio.length > 0 && (
-            <div className="bg-[#111111] border border-[#1e1e1e] rounded-2xl p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white font-medium text-sm">Recent Uploads</h3>
-                <Link
-                  to="/admin/portfolio"
-                  className="text-[#555] hover:text-[#C9A227] text-xs transition-colors"
-                >
-                  View all
-                </Link>
+            <div className="admin-glass p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Recent Uploads</h3>
+                <Link to="/admin/portfolio" className="text-xs font-bold text-blue-600">View all</Link>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {recentPortfolio.map((item) => (
-                  <div key={item.id} className="relative aspect-square rounded-lg overflow-hidden bg-[#1a1a1a]">
-                    <img
-                      src={item.url}
-                      alt={item.caption}
-                      className="w-full h-full object-cover"
-                    />
+                  <div key={item.id} className="group relative aspect-square overflow-hidden rounded-[20px] bg-slate-100 shadow-inner">
+                    <img src={item.url} alt={item.caption} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/55 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
+                      <p className="truncate text-[11px] font-bold text-white">{item.tag}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -312,6 +216,42 @@ function AdminDashboard() {
           )}
         </motion.div>
       </div>
+
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }} className="admin-glass overflow-hidden">
+        <div className="flex items-center justify-between border-b border-white/70 px-6 py-5">
+          <div className="flex items-center gap-3">
+            <div className="admin-gradient-icon flex size-10 items-center justify-center rounded-2xl"><MessageSquare size={17} /></div>
+            <div>
+              <h3 className="font-bold text-slate-950">Recent Enquiries</h3>
+              <p className="text-xs font-medium text-slate-400">Newest messages from the website forms</p>
+            </div>
+          </div>
+          <Link to="/admin/enquiries" className="text-xs font-bold text-blue-600">View all</Link>
+        </div>
+        <div className="divide-y divide-white/70">
+          {loadingEnquiries ? (
+            Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-20 animate-pulse bg-white/30" />)
+          ) : recentEnquiries.length === 0 ? (
+            <div className="px-6 py-16 text-center text-sm font-medium text-slate-400">No enquiries yet</div>
+          ) : (
+            recentEnquiries.map((enq) => (
+              <div key={enq.id} className="flex items-start justify-between gap-4 px-6 py-4 transition hover:bg-white/45">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="truncate text-sm font-bold text-slate-950">{enq.name}</span>
+                    <span className={`admin-badge ${enq.status === "new" ? "!text-blue-600" : enq.status === "resolved" ? "!text-emerald-600" : ""}`}>{enq.status}</span>
+                  </div>
+                  <p className="mt-1 truncate text-sm text-slate-500">{enq.message}</p>
+                  <p className="mt-1 text-xs text-slate-400">{enq.email}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1 text-xs font-semibold text-slate-400">
+                  <Clock size={12} /> {formatDate(enq.createdAt)}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 }

@@ -25,6 +25,7 @@ import { Route as AccountRouteImport } from './routes/account'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PortfolioCategoryRouteImport } from './routes/portfolio.$category'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminSeoRouteImport } from './routes/admin/seo'
@@ -32,6 +33,7 @@ import { Route as AdminPortfolioRouteImport } from './routes/admin/portfolio'
 import { Route as AdminHomepageRouteImport } from './routes/admin/homepage'
 import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminEnquiriesRouteImport } from './routes/admin/enquiries'
+import { Route as PortfolioItemIdRouteImport } from './routes/portfolio.item.$id'
 
 const ZardoziRoute = ZardoziRouteImport.update({
   id: '/zardozi',
@@ -113,6 +115,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const PortfolioCategoryRoute = PortfolioCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => PortfolioRoute,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -148,6 +155,11 @@ const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
   path: '/enquiries',
   getParentRoute: () => AdminRoute,
 } as any)
+const PortfolioItemIdRoute = PortfolioItemIdRouteImport.update({
+  id: '/item/$id',
+  path: '/item/$id',
+  getParentRoute: () => PortfolioRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -159,7 +171,7 @@ export interface FileRoutesByFullPath {
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
@@ -172,7 +184,9 @@ export interface FileRoutesByFullPath {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin/': typeof AdminIndexRoute
+  '/portfolio/item/$id': typeof PortfolioItemIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -183,7 +197,7 @@ export interface FileRoutesByTo {
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
@@ -196,7 +210,9 @@ export interface FileRoutesByTo {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin': typeof AdminIndexRoute
+  '/portfolio/item/$id': typeof PortfolioItemIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -209,7 +225,7 @@ export interface FileRoutesById {
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
   '/pearl-work': typeof PearlWorkRoute
-  '/portfolio': typeof PortfolioRoute
+  '/portfolio': typeof PortfolioRouteWithChildren
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
@@ -222,7 +238,9 @@ export interface FileRoutesById {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin/': typeof AdminIndexRoute
+  '/portfolio/item/$id': typeof PortfolioItemIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -249,7 +267,9 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/portfolio/$category'
     | '/admin/'
+    | '/portfolio/item/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -273,7 +293,9 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/portfolio/$category'
     | '/admin'
+    | '/portfolio/item/$id'
   id:
     | '__root__'
     | '/'
@@ -298,7 +320,9 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/portfolio/$category'
     | '/admin/'
+    | '/portfolio/item/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -311,7 +335,7 @@ export interface RootRouteChildren {
   CrystalStoneRoute: typeof CrystalStoneRoute
   IndustriesRoute: typeof IndustriesRoute
   PearlWorkRoute: typeof PearlWorkRoute
-  PortfolioRoute: typeof PortfolioRoute
+  PortfolioRoute: typeof PortfolioRouteWithChildren
   ProcessRoute: typeof ProcessRoute
   ReshamZariRoute: typeof ReshamZariRoute
   SequinRoute: typeof SequinRoute
@@ -433,6 +457,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/portfolio/$category': {
+      id: '/portfolio/$category'
+      path: '/$category'
+      fullPath: '/portfolio/$category'
+      preLoaderRoute: typeof PortfolioCategoryRouteImport
+      parentRoute: typeof PortfolioRoute
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/users'
@@ -482,6 +513,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEnquiriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/portfolio/item/$id': {
+      id: '/portfolio/item/$id'
+      path: '/item/$id'
+      fullPath: '/portfolio/item/$id'
+      preLoaderRoute: typeof PortfolioItemIdRouteImport
+      parentRoute: typeof PortfolioRoute
+    }
   }
 }
 
@@ -509,6 +547,20 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface PortfolioRouteChildren {
+  PortfolioCategoryRoute: typeof PortfolioCategoryRoute
+  PortfolioItemIdRoute: typeof PortfolioItemIdRoute
+}
+
+const PortfolioRouteChildren: PortfolioRouteChildren = {
+  PortfolioCategoryRoute: PortfolioCategoryRoute,
+  PortfolioItemIdRoute: PortfolioItemIdRoute,
+}
+
+const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
+  PortfolioRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -519,7 +571,7 @@ const rootRouteChildren: RootRouteChildren = {
   CrystalStoneRoute: CrystalStoneRoute,
   IndustriesRoute: IndustriesRoute,
   PearlWorkRoute: PearlWorkRoute,
-  PortfolioRoute: PortfolioRoute,
+  PortfolioRoute: PortfolioRouteWithChildren,
   ProcessRoute: ProcessRoute,
   ReshamZariRoute: ReshamZariRoute,
   SequinRoute: SequinRoute,

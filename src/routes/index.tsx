@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { TypingAnimation } from "@/registry/magicui/typing-animation";
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import { Lens } from "@/registry/magicui/lens";
+import { createEnquiry, getSettings } from "@/lib/admin-data";
+import { getPortfolioItems, type PortfolioItem } from "@/lib/portfolio-admin";
+import { categoryForTag } from "@/lib/portfolio-categories";
 import {
   Crown,
   Layers,
@@ -73,35 +77,35 @@ const techniques = [
     desc: "Metallic gold threadwork rooted in centuries of courtly craft.",
     image: zardoziPaisley,
     images: null,
-    href: "/zardozi" as const,
+    href: "/portfolio/zardozi",
   },
   {
     name: "Sequin",
     desc: "Thousands of hand-stitched sequins catching couture light with every movement.",
     image: sequin3,
     images: null,
-    href: "/sequin" as const,
+    href: "/portfolio/sequin",
   },
   {
     name: "Crystal & Stone Work",
     desc: "Hand-set crystals and stones for couture brilliance and shadow play.",
     image: crystalCard,
     images: null,
-    href: "/crystal-stone" as const,
+    href: "/portfolio/crystal-stone-work",
   },
   {
     name: "Resham & Zari",
     desc: "Fine silk and gold Zari threads woven into intricate surface patterns.",
     image: reshamZariCard,
     images: null,
-    href: "/resham-zari" as const,
+    href: "/portfolio/resham-zari",
   },
   {
     name: "Pearl Work",
     desc: "Glass, pearl and seed-bead compositions stitched by hand.",
     image: pearlWorkCard,
     images: null,
-    href: "/pearl-work" as const,
+    href: "/portfolio/pearl-work",
   },
 ];
 
@@ -150,8 +154,25 @@ const faqs = [
   },
 ];
 
+function techniqueImage(name: string, fallback: string, items: PortfolioItem[]) {
+  const category = categoryForTag(name);
+  return items.find((item) => item.categorySlug === category.slug)?.url ?? fallback;
+}
+
 function HomePage() {
   const [loadVideo, setLoadVideo] = useState(false);
+  const { data: portfolioItems = [] } = useQuery({
+    queryKey: ["portfolio", "home-techniques"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+  });
+  const { data: settings } = useQuery({
+    queryKey: ["settings-public"],
+    queryFn: () => getSettings(),
+    staleTime: 0,
+  });
+  const whatsappDigits = (settings?.whatsappNumber ?? "+91 88260 23527").replace(/\D/g, "");
 
   useEffect(() => {
     // Only load the heavy video after mount to avoid blocking FCP/LCP
@@ -231,7 +252,7 @@ function HomePage() {
                   Start With a Sample
                 </Link>
                 <a
-                  href="https://wa.me/918826023527"
+                  href={`https://wa.me/${whatsappDigits}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full border border-white/40 bg-white/5 px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all hover:bg-white hover:text-[#120c09] sm:w-auto"
@@ -284,7 +305,7 @@ function HomePage() {
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
                     <Lens zoomFactor={2.2} lensSize={130} isStatic={false}>
                       <img
-                        src={item.image}
+                        src={techniqueImage(item.name, item.image, portfolioItems)}
                         alt={item.name}
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                       />
@@ -308,9 +329,9 @@ function HomePage() {
               return (
                 <Reveal key={item.name} delay={i * 70}>
                   {"href" in item ? (
-                    <Link to={item.href} className="block">
+                    <a href={item.href} className="block">
                       {cardInner}
-                    </Link>
+                    </a>
                   ) : (
                     cardInner
                   )}
@@ -524,9 +545,27 @@ function CountUp({
 
 function LeadSection() {
   const [submitted, setSubmitted] = useState(false);
+  const { data: settings } = useQuery({
+    queryKey: ["settings-public"],
+    queryFn: () => getSettings(),
+    staleTime: 0,
+  });
+  const whatsappNumber = settings?.whatsappNumber ?? "+91 88260 23527";
+  const whatsappDigits = whatsappNumber.replace(/\D/g, "");
+  const email = settings?.email ?? "atelier@zardosiatelier.com";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const projectType = String(form.get("subject") ?? "");
+    await createEnquiry({
+      data: {
+        name: String(form.get("name") ?? ""),
+        email: String(form.get("email") ?? ""),
+        phone: String(form.get("phone") ?? ""),
+        message: projectType ? `Project Type: ${projectType}\n\n${String(form.get("message") ?? "")}` : String(form.get("message") ?? ""),
+      },
+    });
     setSubmitted(true);
   };
 
@@ -544,15 +583,15 @@ function LeadSection() {
           <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
               <a
-                href="https://wa.me/918826023527?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project."
+                href={`https://wa.me/${whatsappDigits}?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:bg-transparent"
               >
-                WhatsApp +91 88260 23527
+                WhatsApp {whatsappNumber}
               </a>
               <a
-                href="mailto:atelier@zardosiatelier.com"
+                href={`mailto:${email}`}
                 className="block border border-ink/25 px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-ink transition hover:border-gold hover:text-gold"
               >
                 Email the Atelier

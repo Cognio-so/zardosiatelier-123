@@ -31,6 +31,7 @@ function AdminLayout() {
   const pathname = router.location.pathname;
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const session = loadSession();
@@ -47,12 +48,17 @@ function AdminLayout() {
     navigate({ to: "/admin-login" });
   };
 
+  const toggleTheme = () => {
+    setIsDark(false);
+    localStorage.setItem("admin-theme", "light");
+  };
+
   const pageTitle = PAGE_TITLES[pathname] ?? "Admin";
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <Loader2 className="text-[#C9A227] animate-spin" size={24} />
+      <div className="admin-theme flex min-h-screen items-center justify-center">
+        <Loader2 className="animate-spin text-[#C9A227]" size={24} />
       </div>
     );
   }
@@ -62,13 +68,10 @@ function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-[#0A0A0A] overflow-hidden">
-      {/* Sidebar */}
+    <div className="admin-theme flex h-screen overflow-hidden light">
       <AdminSidebar onLogout={handleLogout} />
-
-      {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <AdminTopbar onLogout={handleLogout} title={pageTitle} />
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <AdminTopbar onLogout={handleLogout} title={pageTitle} isDark={isDark} onToggleTheme={toggleTheme} />
         <main className="flex-1 overflow-y-auto">
           <Outlet />
         </main>

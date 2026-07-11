@@ -1,22 +1,44 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bell, Sun, Moon, User, ExternalLink, ChevronDown } from "lucide-react";
+import { Bell, Sun, User, ExternalLink, ChevronDown, LogOut } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { getEnquiries } from "@/lib/admin-data";
 import { clearSession } from "@/lib/admin-auth";
 
 interface AdminTopbarProps {
   onLogout: () => void;
   title?: string;
+  isDark: boolean;
+  onToggleTheme: () => void;
 }
 
-export function AdminTopbar({ onLogout, title }: AdminTopbarProps) {
-  const [isDark, setIsDark] = useState(true);
+export function AdminTopbar({ onLogout, title, onToggleTheme }: AdminTopbarProps) {
   const [showProfile, setShowProfile] = useState(false);
-  const [hasNotifications] = useState(true);
+  const [showNotifications, setShowNotifications] = useState(false);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    // The admin panel is always dark — this is a placeholder for future light mode
-  };
+  const { data: enquiries = [] } = useQuery({
+    queryKey: ["enquiries"],
+    queryFn: () => getEnquiries(),
+  });
+
+  const unreadEnquiries = enquiries
+    .filter((e) => e.status === "new")
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const hasNotifications = unreadEnquiries.length > 0;
+
+  function formatDate(dateStr: string) {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now.getTime() - d.getTime();
+    const diffH = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffD = Math.floor(diffH / 24);
+    if (diffH < 1) return "Just now";
+    if (diffH < 24) return `${diffH}h ago`;
+    if (diffD < 7) return `${diffD}d ago`;
+    return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+  }
 
   const handleLogout = () => {
     clearSession();
@@ -24,111 +46,82 @@ export function AdminTopbar({ onLogout, title }: AdminTopbarProps) {
   };
 
   return (
-    <header className="h-16 bg-[#111111] border-b border-[#2a2a2a] flex items-center px-6 gap-4 shrink-0 relative z-20">
-      {/* Page Title */}
-      <div className="flex-1 min-w-0">
-        {title && (
-          <h1 className="text-white font-semibold text-base truncate">
-            {title}
-          </h1>
-        )}
+    <header className="relative z-20 mx-4 mt-4 flex h-20 shrink-0 items-center gap-4 rounded-[28px] border border-white/70 bg-white/70 px-5 shadow-[0_18px_60px_rgba(31,41,55,0.08)] backdrop-blur-2xl lg:mx-6 lg:px-6">
+      <div className="min-w-0 flex-1">
+        {title && <h1 className="truncate text-[18px] font-semibold tracking-[-0.03em] text-slate-950">{title}</h1>}
+        <p className="mt-1 hidden text-xs font-medium text-slate-400 sm:block">Premium operations cockpit</p>
       </div>
 
-      {/* Right actions */}
       <div className="flex items-center gap-2">
-        {/* View Site */}
         <a
           href="https://zardosiatelier-123.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#2a2a2a] text-[#666] hover:text-[#C9A227] hover:border-[#C9A227]/40 transition-all duration-200 text-xs"
+          className="admin-secondary-btn hidden items-center gap-2 px-4 py-2.5 text-xs font-bold transition hover:-translate-y-0.5 hover:text-slate-950 sm:flex"
         >
-          <ExternalLink size={12} />
-          <span className="hidden sm:inline">View Site</span>
+          <ExternalLink size={14} strokeWidth={1.8} />
+          View Site
         </a>
 
-        {/* Dark/Light Toggle */}
         <button
-          onClick={toggleTheme}
-          className="w-8 h-8 rounded-lg border border-[#2a2a2a] flex items-center justify-center text-[#666] hover:text-[#C9A227] hover:border-[#C9A227]/40 transition-all duration-200"
-          title="Toggle theme"
+          onClick={onToggleTheme}
+          className="admin-secondary-btn flex size-10 items-center justify-center transition hover:-translate-y-0.5"
+          title="Light mode"
         >
-          {isDark ? <Moon size={14} /> : <Sun size={14} />}
+          <Sun size={15} strokeWidth={1.8} />
         </button>
 
-        {/* Notifications */}
-        <button className="relative w-8 h-8 rounded-lg border border-[#2a2a2a] flex items-center justify-center text-[#666] hover:text-[#C9A227] hover:border-[#C9A227]/40 transition-all duration-200">
-          <Bell size={14} />
-          {hasNotifications && (
-            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#C9A227] rounded-full" />
-          )}
-        </button>
-
-        {/* Profile Dropdown */}
         <div className="relative">
           <button
-            onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg border border-[#2a2a2a] hover:border-[#C9A227]/40 transition-all duration-200"
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="admin-secondary-btn relative flex size-10 items-center justify-center transition hover:-translate-y-0.5"
+            title="Notifications"
           >
-            <div className="w-6 h-6 rounded-md bg-[#C9A227] flex items-center justify-center">
-              <User size={12} className="text-black" />
-            </div>
-            <span className="text-[#888] text-xs hidden sm:inline">Admin</span>
-            <ChevronDown
-              size={12}
-              className={`text-[#555] transition-transform duration-200 ${showProfile ? "rotate-180" : ""}`}
-            />
+            <Bell size={15} strokeWidth={1.8} />
+            {hasNotifications && <span className="absolute right-2 top-2 size-2 rounded-full bg-[#c9a44c] ring-2 ring-white" />}
           </button>
 
           <AnimatePresence>
-            {showProfile && (
+            {showNotifications && (
               <>
-                <div
-                  className="fixed inset-0 z-10"
-                  onClick={() => setShowProfile(false)}
-                />
+                <div className="fixed inset-0 z-10" onClick={() => setShowNotifications(false)} />
                 <motion.div
-                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                  initial={{ opacity: 0, y: -8, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-48 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl shadow-2xl overflow-hidden z-20"
+                  exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                  className="admin-glass absolute right-0 top-full z-20 mt-3 w-80 overflow-hidden p-2"
                 >
-                  <div className="px-4 py-3 border-b border-[#2a2a2a]">
-                    <p className="text-white text-sm font-medium">Zardosi Admin</p>
-                    <p className="text-[#555] text-xs">Super Admin</p>
+                  <div className="flex items-center justify-between px-3 py-3">
+                    <span className="text-sm font-bold text-slate-950">Notifications</span>
+                    {hasNotifications && <span className="admin-badge">{unreadEnquiries.length} New</span>}
                   </div>
-                  <div className="p-1.5">
-                    <a
-                      href="/admin/users"
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#888] hover:text-white hover:bg-[#222] text-sm transition-colors"
-                      onClick={() => setShowProfile(false)}
-                    >
-                      <User size={13} />
-                      Profile & Users
-                    </a>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 text-sm transition-colors"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="13"
-                        height="13"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                        <polyline points="16 17 21 12 16 7" />
-                        <line x1="21" y1="12" x2="9" y2="12" />
-                      </svg>
-                      Sign Out
-                    </button>
+                  <div className="max-h-72 overflow-y-auto">
+                    {unreadEnquiries.length > 0 ? (
+                      unreadEnquiries.slice(0, 3).map((enq) => (
+                        <Link
+                          key={enq.id}
+                          to="/admin/enquiries"
+                          className="block rounded-2xl px-3 py-3 transition hover:bg-white/70"
+                          onClick={() => setShowNotifications(false)}
+                        >
+                          <div className="mb-1 flex items-start justify-between gap-2">
+                            <span className="truncate text-sm font-semibold text-slate-950">{enq.name}</span>
+                            <span className="shrink-0 text-[10px] font-semibold text-slate-400">{formatDate(enq.createdAt)}</span>
+                          </div>
+                          <p className="line-clamp-2 text-xs leading-5 text-slate-500">{enq.message}</p>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="px-4 py-10 text-center text-xs font-medium text-slate-400">No new notifications</div>
+                    )}
                   </div>
+                  <Link
+                    to="/admin/enquiries"
+                    className="mt-1 block rounded-2xl py-3 text-center text-xs font-bold text-[#c9a44c] transition hover:bg-white/70"
+                    onClick={() => setShowNotifications(false)}
+                  >
+                    View all enquiries
+                  </Link>
                 </motion.div>
               </>
             )}

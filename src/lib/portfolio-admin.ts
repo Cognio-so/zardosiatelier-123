@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { put, del, list } from "@vercel/blob";
 import { z } from "zod";
+import { slugifyPortfolioTag } from "./portfolio-categories";
 
 const METADATA_KEY = "portfolio-data.json";
 const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
@@ -11,11 +12,45 @@ export type PortfolioItem = {
   url: string;
   caption: string;
   tag: string;
+  categorySlug: string;
   uploadedAt: string;
+  order: number;
+  sourcePath?: string;
   isDynamic: true;
 };
 
-// ── helpers ────────────────────────────────────────────
+type RawPortfolioItem = Partial<PortfolioItem> &
+  Pick<PortfolioItem, "id" | "url" | "caption" | "tag" | "uploadedAt">;
+
+function canonicalTag(tag: string) {
+  const slug = slugifyPortfolioTag(tag);
+  const labels: Record<string, string> = {
+    zardozi: "Zardozi",
+    sequin: "Sequin",
+    "crystal-stone-work": "Crystal & Stone Work",
+    "resham-zari": "Resham & Zari",
+    "pearl-work": "Pearl Work",
+    "couture-studies": "Couture Studies",
+    other: "Other",
+  };
+  return labels[slug] ?? tag.trim();
+}
+
+function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
+  return items
+    .map((item, index) => ({
+      id: item.id,
+      url: item.url,
+      caption: item.caption ?? "",
+      tag: canonicalTag(item.tag ?? "Other"),
+      categorySlug: item.categorySlug ?? slugifyPortfolioTag(item.tag ?? "Other"),
+      uploadedAt: item.uploadedAt,
+      order: typeof item.order === "number" ? item.order : index,
+      sourcePath: item.sourcePath,
+      isDynamic: true as const,
+    }))
+    .sort((a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt));
+}
 
 async function readMetadata(): Promise<PortfolioItem[]> {
   if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return [];
@@ -23,9 +58,9 @@ async function readMetadata(): Promise<PortfolioItem[]> {
     const { blobs } = await list({ token: BLOB_TOKEN, prefix: METADATA_KEY });
     const meta = blobs.find((b) => b.pathname === METADATA_KEY);
     if (!meta) return [];
-    const res = await fetch(meta.url);
+    const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) return [];
-    return (await res.json()) as PortfolioItem[];
+    return normalizeItems((await res.json()) as RawPortfolioItem[]);
   } catch {
     return [];
   }
@@ -33,7 +68,7 @@ async function readMetadata(): Promise<PortfolioItem[]> {
 
 async function writeMetadata(items: PortfolioItem[]): Promise<void> {
   if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return;
-  await put(METADATA_KEY, JSON.stringify(items), {
+  await put(METADATA_KEY, JSON.stringify(normalizeItems(items), null, 2), {
     access: "public",
     token: BLOB_TOKEN,
     allowOverwrite: true,
@@ -41,40 +76,32 @@ async function writeMetadata(items: PortfolioItem[]): Promise<void> {
   });
 }
 
-// ── Server Functions ───────────────────────────────────
-
-/** GET — returns all dynamically uploaded portfolio items */
 export const getPortfolioItems = createServerFn({ method: "GET" }).handler(
-  async () => {
-    return readMetadata();
-  }
+  async () => readMetadata()
 );
 
-/** POST upload — admin only */
 export const uploadPortfolioImage = createServerFn({ method: "POST" })
   .validator(
     z.object({
       password: z.string(),
       filename: z.string(),
-      base64: z.string(), // data:image/...;base64,...
+      base64: z.string(),
       caption: z.string().max(120),
       tag: z.string().max(60),
+      order: z.number().optional(),
     })
   )
   .handler(async ({ data }) => {
-    if (data.password !== ADMIN_PASS) {
-      throw new Error("Unauthorized");
-    }
+    if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
     if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") {
       throw new Error("BLOB_READ_WRITE_TOKEN not configured");
     }
 
-    // decode base64 → buffer
     const matches = data.base64.match(/^data:([^;]+);base64,(.+)$/);
     if (!matches) throw new Error("Invalid image data");
     const mimeType = matches[1];
-    if (!["image/png", "image/jpeg"].includes(mimeType)) {
-      throw new Error("Only PNG and JPG files are allowed");
+    if (!["image/png", "image/jpeg", "image/webp"].includes(mimeType)) {
+      throw new Error("Only PNG, JPG and WEBP files are allowed");
     }
 
     const buffer = Buffer.from(matches[2], "base64");
@@ -82,8 +109,9 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
       throw new Error("File exceeds 5 MB limit");
     }
 
-    const ext = mimeType === "image/png" ? "png" : "jpg";
-    const blobName = `portfolio/${Date.now()}-${data.filename.replace(/[^a-z0-9.]/gi, "_")}.${ext}`;
+    const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
+    const safeName = data.filename.replace(/[^a-z0-9.]/gi, "_").replace(/\.(png|jpe?g|webp)$/i, "");
+    const blobName = `portfolio/${Date.now()}-${safeName}.${ext}`;
     const { url } = await put(blobName, buffer, {
       access: "public",
       token: BLOB_TOKEN,
@@ -95,15 +123,16 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
       id: `${Date.now()}`,
       url,
       caption: data.caption,
-      tag: data.tag,
+      tag: canonicalTag(data.tag),
+      categorySlug: slugifyPortfolioTag(data.tag),
       uploadedAt: new Date().toISOString(),
+      order: data.order ?? existing.length,
       isDynamic: true,
     };
     await writeMetadata([...existing, newItem]);
     return newItem;
   });
 
-/** PATCH — edit caption/tag of an existing item */
 export const updatePortfolioItem = createServerFn({ method: "POST" })
   .validator(
     z.object({
@@ -111,19 +140,27 @@ export const updatePortfolioItem = createServerFn({ method: "POST" })
       id: z.string(),
       caption: z.string().max(120),
       tag: z.string().max(60),
+      order: z.number().optional(),
     })
   )
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
     const items = await readMetadata();
     const updated = items.map((it) =>
-      it.id === data.id ? { ...it, caption: data.caption, tag: data.tag } : it
+      it.id === data.id
+        ? {
+            ...it,
+            caption: data.caption,
+            tag: canonicalTag(data.tag),
+            categorySlug: slugifyPortfolioTag(data.tag),
+            order: data.order ?? it.order,
+          }
+        : it
     );
     await writeMetadata(updated);
     return { ok: true };
   });
 
-/** DELETE — remove image from blob + metadata */
 export const deletePortfolioItem = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string(), id: z.string(), url: z.string() }))
   .handler(async ({ data }) => {
@@ -131,7 +168,7 @@ export const deletePortfolioItem = createServerFn({ method: "POST" })
     try {
       await del(data.url, { token: BLOB_TOKEN });
     } catch {
-      // if blob already gone, continue
+      // Continue if the blob has already been removed.
     }
     const items = await readMetadata();
     await writeMetadata(items.filter((it) => it.id !== data.id));

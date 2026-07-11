@@ -2,64 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import {
-  MessageSquare,
-  Search,
-  X,
-  Check,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  Download,
-  Trash2,
-  AlertTriangle,
-  Loader2,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { MessageSquare, Search, X, Check, Clock, CheckCircle2, AlertCircle, Download, Trash2, AlertTriangle, Loader2, Phone, Mail } from "lucide-react";
 import { toast } from "sonner";
-import {
-  getEnquiries,
-  updateEnquiryStatus,
-  deleteEnquiry,
-  bulkDeleteEnquiries,
-  type Enquiry,
-} from "@/lib/admin-data";
+import { loadSession } from "@/lib/admin-auth";
+import { getEnquiries, updateEnquiryStatus, deleteEnquiry, bulkDeleteEnquiries, type Enquiry } from "@/lib/admin-data";
 
-export const Route = createFileRoute("/admin/enquiries")({
-  component: EnquiriesAdmin,
-});
-
-const PASS = "zardosi@admin2024";
+export const Route = createFileRoute("/admin/enquiries")({ component: EnquiriesAdmin });
 
 const STATUS_CONFIG = {
-  new: {
-    label: "New",
-    color: "#C9A227",
-    bg: "rgba(201,162,39,0.1)",
-    icon: AlertCircle,
-  },
-  read: {
-    label: "Read",
-    color: "#60a5fa",
-    bg: "rgba(96,165,250,0.1)",
-    icon: MessageSquare,
-  },
-  resolved: {
-    label: "Resolved",
-    color: "#4ade80",
-    bg: "rgba(74,222,128,0.1)",
-    icon: CheckCircle2,
-  },
+  new: { label: "New", color: "text-[#c9a44c]", bg: "bg-[#c9a44c]/15", icon: AlertCircle },
+  read: { label: "Read", color: "text-blue-600", bg: "bg-blue-50", icon: MessageSquare },
+  resolved: { label: "Resolved", color: "text-emerald-600", bg: "bg-emerald-50", icon: CheckCircle2 },
 };
 
 function EnquiriesAdmin() {
   const qc = useQueryClient();
-  const { data: enquiries = [], isLoading } = useQuery({
-    queryKey: ["enquiries"],
-    queryFn: () => getEnquiries(),
-  });
-
+  const session = loadSession();
+  const password = session ? atob(session.token).split("|")[0] : "";
+  const { data: enquiries = [], isLoading } = useQuery({ queryKey: ["enquiries"], queryFn: () => getEnquiries() });
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<"all" | "new" | "read" | "resolved">("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -67,519 +27,66 @@ function EnquiriesAdmin() {
   const [deleteTarget, setDeleteTarget] = useState<Enquiry | null>(null);
   const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
 
-  const updateMut = useMutation({
-    mutationFn: (vars: { id: string; status: Enquiry["status"] }) =>
-      updateEnquiryStatus({ data: { password: PASS, ...vars } }),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["enquiries"] });
-      toast.success("Status updated");
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const deleteMut = useMutation({
-    mutationFn: (id: string) => deleteEnquiry({ data: { password: PASS, id } }),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["enquiries"] });
-      toast.success("Enquiry deleted");
-      setDeleteTarget(null);
-      if (activeEnquiry?.id === deleteTarget?.id) setActiveEnquiry(null);
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const bulkDeleteMut = useMutation({
-    mutationFn: () =>
-      bulkDeleteEnquiries({ data: { password: PASS, ids: Array.from(selectedIds) } }),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["enquiries"] });
-      toast.success(`${selectedIds.size} enquiries deleted`);
-      setSelectedIds(new Set());
-      setBulkDeleteConfirm(false);
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
+  const updateMut = useMutation({ mutationFn: (vars: { id: string; status: Enquiry["status"] }) => updateEnquiryStatus({ data: { password, ...vars } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Status updated"); }, onError: (e: Error) => toast.error(e.message) });
+  const deleteMut = useMutation({ mutationFn: (id: string) => deleteEnquiry({ data: { password, id } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Enquiry deleted"); setDeleteTarget(null); if (activeEnquiry?.id === deleteTarget?.id) setActiveEnquiry(null); }, onError: (e: Error) => toast.error(e.message) });
+  const bulkDeleteMut = useMutation({ mutationFn: () => bulkDeleteEnquiries({ data: { password, ids: Array.from(selectedIds) } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success(`${selectedIds.size} enquiries deleted`); setSelectedIds(new Set()); setBulkDeleteConfirm(false); }, onError: (e: Error) => toast.error(e.message) });
 
   const filtered = enquiries.filter((e) => {
-    const matchSearch =
-      !search ||
-      e.name.toLowerCase().includes(search.toLowerCase()) ||
-      e.email.toLowerCase().includes(search.toLowerCase()) ||
-      e.message.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = filterStatus === "all" || e.status === filterStatus;
-    return matchSearch && matchStatus;
+    const q = search.toLowerCase();
+    const matchSearch = !q || e.name.toLowerCase().includes(q) || e.email.toLowerCase().includes(q) || e.message.toLowerCase().includes(q);
+    return matchSearch && (filterStatus === "all" || e.status === filterStatus);
   });
-
-  function toggleSelect(id: string) {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
-
-  function setSelected(fn: (prev: Set<string>) => Set<string>) {
-    setSelectedIds(fn);
-  }
-
-  function formatDate(str: string) {
-    const d = new Date(str);
-    const now = new Date();
-    const diffMs = now.getTime() - d.getTime();
-    const diffH = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffD = Math.floor(diffH / 24);
-    if (diffH < 1) return "Just now";
-    if (diffH < 24) return `${diffH}h ago`;
-    if (diffD < 7) return `${diffD}d ago`;
-    return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
-  }
-
-  function exportCsv() {
-    const rows = [
-      ["Name", "Email", "Phone", "Message", "Status", "Date"],
-      ...enquiries.map((e) => [
-        e.name,
-        e.email,
-        e.phone,
-        `"${e.message.replace(/"/g, '""')}"`,
-        e.status,
-        new Date(e.createdAt).toLocaleDateString("en-IN"),
-      ]),
-    ];
-    const csv = rows.map((r) => r.join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `enquiries-${Date.now()}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("CSV exported");
-  }
-
   const newCount = enquiries.filter((e) => e.status === "new").length;
+  const resolvedCount = enquiries.filter((e) => e.status === "resolved").length;
+
+  function toggleSelect(id: string) { setSelectedIds((prev) => { const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next; }); }
+  function formatDate(str: string) { const d = new Date(str); const diffH = Math.floor((Date.now() - d.getTime()) / 3600000); const diffD = Math.floor(diffH / 24); if (diffH < 1) return "Just now"; if (diffH < 24) return `${diffH}h ago`; if (diffD < 7) return `${diffD}d ago`; return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); }
+  function exportCsv() { const rows = [["Name", "Email", "Phone", "Message", "Status", "Date"], ...enquiries.map((e) => [e.name, e.email, e.phone, `"${e.message.replace(/"/g, '""')}"`, e.status, new Date(e.createdAt).toLocaleDateString("en-IN")])]; const blob = new Blob([rows.map((r) => r.join(",")).join("\n")], { type: "text/csv" }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `enquiries-${Date.now()}.csv`; a.click(); URL.revokeObjectURL(url); toast.success("CSV exported"); }
 
   return (
-    <div className="p-6 lg:p-8 min-h-full">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
-        <div>
-          <h2 className="text-white text-xl font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-            Enquiries
-          </h2>
-          <p className="text-[#555] text-sm mt-0.5">
-            {enquiries.length} total · {newCount > 0 && <span className="text-[#C9A227]">{newCount} new</span>}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          {selectedIds.size > 0 && (
-            <button
-              onClick={() => setBulkDeleteConfirm(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm hover:bg-red-500/20 transition-colors"
-            >
-              <Trash2 size={13} />
-              Delete ({selectedIds.size})
-            </button>
-          )}
-          <button
-            onClick={exportCsv}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#2a2a2a] text-[#666] text-sm hover:border-[#333] hover:text-white transition-all"
-          >
-            <Download size={13} />
-            Export CSV
-          </button>
+    <div className="admin-page space-y-7">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div><h2 className="admin-page-title">Enquiries</h2><p className="admin-page-subtitle">{enquiries.length} total enquiries, {newCount} awaiting first response.</p></div>
+        <div className="flex flex-wrap gap-2">{selectedIds.size > 0 && <button onClick={() => setBulkDeleteConfirm(true)} className="rounded-[18px] border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-600"><Trash2 size={14} className="mr-2 inline" />Delete ({selectedIds.size})</button>}<button onClick={exportCsv} className="admin-secondary-btn flex items-center gap-2 px-4 py-2.5 text-sm font-bold"><Download size={14} /> Export CSV</button></div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        {[{ label: "Total", value: enquiries.length, icon: MessageSquare }, { label: "New", value: newCount, icon: AlertCircle }, { label: "Resolved", value: resolvedCount, icon: CheckCircle2 }].map((stat) => { const Icon = stat.icon; return <motion.div key={stat.label} whileHover={{ y: -4 }} className="admin-glass p-5"><div className="flex items-center justify-between"><div><p className="admin-label">{stat.label}</p><p className="mt-2 text-3xl font-black text-slate-950">{stat.value}</p></div><div className="admin-gradient-icon flex size-11 items-center justify-center rounded-2xl"><Icon size={18} /></div></div></motion.div>; })}
+      </div>
+
+      <div className="admin-glass p-4">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="relative w-full lg:max-w-md"><Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name, email, message..." className="admin-input w-full py-3 pl-11 pr-4 text-sm" /></div>
+          <div className="flex flex-wrap gap-2">{(["all", "new", "read", "resolved"] as const).map((s) => <button key={s} onClick={() => setFilterStatus(s)} className={`admin-pill capitalize ${filterStatus === s ? "admin-pill-active" : ""}`}>{s}{s === "new" && newCount > 0 && <span className="ml-2 rounded-full bg-white/25 px-1.5 text-[10px]">{newCount}</span>}</button>)}</div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative max-w-sm flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444]" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name, email, message..."
-            className="w-full bg-[#111] border border-[#222] rounded-xl pl-9 pr-4 py-2.5 text-white text-sm placeholder-[#333] focus:outline-none focus:border-[#C9A227]/50 transition-colors"
-          />
+      <section className="admin-glass overflow-hidden p-0">
+        <div className="grid grid-cols-[32px_1fr_140px_116px_110px] gap-4 border-b border-white/70 px-5 py-4 text-[11px] font-black uppercase tracking-[0.18em] text-slate-400 max-lg:grid-cols-[32px_1fr_116px]">
+          <button onClick={() => selectedIds.size === filtered.length ? setSelectedIds(new Set()) : setSelectedIds(new Set(filtered.map((e) => e.id)))} className="flex size-5 items-center justify-center rounded-md border border-slate-300 bg-white/60">{selectedIds.size === filtered.length && filtered.length > 0 && <Check size={12} />}</button><span>Name / Message</span><span className="max-lg:hidden">Contact</span><span>Status</span><span className="max-lg:hidden">Date</span>
         </div>
-        <div className="flex gap-2">
-          {(["all", "new", "read", "resolved"] as const).map((s) => (
-            <button
-              key={s}
-              onClick={() => setFilterStatus(s)}
-              className="px-3 py-2 rounded-xl text-xs font-medium capitalize transition-all duration-200"
-              style={{
-                background: filterStatus === s ? "rgba(201,162,39,0.15)" : "#111",
-                color: filterStatus === s ? "#C9A227" : "#555",
-                border: filterStatus === s ? "1px solid rgba(201,162,39,0.3)" : "1px solid #1e1e1e",
-              }}
-            >
-              {s}
-              {s === "new" && newCount > 0 && (
-                <span className="ml-1 px-1 bg-[#C9A227] text-black text-[9px] rounded font-bold">
-                  {newCount}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="bg-[#111111] border border-[#1e1e1e] rounded-2xl overflow-hidden">
-        <div className="flex items-center gap-4 px-5 py-3.5 border-b border-[#1a1a1a] text-[#444] text-xs uppercase tracking-wider">
-          <div className="w-5">
-            <button
-              onClick={() => {
-                if (selectedIds.size === filtered.length) setSelectedIds(new Set());
-                else setSelectedIds(new Set(filtered.map((e) => e.id)));
-              }}
-              className="w-4 h-4 rounded border border-[#333] flex items-center justify-center hover:border-[#C9A227] transition-colors"
-              style={{
-                background: selectedIds.size === filtered.length && filtered.length > 0 ? "#C9A227" : "transparent",
-              }}
-            >
-              {selectedIds.size === filtered.length && filtered.length > 0 && (
-                <Check size={10} className="text-black" />
-              )}
-            </button>
-          </div>
-          <div className="flex-1">Name / Message</div>
-          <div className="w-28 hidden md:block">Contact</div>
-          <div className="w-24 hidden sm:block">Status</div>
-          <div className="w-24 hidden lg:block">Date</div>
-          <div className="w-28">Actions</div>
-        </div>
-
-        {isLoading ? (
-          Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-4 px-5 py-4 border-b border-[#0f0f0f] animate-pulse">
-              <div className="w-5 h-4 bg-[#1a1a1a] rounded" />
-              <div className="flex-1 space-y-1.5">
-                <div className="h-3 bg-[#1a1a1a] rounded w-1/4" />
-                <div className="h-2 bg-[#1a1a1a] rounded w-3/4" />
-              </div>
-            </div>
-          ))
-        ) : filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#1a1a1a] flex items-center justify-center mb-4">
-              <MessageSquare size={24} className="text-[#333]" />
-            </div>
-            <p className="text-[#444] text-sm font-medium mb-1">No enquiries</p>
-            <p className="text-[#333] text-xs">
-              Enquiries from your website will appear here
-            </p>
-          </div>
-        ) : (
-          filtered.map((enq, i) => {
-            const cfg = STATUS_CONFIG[enq.status];
-            const isSelected = selectedIds.has(enq.id);
-            return (
-              <motion.div
-                key={enq.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: i * 0.03 }}
-                className="flex items-center gap-4 px-5 py-4 border-b border-[#0f0f0f] hover:bg-[#0d0d0d] transition-colors cursor-pointer"
-                onClick={() => {
-                  setActiveEnquiry(enq);
-                  if (enq.status === "new") {
-                    updateMut.mutate({ id: enq.id, status: "read" });
-                  }
-                }}
-              >
-                <div className="w-5" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    onClick={() => toggleSelect(enq.id)}
-                    className="w-4 h-4 rounded border border-[#333] flex items-center justify-center hover:border-[#C9A227] transition-colors"
-                    style={{ background: isSelected ? "#C9A227" : "transparent" }}
-                  >
-                    {isSelected && <Check size={10} className="text-black" />}
-                  </button>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white text-sm font-medium">{enq.name}</span>
-                    {enq.status === "new" && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] shrink-0" />
-                    )}
-                  </div>
-                  <p className="text-[#444] text-xs truncate">{enq.message}</p>
-                </div>
-                <div className="w-28 hidden md:block">
-                  <p className="text-[#555] text-xs truncate">{enq.email}</p>
-                  {enq.phone && (
-                    <p className="text-[#333] text-[11px] truncate">{enq.phone}</p>
-                  )}
-                </div>
-                <div className="w-24 hidden sm:block">
-                  <span
-                    className="px-2 py-0.5 rounded-md text-[10px] font-medium uppercase tracking-wide"
-                    style={{ background: cfg.bg, color: cfg.color }}
-                  >
-                    {cfg.label}
-                  </span>
-                </div>
-                <div className="w-24 hidden lg:block">
-                  <span className="text-[#333] text-xs flex items-center gap-1">
-                    <Clock size={10} />
-                    {formatDate(enq.createdAt)}
-                  </span>
-                </div>
-                <div className="w-28 flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    onClick={() => updateMut.mutate({ id: enq.id, status: "resolved" })}
-                    disabled={enq.status === "resolved"}
-                    className="p-1.5 rounded-lg text-[#333] hover:text-green-400 hover:bg-green-500/10 disabled:opacity-30 transition-all"
-                    title="Mark Resolved"
-                  >
-                    <CheckCircle2 size={14} />
-                  </button>
-                  <button
-                    onClick={() => updateMut.mutate({ id: enq.id, status: "new" })}
-                    disabled={enq.status === "new"}
-                    className="p-1.5 rounded-lg text-[#333] hover:text-[#C9A227] hover:bg-[#C9A227]/10 disabled:opacity-30 transition-all"
-                    title="Mark New"
-                  >
-                    <AlertCircle size={14} />
-                  </button>
-                  <button
-                    onClick={() => setDeleteTarget(enq)}
-                    className="p-1.5 rounded-lg text-[#333] hover:text-red-400 hover:bg-red-500/10 transition-all"
-                    title="Delete"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })
-        )}
-      </div>
-
-      {/* Detail Slide-Over */}
-      <AnimatePresence>
-        {activeEnquiry && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-              onClick={() => setActiveEnquiry(null)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-[#111] border-l border-[#2a2a2a] flex flex-col shadow-2xl"
-            >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#1a1a1a]">
-                <h3 className="text-white font-semibold text-base">Enquiry Detail</h3>
-                <button
-                  onClick={() => setActiveEnquiry(null)}
-                  className="w-8 h-8 rounded-lg border border-[#2a2a2a] flex items-center justify-center text-[#555] hover:text-white transition-all"
-                >
-                  <X size={15} />
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto p-5 space-y-5">
-                {/* Status */}
-                <div className="flex items-center gap-2">
-                  {(["new", "read", "resolved"] as const).map((s) => {
-                    const c = STATUS_CONFIG[s];
-                    return (
-                      <button
-                        key={s}
-                        onClick={() =>
-                          updateMut.mutate({ id: activeEnquiry.id, status: s })
-                        }
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all border"
-                        style={{
-                          background:
-                            activeEnquiry.status === s ? c.bg : "transparent",
-                          color: activeEnquiry.status === s ? c.color : "#444",
-                          borderColor:
-                            activeEnquiry.status === s
-                              ? c.color + "40"
-                              : "#2a2a2a",
-                        }}
-                      >
-                        <c.icon size={11} />
-                        {c.label}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Sender info */}
-                <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-4 space-y-2">
-                  <h4 className="text-white font-semibold text-base">
-                    {activeEnquiry.name}
-                  </h4>
-                  <a
-                    href={`mailto:${activeEnquiry.email}`}
-                    className="flex items-center gap-2 text-[#C9A227] text-sm hover:underline"
-                  >
-                    <Mail size={13} />
-                    {activeEnquiry.email}
-                  </a>
-                  {activeEnquiry.phone && (
-                    <a
-                      href={`tel:${activeEnquiry.phone}`}
-                      className="flex items-center gap-2 text-[#666] text-sm hover:text-white transition-colors"
-                    >
-                      <Phone size={13} />
-                      {activeEnquiry.phone}
-                    </a>
-                  )}
-                  <p className="text-[#333] text-xs flex items-center gap-1 mt-2">
-                    <Clock size={10} />
-                    {new Date(activeEnquiry.createdAt).toLocaleString("en-IN")}
-                  </p>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
-                    Message
-                  </label>
-                  <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-4">
-                    <p className="text-[#aaa] text-sm leading-relaxed whitespace-pre-wrap">
-                      {activeEnquiry.message}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Quick reply shortcuts */}
-                <div>
-                  <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
-                    Quick Actions
-                  </label>
-                  <div className="flex gap-2">
-                    <a
-                      href={`mailto:${activeEnquiry.email}?subject=Re: Your Enquiry — Zardosi Atelier`}
-                      className="flex-1 py-2.5 rounded-xl bg-[#C9A227] text-black text-xs font-semibold text-center hover:bg-[#B8911E] transition-colors"
-                    >
-                      Reply via Email
-                    </a>
-                    {activeEnquiry.phone && (
-                      <a
-                        href={`https://wa.me/${activeEnquiry.phone.replace(/\D/g, "")}?text=Hello+${encodeURIComponent(activeEnquiry.name)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-2.5 rounded-xl bg-green-600/20 border border-green-600/30 text-green-400 text-xs font-semibold text-center hover:bg-green-600/30 transition-colors"
-                      >
-                        WhatsApp
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="px-5 py-4 border-t border-[#1a1a1a]">
-                <button
-                  onClick={() => setDeleteTarget(activeEnquiry)}
-                  className="w-full py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Trash2 size={14} />
-                  Delete Enquiry
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Delete Confirm */}
-      <AnimatePresence>
-        {deleteTarget && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 10 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 10 }}
-              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl p-6 w-80"
-            >
-              <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
-                <AlertTriangle size={18} className="text-red-400" />
-              </div>
-              <h3 className="text-white font-semibold text-base mb-2">
-                Delete Enquiry?
-              </h3>
-              <p className="text-[#555] text-sm mb-5">
-                This enquiry from <strong className="text-white">{deleteTarget.name}</strong> will be permanently deleted.
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setDeleteTarget(null)}
-                  className="flex-1 py-2.5 rounded-xl border border-[#333] text-[#888] text-sm"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => deleteMut.mutate(deleteTarget.id)}
-                  disabled={deleteMut.isPending}
-                  className="flex-1 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm flex items-center justify-center gap-2"
-                >
-                  {deleteMut.isPending ? <Loader2 size={13} className="animate-spin" /> : "Delete"}
-                </button>
-              </div>
-            </motion.div>
+        {isLoading ? Array.from({ length: 5 }).map((_, i) => <div key={i} className="mx-5 my-4 h-16 animate-pulse rounded-[20px] bg-white/55" />) : filtered.length === 0 ? <div className="flex flex-col items-center justify-center py-16 text-center"><div className="admin-gradient-icon mb-4 flex size-14 items-center justify-center rounded-[22px]"><MessageSquare size={22} /></div><p className="text-sm font-black text-slate-500">No enquiries found</p><p className="text-xs font-medium text-slate-400">Website submissions will appear here.</p></div> : filtered.map((enq, i) => { const cfg = STATUS_CONFIG[enq.status]; const StatusIcon = cfg.icon; const isSelected = selectedIds.has(enq.id); return (
+          <motion.div key={enq.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.02 }} onClick={() => { setActiveEnquiry(enq); if (enq.status === "new") updateMut.mutate({ id: enq.id, status: "read" }); }} className="grid cursor-pointer grid-cols-[32px_1fr_140px_116px_110px] gap-4 border-b border-white/55 px-5 py-4 transition hover:bg-white/55 max-lg:grid-cols-[32px_1fr_116px]">
+            <div onClick={(e) => e.stopPropagation()}><button onClick={() => toggleSelect(enq.id)} className={`flex size-5 items-center justify-center rounded-md border ${isSelected ? "border-blue-500 bg-blue-600 text-white" : "border-slate-300 bg-white/60"}`}>{isSelected && <Check size={12} />}</button></div>
+            <div className="min-w-0"><div className="flex items-center gap-2"><p className="truncate text-sm font-black text-slate-950">{enq.name}</p>{enq.status === "new" && <span className="size-2 rounded-full bg-[#c9a44c]" />}</div><p className="truncate text-xs font-medium text-slate-500">{enq.message}</p></div>
+            <div className="min-w-0 max-lg:hidden"><p className="truncate text-xs font-bold text-slate-600">{enq.email}</p>{enq.phone && <p className="truncate text-[11px] text-slate-400">{enq.phone}</p>}</div>
+            <div><span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] ${cfg.bg} ${cfg.color}`}><StatusIcon size={11} />{cfg.label}</span></div>
+            <div className="flex items-center justify-between gap-2 max-lg:hidden"><span className="flex items-center gap-1 text-xs font-bold text-slate-400"><Clock size={11} />{formatDate(enq.createdAt)}</span><button onClick={(e) => { e.stopPropagation(); setDeleteTarget(enq); }} className="rounded-xl p-1.5 text-slate-300 transition hover:bg-red-50 hover:text-red-500"><Trash2 size={14} /></button></div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        ); })}
+      </section>
 
-      {/* Bulk Delete Confirm */}
-      <AnimatePresence>
-        {bulkDeleteConfirm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 10 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 10 }}
-              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl p-6 w-80"
-            >
-              <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
-                <Trash2 size={18} className="text-red-400" />
-              </div>
-              <h3 className="text-white font-semibold text-base mb-2">
-                Delete {selectedIds.size} Enquiries?
-              </h3>
-              <p className="text-[#555] text-sm mb-5">This cannot be undone.</p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setBulkDeleteConfirm(false)}
-                  className="flex-1 py-2.5 rounded-xl border border-[#333] text-[#888] text-sm"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => bulkDeleteMut.mutate()}
-                  disabled={bulkDeleteMut.isPending}
-                  className="flex-1 py-2.5 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm flex items-center justify-center gap-2"
-                >
-                  {bulkDeleteMut.isPending ? <Loader2 size={13} className="animate-spin" /> : "Delete All"}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{activeEnquiry && <EnquiryPanel enquiry={activeEnquiry} onClose={() => setActiveEnquiry(null)} onDelete={() => setDeleteTarget(activeEnquiry)} onStatus={(status) => updateMut.mutate({ id: activeEnquiry.id, status })} />}</AnimatePresence>
+      <Confirm open={!!deleteTarget} title="Delete Enquiry?" body={deleteTarget ? `This enquiry from ${deleteTarget.name} will be permanently deleted.` : ""} loading={deleteMut.isPending} icon={AlertTriangle} onCancel={() => setDeleteTarget(null)} onConfirm={() => deleteTarget && deleteMut.mutate(deleteTarget.id)} />
+      <Confirm open={bulkDeleteConfirm} title={`Delete ${selectedIds.size} Enquiries?`} body="This cannot be undone." loading={bulkDeleteMut.isPending} icon={Trash2} onCancel={() => setBulkDeleteConfirm(false)} onConfirm={() => bulkDeleteMut.mutate()} />
     </div>
   );
+}
+
+function EnquiryPanel({ enquiry, onClose, onDelete, onStatus }: { enquiry: Enquiry; onClose: () => void; onDelete: () => void; onStatus: (status: Enquiry["status"]) => void }) {
+  return <><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-xl" onClick={onClose} /><motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 28, stiffness: 300 }} className="fixed bottom-0 right-0 top-0 z-50 flex w-full max-w-md flex-col border-l border-white/70 bg-white/82 shadow-2xl backdrop-blur-2xl"><div className="flex items-center justify-between border-b border-white/70 px-5 py-4"><h3 className="text-base font-black text-slate-950">Enquiry Detail</h3><button onClick={onClose} className="rounded-2xl p-2 text-slate-400 hover:bg-white/70 hover:text-slate-950"><X size={16} /></button></div><div className="flex-1 space-y-5 overflow-y-auto p-5"><div className="flex gap-2">{(["new", "read", "resolved"] as const).map((s) => { const c = STATUS_CONFIG[s]; const I = c.icon; return <button key={s} onClick={() => onStatus(s)} className={`rounded-full px-3 py-1.5 text-xs font-black ${enquiry.status === s ? `${c.bg} ${c.color}` : "bg-white/70 text-slate-400"}`}><I size={11} className="mr-1 inline" />{c.label}</button>; })}</div><div className="rounded-[24px] border border-white/80 bg-white/65 p-5"><h4 className="text-lg font-black text-slate-950">{enquiry.name}</h4><a href={`mailto:${enquiry.email}`} className="mt-3 flex items-center gap-2 text-sm font-bold text-blue-600"><Mail size={14} />{enquiry.email}</a>{enquiry.phone && <a href={`tel:${enquiry.phone}`} className="mt-2 flex items-center gap-2 text-sm font-bold text-slate-600"><Phone size={14} />{enquiry.phone}</a>}<p className="mt-3 flex items-center gap-1 text-xs font-bold text-slate-400"><Clock size={11} />{new Date(enquiry.createdAt).toLocaleString("en-IN")}</p></div><div><span className="admin-label mb-2 block">Message</span><div className="rounded-[24px] border border-white/80 bg-white/65 p-5 text-sm leading-relaxed text-slate-700 whitespace-pre-wrap">{enquiry.message}</div></div><div className="grid gap-2 sm:grid-cols-2"><a href={`mailto:${enquiry.email}?subject=Re: Your Enquiry - Zardosi Atelier`} className="admin-primary-btn py-3 text-center text-sm font-bold">Reply via Email</a>{enquiry.phone && <a href={`https://wa.me/${enquiry.phone.replace(/\D/g, "")}?text=Hello+${encodeURIComponent(enquiry.name)}`} target="_blank" rel="noopener noreferrer" className="rounded-[20px] border border-emerald-200 bg-emerald-50 py-3 text-center text-sm font-bold text-emerald-700">WhatsApp</a>}</div></div><div className="border-t border-white/70 p-5"><button onClick={onDelete} className="w-full rounded-[20px] border border-red-200 bg-red-50 py-3 text-sm font-bold text-red-600"><Trash2 size={14} className="mr-2 inline" />Delete Enquiry</button></div></motion.div></>;
+}
+
+function Confirm({ open, title, body, loading, icon: Icon, onCancel, onConfirm }: { open: boolean; title: string; body: string; loading: boolean; icon: typeof AlertTriangle; onCancel: () => void; onConfirm: () => void }) {
+  return <AnimatePresence>{open && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/35 px-4 backdrop-blur-xl"><motion.div initial={{ scale: 0.94, y: 10 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.94, y: 10 }} className="admin-glass w-full max-w-sm p-6"><div className="mb-4 flex size-12 items-center justify-center rounded-[20px] bg-red-50 text-red-500"><Icon size={20} /></div><h3 className="text-lg font-black text-slate-950">{title}</h3><p className="mt-2 text-sm text-slate-500">{body}</p><div className="mt-6 flex gap-3"><button onClick={onCancel} className="admin-secondary-btn flex-1 py-3 text-sm font-bold">Cancel</button><button onClick={onConfirm} disabled={loading} className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-red-200 bg-red-50 py-3 text-sm font-bold text-red-600">{loading ? <Loader2 size={14} className="animate-spin" /> : "Delete"}</button></div></motion.div></motion.div>}</AnimatePresence>;
 }

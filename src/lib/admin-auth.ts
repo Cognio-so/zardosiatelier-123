@@ -69,3 +69,8 @@ export function clearSession(): void {
 export function getSessionToken(): string | null {
   return loadSession()?.token ?? null;
 }
+
+export function getStoredPassword(): string {
+  if (typeof window === "undefined") return "zardosi@admin2024";
+  return localStorage.getItem("za_admin_pass") ?? "zardosi@admin2024";
+}
