@@ -10,6 +10,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Home,
   Users,
   Image,
@@ -43,6 +44,7 @@ interface AdminSidebarProps {
 export function AdminSidebar({ onLogout }: AdminSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [search, setSearch] = useState("");
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const router = useRouterState();
   const pathname = router.location.pathname;
 
@@ -176,38 +178,59 @@ export function AdminSidebar({ onLogout }: AdminSidebarProps) {
       </nav>
 
       {/* Bottom Section: Admin Profile + Collapse */}
-      <div className="border-t border-white/70 p-3 space-y-2">
-        {/* Admin profile card */}
-        <Link
-          to="/admin/users"
-          className="group flex w-full items-center gap-3 rounded-[20px] px-3 py-3 transition-all hover:bg-white/80"
+      <div className="relative border-t border-white/70 p-3 space-y-2">
+        <AnimatePresence>
+          {showProfileMenu && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setShowProfileMenu(false)} />
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute bottom-full left-3 right-3 z-20 mb-2 overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-2xl p-2"
+              >
+                <div className="border-b border-slate-100 px-3 py-2">
+                  <p className="text-xs font-bold text-slate-900">Zardosi Admin</p>
+                  <p className="text-[10px] font-medium text-slate-400">Super Admin</p>
+                </div>
+                <Link
+                  to="/admin/users"
+                  onClick={() => setShowProfileMenu(false)}
+                  className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
+                >
+                  <Users size={13} />
+                  Profile & Users
+                </Link>
+                <button
+                  onClick={() => { setShowProfileMenu(false); handleLogout(); }}
+                  className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold text-red-600 transition hover:bg-red-50"
+                >
+                  <LogOut size={13} />
+                  Sign Out
+                </button>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Admin profile card button */}
+        <button
+          onClick={() => setShowProfileMenu(!showProfileMenu)}
+          className={`group flex w-full items-center gap-3 rounded-[20px] border border-slate-200 bg-white/95 px-3 py-3 transition-all duration-200 hover:bg-white hover:border-slate-300 shadow-[0_8px_30px_rgba(201,164,76,0.06)] hover:shadow-[0_8px_30px_rgba(201,164,76,0.12)] ${showProfileMenu ? 'border-slate-300 bg-white' : ''}`}
         >
-          <div className="admin-gold-icon flex size-9 shrink-0 items-center justify-center rounded-xl">
+          <div className="admin-gold-icon flex size-9 shrink-0 items-center justify-center rounded-xl shadow-sm">
             <User size={16} strokeWidth={1.8} />
           </div>
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="min-w-0 flex-1"
-              >
-                <p className="truncate text-sm font-bold text-slate-800">Zardosi Admin</p>
-                <p className="text-[11px] font-medium text-slate-400">Super Admin</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
           {!collapsed && (
-            <button
-              onClick={(e) => { e.preventDefault(); handleLogout(); }}
-              className="shrink-0 rounded-lg p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-500"
-              title="Sign Out"
-            >
-              <LogOut size={14} />
-            </button>
+            <div className="min-w-0 flex-1 text-left">
+              <p className="truncate text-sm font-bold text-slate-800">Zardosi Admin</p>
+              <p className="text-[11px] font-medium text-slate-400">Super Admin</p>
+            </div>
           )}
-        </Link>
+          {!collapsed && (
+            <ChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${showProfileMenu ? 'rotate-180' : ''}`} />
+          )}
+        </button>
 
         {/* Collapse toggle */}
         <button

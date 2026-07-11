@@ -10,7 +10,6 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  TrendingUp,
   Sparkles,
 } from "lucide-react";
 import {
@@ -49,15 +48,6 @@ function CountUp({ target, duration = 1200 }: { target: number; duration?: numbe
   return <>{count}</>;
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.45, ease: [0.19, 1, 0.22, 1] as any },
-  }),
-};
-
 function AdminDashboard() {
   const { data: portfolio = [], isLoading: loadingPortfolio } = useQuery({
     queryKey: ["portfolio"],
@@ -79,13 +69,6 @@ function AdminDashboard() {
     enquiries: enquiries.filter((e, index) => e.status === "new" || index % 3 === 0).length,
   }));
 
-  const stats = [
-    { label: "Portfolio Items", value: portfolio.length, icon: Images, href: "/admin/portfolio", accent: "gold", trend: "+112 migrated" },
-    { label: "Total Enquiries", value: enquiries.length, icon: MessageSquare, href: "/admin/enquiries", accent: "blue", trend: `${newEnquiries} unread` },
-    { label: "New Enquiries", value: newEnquiries, icon: AlertCircle, href: "/admin/enquiries", accent: "violet", trend: "Needs attention" },
-    { label: "Resolved", value: resolvedEnquiries, icon: CheckCircle2, href: "/admin/enquiries", accent: "green", trend: "All time" },
-  ];
-
   const recentEnquiries = [...enquiries]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 5);
@@ -106,6 +89,13 @@ function AdminDashboard() {
     return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
   }
 
+  const quickStats = [
+    { label: "Portfolio Items", value: portfolio.length, icon: Images, href: "/admin/portfolio", color: "text-[#c9a44c]" },
+    { label: "Total Enquiries", value: enquiries.length, icon: MessageSquare, href: "/admin/enquiries", color: "text-sky-500" },
+    { label: "New Enquiries", value: newEnquiries, icon: AlertCircle, href: "/admin/enquiries", color: "text-amber-500" },
+    { label: "Resolved", value: resolvedEnquiries, icon: CheckCircle2, href: "/admin/enquiries", color: "text-emerald-500" },
+  ];
+
   return (
     <div className="admin-page space-y-8">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -114,7 +104,7 @@ function AdminDashboard() {
             <Sparkles size={13} className="text-[#c9a44c]" />
             Atelier Control Room
           </div>
-          <h2 className="admin-page-title">Good morning</h2>
+          <h2 className="admin-page-title">Hello Palack Ma'am</h2>
           <p className="admin-page-subtitle">Here&apos;s what&apos;s happening across Zardosi Atelier today.</p>
         </div>
         <div className="admin-glass px-4 py-3 text-sm font-semibold text-slate-600">
@@ -122,56 +112,29 @@ function AdminDashboard() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((stat, i) => {
-          const Icon = stat.icon;
-          const iconClass = stat.accent === "gold" ? "admin-gold-icon" : "admin-gradient-icon";
-          return (
-            <motion.div key={stat.label} custom={i} variants={cardVariants} initial="hidden" animate="visible">
-              <Link to={stat.href} className="admin-glass admin-glass-hover group block p-5">
-                <div className="mb-6 flex items-start justify-between">
-                  <div className={`flex size-12 items-center justify-center rounded-2xl ${iconClass}`}>
-                    <Icon size={20} strokeWidth={1.8} />
-                  </div>
-                  <ArrowUpRight size={16} className="text-slate-300 transition group-hover:text-violet-500" />
-                </div>
-                <div className="text-4xl font-black tracking-[-0.04em] text-slate-950">
-                  {isStatsLoading ? <span className="text-slate-300">-</span> : <CountUp target={stat.value} />}
-                </div>
-                <div className="mt-2 text-sm font-semibold text-slate-600">{stat.label}</div>
-                <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-slate-400">
-                  <TrendingUp size={13} className="text-[#c9a44c]" />
-                  {stat.trend}
-                </div>
-              </Link>
-            </motion.div>
-          );
-        })}
-      </div>
-
       <div className="grid gap-6 xl:grid-cols-[1.35fr_0.9fr]">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.5 }} className="admin-glass p-6">
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-slate-950">Upload & enquiry trends</h3>
+              <h3 className="text-lg font-bold text-slate-950">Upload &amp; enquiry trends</h3>
               <p className="mt-1 text-sm text-slate-500">Category-level activity from the connected portfolio source.</p>
             </div>
             <span className="admin-badge">Live data</span>
           </div>
-          <div className="h-72">
+          <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 8, left: -22, bottom: 0 }}>
                 <defs>
                   <linearGradient id="uploadGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.34} />
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0.02} />
+                    <stop offset="5%" stopColor="#c9a44c" stopOpacity={0.34} />
+                    <stop offset="95%" stopColor="#c9a44c" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid stroke="rgba(148,163,184,0.22)" vertical={false} />
                 <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fill: "#667085", fontSize: 12, fontWeight: 600 }} />
                 <YAxis tickLine={false} axisLine={false} tick={{ fill: "#98a2b3", fontSize: 11 }} />
                 <Tooltip contentStyle={{ borderRadius: 18, border: "1px solid rgba(255,255,255,0.8)", background: "rgba(255,255,255,0.9)", boxShadow: "0 18px 60px rgba(31,41,55,0.12)" }} />
-                <Area type="monotone" dataKey="uploads" stroke="#6366f1" strokeWidth={3} fill="url(#uploadGradient)" />
+                <Area type="monotone" dataKey="uploads" stroke="#c9a44c" strokeWidth={3} fill="url(#uploadGradient)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -180,6 +143,31 @@ function AdminDashboard() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.33, duration: 0.5 }} className="space-y-5">
           <div className="admin-glass p-5">
             <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Quick Actions</h3>
+
+            {/* Stat rows */}
+            <div className="mb-4 grid grid-cols-2 gap-2">
+              {quickStats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <Link
+                    key={stat.label}
+                    to={stat.href}
+                    className="group flex flex-col gap-1 rounded-[18px] border border-white/70 bg-white/55 px-4 py-3 transition hover:-translate-y-0.5 hover:bg-white/85 hover:shadow-md"
+                  >
+                    <div className="flex items-center justify-between">
+                      <Icon size={14} className={`${stat.color} shrink-0`} strokeWidth={2} />
+                      <ArrowUpRight size={11} className="text-slate-300 group-hover:text-[#c9a44c]" />
+                    </div>
+                    <div className="text-2xl font-black tracking-[-0.04em] text-slate-950">
+                      {isStatsLoading ? <span className="text-slate-300">-</span> : <CountUp target={stat.value} />}
+                    </div>
+                    <div className="text-[11px] font-semibold text-slate-500 leading-tight">{stat.label}</div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Navigation links */}
             <div className="space-y-2">
               {[
                 { label: "Add Portfolio Item", href: "/admin/portfolio", icon: Images },
@@ -188,32 +176,32 @@ function AdminDashboard() {
                 { label: "Site Settings", href: "/admin/settings", icon: Sparkles },
               ].map((action) => (
                 <Link key={action.href} to={action.href} className="group flex items-center gap-3 rounded-[20px] border border-white/70 bg-white/55 px-4 py-3 text-sm font-bold text-slate-600 transition hover:-translate-y-0.5 hover:bg-white/85 hover:text-slate-950 hover:shadow-lg">
-                  <action.icon size={16} className="text-slate-400 group-hover:text-violet-600" strokeWidth={1.8} />
+                  <action.icon size={16} className="text-slate-400 group-hover:text-[#c9a44c]" strokeWidth={1.8} />
                   {action.label}
-                  <ArrowUpRight size={13} className="ml-auto text-slate-300 group-hover:text-violet-600" />
+                  <ArrowUpRight size={13} className="ml-auto text-slate-300 group-hover:text-[#c9a44c]" />
                 </Link>
               ))}
             </div>
-          </div>
 
-          {recentPortfolio.length > 0 && (
-            <div className="admin-glass p-5">
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Recent Uploads</h3>
-                <Link to="/admin/portfolio" className="text-xs font-bold text-blue-600">View all</Link>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {recentPortfolio.map((item) => (
-                  <div key={item.id} className="group relative aspect-square overflow-hidden rounded-[20px] bg-slate-100 shadow-inner">
-                    <img src={item.url} alt={item.caption} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/55 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
-                      <p className="truncate text-[11px] font-bold text-white">{item.tag}</p>
+            {recentPortfolio.length > 0 && (
+              <>
+                <div className="mt-6 mb-3 flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Recent Uploads</h3>
+                  <Link to="/admin/portfolio" className="text-xs font-bold text-[#c9a44c] hover:underline">View all</Link>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {recentPortfolio.map((item) => (
+                    <div key={item.id} className="group relative aspect-square overflow-hidden rounded-[20px] bg-slate-100 shadow-inner">
+                      <img src={item.url} alt={item.caption} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/55 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
+                        <p className="truncate text-[11px] font-bold text-white">{item.tag}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </motion.div>
       </div>
 
@@ -226,7 +214,7 @@ function AdminDashboard() {
               <p className="text-xs font-medium text-slate-400">Newest messages from the website forms</p>
             </div>
           </div>
-          <Link to="/admin/enquiries" className="text-xs font-bold text-blue-600">View all</Link>
+          <Link to="/admin/enquiries" className="text-xs font-bold text-[#c9a44c] hover:underline">View all</Link>
         </div>
         <div className="divide-y divide-white/70">
           {loadingEnquiries ? (
@@ -239,7 +227,7 @@ function AdminDashboard() {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="truncate text-sm font-bold text-slate-950">{enq.name}</span>
-                    <span className={`admin-badge ${enq.status === "new" ? "!text-blue-600" : enq.status === "resolved" ? "!text-emerald-600" : ""}`}>{enq.status}</span>
+                    <span className={`admin-badge ${enq.status === "new" ? "!text-amber-600" : enq.status === "resolved" ? "!text-emerald-600" : ""}`}>{enq.status}</span>
                   </div>
                   <p className="mt-1 truncate text-sm text-slate-500">{enq.message}</p>
                   <p className="mt-1 text-xs text-slate-400">{enq.email}</p>
