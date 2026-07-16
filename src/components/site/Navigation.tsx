@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import zaLogo from "@/assets/za-logo.webp";
+import zaLogo from "@/assets/za-logo-opt.webp";
 
 const navLinks = [
   { to: "/", label: "Home" },

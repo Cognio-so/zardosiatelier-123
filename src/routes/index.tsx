@@ -33,14 +33,14 @@ import techniqueCrystalNew from "@/assets/technique-crystal-new.webp";
 import technique3dNew from "@/assets/technique-3d-new.webp";
 import techniqueBeadworkNew from "@/assets/technique-beadwork-new.webp";
 import techniqueSequinNew from "@/assets/technique-sequin-new.png";
-import zardoziPaisley from "@/assets/zardozi-paisley.webp";
+import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 import reshamZari1 from "@/assets/resham-zari-1.jpeg";
-import reshamZariCard from "@/assets/resham-zari-card.webp";
-import pearlWorkCard from "@/assets/pearl-work-card.webp";
-import crystalCard from "@/assets/crystal-1.webp";
+import reshamZariCard from "@/assets/resham-zari-card-opt.webp";
+import pearlWorkCard from "@/assets/pearl-work-card-opt.webp";
+import crystalCard from "@/assets/crystal-1-opt.webp";
 import sequin1 from "@/assets/sequin-1.jpg";
 import sequin2 from "@/assets/sequin-2.jpg";
-import sequin3 from "@/assets/sequin-3.webp";
+import sequin3 from "@/assets/sequin-3-opt.webp";
 import sequin4 from "@/assets/sequin-4.jpeg";
 import sequin5 from "@/assets/sequin-5.jpg";
 import sequin6 from "@/assets/sequin-6.jpg";
@@ -614,10 +614,11 @@ function LeadSection() {
                   </div>
                   <Field label="Project Type" name="subject" />
                   <div>
-                    <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
+                    <label htmlFor="project-details-index" className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
                       Project Details
                     </label>
                     <textarea
+                      id="project-details-index"
                       name="message"
                       rows={4}
                       required

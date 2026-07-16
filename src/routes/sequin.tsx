@@ -6,7 +6,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import sequin1 from "@/assets/sequin-1.jpg";
 import sequin2 from "@/assets/sequin-2.jpg";
-import sequin3 from "@/assets/sequin-3.jpeg";
+import sequin3 from "@/assets/sequin-3-opt.webp";
 import sequin4 from "@/assets/sequin-4.jpeg";
 import sequin5 from "@/assets/sequin-5.jpg";
 import sequin6 from "@/assets/sequin-6.jpg";

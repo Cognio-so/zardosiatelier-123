@@ -28,9 +28,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
               Contact
-            </h4>
+            </h3>
             <ul className="space-y-3 text-[15px] font-medium leading-6 text-ivory/88">
               {settings?.email && <li>Email: {settings.email}</li>}
               {settings?.whatsappNumber && <li>WhatsApp: {settings.whatsappNumber}</li>}
@@ -41,9 +41,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold-soft">
               Explore
-            </h4>
+            </h3>
             <ul className="space-y-3 text-[15px] font-medium text-ivory/88">
               {[
                 ["Home", "/"],

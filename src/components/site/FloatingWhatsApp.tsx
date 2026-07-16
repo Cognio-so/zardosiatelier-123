@@ -19,7 +19,7 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="group fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-[#25D366] bg-[#25D366] px-4 py-2 pl-2.5 transition-all duration-400 hover:scale-105 hover:bg-[#20ba5a] shadow-lg shadow-black/10"
+      className="group fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-[#128C7E] bg-[#128C7E] px-4 py-2 pl-2.5 transition-all duration-400 hover:scale-105 hover:bg-[#0e7065] shadow-lg shadow-black/10"
     >
       <span className="grid size-7 flex-shrink-0 place-items-center rounded-full bg-white/20 text-white transition-colors duration-400 group-hover:bg-white/30">
         <svg viewBox="0 0 32 32" className="size-4" fill="currentColor" aria-hidden="true">
