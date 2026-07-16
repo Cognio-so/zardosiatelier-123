@@ -29,7 +29,15 @@ import {
 import { loadSession } from "@/lib/admin-auth";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 
-const TAGS = ["Zardozi", "Sequin", "Crystal & Stone Work", "Pearl Work", "Resham & Zari", "Couture Studies", "Other"];
+const TAGS = [
+  "Zardozi",
+  "Sequin",
+  "Crystal & Stone Work",
+  "Pearl Work",
+  "Resham & Zari",
+  "Couture Studies",
+  "Other",
+];
 
 // Memoized individual grid item card to prevent redundant rerenders
 const GridItemCard = memo(
@@ -65,11 +73,19 @@ const GridItemCard = memo(
           <button
             onClick={() => onToggleSelect(item.id)}
             aria-pressed={isSelected}
-            aria-label={isSelected ? `Deselect item ${item.caption || "No caption"}` : `Select item ${item.caption || "No caption"}`}
+            aria-label={
+              isSelected
+                ? `Deselect item ${item.caption || "No caption"}`
+                : `Select item ${item.caption || "No caption"}`
+            }
             title="Select item"
             className="absolute left-3 top-3 flex size-8 items-center justify-center rounded-full border border-white/80 bg-white/75 text-slate-500 backdrop-blur-xl transition hover:text-blue-600 focus-visible:ring-2 focus-visible:ring-[#c9a44c]"
           >
-            {isSelected ? <Check size={15} aria-hidden="true" /> : <div className="size-3 rounded-full border border-slate-350" />}
+            {isSelected ? (
+              <Check size={15} aria-hidden="true" />
+            ) : (
+              <div className="size-3 rounded-full border border-slate-350" />
+            )}
           </button>
           <div className="absolute right-3 top-3 flex gap-2 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
             <button
@@ -90,16 +106,20 @@ const GridItemCard = memo(
             </button>
           </div>
           <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 transition group-hover:opacity-100">
-            <span className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-700 backdrop-blur-xl">{item.tag}</span>
+            <span className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-700 backdrop-blur-xl">
+              {item.tag}
+            </span>
           </div>
         </div>
         <div className="px-2 pt-3 pb-1 shrink-0">
-          <h3 className="truncate text-sm font-bold text-slate-950">{item.caption || "No caption"}</h3>
+          <h3 className="truncate text-sm font-bold text-slate-950">
+            {item.caption || "No caption"}
+          </h3>
           <p className="mt-1 text-xs font-medium text-slate-400">{formattedDate}</p>
         </div>
       </article>
     );
-  }
+  },
 );
 GridItemCard.displayName = "GridItemCard";
 
@@ -135,10 +155,18 @@ const ListItemRow = memo(
             {isSelected && <Check size={12} aria-hidden="true" />}
           </button>
         </div>
-        <img src={item.url} alt={item.caption || `${item.tag} work`} className="size-12 rounded-xl object-cover shadow-sm" loading="lazy" decoding="async" />
+        <img
+          src={item.url}
+          alt={item.caption || `${item.tag} work`}
+          className="size-12 rounded-xl object-cover shadow-sm"
+          loading="lazy"
+          decoding="async"
+        />
         <p className="truncate text-sm font-bold text-slate-800">{item.caption || "No caption"}</p>
         <span className="admin-badge hidden w-fit sm:block">{item.tag}</span>
-        <span className="hidden text-xs font-semibold text-slate-500 md:block">{formattedDate}</span>
+        <span className="hidden text-xs font-semibold text-slate-500 md:block">
+          {formattedDate}
+        </span>
         <div className="flex gap-1">
           <button
             onClick={() => onEdit(item)}
@@ -159,7 +187,7 @@ const ListItemRow = memo(
         </div>
       </article>
     );
-  }
+  },
 );
 ListItemRow.displayName = "ListItemRow";
 
@@ -203,7 +231,9 @@ export default function PortfolioAdmin() {
           reader.onerror = reject;
           reader.readAsDataURL(imageFile!);
         });
-        await uploadPortfolioImage({ data: { password, filename: imageFile!.name, base64, caption, tag } });
+        await uploadPortfolioImage({
+          data: { password, filename: imageFile!.name, base64, caption, tag },
+        });
       }
     },
     onSuccess: () => {
@@ -215,7 +245,8 @@ export default function PortfolioAdmin() {
   });
 
   const deleteMut = useMutation({
-    mutationFn: async (item: PortfolioItem) => deletePortfolioItem({ data: { password, id: item.id, url: item.url } }),
+    mutationFn: async (item: PortfolioItem) =>
+      deletePortfolioItem({ data: { password, id: item.id, url: item.url } }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["portfolio"] });
       toast.success("Item deleted");
@@ -231,7 +262,8 @@ export default function PortfolioAdmin() {
   const bulkDeleteMut = useMutation({
     mutationFn: async () => {
       const toDelete = items.filter((i) => selectedIds.has(i.id));
-      for (const item of toDelete) await deletePortfolioItem({ data: { password, id: item.id, url: item.url } });
+      for (const item of toDelete)
+        await deletePortfolioItem({ data: { password, id: item.id, url: item.url } });
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["portfolio"] });
@@ -299,9 +331,7 @@ export default function PortfolioAdmin() {
     const q = search.toLowerCase().trim();
     return items.filter((item) => {
       const matchSearch =
-        !q ||
-        item.caption.toLowerCase().includes(q) ||
-        item.tag.toLowerCase().includes(q);
+        !q || item.caption.toLowerCase().includes(q) || item.tag.toLowerCase().includes(q);
       const matchTag = filterTag === "All" || item.tag === filterTag;
       return matchSearch && matchTag;
     });
@@ -320,7 +350,11 @@ export default function PortfolioAdmin() {
   }, [allSelected, filteredItems]);
 
   const formatDate = useCallback((str: string) => {
-    return new Date(str).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+    return new Date(str).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   }, []);
 
   // Pre-calculate date string maps to prevent raw formatting on every virtual render
@@ -354,7 +388,9 @@ export default function PortfolioAdmin() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="admin-page-title">Portfolio</h2>
-          <p className="admin-page-subtitle">{items.length} items synced from the shared portfolio source.</p>
+          <p className="admin-page-subtitle">
+            {items.length} items synced from the shared portfolio source.
+          </p>
         </div>
         <div className="flex items-center gap-2">
           {selectedIds.size > 0 && (
@@ -391,8 +427,14 @@ export default function PortfolioAdmin() {
       <div className="admin-glass p-4">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div className="relative min-w-0 flex-1 xl:max-w-md">
-            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-            <label htmlFor="portfolio-search-field" className="sr-only">Search portfolio items</label>
+            <Search
+              size={16}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              aria-hidden="true"
+            />
+            <label htmlFor="portfolio-search-field" className="sr-only">
+              Search portfolio items
+            </label>
             <input
               id="portfolio-search-field"
               value={search}
@@ -416,7 +458,11 @@ export default function PortfolioAdmin() {
               </button>
             ))}
           </div>
-          <div className="flex rounded-[18px] border border-white/80 bg-white/60 p-1 shadow-sm" role="group" aria-label="Layout view mode">
+          <div
+            className="flex rounded-[18px] border border-white/80 bg-white/60 p-1 shadow-sm"
+            role="group"
+            aria-label="Layout view mode"
+          >
             <button
               onClick={() => setViewMode("grid")}
               aria-pressed={viewMode === "grid"}
@@ -440,14 +486,27 @@ export default function PortfolioAdmin() {
       </div>
 
       {isLoading ? (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-busy="true" aria-label="Loading portfolio items">
-          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="admin-glass h-72 animate-pulse" />)}
+        <div
+          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+          aria-busy="true"
+          aria-label="Loading portfolio items"
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="admin-glass h-72 animate-pulse" />
+          ))}
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="admin-glass flex flex-col items-center justify-center px-6 py-20 text-center">
-          <div className="mb-4 flex size-16 items-center justify-center rounded-3xl bg-white/70 text-slate-300" aria-hidden="true"><ImageIcon size={28} /></div>
+          <div
+            className="mb-4 flex size-16 items-center justify-center rounded-3xl bg-white/70 text-slate-300"
+            aria-hidden="true"
+          >
+            <ImageIcon size={28} />
+          </div>
           <p className="text-sm font-bold text-slate-650">No items found</p>
-          <p className="mt-1 text-xs text-slate-500">{search ? "Try a different search term" : "Add your first portfolio item"}</p>
+          <p className="mt-1 text-xs text-slate-500">
+            {search ? "Try a different search term" : "Add your first portfolio item"}
+          </p>
         </div>
       ) : viewMode === "grid" ? (
         <div className="w-full overflow-hidden">
@@ -456,6 +515,7 @@ export default function PortfolioAdmin() {
             rowHeight={430}
             style={{ height: "680px" }}
             className="scrollbar-thin"
+            rowProps={{}}
             rowComponent={({ index, style }) => {
               const rowItems = virtualGridRows[index] ?? [];
               return (
@@ -498,6 +558,7 @@ export default function PortfolioAdmin() {
             rowCount={filteredItems.length}
             rowHeight={72}
             style={{ height: "600px" }}
+            rowProps={{}}
             rowComponent={({ index, style }) => {
               const item = filteredItems[index];
               if (!item) return null;
@@ -521,7 +582,13 @@ export default function PortfolioAdmin() {
       <AnimatePresence>
         {drawerOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-sm" onClick={closeDrawer} />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-sm"
+              onClick={closeDrawer}
+            />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -533,7 +600,9 @@ export default function PortfolioAdmin() {
               aria-labelledby="drawer-title"
             >
               <div className="flex items-center justify-between border-b border-white/70 px-6 py-5">
-                <h3 id="drawer-title" className="text-lg font-bold text-slate-950">{editingItem ? "Edit Item" : "Add Portfolio Item"}</h3>
+                <h3 id="drawer-title" className="text-lg font-bold text-slate-950">
+                  {editingItem ? "Edit Item" : "Add Portfolio Item"}
+                </h3>
                 <button
                   onClick={closeDrawer}
                   aria-label="Close drawer"
@@ -546,11 +615,20 @@ export default function PortfolioAdmin() {
               <div className="flex-1 space-y-5 overflow-y-auto p-6">
                 {!editingItem && (
                   <div>
-                    <label htmlFor="file-upload-input" className="admin-label mb-2 block">Image <span className="text-red-500">*</span></label>
+                    <label htmlFor="file-upload-input" className="admin-label mb-2 block">
+                      Image <span className="text-red-500">*</span>
+                    </label>
                     <div
-                      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setDragOver(true);
+                      }}
                       onDragLeave={() => setDragOver(false)}
-                      onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFileChange(e.dataTransfer.files[0] ?? null); }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setDragOver(false);
+                        handleFileChange(e.dataTransfer.files[0] ?? null);
+                      }}
                       onClick={() => fileInputRef.current?.click()}
                       className={`cursor-pointer rounded-[24px] border-2 border-dashed p-6 text-center transition focus-within:ring-2 focus-within:ring-[#c9a44c] ${dragOver ? "border-violet-400 bg-violet-50" : "border-slate-200 bg-white/60"}`}
                     >
@@ -563,11 +641,21 @@ export default function PortfolioAdmin() {
                         onChange={(e) => handleFileChange(e.target.files?.[0] ?? null)}
                       />
                       {imagePreview ? (
-                        <img src={imagePreview} alt="Image upload preview" className="mx-auto max-h-56 rounded-3xl object-contain" />
+                        <img
+                          src={imagePreview}
+                          alt="Image upload preview"
+                          className="mx-auto max-h-56 rounded-3xl object-contain"
+                        />
                       ) : (
                         <>
-                          <Upload size={26} className="mx-auto mb-3 text-slate-300" aria-hidden="true" />
-                          <p className="text-sm font-bold text-slate-655">Drag & drop or click to upload</p>
+                          <Upload
+                            size={26}
+                            className="mx-auto mb-3 text-slate-300"
+                            aria-hidden="true"
+                          />
+                          <p className="text-sm font-bold text-slate-655">
+                            Drag & drop or click to upload
+                          </p>
                           <p className="mt-1 text-xs text-slate-500">PNG, JPG, WEBP - Max 5MB</p>
                         </>
                       )}
@@ -577,11 +665,17 @@ export default function PortfolioAdmin() {
                 {editingItem && (
                   <div>
                     <span className="admin-label mb-2 block">Current Image</span>
-                    <img src={editingItem.url} alt={editingItem.caption || "Current portfolio embroidery item design"} className="h-56 w-full rounded-[24px] object-cover" />
+                    <img
+                      src={editingItem.url}
+                      alt={editingItem.caption || "Current portfolio embroidery item design"}
+                      className="h-56 w-full rounded-[24px] object-cover"
+                    />
                   </div>
                 )}
                 <div>
-                  <label htmlFor="portfolio-caption-input" className="admin-label mb-2 block">Caption</label>
+                  <label htmlFor="portfolio-caption-input" className="admin-label mb-2 block">
+                    Caption
+                  </label>
                   <input
                     id="portfolio-caption-input"
                     value={caption}
@@ -595,7 +689,11 @@ export default function PortfolioAdmin() {
                 </div>
                 <div>
                   <span className="admin-label mb-2 block">Category Tag</span>
-                  <div className="flex flex-wrap gap-2" role="group" aria-label="Select category tag">
+                  <div
+                    className="flex flex-wrap gap-2"
+                    role="group"
+                    aria-label="Select category tag"
+                  >
                     {TAGS.map((t) => (
                       <button
                         key={t}
@@ -623,7 +721,15 @@ export default function PortfolioAdmin() {
                   disabled={uploadMut.isPending || (!editingItem && !imageFile)}
                   className="admin-primary-btn flex flex-1 items-center justify-center gap-2 py-3 text-sm font-bold focus-visible:ring-2 focus-visible:ring-[#c9a44c]"
                 >
-                  {uploadMut.isPending ? <><Loader2 size={15} className="animate-spin" /> Saving...</> : editingItem ? "Save Changes" : "Upload"}
+                  {uploadMut.isPending ? (
+                    <>
+                      <Loader2 size={15} className="animate-spin" /> Saving...
+                    </>
+                  ) : editingItem ? (
+                    "Save Changes"
+                  ) : (
+                    "Upload"
+                  )}
                 </button>
               </div>
             </motion.div>
@@ -631,8 +737,22 @@ export default function PortfolioAdmin() {
         )}
       </AnimatePresence>
 
-      <ConfirmDialog open={!!deleteTarget} title="Delete Item?" body={`"${deleteTarget?.caption || "This item"}" will be permanently removed. This cannot be undone.`} busy={deleteMut.isPending} onCancel={() => setDeleteTarget(null)} onConfirm={() => deleteTarget && deleteMut.mutate(deleteTarget)} />
-      <ConfirmDialog open={bulkDeleteConfirm} title={`Delete ${selectedIds.size} Items?`} body="This will permanently delete all selected items." busy={bulkDeleteMut.isPending} onCancel={() => setBulkDeleteConfirm(false)} onConfirm={() => bulkDeleteMut.mutate()} />
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Item?"
+        body={`"${deleteTarget?.caption || "This item"}" will be permanently removed. This cannot be undone.`}
+        busy={deleteMut.isPending}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={() => deleteTarget && deleteMut.mutate(deleteTarget)}
+      />
+      <ConfirmDialog
+        open={bulkDeleteConfirm}
+        title={`Delete ${selectedIds.size} Items?`}
+        body="This will permanently delete all selected items."
+        busy={bulkDeleteMut.isPending}
+        onCancel={() => setBulkDeleteConfirm(false)}
+        onConfirm={() => bulkDeleteMut.mutate()}
+      />
       <ConfirmDialog
         open={seedConfirm}
         title="Seed Default Designs?"
@@ -673,7 +793,12 @@ function ConfirmDialog({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/35 p-4 backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/35 p-4 backdrop-blur-sm"
+        >
           <motion.div
             initial={{ scale: 0.95, y: 10 }}
             animate={{ scale: 1, y: 0 }}
@@ -684,11 +809,18 @@ function ConfirmDialog({
             aria-labelledby="confirm-dialog-title"
             aria-describedby="confirm-dialog-desc"
           >
-            <div className={`mb-4 flex size-11 items-center justify-center rounded-2xl ${isRed ? "bg-red-50 text-red-500" : "bg-amber-50 text-[#c9a44c]"}`} aria-hidden="true">
+            <div
+              className={`mb-4 flex size-11 items-center justify-center rounded-2xl ${isRed ? "bg-red-50 text-red-500" : "bg-amber-50 text-[#c9a44c]"}`}
+              aria-hidden="true"
+            >
               {iconType === "sparkles" ? <Sparkles size={19} /> : <AlertTriangle size={19} />}
             </div>
-            <h3 id="confirm-dialog-title" className="text-lg font-bold text-slate-950">{title}</h3>
-            <p id="confirm-dialog-desc" className="mt-2 text-sm leading-6 text-slate-600">{body}</p>
+            <h3 id="confirm-dialog-title" className="text-lg font-bold text-slate-950">
+              {title}
+            </h3>
+            <p id="confirm-dialog-desc" className="mt-2 text-sm leading-6 text-slate-600">
+              {body}
+            </p>
             <div className="mt-6 flex gap-3">
               <button
                 onClick={onCancel}

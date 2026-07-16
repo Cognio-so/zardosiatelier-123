@@ -85,7 +85,7 @@ function defaultAssetNumber(path: string) {
 }
 
 export const DEFAULT_ITEMS: PortfolioItem[] = Object.entries(defaultAssetModules)
-  .map(([path, url]) => {
+  .map<PortfolioItem | null>(([path, url]) => {
     const group = defaultAssetGroup(path);
     if (!group) return null;
     const config = defaultAssetConfig[group];
@@ -104,7 +104,7 @@ export const DEFAULT_ITEMS: PortfolioItem[] = Object.entries(defaultAssetModules
       isDynamic: true as const,
     };
   })
-  .filter((item): item is PortfolioItem => Boolean(item))
+  .filter((item): item is PortfolioItem => item !== null)
   .sort((a, b) => a.order - b.order);
 
 type RawPortfolioItem = Partial<PortfolioItem> &
@@ -140,15 +140,6 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
     .sort((a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt));
 }
 
-function mergeWithDefaultItems(items: PortfolioItem[]): PortfolioItem[] {
-  const defaultsByUrl = new Set(DEFAULT_ITEMS.map((item) => item.url));
-  const defaultsById = new Set(DEFAULT_ITEMS.map((item) => item.id));
-  const uploadedItems = items.filter(
-    (item) => !defaultsById.has(item.id) && !defaultsByUrl.has(item.url),
-  );
-  return normalizeItems([...DEFAULT_ITEMS, ...uploadedItems]);
-}
-
 async function readMetadata(): Promise<PortfolioItem[]> {
   if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return DEFAULT_ITEMS;
   try {
@@ -159,7 +150,7 @@ async function readMetadata(): Promise<PortfolioItem[]> {
     if (!res.ok) return DEFAULT_ITEMS;
     const data = (await res.json()) as RawPortfolioItem[];
     const normalized = normalizeItems(Array.isArray(data) ? data : []);
-    return mergeWithDefaultItems(normalized);
+    return normalized.length > 0 ? normalized : DEFAULT_ITEMS;
   } catch {
     return DEFAULT_ITEMS;
   }
