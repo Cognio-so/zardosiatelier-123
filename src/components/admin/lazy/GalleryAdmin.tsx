@@ -164,8 +164,8 @@ export default function GalleryAdmin() {
   const stats = useMemo(() => {
     return [
       { label: "Total Images", value: items.length, icon: ImageIcon, tone: "gold" },
-      { label: "Zardozi", value: items.filter((i) => i.tag === "Zardozi").length, icon: Sparkles, tone: "blue" },
-      { label: "Crystal & Stone", value: items.filter((i) => i.tag === "Crystal & Stone Work").length, icon: Grid3X3, tone: "violet" },
+      { label: "Zardozi", value: items.filter((i) => i.categorySlug === "zardozi").length, icon: Sparkles, tone: "blue" },
+      { label: "Crystal & Stone", value: items.filter((i) => i.categorySlug === "crystal-stone-work").length, icon: Grid3X3, tone: "violet" },
       { label: "Selected", value: selected.size, icon: Check, tone: "green" },
     ];
   }, [items, selected.size]);

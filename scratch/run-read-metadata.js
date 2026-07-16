@@ -1,4 +1,4 @@
-import { list } from "@vercel/blob";
+import { getPortfolioItems } from "../src/lib/portfolio-admin";
 import fs from "fs";
 
 // Manually parse .env.local
@@ -11,30 +11,20 @@ for (const line of envFile.split("\n")) {
   envVars[key.trim()] = val;
 }
 
-const BLOB_TOKEN = envVars["BLOB_READ_WRITE_TOKEN"] || "";
-const METADATA_KEY = "portfolio-data.json";
-
-async function readMetadata() {
-  const { blobs } = await list({ token: BLOB_TOKEN, prefix: METADATA_KEY });
-  const meta = blobs.find((b) => b.pathname === METADATA_KEY);
-  const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
-  const data = await res.json();
-  return data;
+// Inject env vars to process.env
+for (const key in envVars) {
+  process.env[key] = envVars[key];
 }
 
 async function main() {
-  const items = await readMetadata();
-  console.log("Total items:", items.length);
-  const grouped = {};
-  for (const item of items) {
-    const key = item.tag || "Unknown";
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(item.url);
-  }
-  for (const tag in grouped) {
-    console.log(`Tag: "${tag}" has ${grouped[tag].length} items. First few:`);
-    console.log(grouped[tag].slice(0, 3));
-  }
+  const items = await getPortfolioItems();
+  console.log("Returned items count:", items.length);
+  const zardoziItems = items.filter(it => it.tag === "Zardozi");
+  console.log("Zardozi items count:", zardoziItems.length);
+  const tags = [...new Set(items.map(it => it.tag))];
+  console.log("Unique tags:", tags);
+  const slugs = [...new Set(items.map(it => it.categorySlug))];
+  console.log("Unique slugs:", slugs);
 }
 
 main();

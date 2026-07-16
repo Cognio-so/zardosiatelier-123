@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
-import { categoryBySlug, portfolioCategories } from "@/lib/portfolio-categories";
+import { categoryBySlug, portfolioCategories, slugifyPortfolioTag } from "@/lib/portfolio-categories";
 
 export const Route = createFileRoute("/portfolio/$category")({
   head: ({ params }) => {
@@ -23,13 +23,14 @@ export const Route = createFileRoute("/portfolio/$category")({
 
 function PortfolioCategoryPage() {
   const { category: slug } = Route.useParams();
-  const category = categoryBySlug(slug) ?? portfolioCategories[0];
+  const normalizedSlug = slugifyPortfolioTag(slug);
+  const category = categoryBySlug(normalizedSlug) ?? portfolioCategories[0];
   const { data: items = [], isLoading } = useQuery({
-    queryKey: ["portfolio", slug],
+    queryKey: ["portfolio", normalizedSlug],
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const filtered = items.filter((item) => item.categorySlug === slug);
+  const filtered = items.filter((item) => item.categorySlug === normalizedSlug);
   const heroImage = filtered[0]?.url;
 
   return (

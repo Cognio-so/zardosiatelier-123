@@ -83,9 +83,17 @@ export default function DashboardAdmin() {
   const isStatsLoading = loadingPortfolio || loadingEnquiries;
 
   const chartData = useMemo(() => {
+    const slugMap: Record<string, string> = {
+      Zardozi: "zardozi",
+      Crystal: "crystal-stone-work",
+      Resham: "resham-zari",
+      Pearl: "pearl-work",
+      Sequin: "sequin",
+      Couture: "couture-studies",
+    };
     return ["Zardozi", "Crystal", "Resham", "Pearl", "Sequin", "Couture"].map((label) => ({
       label,
-      uploads: portfolio.filter((item) => item.tag.toLowerCase().includes(label.toLowerCase().split(" ")[0])).length,
+      uploads: portfolio.filter((item) => item.categorySlug === slugMap[label]).length,
       enquiries: enquiries.filter((e, index) => e.status === "new" || index % 3 === 0).length,
     }));
   }, [portfolio, enquiries]);
