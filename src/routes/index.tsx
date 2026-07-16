@@ -7,8 +7,6 @@ import { TypingAnimation } from "@/registry/magicui/typing-animation";
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import { Lens } from "@/registry/magicui/lens";
 import { createEnquiry, getSettings } from "@/lib/admin-data";
-import { getPortfolioItems, type PortfolioItem } from "@/lib/portfolio-admin";
-import { categoryForTag } from "@/lib/portfolio-categories";
 import {
   Crown,
   Layers,
@@ -154,19 +152,8 @@ const faqs = [
   },
 ];
 
-function techniqueImage(name: string, fallback: string, items: PortfolioItem[]) {
-  const category = categoryForTag(name);
-  return items.find((item) => item.categorySlug === category.slug)?.url ?? fallback;
-}
-
 function HomePage() {
   const [loadVideo, setLoadVideo] = useState(false);
-  const { data: portfolioItems = [] } = useQuery({
-    queryKey: ["portfolio", "home-techniques"],
-    queryFn: () => getPortfolioItems(),
-    staleTime: 0,
-    refetchOnWindowFocus: true,
-  });
   const { data: settings } = useQuery({
     queryKey: ["settings-public"],
     queryFn: () => getSettings(),
@@ -209,18 +196,19 @@ function HomePage() {
         )}
 
         {/* Cinematic Dark Gradient Overlay */}
-        <div 
+        <div
           className="absolute inset-0 pointer-events-none"
-          style={{ 
-            background: "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.85) 100%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 40%, rgba(0,0,0,0.7) 100%)" 
-          }} 
+          style={{
+            background:
+              "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.85) 100%), linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 40%, rgba(0,0,0,0.7) 100%)",
+          }}
         />
 
         {/* Content Area with Glass Panel */}
         <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 pb-28 pt-32 sm:pt-36 lg:pt-32">
-          <div 
+          <div
             className="w-full max-w-[700px] border border-white/10 p-8 backdrop-blur-[12px] sm:p-12 lg:p-12 animate-fade-in"
-            style={{ 
+            style={{
               backgroundColor: "rgba(15,15,15,0.28)",
             }}
           >
@@ -238,8 +226,8 @@ function HomePage() {
               </TypingAnimation>
               <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
-                premium brands - every stitch finished by master karigars and checked twice before it
-                ships.
+                premium brands - every stitch finished by master karigars and checked twice before
+                it ships.
               </p>
               <p className="mt-6 font-serif text-lg italic text-gold-soft/90">
                 Patches / Bags / Headbands / Gowns / Bespoke commissions
@@ -305,7 +293,7 @@ function HomePage() {
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
                     <Lens zoomFactor={2.2} lensSize={130} isStatic={false}>
                       <img
-                        src={techniqueImage(item.name, item.image, portfolioItems)}
+                        src={item.image}
                         alt={item.name}
                         className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                       />
@@ -533,14 +521,19 @@ function CountUp({
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, [target, duration]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 }
 
 function LeadSection() {
@@ -563,7 +556,9 @@ function LeadSection() {
         name: String(form.get("name") ?? ""),
         email: String(form.get("email") ?? ""),
         phone: String(form.get("phone") ?? ""),
-        message: projectType ? `Project Type: ${projectType}\n\n${String(form.get("message") ?? "")}` : String(form.get("message") ?? ""),
+        message: projectType
+          ? `Project Type: ${projectType}\n\n${String(form.get("message") ?? "")}`
+          : String(form.get("message") ?? ""),
       },
     });
     setSubmitted(true);
@@ -648,7 +643,7 @@ function LeadSection() {
 function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
   return (
     <div>
-      <label 
+      <label
         htmlFor={`field-${name}`}
         className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft"
       >
@@ -681,4 +676,3 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
-

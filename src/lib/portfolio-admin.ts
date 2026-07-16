@@ -19,68 +19,93 @@ export type PortfolioItem = {
   isDynamic: true;
 };
 
-export const DEFAULT_ITEMS: PortfolioItem[] = [
+const defaultAssetModules = import.meta.glob<string>(
+  "/src/assets/{portfolio,zardozi,sequin,crystal,resham-zari,pearl-work}*.{jpg,jpeg,png,webp}",
+  { eager: true, import: "default", query: "?url" },
+);
+
+const defaultAssetConfig: Record<
+  string,
   {
-    id: "default-1",
-    url: "/portfolio-1.webp",
+    caption: string;
+    tag: string;
+    priority: number;
+  }
+> = {
+  portfolio: {
     caption: "Couture Floral Embroidery on Ivory Tulle",
     tag: "Couture Studies",
-    categorySlug: "couture-studies",
-    uploadedAt: "2026-01-01T00:00:00.000Z",
-    order: 0,
-    isDynamic: true,
+    priority: 0,
   },
-  {
-    id: "default-2",
-    url: "/portfolio-2.webp",
-    caption: "Intricate Tonal Zardozi Lapel Detailing",
-    tag: "Resham & Zari",
-    categorySlug: "resham-zari",
-    uploadedAt: "2026-01-02T00:00:00.000Z",
-    order: 1,
-    isDynamic: true,
-  },
-  {
-    id: "default-3",
-    url: "/portfolio-3.webp",
-    caption: "Luxe Crystal & Glass Bead Swatch",
-    tag: "Crystal & Stone Work",
-    categorySlug: "crystal-stone-work",
-    uploadedAt: "2026-01-03T00:00:00.000Z",
-    order: 2,
-    isDynamic: true,
-  },
-  {
-    id: "default-4",
-    url: "/portfolio-4.webp",
-    caption: "Traditional Mughal Gold Zardozi Panel",
+  zardozi: {
+    caption: "Traditional Gold Zardozi Hand Embroidery",
     tag: "Zardozi",
-    categorySlug: "zardozi",
-    uploadedAt: "2026-01-04T00:00:00.000Z",
-    order: 3,
-    isDynamic: true,
+    priority: 100,
   },
-  {
-    id: "default-5",
-    url: "/portfolio-5.webp",
-    caption: "Delicate Pearl and Seed Bead Lattice",
-    tag: "Pearl Work",
-    categorySlug: "pearl-work",
-    uploadedAt: "2026-01-05T00:00:00.000Z",
-    order: 4,
-    isDynamic: true,
-  },
-  {
-    id: "default-6",
-    url: "/portfolio-6.webp",
-    caption: "Hand-Stitched Sequin Embellished Gown Motif",
+  sequin: {
+    caption: "Hand-Stitched Sequin Embellishment",
     tag: "Sequin",
-    categorySlug: "sequin",
-    uploadedAt: "2026-01-06T00:00:00.000Z",
-    order: 5,
-    isDynamic: true,
+    priority: 200,
   },
-];
+  crystal: {
+    caption: "Crystal and Stone Couture Surface Work",
+    tag: "Crystal & Stone Work",
+    priority: 300,
+  },
+  "resham-zari": {
+    caption: "Resham and Zari Threadwork Detail",
+    tag: "Resham & Zari",
+    priority: 400,
+  },
+  "pearl-work": {
+    caption: "Pearl and Seed Bead Hand Embroidery",
+    tag: "Pearl Work",
+    priority: 500,
+  },
+};
+
+function defaultAssetGroup(path: string) {
+  const filename = path.split("/").pop() ?? "";
+  return Object.keys(defaultAssetConfig).find((prefix) => filename.startsWith(prefix));
+}
+
+function defaultAssetId(path: string) {
+  return path
+    .split("/")
+    .pop()!
+    .replace(/\.[^.]+$/, "")
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+}
+function defaultAssetNumber(path: string) {
+  const filename = path.split("/").pop() ?? "";
+  const match = filename.match(/-(\d+)\./);
+  return match ? Number(match[1]) : 999;
+}
+
+export const DEFAULT_ITEMS: PortfolioItem[] = Object.entries(defaultAssetModules)
+  .map(([path, url]) => {
+    const group = defaultAssetGroup(path);
+    if (!group) return null;
+    const config = defaultAssetConfig[group];
+    const number = defaultAssetNumber(path);
+    const slug = slugifyPortfolioTag(config.tag);
+    const order = config.priority + number;
+    return {
+      id: `default-${defaultAssetId(path)}`,
+      url,
+      caption: number === 999 ? config.caption : `${config.caption} ${number}`,
+      tag: config.tag,
+      categorySlug: slug,
+      uploadedAt: new Date(Date.UTC(2026, 0, 1, 0, order)).toISOString(),
+      order,
+      sourcePath: path,
+      isDynamic: true as const,
+    };
+  })
+  .filter((item): item is PortfolioItem => Boolean(item))
+  .sort((a, b) => a.order - b.order);
 
 type RawPortfolioItem = Partial<PortfolioItem> &
   Pick<PortfolioItem, "id" | "url" | "caption" | "tag" | "uploadedAt">;
@@ -115,6 +140,15 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
     .sort((a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt));
 }
 
+function mergeWithDefaultItems(items: PortfolioItem[]): PortfolioItem[] {
+  const defaultsByUrl = new Set(DEFAULT_ITEMS.map((item) => item.url));
+  const defaultsById = new Set(DEFAULT_ITEMS.map((item) => item.id));
+  const uploadedItems = items.filter(
+    (item) => !defaultsById.has(item.id) && !defaultsByUrl.has(item.url),
+  );
+  return normalizeItems([...DEFAULT_ITEMS, ...uploadedItems]);
+}
+
 async function readMetadata(): Promise<PortfolioItem[]> {
   if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return DEFAULT_ITEMS;
   try {
@@ -124,8 +158,8 @@ async function readMetadata(): Promise<PortfolioItem[]> {
     const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) return DEFAULT_ITEMS;
     const data = (await res.json()) as RawPortfolioItem[];
-    // If the metadata file exists but has no items, we still respect it as empty
-    return normalizeItems(data);
+    const normalized = normalizeItems(Array.isArray(data) ? data : []);
+    return mergeWithDefaultItems(normalized);
   } catch {
     return DEFAULT_ITEMS;
   }
@@ -141,8 +175,8 @@ async function writeMetadata(items: PortfolioItem[]): Promise<void> {
   });
 }
 
-export const getPortfolioItems = createServerFn({ method: "GET" }).handler(
-  async () => readMetadata()
+export const getPortfolioItems = createServerFn({ method: "GET" }).handler(async () =>
+  readMetadata(),
 );
 
 export const uploadPortfolioImage = createServerFn({ method: "POST" })
@@ -154,7 +188,7 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
       caption: z.string().max(120),
       tag: z.string().max(60),
       order: z.number().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
@@ -206,7 +240,7 @@ export const updatePortfolioItem = createServerFn({ method: "POST" })
       caption: z.string().max(120),
       tag: z.string().max(60),
       order: z.number().optional(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
@@ -220,7 +254,7 @@ export const updatePortfolioItem = createServerFn({ method: "POST" })
             categorySlug: slugifyPortfolioTag(data.tag),
             order: data.order ?? it.order,
           }
-        : it
+        : it,
     );
     await writeMetadata(updated);
     return { ok: true };
