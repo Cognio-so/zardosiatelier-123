@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   LayoutGrid,
   List as ListIcon,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -22,6 +23,7 @@ import {
   uploadPortfolioImage,
   updatePortfolioItem,
   deletePortfolioItem,
+  seedDefaultPortfolio,
   type PortfolioItem,
 } from "@/lib/portfolio-admin";
 import { loadSession } from "@/lib/admin-auth";
@@ -180,6 +182,7 @@ export default function PortfolioAdmin() {
   const [editingItem, setEditingItem] = useState<PortfolioItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<PortfolioItem | null>(null);
   const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
+  const [seedConfirm, setSeedConfirm] = useState(false);
 
   const [caption, setCaption] = useState("");
   const [tag, setTag] = useState(TAGS[0]);
@@ -235,6 +238,16 @@ export default function PortfolioAdmin() {
       toast.success(`${selectedIds.size} items deleted`);
       setSelectedIds(new Set());
       setBulkDeleteConfirm(false);
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
+
+  const seedMut = useMutation({
+    mutationFn: async () => seedDefaultPortfolio({ data: { password } }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["portfolio"] });
+      toast.success("Default designs seeded successfully!");
+      setSeedConfirm(false);
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -355,6 +368,14 @@ export default function PortfolioAdmin() {
               <span>Delete ({selectedIds.size})</span>
             </button>
           )}
+          <button
+            onClick={() => setSeedConfirm(true)}
+            className="rounded-[18px] border border-gold/45 bg-white/60 px-5 py-3 text-sm font-bold text-[#c9a44c] hover:bg-gold/10 transition focus-visible:ring-2 focus-visible:ring-[#c9a44c] flex items-center gap-2"
+            title="Seed default showcase items"
+          >
+            <Sparkles size={16} aria-hidden="true" />
+            <span>Seed Defaults</span>
+          </button>
           <button
             onClick={openAdd}
             aria-label="Add new portfolio item"
@@ -612,11 +633,43 @@ export default function PortfolioAdmin() {
 
       <ConfirmDialog open={!!deleteTarget} title="Delete Item?" body={`"${deleteTarget?.caption || "This item"}" will be permanently removed. This cannot be undone.`} busy={deleteMut.isPending} onCancel={() => setDeleteTarget(null)} onConfirm={() => deleteTarget && deleteMut.mutate(deleteTarget)} />
       <ConfirmDialog open={bulkDeleteConfirm} title={`Delete ${selectedIds.size} Items?`} body="This will permanently delete all selected items." busy={bulkDeleteMut.isPending} onCancel={() => setBulkDeleteConfirm(false)} onConfirm={() => bulkDeleteMut.mutate()} />
+      <ConfirmDialog
+        open={seedConfirm}
+        title="Seed Default Designs?"
+        body="This will populate the portfolio with the 6 default Zardosi Atelier designs. If you already have uploaded items, they will be preserved, but duplicates might be created if seeded multiple times. Do you want to proceed?"
+        busy={seedMut.isPending}
+        onCancel={() => setSeedConfirm(false)}
+        onConfirm={() => seedMut.mutate()}
+        confirmText="Seed Designs"
+        confirmColor="gold"
+        iconType="sparkles"
+      />
     </div>
   );
 }
 
-function ConfirmDialog({ open, title, body, busy, onCancel, onConfirm }: { open: boolean; title: string; body: string; busy: boolean; onCancel: () => void; onConfirm: () => void }) {
+function ConfirmDialog({
+  open,
+  title,
+  body,
+  busy,
+  onCancel,
+  onConfirm,
+  confirmText = "Delete",
+  confirmColor = "red",
+  iconType = "warning",
+}: {
+  open: boolean;
+  title: string;
+  body: string;
+  busy: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+  confirmText?: string;
+  confirmColor?: "red" | "gold";
+  iconType?: "warning" | "sparkles";
+}) {
+  const isRed = confirmColor === "red";
   return (
     <AnimatePresence>
       {open && (
@@ -631,7 +684,9 @@ function ConfirmDialog({ open, title, body, busy, onCancel, onConfirm }: { open:
             aria-labelledby="confirm-dialog-title"
             aria-describedby="confirm-dialog-desc"
           >
-            <div className="mb-4 flex size-11 items-center justify-center rounded-2xl bg-red-50 text-red-500" aria-hidden="true"><AlertTriangle size={19} /></div>
+            <div className={`mb-4 flex size-11 items-center justify-center rounded-2xl ${isRed ? "bg-red-50 text-red-500" : "bg-amber-50 text-[#c9a44c]"}`} aria-hidden="true">
+              {iconType === "sparkles" ? <Sparkles size={19} /> : <AlertTriangle size={19} />}
+            </div>
             <h3 id="confirm-dialog-title" className="text-lg font-bold text-slate-950">{title}</h3>
             <p id="confirm-dialog-desc" className="mt-2 text-sm leading-6 text-slate-600">{body}</p>
             <div className="mt-6 flex gap-3">
@@ -644,9 +699,9 @@ function ConfirmDialog({ open, title, body, busy, onCancel, onConfirm }: { open:
               <button
                 onClick={onConfirm}
                 disabled={busy}
-                className="flex flex-1 items-center justify-center gap-2 rounded-[18px] border border-red-200 bg-red-50 py-3 text-sm font-bold text-red-600 transition hover:bg-red-100 disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-red-500"
+                className={`flex flex-1 items-center justify-center gap-2 rounded-[18px] border py-3 text-sm font-bold transition disabled:opacity-50 ${isRed ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100 focus-visible:ring-2 focus-visible:ring-red-500" : "border-[#c9a44c]/30 bg-amber-55 text-[#c9a44c] hover:bg-amber-100 focus-visible:ring-2 focus-visible:ring-[#c9a44c]"}`}
               >
-                {busy ? <Loader2 size={14} className="animate-spin" /> : "Delete"}
+                {busy ? <Loader2 size={14} className="animate-spin" /> : confirmText}
               </button>
             </div>
           </motion.div>

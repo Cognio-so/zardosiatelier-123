@@ -290,22 +290,7 @@ export function AdminSidebar({ onLogout, isDark: _isDark, isMobile = false, onCl
           )}
         </button>
 
-        {/* Collapse toggle */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          aria-label={collapsed ? "Expand sidebar navigation menu" : "Collapse sidebar navigation menu"}
-          title={collapsed ? "Expand sidebar navigation menu" : "Collapse sidebar navigation menu"}
-          className="flex w-full items-center justify-center gap-2 rounded-lg py-1 text-slate-400 transition-all hover:bg-white/70 hover:text-slate-700"
-        >
-          {collapsed ? (
-            <ChevronRight size={13} aria-hidden="true" />
-          ) : (
-            <>
-              <ChevronLeft size={13} aria-hidden="true" />
-              <span className="text-[10px] font-semibold">Collapse</span>
-            </>
-          )}
-        </button>
+
       </div>
     </motion.aside>
   );
