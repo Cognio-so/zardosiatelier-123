@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { put, list } from "@vercel/blob";
 import { z } from "zod";
+import { hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN ?? "";
 const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
@@ -83,9 +83,9 @@ export interface AdminUser {
 // ── Generic Blob JSON CRUD ───────────────────────────────────
 
 async function readBlob<T>(key: string, fallback: T): Promise<T> {
-  if (!BLOB_TOKEN) return fallback;
+  if (!hasBlobToken(BLOB_TOKEN)) return fallback;
   try {
-    const { blobs } = await list({ token: BLOB_TOKEN, prefix: key });
+    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: key });
     const match = blobs.find((b) => b.pathname === key);
     if (!match) return fallback;
     const res = await fetch(match.url + `?t=${Date.now()}`);
@@ -97,10 +97,9 @@ async function readBlob<T>(key: string, fallback: T): Promise<T> {
 }
 
 async function writeBlob<T>(key: string, data: T): Promise<void> {
-  if (!BLOB_TOKEN) return;
-  await put(key, JSON.stringify(data, null, 2), {
+  if (!hasBlobToken(BLOB_TOKEN)) return;
+  await putBlob(BLOB_TOKEN, key, JSON.stringify(data, null, 2), {
     access: "public",
-    token: BLOB_TOKEN,
     allowOverwrite: true,
     contentType: "application/json",
   });
@@ -112,8 +111,8 @@ function authCheck(password: string) {
 
 // ── ENQUIRIES ────────────────────────────────────────────────
 
-export const getEnquiries = createServerFn({ method: "GET" }).handler(
-  async () => readBlob<Enquiry[]>(KEYS.enquiries, [])
+export const getEnquiries = createServerFn({ method: "GET" }).handler(async () =>
+  readBlob<Enquiry[]>(KEYS.enquiries, []),
 );
 
 export const createEnquiry = createServerFn({ method: "POST" })
@@ -123,7 +122,7 @@ export const createEnquiry = createServerFn({ method: "POST" })
       email: z.string().email(),
       phone: z.string(),
       message: z.string().min(1),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
@@ -143,7 +142,7 @@ export const updateEnquiryStatus = createServerFn({ method: "POST" })
       password: z.string(),
       id: z.string(),
       status: z.enum(["new", "read", "resolved"]),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
@@ -153,12 +152,9 @@ export const updateEnquiryStatus = createServerFn({ method: "POST" })
         ? {
             ...e,
             status: data.status,
-            readAt:
-              data.status === "read" && !e.readAt
-                ? new Date().toISOString()
-                : e.readAt,
+            readAt: data.status === "read" && !e.readAt ? new Date().toISOString() : e.readAt,
           }
-        : e
+        : e,
     );
     await writeBlob(KEYS.enquiries, updated);
     return { ok: true };
@@ -171,7 +167,7 @@ export const deleteEnquiry = createServerFn({ method: "POST" })
     const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
     await writeBlob(
       KEYS.enquiries,
-      enquiries.filter((e) => e.id !== data.id)
+      enquiries.filter((e) => e.id !== data.id),
     );
     return { ok: true };
   });
@@ -183,7 +179,7 @@ export const bulkDeleteEnquiries = createServerFn({ method: "POST" })
     const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
     await writeBlob(
       KEYS.enquiries,
-      enquiries.filter((e) => !data.ids.includes(e.id))
+      enquiries.filter((e) => !data.ids.includes(e.id)),
     );
     return { ok: true };
   });
@@ -208,8 +204,8 @@ const defaultSettings: SiteSettings = {
   footerText: "© 2025 Zardosi Atelier. All rights reserved.",
 };
 
-export const getSettings = createServerFn({ method: "GET" }).handler(
-  async () => readBlob<SiteSettings>(KEYS.settings, defaultSettings)
+export const getSettings = createServerFn({ method: "GET" }).handler(async () =>
+  readBlob<SiteSettings>(KEYS.settings, defaultSettings),
 );
 
 export const updateSettings = createServerFn({ method: "POST" })
@@ -217,14 +213,11 @@ export const updateSettings = createServerFn({ method: "POST" })
     z.object({
       password: z.string(),
       settings: z.record(z.string(), z.any()),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
-    const current = await readBlob<SiteSettings>(
-      KEYS.settings,
-      defaultSettings
-    );
+    const current = await readBlob<SiteSettings>(KEYS.settings, defaultSettings);
     const merged = { ...current, ...(data.settings as Partial<SiteSettings>) };
     await writeBlob(KEYS.settings, merged);
     return { ok: true };
@@ -238,8 +231,7 @@ const defaultHomepage: HomepageSection[] = [
     section: "hero",
     content: {
       heading: "Where Thread Meets Artistry",
-      subheading:
-        "Bespoke hand embroidery for the world's finest fashion houses",
+      subheading: "Bespoke hand embroidery for the world's finest fashion houses",
       ctaText: "Explore Our Work",
       ctaLink: "/portfolio",
     },
@@ -267,8 +259,8 @@ const defaultHomepage: HomepageSection[] = [
   },
 ];
 
-export const getHomepageSections = createServerFn({ method: "GET" }).handler(
-  async () => readBlob<HomepageSection[]>(KEYS.homepage, defaultHomepage)
+export const getHomepageSections = createServerFn({ method: "GET" }).handler(async () =>
+  readBlob<HomepageSection[]>(KEYS.homepage, defaultHomepage),
 );
 
 export const updateHomepageSection = createServerFn({ method: "POST" })
@@ -277,20 +269,17 @@ export const updateHomepageSection = createServerFn({ method: "POST" })
       password: z.string(),
       section: z.string(),
       content: z.record(z.string(), z.any()),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
-    const sections = await readBlob<HomepageSection[]>(
-      KEYS.homepage,
-      defaultHomepage
-    );
+    const sections = await readBlob<HomepageSection[]>(KEYS.homepage, defaultHomepage);
     const exists = sections.find((s) => s.section === data.section);
     const updated = exists
       ? sections.map((s) =>
           s.section === data.section
             ? { ...s, content: data.content, updatedAt: new Date().toISOString() }
-            : s
+            : s,
         )
       : [
           ...sections,
@@ -312,7 +301,8 @@ const defaultSeo: SeoEntry[] = [
     id: "home",
     page: "Home",
     metaTitle: "Zardosi Atelier - Luxury Hand Embroidery Couture",
-    metaDescription: "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work and bespoke craftsmanship.",
+    metaDescription:
+      "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work and bespoke craftsmanship.",
     keywords: "zardosi, hand embroidery, couture, luxury fashion",
     ogImage: "",
     robots: "index",
@@ -322,7 +312,8 @@ const defaultSeo: SeoEntry[] = [
     id: "portfolio",
     page: "Portfolio",
     metaTitle: "Portfolio - Zardosi Atelier | Hand Embroidery Work",
-    metaDescription: "Explore our portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture houses.",
+    metaDescription:
+      "Explore our portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture houses.",
     keywords: "portfolio, hand embroidery, zardosi, crystals, sequins, couture embellishment",
     ogImage: "",
     robots: "index",
@@ -332,7 +323,8 @@ const defaultSeo: SeoEntry[] = [
     id: "about",
     page: "About",
     metaTitle: "About Us - Zardosi Atelier | Our Craft Legacy",
-    metaDescription: "Discover Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses.",
+    metaDescription:
+      "Discover Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses.",
     keywords: "zardosi atelier, about us, hand embroidery heritage, couture craftsmanship",
     ogImage: "",
     robots: "index",
@@ -342,7 +334,8 @@ const defaultSeo: SeoEntry[] = [
     id: "contact",
     page: "Contact",
     metaTitle: "Contact Us - Zardosi Atelier | Get in Touch",
-    metaDescription: "Get in touch with Zardosi Atelier for custom hand embroidery, zardosi work, and couture embellishments. We partner with fashion houses worldwide.",
+    metaDescription:
+      "Get in touch with Zardosi Atelier for custom hand embroidery, zardosi work, and couture embellishments. We partner with fashion houses worldwide.",
     keywords: "contact zardosi atelier, embroidery enquiry, couture partnership",
     ogImage: "",
     robots: "index",
@@ -352,7 +345,8 @@ const defaultSeo: SeoEntry[] = [
     id: "process",
     page: "Process",
     metaTitle: "Our Process - Zardosi Atelier | How We Craft",
-    metaDescription: "Step inside our process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship.",
+    metaDescription:
+      "Step inside our process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship.",
     keywords: "zardosi process, hand embroidery process, couture manufacturing",
     ogImage: "",
     robots: "index",
@@ -362,53 +356,66 @@ const defaultSeo: SeoEntry[] = [
     id: "services",
     page: "Services",
     metaTitle: "Our Services - Zardosi Atelier | What We Offer",
-    metaDescription: "Zardosi Atelier offers hand embroidery, zardosi work, crystal embellishments, and custom couture manufacturing services for fashion brands globally.",
-    keywords: "hand embroidery services, zardosi work, couture manufacturing, embellishment services",
+    metaDescription:
+      "Zardosi Atelier offers hand embroidery, zardosi work, crystal embellishments, and custom couture manufacturing services for fashion brands globally.",
+    keywords:
+      "hand embroidery services, zardosi work, couture manufacturing, embellishment services",
     ogImage: "",
     robots: "index",
     updatedAt: new Date().toISOString(),
   },
 ];
 
-export const getSeoEntries = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const entries = await readBlob<SeoEntry[]>(KEYS.seo, defaultSeo);
-    let changed = false;
-    const merged = [...entries];
-    for (const def of defaultSeo) {
-      const matchIndex = merged.findIndex((e) => e.page === def.page);
-      if (matchIndex === -1) {
-        merged.push(def);
+export const getSeoEntries = createServerFn({ method: "GET" }).handler(async () => {
+  const entries = await readBlob<SeoEntry[]>(KEYS.seo, defaultSeo);
+  let changed = false;
+  const merged = [...entries];
+  for (const def of defaultSeo) {
+    const matchIndex = merged.findIndex((e) => e.page === def.page);
+    if (matchIndex === -1) {
+      merged.push(def);
+      changed = true;
+    } else {
+      // If the entry has a default placeholder or old long description, update it!
+      const entry = merged[matchIndex];
+      if (
+        entry.metaDescription === "Get in touch with Zardosi Atelier." ||
+        entry.metaDescription === "Explore our portfolio of luxury hand embroidery works." ||
+        entry.metaDescription === "A compelling description of this page..." ||
+        entry.metaDescription ===
+          "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work, hand-embellished fabrics, and bespoke craftsmanship." ||
+        entry.metaDescription ===
+          "Explore our curated portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture and fashion houses." ||
+        entry.metaDescription ===
+          "Discover the story behind Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses worldwide." ||
+        entry.metaDescription ===
+          "Step inside our atelier's process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship every time." ||
+        entry.metaDescription === ""
+      ) {
+        merged[matchIndex] = {
+          ...entry,
+          metaTitle:
+            entry.metaTitle.startsWith(def.page + " -") ||
+            entry.metaTitle === def.page + " - Zardosi Atelier"
+              ? def.metaTitle
+              : entry.metaTitle,
+          metaDescription: def.metaDescription,
+          keywords:
+            entry.keywords === "zardosi, hand embroidery, couture..." ||
+            entry.keywords === "portfolio, embroidery, zardosi, crystals, sequins" ||
+            entry.keywords === ""
+              ? def.keywords
+              : entry.keywords,
+        };
         changed = true;
-      } else {
-        // If the entry has a default placeholder or old long description, update it!
-        const entry = merged[matchIndex];
-        if (entry.metaDescription === "Get in touch with Zardosi Atelier." || 
-            entry.metaDescription === "Explore our portfolio of luxury hand embroidery works." || 
-            entry.metaDescription === "A compelling description of this page..." ||
-            entry.metaDescription === "A luxury hand embroidery and couture manufacturing atelier serving global fashion houses with intricate zardosi work, hand-embellished fabrics, and bespoke craftsmanship." ||
-            entry.metaDescription === "Explore our curated portfolio of luxury hand embroidery, zardosi work, crystal embellishments, and sequin craftsmanship created for global couture and fashion houses." ||
-            entry.metaDescription === "Discover the story behind Zardosi Atelier, a heritage hand embroidery atelier blending traditional zardosi craftsmanship with modern couture for fashion houses worldwide." ||
-            entry.metaDescription === "Step inside our atelier's process - from design and sourcing to hand embroidery, quality checks, and finishing - delivering couture-grade craftsmanship every time." ||
-            entry.metaDescription === "") {
-          merged[matchIndex] = {
-            ...entry,
-            metaTitle: entry.metaTitle.startsWith(def.page + " -") || entry.metaTitle === def.page + " - Zardosi Atelier" ? def.metaTitle : entry.metaTitle,
-            metaDescription: def.metaDescription,
-            keywords: entry.keywords === "zardosi, hand embroidery, couture..." || entry.keywords === "portfolio, embroidery, zardosi, crystals, sequins" || entry.keywords === "" ? def.keywords : entry.keywords
-          };
-          changed = true;
-        }
       }
     }
-    if (changed) {
-      await writeBlob(KEYS.seo, merged);
-    }
-    return merged;
   }
-);
-
-
+  if (changed) {
+    await writeBlob(KEYS.seo, merged);
+  }
+  return merged;
+});
 
 export const updateSeoEntry = createServerFn({ method: "POST" })
   .validator(
@@ -421,7 +428,7 @@ export const updateSeoEntry = createServerFn({ method: "POST" })
       keywords: z.string(),
       ogImage: z.string(),
       robots: z.enum(["index", "noindex"]),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
@@ -431,9 +438,7 @@ export const updateSeoEntry = createServerFn({ method: "POST" })
     const exists = entries.find((e) => e.id === rest.id);
     const updated = exists
       ? entries.map((e) =>
-          e.id === rest.id
-            ? { ...e, ...rest, updatedAt: new Date().toISOString() }
-            : e
+          e.id === rest.id ? { ...e, ...rest, updatedAt: new Date().toISOString() } : e,
         )
       : [...entries, { ...rest, updatedAt: new Date().toISOString() }];
     await writeBlob(KEYS.seo, updated);
@@ -447,14 +452,11 @@ export const addLoginHistory = createServerFn({ method: "POST" })
     z.object({
       password: z.string(),
       userAgent: z.string(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
-    const history = await readBlob<LoginHistoryEntry[]>(
-      KEYS.loginHistory,
-      []
-    );
+    const history = await readBlob<LoginHistoryEntry[]>(KEYS.loginHistory, []);
     const entry: LoginHistoryEntry = {
       id: `login_${Date.now()}`,
       userAgent: data.userAgent,
@@ -464,8 +466,8 @@ export const addLoginHistory = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const getLoginHistory = createServerFn({ method: "GET" }).handler(
-  async () => readBlob<LoginHistoryEntry[]>(KEYS.loginHistory, [])
+export const getLoginHistory = createServerFn({ method: "GET" }).handler(async () =>
+  readBlob<LoginHistoryEntry[]>(KEYS.loginHistory, []),
 );
 
 const defaultAdminUsers: AdminUser[] = [
@@ -484,11 +486,11 @@ const defaultAdminUsers: AdminUser[] = [
     role: "admin",
     createdAt: "2025-07-05T08:30:00Z",
     status: "active",
-  }
+  },
 ];
 
-export const getAdminUsers = createServerFn({ method: "GET" }).handler(
-  async () => readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers)
+export const getAdminUsers = createServerFn({ method: "GET" }).handler(async () =>
+  readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers),
 );
 
 export const createAdminUser = createServerFn({ method: "POST" })
@@ -498,13 +500,13 @@ export const createAdminUser = createServerFn({ method: "POST" })
       name: z.string().min(1),
       email: z.string().email(),
       role: z.enum(["super_admin", "admin", "manager"]),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
     const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
-    
-    if (users.some(u => u.email.toLowerCase() === data.email.toLowerCase())) {
+
+    if (users.some((u) => u.email.toLowerCase() === data.email.toLowerCase())) {
       throw new Error("Admin user with this email already exists");
     }
 
@@ -525,20 +527,20 @@ export const deleteAdminUser = createServerFn({ method: "POST" })
     z.object({
       password: z.string(),
       id: z.string(),
-    })
+    }),
   )
   .handler(async ({ data }) => {
     authCheck(data.password);
     const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
-    
-    const userToDelete = users.find(u => u.id === data.id);
+
+    const userToDelete = users.find((u) => u.id === data.id);
     if (userToDelete?.role === "super_admin") {
       throw new Error("Cannot delete a Super Admin.");
     }
 
     await writeBlob(
       KEYS.adminUsers,
-      users.filter((u) => u.id !== data.id)
+      users.filter((u) => u.id !== data.id),
     );
     return { ok: true };
   });

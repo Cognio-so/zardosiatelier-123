@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { put, del, list } from "@vercel/blob";
 import { z } from "zod";
 import { slugifyPortfolioTag } from "./portfolio-categories";
+import { deleteBlob, hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
 const METADATA_KEY = "portfolio-data.json";
 const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
@@ -141,9 +141,9 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
 }
 
 async function readMetadata(): Promise<PortfolioItem[]> {
-  if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return DEFAULT_ITEMS;
+  if (!hasBlobToken(BLOB_TOKEN)) return DEFAULT_ITEMS;
   try {
-    const { blobs } = await list({ token: BLOB_TOKEN, prefix: METADATA_KEY });
+    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: METADATA_KEY });
     const meta = blobs.find((b) => b.pathname === METADATA_KEY);
     if (!meta) return DEFAULT_ITEMS;
     const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
@@ -157,10 +157,9 @@ async function readMetadata(): Promise<PortfolioItem[]> {
 }
 
 async function writeMetadata(items: PortfolioItem[]): Promise<void> {
-  if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") return;
-  await put(METADATA_KEY, JSON.stringify(normalizeItems(items), null, 2), {
+  if (!hasBlobToken(BLOB_TOKEN)) return;
+  await putBlob(BLOB_TOKEN, METADATA_KEY, JSON.stringify(normalizeItems(items), null, 2), {
     access: "public",
-    token: BLOB_TOKEN,
     allowOverwrite: true,
     contentType: "application/json",
   });
@@ -183,7 +182,7 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
-    if (!BLOB_TOKEN || BLOB_TOKEN === "your_vercel_blob_token_here") {
+    if (!hasBlobToken(BLOB_TOKEN)) {
       throw new Error("BLOB_READ_WRITE_TOKEN not configured");
     }
 
@@ -202,10 +201,10 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
     const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
     const safeName = data.filename.replace(/[^a-z0-9.]/gi, "_").replace(/\.(png|jpe?g|webp)$/i, "");
     const blobName = `portfolio/${Date.now()}-${safeName}.${ext}`;
-    const { url } = await put(blobName, buffer, {
+    const { url } = await putBlob(BLOB_TOKEN, blobName, buffer, {
       access: "public",
-      token: BLOB_TOKEN,
       contentType: mimeType,
+      addRandomSuffix: false,
     });
 
     const existing = await readMetadata();
@@ -256,7 +255,7 @@ export const deletePortfolioItem = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
     try {
-      await del(data.url, { token: BLOB_TOKEN });
+      await deleteBlob(BLOB_TOKEN, data.url);
     } catch {
       // Continue if the blob has already been removed.
     }
