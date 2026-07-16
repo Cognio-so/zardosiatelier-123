@@ -89,17 +89,7 @@ function PortfolioPage() {
       />
       <section className="luxury-silk-bg py-10 sm:py-12">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
-          <Reveal>
-            <div className="mb-6 flex items-center gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#C9A84C]">
-                Admin Portfolio
-              </span>
-              <div style={{ height: "1px", flex: 1, background: "rgba(201,168,76,0.2)" }} />
-              <span className="text-[10px] text-[#9A8878]">
-                {isLoading ? "Loading archive..." : `${items.length} item${items.length !== 1 ? "s" : ""}`}
-              </span>
-            </div>
-          </Reveal>
+
 
           {isLoading ? (
             <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">

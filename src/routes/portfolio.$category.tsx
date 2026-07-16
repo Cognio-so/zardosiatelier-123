@@ -56,7 +56,7 @@ function PortfolioCategoryPage() {
             <span className="eyebrow">Gallery</span>
             <h2 className="mt-2 font-serif text-4xl sm:text-5xl">{category.name} Work</h2>
             <p className="mt-3 text-sm font-medium text-ink-soft">
-              {isLoading ? "Loading images..." : `${filtered.length} image${filtered.length !== 1 ? "s" : ""} from the admin portfolio`}
+              {isLoading ? "Loading images..." : `${filtered.length} design${filtered.length !== 1 ? "s" : ""} in this collection`}
             </p>
           </Reveal>
 
