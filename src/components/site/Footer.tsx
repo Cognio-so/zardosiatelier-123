@@ -33,7 +33,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-[15px] font-medium leading-6 text-ivory/88">
               {settings?.email && <li>Email: {settings.email}</li>}
-              {settings?.whatsappNumber && <li>WhatsApp: {settings.whatsappNumber}</li>}
+              {settings?.phone && <li>Phone: {settings.phone}</li>}
               {settings?.instagramUrl && <li>Instagram: {settings.instagramUrl}</li>}
               {settings?.linkedinUrl && <li>LinkedIn: {settings.linkedinUrl}</li>}
               <li>Location: {settings?.address ?? "India - Serving global fashion brands"}</li>

@@ -159,7 +159,7 @@ function HomePage() {
     queryFn: () => getSettings(),
     staleTime: 0,
   });
-  const whatsappDigits = (settings?.whatsappNumber ?? "+91 88260 23527").replace(/\D/g, "");
+  const phoneDigits = (settings?.phone ?? "8826023527").replace(/\D/g, "");
 
   useEffect(() => {
     // Only load the heavy video after mount to avoid blocking FCP/LCP
@@ -240,12 +240,12 @@ function HomePage() {
                   Start With a Sample
                 </Link>
                 <a
-                  href={`https://wa.me/${whatsappDigits}`}
+                  href={`tel:${phoneDigits}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full border border-white/40 bg-white/5 px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all hover:bg-white hover:text-[#120c09] sm:w-auto"
                 >
-                  WhatsApp the Atelier
+                  Call the Atelier
                 </a>
               </div>
             </Reveal>
@@ -543,9 +543,9 @@ function LeadSection() {
     queryFn: () => getSettings(),
     staleTime: 0,
   });
-  const whatsappNumber = settings?.whatsappNumber ?? "+91 88260 23527";
-  const whatsappDigits = whatsappNumber.replace(/\D/g, "");
-  const email = settings?.email ?? "atelier@zardosiatelier.com";
+  const phoneNumber = settings?.phone ?? "8826023527";
+  const phoneDigits = phoneNumber.replace(/\D/g, "");
+  const email = settings?.email ?? "zardosiatelier@gmail.com";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -578,12 +578,12 @@ function LeadSection() {
           <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
               <a
-                href={`https://wa.me/${whatsappDigits}?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project.`}
+                href={`tel:${phoneDigits}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:bg-transparent"
               >
-                WhatsApp {whatsappNumber}
+                Call {phoneNumber}
               </a>
               <a
                 href={`mailto:${email}`}
@@ -677,3 +677,6 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
+
+

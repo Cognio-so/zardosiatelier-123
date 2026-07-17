@@ -36,9 +36,9 @@ function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const email = settings?.email ?? "atelier@zardosiatelier.com";
-  const whatsappNumber = settings?.whatsappNumber ?? "+91 88260 23527";
-  const whatsappHref = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}`;
+  const email = settings?.email ?? "zardosiatelier@gmail.com";
+  const phoneNumber = settings?.phone ?? "8826023527";
+  const phoneHref = `tel:${phoneNumber.replace(/\D/g, "")}`;
   const address = settings?.address ?? "New Delhi - Paris - New York";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -136,14 +136,14 @@ function ContactPage() {
                 </a>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">WhatsApp</p>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Phone</p>
                 <a
-                  href={whatsappHref}
+                  href={phoneHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 inline-block font-serif text-xl gold-link"
                 >
-                  {whatsappNumber}
+                  {phoneNumber}
                 </a>
               </div>
               <div>
@@ -220,3 +220,5 @@ function ContactPage() {
     </PageShell>
   );
 }
+
+

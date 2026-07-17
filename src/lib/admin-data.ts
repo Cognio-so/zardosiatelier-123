@@ -189,9 +189,9 @@ export const bulkDeleteEnquiries = createServerFn({ method: "POST" })
 const defaultSettings: SiteSettings = {
   siteName: "Zardosi Atelier",
   tagline: "Luxury Hand Embroidery Couture",
-  whatsappNumber: "+91 9876543210",
-  email: "hello@zardosiatelier.com",
-  phone: "+91 9876543210",
+  whatsappNumber: "",
+  email: "zardosiatelier@gmail.com",
+  phone: "8826023527",
   address: "Mumbai, Maharashtra, India",
   instagramUrl: "https://instagram.com/zardosiatelier",
   facebookUrl: "",
@@ -473,7 +473,7 @@ export const getLoginHistory = createServerFn({ method: "GET" }).handler(async (
 const defaultAdminUsers: AdminUser[] = [
   {
     id: "usr_1",
-    email: "hello@zardosiatelier.com",
+    email: "zardosiatelier@gmail.com",
     name: "Zardosi Superadmin",
     role: "super_admin",
     createdAt: "2025-07-01T12:00:00Z",
@@ -544,3 +544,4 @@ export const deleteAdminUser = createServerFn({ method: "POST" })
     );
     return { ok: true };
   });
+
