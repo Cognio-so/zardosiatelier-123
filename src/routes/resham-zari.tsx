@@ -44,7 +44,7 @@ export const Route = createFileRoute("/resham-zari")({
   component: ReshamZariPage,
 });
 
-const galleryImages = [
+const staticGalleryImages = [
   { src: r01, alt: "Resham & Zari Work - Masterpiece design 1" },
   { src: r02, alt: "Resham & Zari Work - Masterpiece design 2" },
   { src: r03, alt: "Resham & Zari Work - Masterpiece design 3" },
@@ -82,16 +82,17 @@ function ReshamZariPage() {
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const galleryImages = useMemo(
-    () =>
-      portfolioItems
-        .filter((item) => item.categorySlug === "resham-zari")
-        .map((item) => ({
-          src: item.url,
-          alt: item.caption || "Resham and zari portfolio image",
-        })),
-    [portfolioItems],
-  );
+  // Merge admin-uploaded images (from blob storage) with static default images.
+  // Admin uploads appear first so new content is always visible at the top.
+  const galleryImages = useMemo(() => {
+    const adminUploaded = portfolioItems
+      .filter((item) => item.categorySlug === "resham-zari" && !item.id.startsWith("default-"))
+      .map((item) => ({
+        src: item.url,
+        alt: item.caption || "Resham and zari portfolio image",
+      }));
+    return [...adminUploaded, ...staticGalleryImages];
+  }, [portfolioItems]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

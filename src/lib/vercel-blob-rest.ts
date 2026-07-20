@@ -22,8 +22,9 @@ type PutBlobOptions = {
   addRandomSuffix?: boolean;
 };
 
-const API_BASE_URL = "https://vercel.com/api/blob";
-const API_VERSION = "12";
+// Correct Vercel Blob REST API endpoint
+const API_BASE_URL = "https://blob.vercel-storage.com";
+const API_VERSION = "7";
 const PLACEHOLDER_TOKEN = "your_vercel_blob_token_here";
 
 export function hasBlobToken(token: string) {
@@ -31,20 +32,14 @@ export function hasBlobToken(token: string) {
 }
 
 function storeIdFromToken(token: string) {
-  return token.split("_")[3] ?? "";
+  // Token format: vercel_blob_rw_<storeId>_<secret>
+  const parts = token.split("_");
+  return parts.slice(0, 4).join("_");
 }
 
 async function blobRequest<T>(token: string, path: string, init: RequestInit = {}): Promise<T> {
-  const storeId = storeIdFromToken(token);
   const headers = new Headers(init.headers);
   headers.set("authorization", `Bearer ${token}`);
-  headers.set("x-api-version", API_VERSION);
-  headers.set("x-vercel-blob-store-id", storeId);
-  headers.set(
-    "x-api-blob-request-id",
-    `${storeId}:${Date.now()}:${Math.random().toString(16).slice(2)}`,
-  );
-  headers.set("x-api-blob-request-attempt", "0");
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
@@ -82,11 +77,11 @@ export async function putBlob(
   const params = new URLSearchParams({ pathname });
   const headers = new Headers();
   headers.set("x-vercel-blob-access", options.access ?? "public");
-  if (options.contentType) headers.set("x-content-type", options.contentType);
+  if (options.contentType) headers.set("content-type", options.contentType);
   if (options.allowOverwrite) headers.set("x-allow-overwrite", "1");
   if (options.addRandomSuffix === false) headers.set("x-add-random-suffix", "0");
 
-  return blobRequest<BlobRecord>(token, `?${params.toString()}`, {
+  return blobRequest<BlobRecord>(token, `/${pathname}`, {
     method: "PUT",
     headers,
     body: body as BodyInit,

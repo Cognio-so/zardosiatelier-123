@@ -156,9 +156,30 @@ async function readMetadata(): Promise<PortfolioItem[]> {
   }
 }
 
+// Only reads blob-stored items (no defaults). Used for write operations so
+// default static assets never get written into blob storage metadata.
+async function readBlobOnlyMetadata(): Promise<PortfolioItem[]> {
+  if (!hasBlobToken(BLOB_TOKEN)) return [];
+  try {
+    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: METADATA_KEY });
+    const meta = blobs.find((b) => b.pathname === METADATA_KEY);
+    if (!meta) return [];
+    const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as RawPortfolioItem[];
+    const normalized = normalizeItems(Array.isArray(data) ? data : []);
+    // Filter out any default-prefixed items that may have been stored accidentally
+    return normalized.filter((item) => !item.id.startsWith("default-"));
+  } catch {
+    return [];
+  }
+}
+
 async function writeMetadata(items: PortfolioItem[]): Promise<void> {
   if (!hasBlobToken(BLOB_TOKEN)) return;
-  await putBlob(BLOB_TOKEN, METADATA_KEY, JSON.stringify(normalizeItems(items), null, 2), {
+  // Never write default items into blob storage
+  const blobItems = items.filter((item) => !item.id.startsWith("default-"));
+  await putBlob(BLOB_TOKEN, METADATA_KEY, JSON.stringify(normalizeItems(blobItems), null, 2), {
     access: "public",
     allowOverwrite: true,
     contentType: "application/json",
@@ -207,7 +228,7 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
       addRandomSuffix: false,
     });
 
-    const existing = await readMetadata();
+    const existing = await readBlobOnlyMetadata();
     const newItem: PortfolioItem = {
       id: `${Date.now()}`,
       url,
@@ -234,7 +255,7 @@ export const updatePortfolioItem = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
-    const items = await readMetadata();
+    const items = await readBlobOnlyMetadata();
     const updated = items.map((it) =>
       it.id === data.id
         ? {
@@ -259,7 +280,7 @@ export const deletePortfolioItem = createServerFn({ method: "POST" })
     } catch {
       // Continue if the blob has already been removed.
     }
-    const items = await readMetadata();
+    const items = await readBlobOnlyMetadata();
     await writeMetadata(items.filter((it) => it.id !== data.id));
     return { ok: true };
   });

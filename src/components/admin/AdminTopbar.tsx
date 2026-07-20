@@ -59,7 +59,7 @@ export function AdminTopbar({ onLogout, title, onToggleMobileMenu }: AdminTopbar
 
       <div className="flex items-center gap-2">
         <a
-          href="https://zardosiatelier-123.vercel.app/"
+          href="https://www.zardosiatelier.com/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="View live website (opens in new tab)"

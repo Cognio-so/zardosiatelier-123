@@ -30,7 +30,7 @@ export const Route = createFileRoute("/pearl-work")({
   component: PearlWorkPage,
 });
 
-const galleryImages = [
+const staticGalleryImages = [
   { src: p01, alt: "Pearl Work - Delicate check pattern design 1" },
   { src: p02, alt: "Pearl Work - Detailed surface pattern 2" },
   { src: p03, alt: "Pearl Work - Diamond lattice detail 3" },
@@ -54,16 +54,17 @@ function PearlWorkPage() {
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const galleryImages = useMemo(
-    () =>
-      portfolioItems
-        .filter((item) => item.categorySlug === "pearl-work")
-        .map((item) => ({
-          src: item.url,
-          alt: item.caption || "Pearl work portfolio image",
-        })),
-    [portfolioItems],
-  );
+  // Merge admin-uploaded images (from blob storage) with static default images.
+  // Admin uploads appear first so new content is always visible at the top.
+  const galleryImages = useMemo(() => {
+    const adminUploaded = portfolioItems
+      .filter((item) => item.categorySlug === "pearl-work" && !item.id.startsWith("default-"))
+      .map((item) => ({
+        src: item.url,
+        alt: item.caption || "Pearl work portfolio image",
+      }));
+    return [...adminUploaded, ...staticGalleryImages];
+  }, [portfolioItems]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

@@ -112,7 +112,7 @@ export default function HomepageAdmin() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div><h2 className="admin-page-title">Homepage CMS</h2><p className="admin-page-subtitle">Edit homepage sections. Saved changes continue writing to Vercel Blob.</p></div>
         <a
-          href="https://zardosiatelier-123.vercel.app/"
+          href="https://www.zardosiatelier.com/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Preview live website in a new window"

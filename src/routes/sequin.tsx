@@ -27,7 +27,7 @@ export const Route = createFileRoute("/sequin")({
   component: SequinPage,
 });
 
-const galleryImages = [
+const staticGalleryImages = [
   { src: sequin1, alt: "Sequin embroidery - maroon gold lattice pattern 1" },
   { src: sequin2, alt: "Sequin embroidery - maroon gold lattice pattern 2" },
   { src: sequin3, alt: "Sequin embroidery - 3D floral sequin close-up" },
@@ -42,16 +42,17 @@ function SequinPage() {
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const galleryImages = useMemo(
-    () =>
-      portfolioItems
-        .filter((item) => item.categorySlug === "sequin")
-        .map((item) => ({
-          src: item.url,
-          alt: item.caption || "Sequin embroidery portfolio image",
-        })),
-    [portfolioItems],
-  );
+  // Merge admin-uploaded images (from blob storage) with static default images.
+  // Admin uploads appear first so new content is always visible at the top.
+  const galleryImages = useMemo(() => {
+    const adminUploaded = portfolioItems
+      .filter((item) => item.categorySlug === "sequin" && !item.id.startsWith("default-"))
+      .map((item) => ({
+        src: item.url,
+        alt: item.caption || "Sequin embroidery portfolio image",
+      }));
+    return [...adminUploaded, ...staticGalleryImages];
+  }, [portfolioItems]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

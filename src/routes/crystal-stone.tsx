@@ -46,7 +46,7 @@ export const Route = createFileRoute("/crystal-stone")({
   component: CrystalStonePage,
 });
 
-const galleryImages = [
+const staticGalleryImages = [
   { src: c01, alt: "Crystal & Stone Work - Amethyst floral scrollwork on silk" },
   { src: c02, alt: "Crystal & Stone Work - Multi-stone couture panel detail 2" },
   { src: c03, alt: "Crystal & Stone Work - Gold zircon cluster motif 3" },
@@ -90,16 +90,17 @@ function CrystalStonePage() {
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const galleryImages = useMemo(
-    () =>
-      portfolioItems
-        .filter((item) => item.categorySlug === "crystal-stone-work")
-        .map((item) => ({
-          src: item.url,
-          alt: item.caption || "Crystal and stone work portfolio image",
-        })),
-    [portfolioItems],
-  );
+  // Merge admin-uploaded images (from blob storage) with static default images.
+  // Admin uploads appear first so new content is always visible at the top.
+  const galleryImages = useMemo(() => {
+    const adminUploaded = portfolioItems
+      .filter((item) => item.categorySlug === "crystal-stone-work" && !item.id.startsWith("default-"))
+      .map((item) => ({
+        src: item.url,
+        alt: item.caption || "Crystal and stone work portfolio image",
+      }));
+    return [...adminUploaded, ...staticGalleryImages];
+  }, [portfolioItems]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

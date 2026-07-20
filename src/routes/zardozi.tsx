@@ -58,7 +58,7 @@ export const Route = createFileRoute("/zardozi")({
   component: ZardoziPage,
 });
 
-const galleryImages = [
+const staticGalleryImages = [
   { src: z01, alt: "Zardozi paisley motif - gold thread on white silk" },
   { src: z02, alt: "Zardozi embroidery detail close-up" },
   { src: z03, alt: "Zardozi needlework - fine metallic craftsmanship" },
@@ -110,16 +110,17 @@ function ZardoziPage() {
     queryFn: () => getPortfolioItems(),
     staleTime: 0,
   });
-  const galleryImages = useMemo(
-    () =>
-      portfolioItems
-        .filter((item) => item.categorySlug === "zardozi")
-        .map((item) => ({
-          src: item.url,
-          alt: item.caption || "Zardozi embroidery portfolio image",
-        })),
-    [portfolioItems],
-  );
+  // Merge admin-uploaded images (from blob storage) with static default images.
+  // Admin uploads appear first so new content is always visible at the top.
+  const galleryImages = useMemo(() => {
+    const adminUploaded = portfolioItems
+      .filter((item) => item.categorySlug === "zardozi" && !item.id.startsWith("default-"))
+      .map((item) => ({
+        src: item.url,
+        alt: item.caption || "Zardozi embroidery portfolio image",
+      }));
+    return [...adminUploaded, ...staticGalleryImages];
+  }, [portfolioItems]);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);
