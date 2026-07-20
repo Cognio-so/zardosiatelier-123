@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { getPortfolioItems } from "@/lib/portfolio-admin";
 
 import sequin1 from "@/assets/sequin-1.jpg";
 import sequin2 from "@/assets/sequin-2.jpg";
@@ -35,6 +37,21 @@ const galleryImages = [
 ];
 
 function SequinPage() {
+  const { data: portfolioItems = [] } = useQuery({
+    queryKey: ["portfolio", "sequin-page"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 0,
+  });
+  const galleryImages = useMemo(
+    () =>
+      portfolioItems
+        .filter((item) => item.categorySlug === "sequin")
+        .map((item) => ({
+          src: item.url,
+          alt: item.caption || "Sequin embroidery portfolio image",
+        })),
+    [portfolioItems],
+  );
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

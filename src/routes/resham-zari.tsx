@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { getPortfolioItems } from "@/lib/portfolio-admin";
 
 import r01 from "@/assets/resham-zari-page-1.jpeg";
 import r02 from "@/assets/resham-zari-page-2.jpeg";
@@ -75,14 +77,29 @@ const stats = [
 ];
 
 function ReshamZariPage() {
+  const { data: portfolioItems = [] } = useQuery({
+    queryKey: ["portfolio", "resham-zari-page"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 0,
+  });
+  const galleryImages = useMemo(
+    () =>
+      portfolioItems
+        .filter((item) => item.categorySlug === "resham-zari")
+        .map((item) => ({
+          src: item.url,
+          alt: item.caption || "Resham and zari portfolio image",
+        })),
+    [portfolioItems],
+  );
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);
   const closeLightbox = () => setLightbox(null);
   const prevImage = useCallback(() =>
-    setLightbox((i) => (i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length)), []);
+    setLightbox((i) => (i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length)), [galleryImages.length]);
   const nextImage = useCallback(() =>
-    setLightbox((i) => (i === null ? null : (i + 1) % galleryImages.length)), []);
+    setLightbox((i) => (i === null ? null : (i + 1) % galleryImages.length)), [galleryImages.length]);
 
   // Keyboard navigation
   useEffect(() => {

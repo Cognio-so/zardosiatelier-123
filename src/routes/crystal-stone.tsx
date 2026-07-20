@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { getPortfolioItems } from "@/lib/portfolio-admin";
 
 import c01 from "@/assets/crystal-1.jpeg";
 import c02 from "@/assets/crystal-2.jpeg";
@@ -83,6 +85,21 @@ const features = [
 ];
 
 function CrystalStonePage() {
+  const { data: portfolioItems = [] } = useQuery({
+    queryKey: ["portfolio", "crystal-stone-page"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 0,
+  });
+  const galleryImages = useMemo(
+    () =>
+      portfolioItems
+        .filter((item) => item.categorySlug === "crystal-stone-work")
+        .map((item) => ({
+          src: item.url,
+          alt: item.caption || "Crystal and stone work portfolio image",
+        })),
+    [portfolioItems],
+  );
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);

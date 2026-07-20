@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { getPortfolioItems } from "@/lib/portfolio-admin";
 
 import z01 from "@/assets/zardozi-1.jpeg";
 import z02 from "@/assets/zardozi-2.jpg";
@@ -103,14 +105,29 @@ const stats = [
 ];
 
 function ZardoziPage() {
+  const { data: portfolioItems = [] } = useQuery({
+    queryKey: ["portfolio", "zardozi-page"],
+    queryFn: () => getPortfolioItems(),
+    staleTime: 0,
+  });
+  const galleryImages = useMemo(
+    () =>
+      portfolioItems
+        .filter((item) => item.categorySlug === "zardozi")
+        .map((item) => ({
+          src: item.url,
+          alt: item.caption || "Zardozi embroidery portfolio image",
+        })),
+    [portfolioItems],
+  );
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightbox(idx);
   const closeLightbox = () => setLightbox(null);
   const prevImage = useCallback(() =>
-    setLightbox((i) => (i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length)), []);
+    setLightbox((i) => (i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length)), [galleryImages.length]);
   const nextImage = useCallback(() =>
-    setLightbox((i) => (i === null ? null : (i + 1) % galleryImages.length)), []);
+    setLightbox((i) => (i === null ? null : (i + 1) % galleryImages.length)), [galleryImages.length]);
 
   // Keyboard navigation
   useEffect(() => {
