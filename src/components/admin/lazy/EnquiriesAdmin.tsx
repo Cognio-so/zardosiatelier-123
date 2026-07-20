@@ -109,9 +109,30 @@ export default function EnquiriesAdmin() {
   const [deleteTarget, setDeleteTarget] = useState<Enquiry | null>(null);
   const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
 
-  const updateMut = useMutation({ mutationFn: (vars: { id: string; status: Enquiry["status"] }) => updateEnquiryStatus({ data: { password, ...vars } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Status updated"); }, onError: (e: Error) => toast.error(e.message) });
-  const deleteMut = useMutation({ mutationFn: (id: string) => deleteEnquiry({ data: { password, id } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Enquiry deleted"); setDeleteTarget(null); if (activeEnquiry?.id === deleteTarget?.id) setActiveEnquiry(null); }, onError: (e: Error) => toast.error(e.message) });
-  const bulkDeleteMut = useMutation({ mutationFn: () => bulkDeleteEnquiries({ data: { password, ids: Array.from(selectedIds) } }), onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success(`${selectedIds.size} enquiries deleted`); setSelectedIds(new Set()); setBulkDeleteConfirm(false); }, onError: (e: Error) => toast.error(e.message) });
+  const updateMut = useMutation({
+    mutationFn: async (vars: { id: string; status: Enquiry["status"] }) => {
+      const res = await updateEnquiryStatus({ data: { password, ...vars } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Status updated"); },
+    onError: (e: Error) => toast.error(e.message)
+  });
+  const deleteMut = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await deleteEnquiry({ data: { password, id } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success("Enquiry deleted"); setDeleteTarget(null); if (activeEnquiry?.id === deleteTarget?.id) setActiveEnquiry(null); },
+    onError: (e: Error) => toast.error(e.message)
+  });
+  const bulkDeleteMut = useMutation({
+    mutationFn: async () => {
+      const res = await bulkDeleteEnquiries({ data: { password, ids: Array.from(selectedIds) } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["enquiries"] }); toast.success(`${selectedIds.size} enquiries deleted`); setSelectedIds(new Set()); setBulkDeleteConfirm(false); },
+    onError: (e: Error) => toast.error(e.message)
+  });
 
   // Memoized filter calculation
   const filtered = useMemo(() => {

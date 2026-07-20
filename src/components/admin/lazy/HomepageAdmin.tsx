@@ -89,7 +89,10 @@ export default function HomepageAdmin() {
   }, [sections]);
 
   const saveMut = useMutation({
-    mutationFn: (sectionId: string) => updateHomepageSection({ data: { password, section: sectionId, content: formData[sectionId] ?? {} } }),
+    mutationFn: async (sectionId: string) => {
+      const res = await updateHomepageSection({ data: { password, section: sectionId, content: formData[sectionId] ?? {} } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
     onSuccess: (_, sectionId) => {
       qc.invalidateQueries({ queryKey: ["homepage"] });
       toast.success("Section saved!");

@@ -80,7 +80,10 @@ export default function SettingsAdmin() {
   useEffect(() => { if (settings) { setFormData(settings); setDirty(false); } }, [settings]);
 
   const saveMut = useMutation({
-    mutationFn: () => updateSettings({ data: { password, settings: formData } }),
+    mutationFn: async () => {
+      const res = await updateSettings({ data: { password, settings: formData } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["settings"] }); toast.success("Settings saved!"); setDirty(false); },
     onError: (e: Error) => toast.error(e.message),
   });

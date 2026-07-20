@@ -2,8 +2,12 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN ?? "";
-const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+function getAdminPass() {
+  return process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+}
+function getBlobToken() {
+  return process.env.BLOB_READ_WRITE_TOKEN ?? "";
+}
 
 // ── Blob key constants ──────────────────────────────────────
 const KEYS = {
@@ -83,9 +87,10 @@ export interface AdminUser {
 // ── Generic Blob JSON CRUD ───────────────────────────────────
 
 async function readBlob<T>(key: string, fallback: T): Promise<T> {
-  if (!hasBlobToken(BLOB_TOKEN)) return fallback;
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return fallback;
   try {
-    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: key });
+    const { blobs } = await listBlobs(token, { prefix: key });
     const match = blobs.find((b) => b.pathname === key);
     if (!match) return fallback;
     const res = await fetch(match.url + `?t=${Date.now()}`);
@@ -97,8 +102,9 @@ async function readBlob<T>(key: string, fallback: T): Promise<T> {
 }
 
 async function writeBlob<T>(key: string, data: T): Promise<void> {
-  if (!hasBlobToken(BLOB_TOKEN)) return;
-  await putBlob(BLOB_TOKEN, key, JSON.stringify(data, null, 2), {
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return;
+  await putBlob(token, key, JSON.stringify(data, null, 2), {
     access: "public",
     allowOverwrite: true,
     contentType: "application/json",
@@ -106,7 +112,7 @@ async function writeBlob<T>(key: string, data: T): Promise<void> {
 }
 
 function authCheck(password: string) {
-  if (password !== ADMIN_PASS) throw new Error("Unauthorized");
+  if (password !== getAdminPass()) throw new Error("Unauthorized");
 }
 
 // ── ENQUIRIES ────────────────────────────────────────────────
@@ -125,15 +131,20 @@ export const createEnquiry = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
-    const newEnquiry: Enquiry = {
-      id: `enq_${Date.now()}`,
-      ...data,
-      status: "new",
-      createdAt: new Date().toISOString(),
-    };
-    await writeBlob(KEYS.enquiries, [newEnquiry, ...enquiries]);
-    return newEnquiry;
+    try {
+      const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
+      const newEnquiry: Enquiry = {
+        id: `enq_${Date.now()}`,
+        ...data,
+        status: "new",
+        createdAt: new Date().toISOString(),
+      };
+      await writeBlob(KEYS.enquiries, [newEnquiry, ...enquiries]);
+      return { success: true, enquiry: newEnquiry };
+    } catch (err: any) {
+      console.error("createEnquiry error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 export const updateEnquiryStatus = createServerFn({ method: "POST" })
@@ -145,43 +156,58 @@ export const updateEnquiryStatus = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
-    const updated = enquiries.map((e) =>
-      e.id === data.id
-        ? {
-            ...e,
-            status: data.status,
-            readAt: data.status === "read" && !e.readAt ? new Date().toISOString() : e.readAt,
-          }
-        : e,
-    );
-    await writeBlob(KEYS.enquiries, updated);
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
+      const updated = enquiries.map((e) =>
+        e.id === data.id
+          ? {
+              ...e,
+              status: data.status,
+              readAt: data.status === "read" && !e.readAt ? new Date().toISOString() : e.readAt,
+            }
+          : e,
+      );
+      await writeBlob(KEYS.enquiries, updated);
+      return { success: true };
+    } catch (err: any) {
+      console.error("updateEnquiryStatus error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 export const deleteEnquiry = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string(), id: z.string() }))
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
-    await writeBlob(
-      KEYS.enquiries,
-      enquiries.filter((e) => e.id !== data.id),
-    );
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
+      await writeBlob(
+        KEYS.enquiries,
+        enquiries.filter((e) => e.id !== data.id),
+      );
+      return { success: true };
+    } catch (err: any) {
+      console.error("deleteEnquiry error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 export const bulkDeleteEnquiries = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string(), ids: z.array(z.string()) }))
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
-    await writeBlob(
-      KEYS.enquiries,
-      enquiries.filter((e) => !data.ids.includes(e.id)),
-    );
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const enquiries = await readBlob<Enquiry[]>(KEYS.enquiries, []);
+      await writeBlob(
+        KEYS.enquiries,
+        enquiries.filter((e) => !data.ids.includes(e.id)),
+      );
+      return { success: true };
+    } catch (err: any) {
+      console.error("bulkDeleteEnquiries error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 // ── SETTINGS ─────────────────────────────────────────────────
@@ -216,11 +242,16 @@ export const updateSettings = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const current = await readBlob<SiteSettings>(KEYS.settings, defaultSettings);
-    const merged = { ...current, ...(data.settings as Partial<SiteSettings>) };
-    await writeBlob(KEYS.settings, merged);
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const current = await readBlob<SiteSettings>(KEYS.settings, defaultSettings);
+      const merged = { ...current, ...(data.settings as Partial<SiteSettings>) };
+      await writeBlob(KEYS.settings, merged);
+      return { success: true };
+    } catch (err: any) {
+      console.error("updateSettings error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 // ── HOMEPAGE CMS ─────────────────────────────────────────────
@@ -272,26 +303,31 @@ export const updateHomepageSection = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const sections = await readBlob<HomepageSection[]>(KEYS.homepage, defaultHomepage);
-    const exists = sections.find((s) => s.section === data.section);
-    const updated = exists
-      ? sections.map((s) =>
-          s.section === data.section
-            ? { ...s, content: data.content, updatedAt: new Date().toISOString() }
-            : s,
-        )
-      : [
-          ...sections,
-          {
-            id: data.section,
-            section: data.section,
-            content: data.content,
-            updatedAt: new Date().toISOString(),
-          },
-        ];
-    await writeBlob(KEYS.homepage, updated);
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const sections = await readBlob<HomepageSection[]>(KEYS.homepage, defaultHomepage);
+      const exists = sections.find((s) => s.section === data.section);
+      const updated = exists
+        ? sections.map((s) =>
+            s.section === data.section
+              ? { ...s, content: data.content, updatedAt: new Date().toISOString() }
+              : s,
+          )
+        : [
+            ...sections,
+            {
+              id: data.section,
+              section: data.section,
+              content: data.content,
+              updatedAt: new Date().toISOString(),
+            },
+          ];
+      await writeBlob(KEYS.homepage, updated);
+      return { success: true };
+    } catch (err: any) {
+      console.error("updateHomepageSection error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 // ── SEO ──────────────────────────────────────────────────────
@@ -431,18 +467,23 @@ export const updateSeoEntry = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const entries = await readBlob<SeoEntry[]>(KEYS.seo, defaultSeo);
-    const { password, ...rest } = data;
-    void password;
-    const exists = entries.find((e) => e.id === rest.id);
-    const updated = exists
-      ? entries.map((e) =>
-          e.id === rest.id ? { ...e, ...rest, updatedAt: new Date().toISOString() } : e,
-        )
-      : [...entries, { ...rest, updatedAt: new Date().toISOString() }];
-    await writeBlob(KEYS.seo, updated);
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const entries = await readBlob<SeoEntry[]>(KEYS.seo, defaultSeo);
+      const { password, ...rest } = data;
+      void password;
+      const exists = entries.find((e) => e.id === rest.id);
+      const updated = exists
+        ? entries.map((e) =>
+            e.id === rest.id ? { ...e, ...rest, updatedAt: new Date().toISOString() } : e,
+          )
+        : [...entries, { ...rest, updatedAt: new Date().toISOString() }];
+      await writeBlob(KEYS.seo, updated);
+      return { success: true };
+    } catch (err: any) {
+      console.error("updateSeoEntry error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 // ── LOGIN HISTORY ─────────────────────────────────────────────
@@ -455,15 +496,20 @@ export const addLoginHistory = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const history = await readBlob<LoginHistoryEntry[]>(KEYS.loginHistory, []);
-    const entry: LoginHistoryEntry = {
-      id: `login_${Date.now()}`,
-      userAgent: data.userAgent,
-      createdAt: new Date().toISOString(),
-    };
-    await writeBlob(KEYS.loginHistory, [entry, ...history].slice(0, 100));
-    return { ok: true };
+    try {
+      authCheck(data.password);
+      const history = await readBlob<LoginHistoryEntry[]>(KEYS.loginHistory, []);
+      const entry: LoginHistoryEntry = {
+        id: `login_${Date.now()}`,
+        userAgent: data.userAgent,
+        createdAt: new Date().toISOString(),
+      };
+      await writeBlob(KEYS.loginHistory, [entry, ...history].slice(0, 100));
+      return { success: true };
+    } catch (err: any) {
+      console.error("addLoginHistory error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 export const getLoginHistory = createServerFn({ method: "GET" }).handler(async () =>
@@ -503,23 +549,28 @@ export const createAdminUser = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
+    try {
+      authCheck(data.password);
+      const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
 
-    if (users.some((u) => u.email.toLowerCase() === data.email.toLowerCase())) {
-      throw new Error("Admin user with this email already exists");
+      if (users.some((u) => u.email.toLowerCase() === data.email.toLowerCase())) {
+        throw new Error("Admin user with this email already exists");
+      }
+
+      const newUser: AdminUser = {
+        id: `usr_${Date.now()}`,
+        name: data.name,
+        email: data.email,
+        role: data.role,
+        status: "active",
+        createdAt: new Date().toISOString(),
+      };
+      await writeBlob(KEYS.adminUsers, [...users, newUser]);
+      return { success: true, user: newUser };
+    } catch (err: any) {
+      console.error("createAdminUser error:", err);
+      return { success: false, error: err.message || String(err) };
     }
-
-    const newUser: AdminUser = {
-      id: `usr_${Date.now()}`,
-      name: data.name,
-      email: data.email,
-      role: data.role,
-      status: "active",
-      createdAt: new Date().toISOString(),
-    };
-    await writeBlob(KEYS.adminUsers, [...users, newUser]);
-    return newUser;
   });
 
 export const deleteAdminUser = createServerFn({ method: "POST" })
@@ -530,18 +581,23 @@ export const deleteAdminUser = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    authCheck(data.password);
-    const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
+    try {
+      authCheck(data.password);
+      const users = await readBlob<AdminUser[]>(KEYS.adminUsers, defaultAdminUsers);
 
-    const userToDelete = users.find((u) => u.id === data.id);
-    if (userToDelete?.role === "super_admin") {
-      throw new Error("Cannot delete a Super Admin.");
+      const userToDelete = users.find((u) => u.id === data.id);
+      if (userToDelete?.role === "super_admin") {
+        throw new Error("Cannot delete a Super Admin.");
+      }
+
+      await writeBlob(
+        KEYS.adminUsers,
+        users.filter((u) => u.id !== data.id),
+      );
+      return { success: true };
+    } catch (err: any) {
+      console.error("deleteAdminUser error:", err);
+      return { success: false, error: err.message || String(err) };
     }
-
-    await writeBlob(
-      KEYS.adminUsers,
-      users.filter((u) => u.id !== data.id),
-    );
-    return { ok: true };
   });
 

@@ -80,7 +80,10 @@ export default function SeoAdmin() {
   }, [activePage, activeEntry]);
 
   const saveMut = useMutation({
-    mutationFn: () => updateSeoEntry({ data: { password, id: formData.id ?? activePage.toLowerCase(), page: activePage, metaTitle: formData.metaTitle ?? "", metaDescription: formData.metaDescription ?? "", keywords: formData.keywords ?? "", ogImage: formData.ogImage ?? "", robots: formData.robots ?? "index" } }),
+    mutationFn: async () => {
+      const res = await updateSeoEntry({ data: { password, id: formData.id ?? activePage.toLowerCase(), page: activePage, metaTitle: formData.metaTitle ?? "", metaDescription: formData.metaDescription ?? "", keywords: formData.keywords ?? "", ogImage: formData.ogImage ?? "", robots: formData.robots ?? "index" } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["seo"] }); toast.success("SEO settings saved!"); setDirty(false); },
     onError: (e: Error) => toast.error(e.message),
   });

@@ -4,8 +4,12 @@ import { slugifyPortfolioTag } from "./portfolio-categories";
 import { deleteBlob, hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
 const METADATA_KEY = "portfolio-data.json";
-const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN ?? "";
+function getAdminPass() {
+  return process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+}
+function getBlobToken() {
+  return process.env.BLOB_READ_WRITE_TOKEN ?? "";
+}
 
 export type PortfolioItem = {
   id: string;
@@ -141,9 +145,10 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
 }
 
 async function readMetadata(): Promise<PortfolioItem[]> {
-  if (!hasBlobToken(BLOB_TOKEN)) return DEFAULT_ITEMS;
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return DEFAULT_ITEMS;
   try {
-    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: METADATA_KEY });
+    const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
     const meta = blobs.find((b) => b.pathname === METADATA_KEY);
     if (!meta) return DEFAULT_ITEMS;
     const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
@@ -159,9 +164,10 @@ async function readMetadata(): Promise<PortfolioItem[]> {
 // Only reads blob-stored items (no defaults). Used for write operations so
 // default static assets never get written into blob storage metadata.
 async function readBlobOnlyMetadata(): Promise<PortfolioItem[]> {
-  if (!hasBlobToken(BLOB_TOKEN)) return [];
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return [];
   try {
-    const { blobs } = await listBlobs(BLOB_TOKEN, { prefix: METADATA_KEY });
+    const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
     const meta = blobs.find((b) => b.pathname === METADATA_KEY);
     if (!meta) return [];
     const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
@@ -176,10 +182,11 @@ async function readBlobOnlyMetadata(): Promise<PortfolioItem[]> {
 }
 
 async function writeMetadata(items: PortfolioItem[]): Promise<void> {
-  if (!hasBlobToken(BLOB_TOKEN)) return;
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return;
   // Never write default items into blob storage
   const blobItems = items.filter((item) => !item.id.startsWith("default-"));
-  await putBlob(BLOB_TOKEN, METADATA_KEY, JSON.stringify(normalizeItems(blobItems), null, 2), {
+  await putBlob(token, METADATA_KEY, JSON.stringify(normalizeItems(blobItems), null, 2), {
     access: "public",
     allowOverwrite: true,
     contentType: "application/json",
@@ -202,45 +209,51 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
-    if (!hasBlobToken(BLOB_TOKEN)) {
-      throw new Error("BLOB_READ_WRITE_TOKEN not configured");
+    try {
+      if (data.password !== getAdminPass()) throw new Error("Unauthorized");
+      const token = getBlobToken();
+      if (!hasBlobToken(token)) {
+        throw new Error("BLOB_READ_WRITE_TOKEN not configured");
+      }
+
+      const matches = data.base64.match(/^data:([^;]+);base64,(.+)$/);
+      if (!matches) throw new Error("Invalid image data");
+      const mimeType = matches[1];
+      if (!["image/png", "image/jpeg", "image/webp"].includes(mimeType)) {
+        throw new Error("Only PNG, JPG and WEBP files are allowed");
+      }
+
+      const buffer = Buffer.from(matches[2], "base64");
+      if (buffer.byteLength > 5 * 1024 * 1024) {
+        throw new Error("File exceeds 5 MB limit");
+      }
+
+      const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
+      const safeName = data.filename.replace(/[^a-z0-9.]/gi, "_").replace(/\.(png|jpe?g|webp)$/i, "");
+      const blobName = `portfolio/${Date.now()}-${safeName}.${ext}`;
+      const { url } = await putBlob(token, blobName, buffer, {
+        access: "public",
+        contentType: mimeType,
+        addRandomSuffix: false,
+      });
+
+      const existing = await readBlobOnlyMetadata();
+      const newItem: PortfolioItem = {
+        id: `${Date.now()}`,
+        url,
+        caption: data.caption,
+        tag: canonicalTag(data.tag),
+        categorySlug: slugifyPortfolioTag(data.tag),
+        uploadedAt: new Date().toISOString(),
+        order: data.order ?? existing.length,
+        isDynamic: true,
+      };
+      await writeMetadata([...existing, newItem]);
+      return { success: true, item: newItem };
+    } catch (err: any) {
+      console.error("uploadPortfolioImage error:", err);
+      return { success: false, error: err.message || String(err) };
     }
-
-    const matches = data.base64.match(/^data:([^;]+);base64,(.+)$/);
-    if (!matches) throw new Error("Invalid image data");
-    const mimeType = matches[1];
-    if (!["image/png", "image/jpeg", "image/webp"].includes(mimeType)) {
-      throw new Error("Only PNG, JPG and WEBP files are allowed");
-    }
-
-    const buffer = Buffer.from(matches[2], "base64");
-    if (buffer.byteLength > 5 * 1024 * 1024) {
-      throw new Error("File exceeds 5 MB limit");
-    }
-
-    const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
-    const safeName = data.filename.replace(/[^a-z0-9.]/gi, "_").replace(/\.(png|jpe?g|webp)$/i, "");
-    const blobName = `portfolio/${Date.now()}-${safeName}.${ext}`;
-    const { url } = await putBlob(BLOB_TOKEN, blobName, buffer, {
-      access: "public",
-      contentType: mimeType,
-      addRandomSuffix: false,
-    });
-
-    const existing = await readBlobOnlyMetadata();
-    const newItem: PortfolioItem = {
-      id: `${Date.now()}`,
-      url,
-      caption: data.caption,
-      tag: canonicalTag(data.tag),
-      categorySlug: slugifyPortfolioTag(data.tag),
-      uploadedAt: new Date().toISOString(),
-      order: data.order ?? existing.length,
-      isDynamic: true,
-    };
-    await writeMetadata([...existing, newItem]);
-    return newItem;
   });
 
 export const updatePortfolioItem = createServerFn({ method: "POST" })
@@ -254,41 +267,57 @@ export const updatePortfolioItem = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data }) => {
-    if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
-    const items = await readBlobOnlyMetadata();
-    const updated = items.map((it) =>
-      it.id === data.id
-        ? {
-            ...it,
-            caption: data.caption,
-            tag: canonicalTag(data.tag),
-            categorySlug: slugifyPortfolioTag(data.tag),
-            order: data.order ?? it.order,
-          }
-        : it,
-    );
-    await writeMetadata(updated);
-    return { ok: true };
+    try {
+      if (data.password !== getAdminPass()) throw new Error("Unauthorized");
+      const items = await readBlobOnlyMetadata();
+      const updated = items.map((it) =>
+        it.id === data.id
+          ? {
+              ...it,
+              caption: data.caption,
+              tag: canonicalTag(data.tag),
+              categorySlug: slugifyPortfolioTag(data.tag),
+              order: data.order ?? it.order,
+            }
+          : it,
+      );
+      await writeMetadata(updated);
+      return { success: true };
+    } catch (err: any) {
+      console.error("updatePortfolioItem error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });
 
 export const deletePortfolioItem = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string(), id: z.string(), url: z.string() }))
   .handler(async ({ data }) => {
-    if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
     try {
-      await deleteBlob(BLOB_TOKEN, data.url);
-    } catch {
-      // Continue if the blob has already been removed.
+      if (data.password !== getAdminPass()) throw new Error("Unauthorized");
+      const token = getBlobToken();
+      try {
+        await deleteBlob(token, data.url);
+      } catch {
+        // Continue if the blob has already been removed.
+      }
+      const items = await readBlobOnlyMetadata();
+      await writeMetadata(items.filter((it) => it.id !== data.id));
+      return { success: true };
+    } catch (err: any) {
+      console.error("deletePortfolioItem error:", err);
+      return { success: false, error: err.message || String(err) };
     }
-    const items = await readBlobOnlyMetadata();
-    await writeMetadata(items.filter((it) => it.id !== data.id));
-    return { ok: true };
   });
 
 export const seedDefaultPortfolio = createServerFn({ method: "POST" })
   .validator(z.object({ password: z.string() }))
   .handler(async ({ data }) => {
-    if (data.password !== ADMIN_PASS) throw new Error("Unauthorized");
-    await writeMetadata(DEFAULT_ITEMS);
-    return { ok: true };
+    try {
+      if (data.password !== getAdminPass()) throw new Error("Unauthorized");
+      await writeMetadata(DEFAULT_ITEMS);
+      return { success: true };
+    } catch (err: any) {
+      console.error("seedDefaultPortfolio error:", err);
+      return { success: false, error: err.message || String(err) };
+    }
   });

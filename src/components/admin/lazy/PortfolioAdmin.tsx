@@ -222,7 +222,8 @@ export default function PortfolioAdmin() {
     mutationFn: async () => {
       if (!imageFile && !editingItem) throw new Error("No image selected");
       if (editingItem) {
-        await updatePortfolioItem({ data: { password, id: editingItem.id, caption, tag } });
+        const res = await updatePortfolioItem({ data: { password, id: editingItem.id, caption, tag } });
+        if (res && "error" in res && res.error) throw new Error(res.error);
       } else {
         const reader = new FileReader();
         const base64 = await new Promise<string>((resolve, reject) => {
@@ -230,9 +231,10 @@ export default function PortfolioAdmin() {
           reader.onerror = reject;
           reader.readAsDataURL(imageFile!);
         });
-        await uploadPortfolioImage({
+        const res = await uploadPortfolioImage({
           data: { password, filename: imageFile!.name, base64, caption, tag },
         });
+        if (res && "error" in res && res.error) throw new Error(res.error);
       }
     },
     onSuccess: () => {
@@ -244,15 +246,14 @@ export default function PortfolioAdmin() {
   });
 
   const deleteMut = useMutation({
-    mutationFn: async (item: PortfolioItem) =>
-      deletePortfolioItem({ data: { password, id: item.id, url: item.url } }),
+    mutationFn: async (item: PortfolioItem) => {
+      const res = await deletePortfolioItem({ data: { password, id: item.id, url: item.url } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["portfolio"] });
       toast.success("Item deleted");
       setDeleteTarget(null);
-      if (activeEnquiryIdRef.current === deleteTarget?.id) {
-        // cleanup references if any
-      }
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -261,8 +262,10 @@ export default function PortfolioAdmin() {
   const bulkDeleteMut = useMutation({
     mutationFn: async () => {
       const toDelete = items.filter((i) => selectedIds.has(i.id));
-      for (const item of toDelete)
-        await deletePortfolioItem({ data: { password, id: item.id, url: item.url } });
+      for (const item of toDelete) {
+        const res = await deletePortfolioItem({ data: { password, id: item.id, url: item.url } });
+        if (res && "error" in res && res.error) throw new Error(res.error);
+      }
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["portfolio"] });
@@ -274,7 +277,10 @@ export default function PortfolioAdmin() {
   });
 
   const seedMut = useMutation({
-    mutationFn: async () => seedDefaultPortfolio({ data: { password } }),
+    mutationFn: async () => {
+      const res = await seedDefaultPortfolio({ data: { password } });
+      if (res && "error" in res && res.error) throw new Error(res.error);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["portfolio"] });
       toast.success("Default designs seeded successfully!");
