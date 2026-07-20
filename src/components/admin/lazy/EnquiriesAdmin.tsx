@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo, useCallback, memo, useRef } from "react";
 import { MessageSquare, Search, X, Check, Clock, CheckCircle2, AlertCircle, Download, Trash2, AlertTriangle, Loader2, Phone, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { loadSession } from "@/lib/admin-auth";
+import { loadSession, getStoredPassword } from "@/lib/admin-auth";
 import { getEnquiries, updateEnquiryStatus, deleteEnquiry, bulkDeleteEnquiries, type Enquiry } from "@/lib/admin-data";
 
 const STATUS_CONFIG = {
@@ -99,8 +99,7 @@ EnquiryItemRow.displayName = "EnquiryItemRow";
 
 export default function EnquiriesAdmin() {
   const qc = useQueryClient();
-  const session = loadSession();
-  const password = session ? atob(session.token).split("|")[0] : "";
+  const password = getStoredPassword();
   const { data: enquiries = [], isLoading } = useQuery({ queryKey: ["enquiries"], queryFn: () => getEnquiries() });
 
   const [search, setSearch] = useState("");

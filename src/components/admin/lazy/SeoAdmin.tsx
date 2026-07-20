@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Save, Loader2, Globe, Eye, SearchCheck } from "lucide-react";
 import { toast } from "sonner";
 import { getSeoEntries, updateSeoEntry, type SeoEntry } from "@/lib/admin-data";
-import { loadSession } from "@/lib/admin-auth";
+import { loadSession, getStoredPassword } from "@/lib/admin-auth";
 
 const PAGES = ["Home", "Portfolio", "About", "Contact", "Process", "Services"];
 
@@ -65,8 +65,7 @@ MiniMetric.displayName = "MiniMetric";
 
 export default function SeoAdmin() {
   const qc = useQueryClient();
-  const session = loadSession();
-  const password = session ? atob(session.token).split("|")[0] : "";
+  const password = getStoredPassword();
   const { data: entries = [], isLoading } = useQuery({ queryKey: ["seo"], queryFn: () => getSeoEntries() });
   const [activePage, setActivePage] = useState("Home");
   const [formData, setFormData] = useState<Partial<SeoEntry>>({});

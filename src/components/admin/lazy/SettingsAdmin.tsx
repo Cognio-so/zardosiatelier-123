@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Save, Loader2, Globe, Phone, MapPin, Share2, Shield, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { getSettings, updateSettings, type SiteSettings } from "@/lib/admin-data";
-import { loadSession } from "@/lib/admin-auth";
+import { loadSession, getStoredPassword } from "@/lib/admin-auth";
 
 const SECTIONS = [
   { id: "general", label: "General", icon: Globe, fields: [
@@ -71,8 +71,7 @@ TabButton.displayName = "TabButton";
 
 export default function SettingsAdmin() {
   const qc = useQueryClient();
-  const session = loadSession();
-  const password = session ? atob(session.token).split("|")[0] : "";
+  const password = getStoredPassword();
   const { data: settings, isLoading } = useQuery({ queryKey: ["settings"], queryFn: () => getSettings() });
   const [activeSection, setActiveSection] = useState<"general" | "contact" | "social" | "assets" | "maintenance">("general");
   const [formData, setFormData] = useState<Partial<SiteSettings>>({});

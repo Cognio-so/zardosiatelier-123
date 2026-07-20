@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Save, Loader2, ExternalLink, Home, Info, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { getHomepageSections, updateHomepageSection } from "@/lib/admin-data";
-import { loadSession } from "@/lib/admin-auth";
+import { loadSession, getStoredPassword } from "@/lib/admin-auth";
 
 interface SectionConfig {
   id: string;
@@ -66,8 +66,7 @@ TabButton.displayName = "TabButton";
 
 export default function HomepageAdmin() {
   const qc = useQueryClient();
-  const session = loadSession();
-  const password = session ? atob(session.token).split("|")[0] : "";
+  const password = getStoredPassword();
   const { data: sections = [], isLoading } = useQuery({ queryKey: ["homepage"], queryFn: () => getHomepageSections() });
 
   const [activeSection, setActiveSection] = useState("hero");

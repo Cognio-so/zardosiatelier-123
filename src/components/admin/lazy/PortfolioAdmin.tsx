@@ -26,7 +26,7 @@ import {
   seedDefaultPortfolio,
   type PortfolioItem,
 } from "@/lib/portfolio-admin";
-import { loadSession } from "@/lib/admin-auth";
+import { loadSession, getStoredPassword } from "@/lib/admin-auth";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 const TAGS = [
@@ -193,8 +193,7 @@ ListItemRow.displayName = "ListItemRow";
 
 export default function PortfolioAdmin() {
   const qc = useQueryClient();
-  const session = loadSession();
-  const password = session ? atob(session.token).split("|")[0] : "";
+  const password = getStoredPassword();
   const windowWidth = useWindowWidth();
 
   const { data: items = [], isLoading } = useQuery({
