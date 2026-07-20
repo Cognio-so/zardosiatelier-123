@@ -27,6 +27,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         !target.closest("header") &&
         !target.closest("nav") &&
         !target.closest("footer") &&
+        !target.closest("a") &&
         !target.classList.contains("no-preview") &&
         !target.closest(".no-preview")
       ) {
