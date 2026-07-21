@@ -24,14 +24,7 @@ export type PortfolioItem = {
 };
 
 const defaultAssetModules = import.meta.glob<string>(
-  [
-    "../assets/portfolio-[0-9]*.{jpg,jpeg,png,webp}",
-    "../assets/zardozi-[0-9]*.{jpg,jpeg,png,webp}",
-    "../assets/sequin-[0-9]*.{jpg,jpeg,png,webp}",
-    "../assets/crystal-[0-9]*.{jpg,jpeg,png,webp}",
-    "../assets/resham-zari-page-[0-9]*.{jpg,jpeg,png,webp}",
-    "../assets/pearl-work-page-[0-9]*.{jpg,jpeg,png,webp}",
-  ],
+  ["../assets/*.{jpg,jpeg,png,webp}", "!../assets/*.tmp"],
   { eager: true, import: "default", query: "?url" },
 );
 
@@ -48,10 +41,35 @@ const defaultAssetConfig: Record<
     tag: "Couture Studies",
     priority: 0,
   },
+  "portfolio-hero": {
+    caption: "Portfolio Archive Hero Image",
+    tag: "Couture Studies",
+    priority: 20,
+  },
+  collection: {
+    caption: "Couture Collection Showcase",
+    tag: "Couture Studies",
+    priority: 40,
+  },
+  "hero-embroidery": {
+    caption: "Homepage Hero Embroidery Detail",
+    tag: "Couture Studies",
+    priority: 60,
+  },
+  "hero-zardosi": {
+    caption: "Zardozi Hero Embroidery Detail",
+    tag: "Zardozi",
+    priority: 80,
+  },
   zardozi: {
     caption: "Traditional Gold Zardozi Hand Embroidery",
     tag: "Zardozi",
     priority: 100,
+  },
+  "zardozi-paisley": {
+    caption: "Zardozi Paisley Surface Work",
+    tag: "Zardozi",
+    priority: 120,
   },
   sequin: {
     caption: "Hand-Stitched Sequin Embellishment",
@@ -73,11 +91,78 @@ const defaultAssetConfig: Record<
     tag: "Pearl Work",
     priority: 500,
   },
+  "technique-zardosi": {
+    caption: "Technique Study - Zardozi",
+    tag: "Zardozi",
+    priority: 600,
+  },
+  "technique-sequin": {
+    caption: "Technique Study - Sequin",
+    tag: "Sequin",
+    priority: 610,
+  },
+  "technique-crystal": {
+    caption: "Technique Study - Crystal Work",
+    tag: "Crystal & Stone Work",
+    priority: 620,
+  },
+  "technique-beadwork": {
+    caption: "Technique Study - Beadwork",
+    tag: "Pearl Work",
+    priority: 630,
+  },
+  "technique-bead": {
+    caption: "Technique Study - Beadwork",
+    tag: "Pearl Work",
+    priority: 640,
+  },
+  "technique-aari": {
+    caption: "Technique Study - Aari Work",
+    tag: "Couture Studies",
+    priority: 650,
+  },
+  "technique-3d": {
+    caption: "Technique Study - 3D Embroidery",
+    tag: "Couture Studies",
+    priority: 660,
+  },
+  "category-hero": {
+    caption: "Category Page Hero Image",
+    tag: "Couture Studies",
+    priority: 700,
+  },
+  "about-hero": {
+    caption: "About Page Hero Image",
+    tag: "Couture Studies",
+    priority: 710,
+  },
+  "about-quality": {
+    caption: "Quality Craftsmanship Image",
+    tag: "Couture Studies",
+    priority: 720,
+  },
+  "contact-hero": {
+    caption: "Contact Page Hero Image",
+    tag: "Couture Studies",
+    priority: 730,
+  },
+  "process-hero": {
+    caption: "Process Page Hero Image",
+    tag: "Couture Studies",
+    priority: 740,
+  },
+  "za-logo": {
+    caption: "Zardosi Atelier Brand Logo",
+    tag: "Couture Studies",
+    priority: 750,
+  },
 };
 
 function defaultAssetGroup(path: string) {
   const filename = path.split("/").pop() ?? "";
-  return Object.keys(defaultAssetConfig).find((prefix) => filename.startsWith(prefix));
+  return Object.keys(defaultAssetConfig)
+    .sort((a, b) => b.length - a.length)
+    .find((prefix) => filename.startsWith(prefix));
 }
 
 function defaultAssetId(path: string) {
@@ -107,7 +192,10 @@ const defaultAssetEntries = Object.entries(defaultAssetModules)
   .sort(([pathA], [pathB]) => defaultAssetVariantRank(pathA) - defaultAssetVariantRank(pathB))
   .filter(([path], index, entries) => {
     const id = defaultAssetId(path).replace(/-opt$/, "");
-    return entries.findIndex(([candidate]) => defaultAssetId(candidate).replace(/-opt$/, "") === id) === index;
+    return (
+      entries.findIndex(([candidate]) => defaultAssetId(candidate).replace(/-opt$/, "") === id) ===
+      index
+    );
   });
 
 export const DEFAULT_ITEMS: PortfolioItem[] = defaultAssetEntries
@@ -166,43 +254,86 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
     .sort((a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt));
 }
 
+function uniquePortfolioItems(items: PortfolioItem[]): PortfolioItem[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.url || item.id;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+async function readStoredMetadata(): Promise<PortfolioItem[]> {
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return [];
+  const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
+  const meta = blobs.find((b) => b.pathname === METADATA_KEY);
+  if (!meta) return [];
+  const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
+  if (!res.ok) return [];
+  const data = (await res.json()) as RawPortfolioItem[];
+  return normalizeItems(Array.isArray(data) ? data : []);
+}
+
+async function discoverPortfolioBlobs(): Promise<PortfolioItem[]> {
+  const token = getBlobToken();
+  if (!hasBlobToken(token)) return [];
+  const discovered: PortfolioItem[] = [];
+  let cursor: string | undefined;
+
+  do {
+    const result = await listBlobs(token, { prefix: "portfolio/", cursor, limit: 100 });
+    for (const blob of result.blobs) {
+      if (!/\.(png|jpe?g|webp)$/i.test(blob.pathname)) continue;
+      const id = `blob-${defaultAssetId(blob.pathname)}`;
+      discovered.push({
+        id,
+        url: blob.url,
+        caption:
+          blob.pathname
+            .split("/")
+            .pop()
+            ?.replace(/\.[^.]+$/, "")
+            .replace(/[-_]+/g, " ") ?? "Portfolio image",
+        tag: "Other",
+        categorySlug: "other",
+        uploadedAt: blob.uploadedAt ?? new Date().toISOString(),
+        order: 10_000 + discovered.length,
+        sourcePath: blob.pathname,
+        isDynamic: true,
+      });
+    }
+    cursor = result.hasMore ? result.cursor : undefined;
+  } while (cursor);
+
+  return discovered;
+}
+
 async function readMetadata(): Promise<PortfolioItem[]> {
   const token = getBlobToken();
   if (!hasBlobToken(token)) return DEFAULT_ITEMS;
   try {
-    const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
-    const meta = blobs.find((b) => b.pathname === METADATA_KEY);
-    if (!meta) return DEFAULT_ITEMS;
-    const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) return DEFAULT_ITEMS;
-    const data = (await res.json()) as RawPortfolioItem[];
-    const normalized = normalizeItems(Array.isArray(data) ? data : []);
-    return normalized.length > 0 ? normalized : DEFAULT_ITEMS;
+    const [stored, discovered] = await Promise.all([
+      readStoredMetadata(),
+      discoverPortfolioBlobs(),
+    ]);
+    return uniquePortfolioItems([...DEFAULT_ITEMS, ...stored, ...discovered]).sort(
+      (a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt),
+    );
   } catch {
     return DEFAULT_ITEMS;
   }
 }
-
 // Only reads blob-stored items (no defaults). Used for write operations so
 // default static assets never get written into blob storage metadata.
 async function readBlobOnlyMetadata(): Promise<PortfolioItem[]> {
-  const token = getBlobToken();
-  if (!hasBlobToken(token)) return [];
   try {
-    const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
-    const meta = blobs.find((b) => b.pathname === METADATA_KEY);
-    if (!meta) return [];
-    const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) return [];
-    const data = (await res.json()) as RawPortfolioItem[];
-    const normalized = normalizeItems(Array.isArray(data) ? data : []);
-    // Filter out any default-prefixed items that may have been stored accidentally
-    return normalized.filter((item) => !item.id.startsWith("default-"));
+    return (await readStoredMetadata()).filter((item) => !item.id.startsWith("default-"));
   } catch {
     return [];
   }
 }
-
 async function writeMetadata(items: PortfolioItem[]): Promise<void> {
   const token = getBlobToken();
   if (!hasBlobToken(token)) return;
@@ -251,7 +382,9 @@ export const uploadPortfolioImage = createServerFn({ method: "POST" })
       }
 
       const ext = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
-      const safeName = data.filename.replace(/[^a-z0-9.]/gi, "_").replace(/\.(png|jpe?g|webp)$/i, "");
+      const safeName = data.filename
+        .replace(/[^a-z0-9.]/gi, "_")
+        .replace(/\.(png|jpe?g|webp)$/i, "");
       const blobName = `portfolio/${Date.now()}-${safeName}.${ext}`;
       const { url } = await putBlob(token, blobName, buffer, {
         access: "public",
