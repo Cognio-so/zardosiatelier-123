@@ -39,6 +39,81 @@ const TAGS = [
   "Other",
 ];
 
+async function compressImageForUpload(file: File) {
+  const originalMime = file.type || "image/jpeg";
+  const shouldCompress = file.size > 900_000 || !['image/webp', 'image/jpeg', 'image/png'].includes(originalMime);
+
+  if (typeof document === 'undefined' || typeof createImageBitmap !== 'function' || !shouldCompress) {
+    return {
+      filename: file.name,
+      mimeType: originalMime,
+      base64: await fileToDataUrl(file),
+    };
+  }
+
+  const bitmap = await createImageBitmap(file);
+  try {
+    const maxSide = 2200;
+    const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+    const targetWidth = Math.max(1, Math.round(bitmap.width * scale));
+    const targetHeight = Math.max(1, Math.round(bitmap.height * scale));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return {
+        filename: file.name,
+        mimeType: originalMime,
+        base64: await fileToDataUrl(file),
+      };
+    }
+
+    ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (result) => {
+          if (!result) {
+            reject(new Error('Could not compress image'));
+            return;
+          }
+          resolve(result);
+        },
+        'image/webp',
+        0.84,
+      );
+    });
+
+    return {
+      filename: file.name.replace(/\.(png|jpe?g|webp)$/i, '') + '.webp',
+      mimeType: 'image/webp',
+      base64: await blobToDataUrl(blob),
+    };
+  } finally {
+    bitmap.close();
+  }
+}
+
+async function fileToDataUrl(file: Blob) {
+  const reader = new FileReader();
+  return await new Promise<string>((resolve, reject) => {
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error ?? new Error('Could not read file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function blobToDataUrl(blob: Blob) {
+  const reader = new FileReader();
+  return await new Promise<string>((resolve, reject) => {
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error ?? new Error('Could not read blob'));
+    reader.readAsDataURL(blob);
+  });
+}
+
 // Memoized individual grid item card to prevent redundant rerenders
 const GridItemCard = memo(
   ({
@@ -661,7 +736,7 @@ export default function PortfolioAdmin() {
                           <p className="text-sm font-bold text-slate-655">
                             Drag & drop or click to upload
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">PNG, JPG, WEBP - Max 5MB</p>
+                          <p className="mt-1 text-xs text-slate-500">PNG, JPG, WEBP - auto-compressed before upload</p>
                         </>
                       )}
                     </div>
@@ -847,3 +922,4 @@ function ConfirmDialog({
     </AnimatePresence>
   );
 }
+
