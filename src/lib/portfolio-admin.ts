@@ -24,7 +24,14 @@ export type PortfolioItem = {
 };
 
 const defaultAssetModules = import.meta.glob<string>(
-  "/src/assets/{portfolio,zardozi,sequin,crystal,resham-zari,pearl-work}*.{jpg,jpeg,png,webp}",
+  [
+    "../assets/portfolio-[0-9]*.{jpg,jpeg,png,webp}",
+    "../assets/zardozi-[0-9]*.{jpg,jpeg,png,webp}",
+    "../assets/sequin-[0-9]*.{jpg,jpeg,png,webp}",
+    "../assets/crystal-[0-9]*.{jpg,jpeg,png,webp}",
+    "../assets/resham-zari-page-[0-9]*.{jpg,jpeg,png,webp}",
+    "../assets/pearl-work-page-[0-9]*.{jpg,jpeg,png,webp}",
+  ],
   { eager: true, import: "default", query: "?url" },
 );
 
@@ -88,7 +95,22 @@ function defaultAssetNumber(path: string) {
   return match ? Number(match[1]) : 999;
 }
 
-export const DEFAULT_ITEMS: PortfolioItem[] = Object.entries(defaultAssetModules)
+function defaultAssetVariantRank(path: string) {
+  const filename = path.split("/").pop() ?? "";
+  if (filename.includes("-opt.")) return 0;
+  if (filename.endsWith(".webp")) return 1;
+  if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) return 2;
+  return 3;
+}
+
+const defaultAssetEntries = Object.entries(defaultAssetModules)
+  .sort(([pathA], [pathB]) => defaultAssetVariantRank(pathA) - defaultAssetVariantRank(pathB))
+  .filter(([path], index, entries) => {
+    const id = defaultAssetId(path).replace(/-opt$/, "");
+    return entries.findIndex(([candidate]) => defaultAssetId(candidate).replace(/-opt$/, "") === id) === index;
+  });
+
+export const DEFAULT_ITEMS: PortfolioItem[] = defaultAssetEntries
   .map<PortfolioItem | null>(([path, url]) => {
     const group = defaultAssetGroup(path);
     if (!group) return null;
@@ -97,7 +119,7 @@ export const DEFAULT_ITEMS: PortfolioItem[] = Object.entries(defaultAssetModules
     const slug = slugifyPortfolioTag(config.tag);
     const order = config.priority + number;
     return {
-      id: `default-${defaultAssetId(path)}`,
+      id: `default-${defaultAssetId(path).replace(/-opt$/, "")}`,
       url,
       caption: number === 999 ? config.caption : `${config.caption} ${number}`,
       tag: config.tag,

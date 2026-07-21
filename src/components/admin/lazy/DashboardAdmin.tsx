@@ -151,7 +151,7 @@ export default function DashboardAdmin() {
           <p className="admin-page-subtitle">Here&apos;s what&apos;s happening across Zardosi Atelier today.</p>
         </div>
         <div className="admin-glass px-4 py-3 text-sm font-semibold text-slate-655" aria-live="polite">
-          {portfolio.length} portfolio assets synced from Vercel Blob
+          {portfolio.length} portfolio assets synced from the website
         </div>
       </motion.div>
 

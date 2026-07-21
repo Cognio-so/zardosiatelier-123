@@ -394,7 +394,7 @@ export default function PortfolioAdmin() {
         <div>
           <h2 className="admin-page-title">Portfolio</h2>
           <p className="admin-page-subtitle">
-            {items.length} items synced from the shared portfolio source.
+            {items.length} items synced from the website portfolio source.
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -175,7 +175,7 @@ export default function GalleryAdmin() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="admin-page-title">Media Gallery</h2>
-          <p className="admin-page-subtitle">{items.length} images mirrored directly from Vercel Blob portfolio storage.</p>
+          <p className="admin-page-subtitle">{items.length} images mirrored from website sections and portfolio uploads.</p>
         </div>
         <div className="flex items-center gap-2">
           {selected.size > 0 && (
