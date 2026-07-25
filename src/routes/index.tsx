@@ -308,8 +308,8 @@ function HomePage() {
                   className="min-h-[112px] border border-gold/25 bg-ivory px-5 py-5"
                 >
                   <Icon name={item.icon} className="size-6 text-gold" />
-                  <p className="mt-6 text-[18px] font-medium leading-relaxed text-ink sm:text-[20px]">
-                    `r`n {item.title}`r`n{" "}
+                  <p className="mt-6 text-[20px] font-medium leading-relaxed text-ink sm:text-[22px]">
+                    {item.title}
                   </p>
                 </div>
               ))}
