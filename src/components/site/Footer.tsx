@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, ChevronRight, Instagram, Linkedin, Heart } from "lucide-react";
+import { Mail, ChevronRight, Instagram, Linkedin, Heart } from "lucide-react";
 import zaLogo from "@/assets/za-logo-opt.webp";
 
 // Custom WhatsApp SVG Icon
@@ -92,24 +92,6 @@ export function Footer() {
                   <p className="text-[10px] uppercase tracking-[0.24em] text-white/50">Email</p>
                   <p className="mt-0.5 text-sm font-medium text-[#F5F0E8] transition-colors group-hover:text-[#D4AF37]">
                     {email}
-                  </p>
-                </div>
-              </a>
-
-              {/* Phone */}
-              <a
-                href={`tel:${phone.replace(/\D/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 transition-all duration-300"
-              >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/35 text-[#D4AF37] transition-all duration-500 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-[#160F0C] group-hover:shadow-[0_0_15px_rgba(212,175,55,0.4)]">
-                  <Phone size={18} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-white/50">Phone</p>
-                  <p className="mt-0.5 text-sm font-medium text-[#F5F0E8] transition-colors group-hover:text-[#D4AF37]">
-                    {phone}
                   </p>
                 </div>
               </a>
