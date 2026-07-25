@@ -4,71 +4,94 @@
 
 /* Local Font Families (Latin Subset only) */
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSo.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtImSo.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2)
+    format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 
 @custom-variant dark (&:is(.dark *));
 
@@ -162,8 +185,13 @@
   --animate-float: float 6s ease-in-out infinite;
 
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -546,7 +574,10 @@
 }
 
 /* SVG icons default in light mode */
-.admin-theme.light svg:not(.text-black):not(.text-red-400):not(.text-green-400):not(.text-blue-400):not([style*="color: rgb(201, 162, 39)"]):not([style*="color: #C9A227"]) {
+.admin-theme.light
+  svg:not(.text-black):not(.text-red-400):not(.text-green-400):not(.text-blue-400):not(
+    [style*="color: rgb(201, 162, 39)"]
+  ):not([style*="color: #C9A227"]) {
   color: #6b7280 !important;
 }
 
@@ -590,12 +621,14 @@
   color: var(--admin-ink) !important;
   background:
     radial-gradient(circle at 5% 10%, rgba(16, 185, 129, 0.12), transparent 30%),
-    radial-gradient(circle at 90% 8%, rgba(52, 211, 153, 0.10), transparent 28%),
-    radial-gradient(circle at 80% 92%, rgba(201, 164, 76, 0.10), transparent 30%),
+    radial-gradient(circle at 90% 8%, rgba(52, 211, 153, 0.1), transparent 28%),
+    radial-gradient(circle at 80% 92%, rgba(201, 164, 76, 0.1), transparent 30%),
     radial-gradient(circle at 15% 85%, rgba(16, 185, 129, 0.08), transparent 28%),
     linear-gradient(135deg, #ffffff 0%, #f5faf8 45%, #edf7f2 100%) !important;
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-  transition: background 0.5s ease, color 0.3s ease;
+  transition:
+    background 0.5s ease,
+    color 0.3s ease;
 }
 
 /* ==========================================
@@ -607,7 +640,7 @@
   --admin-soft: #64748b;
   --admin-line: rgba(255, 255, 255, 0.08);
   --admin-glass: rgba(255, 255, 255, 0.05);
-  --admin-glass-strong: rgba(255, 255, 255, 0.10);
+  --admin-glass-strong: rgba(255, 255, 255, 0.1);
   --admin-green: #10b981;
   --admin-green-soft: rgba(16, 185, 129, 0.18);
   --admin-gold: #f3d98b;
@@ -618,7 +651,9 @@
     radial-gradient(circle at 80% 92%, rgba(99, 102, 241, 0.05), transparent 30%),
     linear-gradient(135deg, #0d0f14 0%, #111318 45%, #0f1117 100%) !important;
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-  transition: background 0.5s ease, color 0.3s ease;
+  transition:
+    background 0.5s ease,
+    color 0.3s ease;
 }
 
 .admin-theme::before,
@@ -641,7 +676,7 @@
 .admin-theme::after {
   right: -130px;
   bottom: -160px;
-  background: linear-gradient(135deg, rgba(201, 164, 76, 0.20), rgba(16, 185, 129, 0.18));
+  background: linear-gradient(135deg, rgba(201, 164, 76, 0.2), rgba(16, 185, 129, 0.18));
 }
 
 .admin-theme main,
@@ -656,7 +691,9 @@
   padding: 20px;
 }
 @media (min-width: 1024px) {
-  .admin-page { padding: 24px; }
+  .admin-page {
+    padding: 24px;
+  }
 }
 
 .admin-page-title {
@@ -673,20 +710,27 @@
 }
 
 .admin-glass {
-  background: linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255,255,255,0.58));
-  border: 1px solid rgba(255,255,255,0.75);
-  box-shadow: 0 16px 45px rgba(31, 41, 55, 0.05), inset 0 1px 0 rgba(255,255,255,0.86);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.58));
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 16px 45px rgba(31, 41, 55, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(22px) saturate(155%);
   -webkit-backdrop-filter: blur(22px) saturate(155%);
   border-radius: 18px;
 }
 .admin-glass-hover {
-  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
 }
 .admin-glass-hover:hover {
   transform: translateY(-2px);
   border-color: rgba(201, 164, 76, 0.28);
-  box-shadow: 0 20px 60px rgba(31, 41, 55, 0.08), 0 6px 16px rgba(201, 164, 76, 0.04);
+  box-shadow:
+    0 20px 60px rgba(31, 41, 55, 0.08),
+    0 6px 16px rgba(201, 164, 76, 0.04);
 }
 
 .admin-primary-btn {
@@ -694,16 +738,26 @@
   color: white !important;
   background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
   box-shadow: 0 10px 24px rgba(99, 102, 241, 0.2);
-  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
 }
-.admin-primary-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(99, 102, 241, 0.25); }
-.admin-primary-btn:disabled { opacity: 0.48; transform: none; box-shadow: none; }
+.admin-primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.25);
+}
+.admin-primary-btn:disabled {
+  opacity: 0.48;
+  transform: none;
+  box-shadow: none;
+}
 
 .admin-secondary-btn,
 .admin-pill {
   border-radius: 14px;
-  background: rgba(255,255,255,0.66);
-  border: 1px solid rgba(255,255,255,0.78);
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.78);
   color: #475467 !important;
   font-size: 0.78rem;
   font-weight: 600;
@@ -721,16 +775,25 @@
 .admin-input {
   border-radius: 14px !important;
   border: 1px solid rgba(208, 213, 221, 0.85) !important;
-  background: rgba(255,255,255,0.76) !important;
+  background: rgba(255, 255, 255, 0.76) !important;
   color: var(--admin-ink) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.92), 0 6px 16px rgba(31, 41, 55, 0.03);
-  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 6px 16px rgba(31, 41, 55, 0.03);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
 }
-.admin-input::placeholder { color: #98a2b3 !important; }
+.admin-input::placeholder {
+  color: #98a2b3 !important;
+}
 .admin-input:focus {
   outline: none !important;
   border-color: rgba(16, 185, 129, 0.45) !important;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.10), inset 0 1px 0 rgba(255,255,255,0.95);
+  box-shadow:
+    0 0 0 4px rgba(16, 185, 129, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .admin-label {
@@ -755,38 +818,64 @@
 .admin-badge {
   border-radius: 999px;
   padding: 0.28rem 0.62rem;
-  background: rgba(255,255,255,0.68);
-  border: 1px solid rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   color: #475467;
   font-size: 0.68rem;
   font-weight: 700;
 }
 
-.admin-theme .text-white { color: var(--admin-ink) !important; }
+.admin-theme .text-white {
+  color: var(--admin-ink) !important;
+}
 .admin-theme .text-\[\#888\],
 .admin-theme .text-\[\#666\],
-.admin-theme .text-\[\#555\] { color: var(--admin-muted) !important; }
+.admin-theme .text-\[\#555\] {
+  color: var(--admin-muted) !important;
+}
 .admin-theme .text-\[\#444\],
-.admin-theme .text-\[\#333\] { color: var(--admin-soft) !important; }
+.admin-theme .text-\[\#333\] {
+  color: var(--admin-soft) !important;
+}
 .admin-theme .bg-\[\#111111\],
 .admin-theme .bg-\[\#111\],
 .admin-theme .bg-\[\#1a1a1a\],
 .admin-theme .bg-\[\#0a0a0a\],
 .admin-theme .bg-\[\#0d0d0d\],
-.admin-theme .bg-\[\#151515\] { background-color: rgba(255,255,255,0.7) !important; }
+.admin-theme .bg-\[\#151515\] {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
 .admin-theme .border-\[\#2a2a2a\],
 .admin-theme .border-\[\#1e1e1e\],
 .admin-theme .border-\[\#222\],
 .admin-theme .border-\[\#333\],
 .admin-theme .border-\[\#1a1a1a\],
-.admin-theme .border-\[\#0f0f0f\] { border-color: rgba(255,255,255,0.72) !important; }
-.admin-theme .text-\[\#C9A227\] { color: var(--admin-gold) !important; }
-.admin-theme .bg-\[\#C9A227\] { background: linear-gradient(135deg, #f3d98b 0%, #c9a44c 100%) !important; }
-.admin-theme .hover\:bg-\[\#B8911E\]:hover { background: linear-gradient(135deg, #edd17c 0%, #b99132 100%) !important; }
+.admin-theme .border-\[\#0f0f0f\] {
+  border-color: rgba(255, 255, 255, 0.72) !important;
+}
+.admin-theme .text-\[\#C9A227\] {
+  color: var(--admin-gold) !important;
+}
+.admin-theme .bg-\[\#C9A227\] {
+  background: linear-gradient(135deg, #f3d98b 0%, #c9a44c 100%) !important;
+}
+.admin-theme .hover\:bg-\[\#B8911E\]:hover {
+  background: linear-gradient(135deg, #edd17c 0%, #b99132 100%) !important;
+}
 
-.admin-theme ::-webkit-scrollbar { width: 12px; height: 12px; }
-.admin-theme ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.38); border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
-.admin-theme ::-webkit-scrollbar-track { background: transparent; }
+.admin-theme ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+.admin-theme ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.38);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.admin-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
 /* Admin polish overrides */
 .admin-theme :is(button, a, input, textarea, select):focus {
   outline: none !important;
@@ -937,8 +1026,6 @@
   box-shadow: none !important;
 }
 
-
-
 .admin-theme .admin-secondary-btn,
 .admin-theme .admin-pill,
 .admin-theme .admin-badge {
@@ -959,22 +1046,38 @@
 
 /* Glass cards */
 .admin-theme.dark .admin-glass {
-  background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)) !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
 .admin-theme.dark .admin-glass-hover:hover {
-  border-color: rgba(201,164,76,0.25) !important;
-  box-shadow: 0 30px 90px rgba(0,0,0,0.55), 0 8px 24px rgba(201,164,76,0.08) !important;
-  background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05)) !important;
+  border-color: rgba(201, 164, 76, 0.25) !important;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.55),
+    0 8px 24px rgba(201, 164, 76, 0.08) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  ) !important;
 }
 
 /* Topbar & Sidebar surface */
 .admin-theme.dark header,
 .admin-theme.dark aside {
-  background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)) !important;
-  border-color: rgba(255,255,255,0.08) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Text */
@@ -1011,35 +1114,35 @@
 /* Secondary buttons & pills */
 .admin-theme.dark .admin-secondary-btn,
 .admin-theme.dark .admin-pill {
-  background: rgba(255,255,255,0.08) !important;
-  border-color: rgba(255,255,255,0.12) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
   color: #cbd5e1 !important;
 }
 .admin-theme.dark .admin-secondary-btn:hover,
 .admin-theme.dark .admin-pill:hover {
-  background: rgba(255,255,255,0.14) !important;
+  background: rgba(255, 255, 255, 0.14) !important;
   color: #f1f5f9 !important;
 }
 
 /* Badge */
 .admin-theme.dark .admin-badge {
-  background: rgba(255,255,255,0.09) !important;
-  border-color: rgba(255,255,255,0.12) !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
   color: #94a3b8 !important;
 }
 
 /* Input */
 .admin-theme.dark .admin-input {
-  background: rgba(255,255,255,0.07) !important;
-  border-color: rgba(255,255,255,0.12) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
   color: #f1f5f9 !important;
 }
 .admin-theme.dark .admin-input::placeholder {
   color: #475569 !important;
 }
 .admin-theme.dark .admin-input:focus {
-  border-color: rgba(201,164,76,0.45) !important;
-  box-shadow: 0 0 0 4px rgba(201,164,76,0.10) !important;
+  border-color: rgba(201, 164, 76, 0.45) !important;
+  box-shadow: 0 0 0 4px rgba(201, 164, 76, 0.1) !important;
 }
 
 /* Nav links */
@@ -1048,7 +1151,7 @@
 }
 .admin-theme.dark nav a:hover {
   color: #f1f5f9 !important;
-  background: rgba(255,255,255,0.07) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
 }
 
 /* Active nav pill */
@@ -1059,58 +1162,58 @@
 
 /* Inline quick-action links */
 .admin-theme.dark .group.flex.items-center.gap-3 {
-  background: rgba(255,255,255,0.05) !important;
-  border-color: rgba(255,255,255,0.09) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
   color: #94a3b8 !important;
 }
 .admin-theme.dark .group.flex.items-center.gap-3:hover {
-  background: rgba(255,255,255,0.10) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   color: #f1f5f9 !important;
 }
 
 /* Stat mini-cards */
 .admin-theme.dark .group.flex.flex-col {
-  background: rgba(255,255,255,0.05) !important;
-  border-color: rgba(255,255,255,0.09) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
 }
 .admin-theme.dark .group.flex.flex-col:hover {
-  background: rgba(255,255,255,0.10) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Dividers */
 .admin-theme.dark .divide-white\/70 > * + * {
-  border-color: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
 .admin-theme.dark .border-white\/70 {
-  border-color: rgba(255,255,255,0.07) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
 }
 .admin-theme.dark .border-b {
-  border-color: rgba(255,255,255,0.07) !important;
+  border-color: rgba(255, 255, 255, 0.07) !important;
 }
 
 /* Hover rows */
 .admin-theme.dark .hover\:bg-white\/45:hover {
-  background: rgba(255,255,255,0.05) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Profile card */
 .admin-theme.dark button.border-slate-200 {
-  background: rgba(255,255,255,0.08) !important;
-  border-color: rgba(255,255,255,0.10) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 .admin-theme.dark button.border-slate-200:hover {
-  background: rgba(255,255,255,0.13) !important;
+  background: rgba(255, 255, 255, 0.13) !important;
 }
 
 /* Profile popup */
 .admin-theme.dark .absolute.bg-white {
   background: #1a1d24 !important;
-  border-color: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Scrollbar */
 .admin-theme.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* SVG icons */
@@ -1145,11 +1248,108 @@
 
 /* Glow blobs adapt to dark */
 .admin-theme.dark::before {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(52, 211, 153, 0.06)) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.12),
+    rgba(52, 211, 153, 0.06)
+  ) !important;
   opacity: 0.25 !important;
 }
 .admin-theme.dark::after {
-  background: linear-gradient(135deg, rgba(201, 164, 76, 0.10), rgba(16, 185, 129, 0.08)) !important;
-  opacity: 0.20 !important;
+  background: linear-gradient(135deg, rgba(201, 164, 76, 0.1), rgba(16, 185, 129, 0.08)) !important;
+  opacity: 0.2 !important;
 }
 
+/* Mobile readability and crisp typography pass */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-synthesis-weight: none;
+    font-synthesis-style: none;
+  }
+
+  body {
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+  }
+
+  main {
+    font-size: 16px;
+  }
+
+  main :is(p, li, label, input, textarea, summary) {
+    font-weight: 500;
+  }
+
+  main :is(h1, h2, h3),
+  main .font-serif {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+  }
+
+  main :is(h1, h2, h3) {
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    font-size: 17px;
+  }
+
+  main :is(p, li) {
+    font-size: max(15px, 0.95rem);
+    line-height: 1.75;
+  }
+
+  main :is(label, input, textarea, button, a, summary) {
+    -webkit-font-smoothing: antialiased;
+    font-size: max(12px, 0.78rem);
+  }
+
+  main [class*="text-[9px]"],
+  main [class*="text-[10px]"],
+  main [class*="text-[11px]"] {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  main [class*="text-[12px]"] {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  main [class*="text-[13px]"] {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  main .eyebrow,
+  main .gold-link,
+  main [class*="uppercase"] {
+    letter-spacing: 0.16em !important;
+  }
+
+  main :is(button, .gold-link, a[class*="border"], input, textarea) {
+    font-weight: 700;
+  }
+
+  main :is(h1, h2) {
+    line-height: 1.04;
+  }
+
+  main h3 {
+    line-height: 1.12;
+  }
+
+  main .font-serif {
+    font-weight: 600;
+  }
+
+  main em.font-serif,
+  main em,
+  main .italic {
+    font-weight: 500;
+  }
+}
