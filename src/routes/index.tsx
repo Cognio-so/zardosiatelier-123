@@ -169,7 +169,7 @@ function HomePage() {
                 as="h1"
                 duration={28}
                 delay={250}
-                className="mt-6 font-serif text-[46px] font-normal leading-[1.02] tracking-normal text-white sm:text-[64px] lg:text-[76px]"
+                className="mt-6 font-serif text-[40px] font-normal leading-[1.04] tracking-normal text-white sm:text-[56px] lg:text-[66px]"
               >
                 {"Hand embroidery for the world's *finest labels.*"}
               </TypingAnimation>
@@ -322,28 +322,28 @@ function HomePage() {
           </Reveal>
 
           <Reveal delay={120} className="mt-4 px-0 py-8">
-            <div className="grid gap-10 border-y border-ink/10 py-10 text-center sm:py-16 md:grid-cols-3">
+            <div className="grid gap-10 border-y border-ink/10 py-14 text-center sm:py-20 md:grid-cols-3">
               <div>
-                <p className="font-serif text-6xl sm:text-7xl md:text-8xl font-light leading-none text-[#D4AF37]">
+                <p className="font-serif text-[72px] sm:text-[100px] md:text-[120px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={150} suffix="+" duration={2000} />
                 </p>
-                <p className="mt-5 text-[14px] font-bold uppercase leading-relaxed tracking-[0.2em] text-[#A69C98]">
+                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Collections Supported
                 </p>
               </div>
               <div>
-                <p className="font-serif text-6xl sm:text-7xl md:text-8xl font-light leading-none text-[#D4AF37]">
+                <p className="font-serif text-[72px] sm:text-[100px] md:text-[120px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={18} duration={1600} />
                 </p>
-                <p className="mt-5 text-[14px] font-bold uppercase leading-relaxed tracking-[0.2em] text-[#A69C98]">
+                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Markets Served
                 </p>
               </div>
               <div>
-                <p className="font-serif text-5xl sm:text-6xl md:text-7xl italic font-light leading-none text-[#D4AF37]">
+                <p className="font-serif text-[52px] sm:text-[72px] md:text-[88px] italic font-light leading-none text-[#D4AF37]">
                   Fast-track
                 </p>
-                <p className="mt-5 text-[14px] font-bold uppercase leading-relaxed tracking-[0.2em] text-[#A69C98]">
+                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Sampling Turnaround
                 </p>
               </div>

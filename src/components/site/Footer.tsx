@@ -187,8 +187,8 @@ export function Footer() {
 
         {/* Luxury Quote */}
         <div className="my-10 text-center">
-          <p className="font-serif text-xl sm:text-2xl italic tracking-wide text-[#D4AF37]/90 font-normal">
-            “ Every stitch tells a story of timeless elegance. ”
+          <p className="font-serif text-base sm:text-lg italic tracking-wide text-[#D4AF37]/90 font-normal">
+            " Every stitch tells a story of timeless elegance. "
           </p>
         </div>
 
