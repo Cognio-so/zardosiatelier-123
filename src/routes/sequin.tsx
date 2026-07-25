@@ -69,7 +69,7 @@ function SequinPage() {
         <div className="relative z-10 flex flex-col items-center justify-center px-6 py-20 text-center">
           <Reveal>
             <span className="inline-block text-[10px] font-bold uppercase tracking-[0.45em]" style={{ color: "#C9A84C" }}>Embroidery Technique</span>
-            <h1 className="mt-4 font-serif text-4xl leading-tight text-white sm:text-5xl">Sequin Work</h1>
+            <h1 className="mt-4 font-serif text-5xl leading-tight text-white sm:text-6xl lg:text-7xl">Sequin Work</h1>
             <p className="mx-auto mt-6 max-w-[52ch] text-base font-medium leading-relaxed text-white/75 sm:text-lg">
               Thousands of hand-stitched sequins catching couture light with every movement - crafted by master karigars for luxury fashion houses worldwide.
             </p>
@@ -114,7 +114,7 @@ function SequinPage() {
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-20">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.4em]" style={{ color: "#C9A84C" }}>The Technique</span>
-                <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">What makes our sequin work couture-grade.</h2>
+                <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">What makes our sequin work couture-grade.</h2>
               </div>
               <div className="space-y-5 text-[15px] font-medium leading-8 text-white/70">
                 <p>Each sequin is individually hand-stitched onto fabric - a painstaking process that ensures uniform coverage, texture depth, and long-term durability that machine application cannot replicate.</p>

@@ -174,7 +174,7 @@ function ZardoziPage() {
             <span className="inline-block text-[10px] font-bold uppercase tracking-[0.55em] mb-5" style={{ color: "#C9A84C" }}>
               Embroidery Technique
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight tracking-tight mb-4">
+            <h1 className="font-serif text-6xl sm:text-7xl lg:text-8xl text-white leading-none tracking-tight mb-4">
               Zardozi
             </h1>
             <p className="font-serif italic text-2xl sm:text-3xl mb-6" style={{ color: "#C9A84C" }}>

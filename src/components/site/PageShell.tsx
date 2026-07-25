@@ -29,13 +29,13 @@ export function PageHero({
         <div className="mx-auto w-full max-w-[1360px] px-5 sm:px-6 lg:px-10">
           <p className="eyebrow !text-gold-soft animate-fade-up">{eyebrow}</p>
           <h1
-            className="mt-4 max-w-3xl font-serif text-3xl leading-[1.05] text-ivory animate-fade-up sm:text-5xl lg:text-[56px]"
+            className="mt-4 max-w-4xl font-serif text-4xl leading-[1.02] text-ivory animate-fade-up sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "200ms" }}
           >
             {title} {italic ? <span className="italic font-normal">{italic}</span> : null}
           </h1>
           <p
-            className="mt-4 max-w-xl text-[15px] font-medium leading-7 text-ivory/90 animate-fade-up"
+            className="mt-5 max-w-2xl text-base font-medium leading-7 text-ivory/90 animate-fade-up sm:text-lg"
             style={{ animationDelay: "400ms" }}
           >
             {description}
@@ -65,8 +65,8 @@ export function CTABand({
     <section className="bg-ink py-16 text-ivory sm:py-20">
       <div className="mx-auto max-w-[1100px] px-5 text-center sm:px-6 lg:px-10">
         <Reveal>
-          <h2 className="font-serif text-3xl sm:text-4xl text-ivory text-balance">{title}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-ivory/88">{body}</p>
+          <h2 className="font-serif text-4xl sm:text-5xl text-ivory text-balance">{title}</h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-ivory/88">{body}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               to="/contact"
