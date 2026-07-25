@@ -1,12 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
-import { TypingAnimation } from "@/registry/magicui/typing-animation";
-import Text3DFlip from "@/registry/magicui/text-3d-flip";
-import { Lens } from "@/registry/magicui/lens";
-import { createEnquiry, getSettings } from "@/lib/admin-data";
+import { createEnquiry } from "@/lib/admin-data";
 import {
   Crown,
   Layers,
@@ -19,31 +15,12 @@ import {
   ShieldCheck,
   Zap,
 } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 import heroEmbroidery from "@/assets/hero-embroidery.webp";
-import heroVideo from "@/assets/hero-video.mp4";
-import techniqueZardosiNew from "@/assets/technique-zardosi-new.webp";
-import techniqueCrystalNew from "@/assets/technique-crystal-new.webp";
-import technique3dNew from "@/assets/technique-3d-new.webp";
-import techniqueBeadworkNew from "@/assets/technique-beadwork-new.webp";
-import techniqueSequinNew from "@/assets/technique-sequin-new.png";
 import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
-import reshamZari1 from "@/assets/resham-zari-1.jpeg";
 import reshamZariCard from "@/assets/resham-zari-card-opt.webp";
 import pearlWorkCard from "@/assets/pearl-work-card-opt.webp";
 import crystalCard from "@/assets/crystal-1-opt.webp";
-import sequin1 from "@/assets/sequin-1.jpg";
-import sequin2 from "@/assets/sequin-2.jpg";
 import sequin3 from "@/assets/sequin-3-opt.webp";
-import sequin4 from "@/assets/sequin-4.jpeg";
-import sequin5 from "@/assets/sequin-5.jpg";
-import sequin6 from "@/assets/sequin-6.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -153,47 +130,18 @@ const faqs = [
 ];
 
 function HomePage() {
-  const [loadVideo, setLoadVideo] = useState(false);
-  const { data: settings } = useQuery({
-    queryKey: ["settings-public"],
-    queryFn: () => getSettings(),
-    staleTime: 0,
-  });
-  const phoneDigits = (settings?.phone ?? "8826023527").replace(/\D/g, "");
-
-  useEffect(() => {
-    // Only load the heavy video after mount to avoid blocking FCP/LCP
-    const timer = setTimeout(() => {
-      setLoadVideo(true);
-    }, 1500); // 1.5s delay allows initial paint to finish cleanly
-    return () => clearTimeout(timer);
-  }, []);
+  const phoneDigits = "8826023527";
 
   return (
     <SiteShell>
       <section className="relative min-h-screen w-full overflow-hidden bg-[#160f0b]">
-        {/* Full-screen cinematic video / Poster placeholder */}
-        {loadVideo ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={heroEmbroidery}
-            className="absolute inset-0 h-full w-full object-cover animate-fade-in"
-            aria-hidden="true"
-          >
-            <source src={heroVideo} type="video/mp4" />
-            <track kind="captions" src="" label="No captions available" default />
-          </video>
-        ) : (
-          <img
-            src={heroEmbroidery}
-            alt="Hand embroidery craftsmanship header background"
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover opacity-80"
-          />
-        )}
+        <img
+          src={heroEmbroidery}
+          alt="Hand embroidery craftsmanship header background"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
+        />
 
         {/* Cinematic Dark Gradient Overlay */}
         <div
@@ -212,18 +160,14 @@ function HomePage() {
               backgroundColor: "rgba(15,15,15,0.28)",
             }}
           >
-            <Reveal>
+            <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
                 Haute Couture Embroidery - India
               </p>
-              <TypingAnimation
-                as="h1"
-                duration={40}
-                delay={200}
-                className="mt-6 font-serif text-[46px] leading-[1.02] text-white sm:text-[64px] lg:text-[76px] font-normal tracking-normal text-left"
-              >
-                Hand embroidery for the world's *finest labels.*
-              </TypingAnimation>
+              <h1 className="mt-6 font-serif text-[46px] font-normal leading-[1.02] tracking-normal text-white sm:text-[64px] lg:text-[76px]">
+                Hand embroidery for the world's{" "}
+                <em className="font-normal text-gold-soft">finest labels.</em>
+              </h1>
               <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
                 premium brands - every stitch finished by master karigars and checked twice before
@@ -248,7 +192,7 @@ function HomePage() {
                   Call the Atelier
                 </a>
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
 
@@ -268,18 +212,9 @@ function HomePage() {
           <Reveal className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end lg:mb-10">
             <div className="max-w-[980px]">
               <span className="eyebrow text-[11px]">Embroidery Techniques</span>
-              <Text3DFlip
-                as="h2"
-                className="mt-3 font-serif text-[58px] leading-[0.95] text-ink sm:text-[86px] lg:text-[104px]"
-                textClassName="text-ink"
-                flipTextClassName="text-gold-soft"
-                rotateDirection="top"
-                staggerDuration={0.03}
-                staggerFrom="first"
-                transition={{ type: "spring", damping: 25, stiffness: 160 }}
-              >
+              <h2 className="mt-3 font-serif text-[58px] leading-[0.95] text-ink sm:text-[86px] lg:text-[104px]">
                 A vocabulary of luxury hand-craft.
-              </Text3DFlip>
+              </h2>
             </div>
             <Link
               to="/portfolio"
@@ -294,13 +229,13 @@ function HomePage() {
               const cardInner = (
                 <article className="group cursor-pointer text-center">
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
-                    <Lens zoomFactor={2.2} lensSize={130} isStatic={false}>
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                      />
-                    </Lens>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     {/* View hint for sequin card */}
                     {"href" in item && (
                       <div className="absolute inset-0 flex items-end justify-center pb-10 pointer-events-none">
@@ -414,81 +349,25 @@ function HomePage() {
             <span className="eyebrow">Questions</span>
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
               Working with our atelier.
-            </h2>
-
-            <Accordion type="single" collapsible className="mt-7 w-full">
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={faq.question}
-                  value={`item-${i}`}
-                  className="border-b border-ink/10 py-3"
-                >
-                  <AccordionTrigger className="text-left font-serif text-2xl hover:text-gold hover:no-underline">
+            </h2>{" "}
+            <div className="mt-7 w-full">
+              {faqs.map((faq) => (
+                <details key={faq.question} className="group border-b border-ink/10 py-5">
+                  <summary className="cursor-pointer list-none font-serif text-2xl transition hover:text-gold">
                     {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="max-w-[70ch] pt-3 text-[15px] font-medium leading-7 text-ink-soft">
+                  </summary>
+                  <p className="max-w-[70ch] pt-3 text-[15px] font-medium leading-7 text-ink-soft">
                     {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                  </p>
+                </details>
               ))}
-            </Accordion>
+            </div>
           </Reveal>
         </div>
       </section>
 
       <LeadSection />
     </SiteShell>
-  );
-}
-
-function SequinCarousel({ images, name }: { images: string[]; name: string }) {
-  const [current, setCurrent] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const next = useCallback(() => {
-    setCurrent((c) => (c + 1) % images.length);
-  }, [images.length]);
-
-  useEffect(() => {
-    timerRef.current = setInterval(next, 3000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [next]);
-
-  const goTo = (idx: number) => {
-    setCurrent(idx);
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(next, 3000);
-  };
-
-  return (
-    <div className="relative h-full w-full overflow-hidden group">
-      {images.map((src, idx) => (
-        <img
-          key={idx}
-          src={src}
-          alt={`${name} ${idx + 1}`}
-          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
-          style={{ opacity: idx === current ? 1 : 0 }}
-        />
-      ))}
-      {/* Dot indicators */}
-      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
-        {images.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => goTo(idx)}
-            aria-label={`Go to image ${idx + 1}`}
-            className="h-1.5 rounded-full transition-all duration-300"
-            style={{
-              width: idx === current ? "20px" : "6px",
-              backgroundColor: idx === current ? "#C9A84C" : "rgba(255,255,255,0.6)",
-            }}
-          />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -543,14 +422,7 @@ function CountUp({
 
 function LeadSection() {
   const [submitted, setSubmitted] = useState(false);
-  const { data: settings } = useQuery({
-    queryKey: ["settings-public"],
-    queryFn: () => getSettings(),
-    staleTime: 0,
-  });
-  const phoneNumber = settings?.phone ?? "8826023527";
-  const phoneDigits = phoneNumber.replace(/\D/g, "");
-  const email = settings?.email ?? "zardosiatelier@gmail.com";
+  const email = "zardosiatelier@gmail.com";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

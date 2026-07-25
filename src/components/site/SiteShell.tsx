@@ -1,7 +1,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
-import { SiteMetadata } from "./SiteMetadata";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -66,7 +65,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="bg-ivory text-ink">
-      <SiteMetadata />
       <Navigation />
       <main>{children}</main>
       <Footer />
@@ -89,7 +87,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
             Close
             <span className="text-2xl font-light leading-none">&times;</span>
           </button>
-          <div className="relative max-h-[85vh] max-w-[90vw] overflow-hidden bg-transparent select-none transition-all duration-300" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-h-[85vh] max-w-[90vw] overflow-hidden bg-transparent select-none transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div
               className="relative flex items-center justify-center overflow-hidden"
               style={{ cursor: zoomed ? "zoom-out" : "zoom-in" }}
@@ -118,4 +119,3 @@ export function SiteShell({ children }: { children: ReactNode }) {
     </div>
   );
 }
-

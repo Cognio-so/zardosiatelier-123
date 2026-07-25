@@ -1,14 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { getSettings } from "@/lib/admin-data";
-import {
-  Mail,
-  Phone,
-  ChevronRight,
-  Instagram,
-  Linkedin,
-  Heart,
-} from "lucide-react";
+import { Mail, Phone, ChevronRight, Instagram, Linkedin, Heart } from "lucide-react";
 import zaLogo from "@/assets/za-logo-opt.webp";
 
 // Custom WhatsApp SVG Icon
@@ -21,18 +12,13 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 export function Footer() {
-  const { data: settings } = useQuery({
-    queryKey: ["settings-public"],
-    queryFn: () => getSettings(),
-    staleTime: 0,
-  });
+  const siteName = "Zardosi Atelier";
+  const tagline = "Luxury Hand Embroidery Couture";
+  const email = "zardosiatelier@gmail.com";
+  const phone = "+91 88260 23527";
 
-  const siteName = settings?.siteName ?? "Zardosi Atelier";
-  const tagline = settings?.tagline ?? "Luxury Hand Embroidery Couture";
-  const email = settings?.email || "zardosiatelier@gmail.com";
-  const phone = settings?.phone || "+91 88260 23527";
-
-  const instagramUrl = settings?.instagramUrl || "https://www.instagram.com/reel/DaUjL2Mp4qF/?igsh=amUyNnNnbWJudzQz";
+  const instagramUrl =
+    settings?.instagramUrl || "https://www.instagram.com/reel/DaUjL2Mp4qF/?igsh=amUyNnNnbWJudzQz";
   const linkedinUrl = settings?.linkedinUrl || "https://www.linkedin.com/in/sajal-jain08";
   const whatsappUrl = `https://wa.me/${phone.replace(/\D/g, "") || "918826023527"}`;
 
@@ -81,7 +67,9 @@ export function Footer() {
             </div>
 
             <p className="max-w-[42ch] text-[13px] font-normal leading-7 text-white/70">
-              At Zardosi Atelier, we celebrate the timeless art of hand embroidery through exquisite craftsmanship, luxurious fabrics, and attention to every detail. Each creation is a reflection of heritage, elegance and sophistication.
+              At Zardosi Atelier, we celebrate the timeless art of hand embroidery through exquisite
+              craftsmanship, luxurious fabrics, and attention to every detail. Each creation is a
+              reflection of heritage, elegance and sophistication.
             </p>
           </div>
 
@@ -94,7 +82,10 @@ export function Footer() {
 
             <div className="space-y-6">
               {/* Email */}
-              <a href={`mailto:${email}`} className="group flex items-center gap-4 transition-all duration-300">
+              <a
+                href={`mailto:${email}`}
+                className="group flex items-center gap-4 transition-all duration-300"
+              >
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/35 text-[#D4AF37] transition-all duration-500 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-[#160F0C] group-hover:shadow-[0_0_15px_rgba(212,175,55,0.4)]">
                   <Mail size={18} strokeWidth={1.5} />
                 </div>
@@ -107,7 +98,12 @@ export function Footer() {
               </a>
 
               {/* Phone */}
-              <a href={`tel:${phone.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 transition-all duration-300">
+              <a
+                href={`tel:${phone.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 transition-all duration-300"
+              >
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#D4AF37]/35 text-[#D4AF37] transition-all duration-500 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-[#160F0C] group-hover:shadow-[0_0_15px_rgba(212,175,55,0.4)]">
                   <Phone size={18} strokeWidth={1.5} />
                 </div>
@@ -118,7 +114,6 @@ export function Footer() {
                   </p>
                 </div>
               </a>
-
             </div>
           </div>
 
@@ -141,7 +136,10 @@ export function Footer() {
                     to={to}
                     className="group inline-flex items-center gap-2 text-white/80 transition-all duration-300 hover:text-[#D4AF37]"
                   >
-                    <ChevronRight size={14} className="text-[#D4AF37] transition-transform duration-300 group-hover:translate-x-1" />
+                    <ChevronRight
+                      size={14}
+                      className="text-[#D4AF37] transition-transform duration-300 group-hover:translate-x-1"
+                    />
                     <span className="relative">
                       {label}
                       <span className="absolute -bottom-0.5 left-0 h-[1px] w-0 bg-[#D4AF37] transition-all duration-300 group-hover:w-full" />
