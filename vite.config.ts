@@ -16,8 +16,22 @@ export default defineConfig({
     preset: "vercel",
   },
   vite: {
+    logLevel: "info",
     build: {
       rollupOptions: {
+        onLog(level, log, handler) {
+          if (
+            log.code === "MODULE_LEVEL_DIRECTIVE" ||
+            log.message.includes("Module level directives cause errors when bundled")
+          ) {
+            return;
+          }
+          handler(level, log);
+        },
+        onwarn(warning, warn) {
+          if (warning.code === "MODULE_LEVEL_DIRECTIVE") return;
+          warn(warning);
+        },
         output: {
           manualChunks(id) {
             if (id.includes("node_modules")) {
@@ -25,10 +39,9 @@ export default defineConfig({
               if (id.includes("lucide-react")) return "lucide-react";
               return "vendor";
             }
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 });
-

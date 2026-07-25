@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
+import { TypingAnimation } from "@/registry/magicui/typing-animation";
 import { createEnquiry } from "@/lib/admin-data";
 import {
   Crown,
@@ -164,10 +165,14 @@ function HomePage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
                 Haute Couture Embroidery - India
               </p>
-              <h1 className="mt-6 font-serif text-[46px] font-normal leading-[1.02] tracking-normal text-white sm:text-[64px] lg:text-[76px]">
-                Hand embroidery for the world's{" "}
-                <em className="font-normal text-gold-soft">finest labels.</em>
-              </h1>
+              <TypingAnimation
+                as="h1"
+                duration={28}
+                delay={250}
+                className="mt-6 font-serif text-[46px] font-normal leading-[1.02] tracking-normal text-white sm:text-[64px] lg:text-[76px]"
+              >
+                {"Hand embroidery for the world's *finest labels.*"}
+              </TypingAnimation>
               <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
                 We craft and export luxury embroidered pieces for couture houses, designers and
                 premium brands - every stitch finished by master karigars and checked twice before
