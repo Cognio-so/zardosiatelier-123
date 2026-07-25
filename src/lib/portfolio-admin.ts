@@ -110,6 +110,139 @@ const defaultAssetEntries = Object.entries(defaultAssetModules)
     return entries.findIndex(([candidate]) => defaultAssetId(candidate).replace(/-opt$/, "") === id) === index;
   });
 
+const specificAssetCaptions: Record<string, string> = {
+  // Portfolio highlights
+  "portfolio-1": "Couture Floral Embroidery on Ivory Tulle",
+  "portfolio-2": "Tailored Menswear Tonal Gold Zari Lapel",
+  "portfolio-3": "Royal Gold Zardozi & Silver Bridal Panel",
+  "portfolio-4": "Silk Resham & Sequin Floral Motif",
+  "portfolio-5": "Dimensional Pearl & Micro Beadwork Lattice",
+  "portfolio-6": "Haute Couture Gown Crystal & Zardozi Accent",
+
+  // Sequin Work
+  "sequin-1": "Maroon & Gold Sequin Lattice Pattern",
+  "sequin-2": "Geometric Sequin & Metallic Beadwork",
+  "sequin-3": "3D Floral Sequin & Micro-Bead Close-up",
+  "sequin-4": "Full Couture Floral Sequin Panel",
+  "sequin-5": "Beaded Metallic Floral Sequin Work",
+  "sequin-6": "Dimensional 3D Sequin Blossom Detail",
+
+  // Zardozi Work
+  "zardozi-1": "Zardozi Paisley Motif in Gold Thread on Silk",
+  "zardozi-2": "Close-up of Intricate Zardozi Needlework",
+  "zardozi-3": "Fine Metallic Zardozi Stitching on Luxury Fabric",
+  "zardozi-4": "Dense Gold Zardozi Threadwork Couture Panel",
+  "zardozi-5": "Zardozi Embellishment with Floral Swirls",
+  "zardozi-6": "Metallic Zardozi Floral & Leaf Composition",
+  "zardozi-7": "Artisan Hand-Stitched Zardozi Swatch",
+  "zardozi-8": "Symmetrical Metallic Zardozi Geometry",
+  "zardozi-9": "Ornate Zardozi Pattern with Heavy Gold Relief",
+  "zardozi-10": "Detail of Fine Zardozi Wire Work & Bead Accents",
+  "zardozi-11": "Couture Zardozi Border & Medallion Detail",
+  "zardozi-12": "Gold Zardozi Threadwork on Deep Velvet Base",
+  "zardozi-13": "Ornate Zardozi Crest & Vine Embroidery",
+  "zardozi-14": "Gold Zardozi Floral Arrangement with Beaded Stems",
+  "zardozi-15": "Surface Zardozi Texture Sample for Couture",
+  "zardozi-16": "Luxury Gold Zardozi Craftsmanship Detail",
+  "zardozi-17": "Heavy Gold Zardozi Work on Sheer Net Fabric",
+  "zardozi-18": "Heritage Zardozi Craft with Metallic Dabka Springs",
+  "zardozi-19": "Symmetrical Zardozi Medallion Motif",
+  "zardozi-20": "Refined Zardozi Couture Finishing Detail",
+  "zardozi-21": "Detailed Zardozi Wire Stitching & Raised Texture",
+  "zardozi-22": "Gold Zardozi Filigree Embroidery on Silk",
+  "zardozi-23": "Hand-Stitched Zardozi Panel with Beaded Outlines",
+  "zardozi-24": "Luxury Zardozi Embellishment Swatch",
+  "zardozi-25": "Zardozi Design Accentuated with Gemstones & Beads",
+  "zardozi-26": "Master Karigar Zardozi Craftsmanship Study",
+  "zardozi-27": "Export-Quality Zardozi Surface Work",
+  "zardozi-28": "Fine Zardozi Needlework on Sheer Ground",
+  "zardozi-29": "Artisan Zardozi Embroidery Pattern Swatch",
+  "zardozi-30": "Metallic Gold Zardozi Threadwork Panel",
+  "zardozi-31": "Ornate Zardozi Motif with Sculpted Gold Threads",
+  "zardozi-32": "Couture Zardozi Surface Work for Gowns & Lehengas",
+  "zardozi-33": "Zardozi Surface Embellishment & Metallic Highlights",
+  "zardozi-34": "Heritage Zardozi Craft for Bridal Accessories",
+  "zardozi-35": "Luxury Gold Zardozi Finishing with Seed Beads",
+  "zardozi-36": "Karigar Hand Embroidery Detail with Dabka & Salma",
+  "zardozi-37": "Precision Zardozi Surface Work for Luxury Fashion",
+
+  // Crystal & Stone Work
+  "crystal-1": "Amethyst Floral Scrollwork on Silk",
+  "crystal-2": "Multi-Stone Couture Panel Detail",
+  "crystal-3": "Gold Zircon Cluster Motif",
+  "crystal-4": "Hand-Set Swarovski Embellishments",
+  "crystal-5": "Cutdana Bugle Bead Border",
+  "crystal-6": "Dimensional Crystal Lattice Work",
+  "crystal-7": "Scattered Stone and Sequin Mix",
+  "crystal-8": "Stone Paisley Motif Swatch",
+  "crystal-9": "Full Panel Stonework Composition",
+  "crystal-10": "Mirror & Crystal Hand Embroidery",
+  "crystal-11": "Delicate Zircon Surface Overlay",
+  "crystal-12": "Symmetrical Mandala Stonework",
+  "crystal-13": "Couture Gown Crystal Embellishment",
+  "crystal-14": "Lace and Stone Bridal Border",
+  "crystal-15": "Full-Coverage Crystal Netting",
+  "crystal-16": "Burgundy Stone Inlay Detail",
+  "crystal-17": "Fine Crystal Mesh Close-up",
+  "crystal-18": "Floral Stone Cluster Motif",
+  "crystal-19": "Emerald-Tone Stone Panel",
+  "crystal-20": "Dual-Tone Crystal Scatter Swatch",
+  "crystal-21": "Rich Jewel-Tone Crystal Embroidery",
+
+  // Resham & Zari Work
+  "resham-zari-page-1": "Fine Silk Resham Floral Spray on Cream Ground",
+  "resham-zari-page-2": "Gold Zari & Silk Threadwork Border Detail",
+  "resham-zari-page-3": "Intricate Resham Leaf & Vine Composition",
+  "resham-zari-page-4": "Multi-Color Silk Resham Medallion Motif",
+  "resham-zari-page-5": "Gold Zari Surface Stitching Swatch",
+  "resham-zari-page-6": "Dual-Tone Resham & Zari Floral Pattern",
+  "resham-zari-page-7": "Traditional Paisley Motif in Gold Zari",
+  "resham-zari-page-8": "Fine Silk Threadwork Fill & Shading",
+  "resham-zari-page-9": "Ornate Zari Threaded Architectural Motif",
+  "resham-zari-page-10": "High-Density Silk Resham Border Study",
+  "resham-zari-page-11": "Geometric Zari & Silk Grid Embroidery",
+  "resham-zari-page-12": "Botanical Silk Resham Embroidery Panel",
+  "resham-zari-page-13": "Gold Zari Filigree with Silk Accents",
+  "resham-zari-page-14": "Delicate Resham Stitching on Sheer Base",
+  "resham-zari-page-15": "Heritage Zari Threadwork Composition",
+  "resham-zari-page-16": "Contrast Resham Floral Embroidery Swatch",
+  "resham-zari-page-17": "Luminous Gold Zari Grid & Floral Fill",
+  "resham-zari-page-18": "Master Karigar Resham Thread Shading",
+  "resham-zari-page-19": "Symmetrical Silk Resham Crest Motif",
+  "resham-zari-page-20": "Gold Zari & Silk Threadwork Band",
+  "resham-zari-page-21": "Fine Resham Micro-Stitch Floral Swatch",
+  "resham-zari-page-22": "Rich Resham & Gold Zari Couture Surface",
+  "resham-zari-page-23": "Full Resham & Zari Tapestry Panel",
+
+  // Pearl Work
+  "pearl-work-page-1": "Delicate Pearl Check Grid Pattern",
+  "pearl-work-page-2": "Hand-Stitched Pearl Surface Texture",
+  "pearl-work-page-3": "Diamond Pearl & Beadwork Lattice",
+  "pearl-work-page-4": "Bridal Ivory Pearl Fabric Swatch",
+  "pearl-work-page-5": "Couture Glass Bead & Seed Pearl Composition",
+  "pearl-work-page-6": "Traditional Pearl Flower Motif",
+  "pearl-work-page-7": "Hand-Sewn Micro Pearl & Bead Cluster",
+  "pearl-work-page-8": "Elegant White Pearl & Crystal Accents",
+  "pearl-work-page-9": "Intricate Pearl Mesh Layout for Couture",
+};
+
+const topPinnedIds = [
+  "default-zardozi-3",
+  "default-zardozi-4",
+  "default-zardozi-1",
+  "default-pearl-work-page-2",
+  "default-portfolio-3",
+  "default-zardozi-9",
+  "default-zardozi-30",
+  "default-zardozi-32",
+  "default-portfolio-6",
+  "default-sequin-4",
+  "default-crystal-9",
+  "default-resham-zari-page-23",
+  "default-zardozi-17",
+  "default-zardozi-37",
+];
+
 export const DEFAULT_ITEMS: PortfolioItem[] = defaultAssetEntries
   .map<PortfolioItem | null>(([path, url]) => {
     const group = defaultAssetGroup(path);
@@ -117,11 +250,16 @@ export const DEFAULT_ITEMS: PortfolioItem[] = defaultAssetEntries
     const config = defaultAssetConfig[group];
     const number = defaultAssetNumber(path);
     const slug = slugifyPortfolioTag(config.tag);
-    const order = config.priority + number;
+    const baseId = defaultAssetId(path).replace(/-opt$/, "");
+    const fullId = `default-${baseId}`;
+    const pinnedIndex = topPinnedIds.indexOf(fullId);
+    const order = pinnedIndex !== -1 ? pinnedIndex + 1 : config.priority + number + 100;
+    const caption = specificAssetCaptions[baseId] || (number === 999 ? config.caption : `${config.caption} ${number}`);
+
     return {
-      id: `default-${defaultAssetId(path).replace(/-opt$/, "")}`,
+      id: fullId,
       url,
-      caption: number === 999 ? config.caption : `${config.caption} ${number}`,
+      caption,
       tag: config.tag,
       categorySlug: slug,
       uploadedAt: new Date(Date.UTC(2026, 0, 1, 0, order)).toISOString(),

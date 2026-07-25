@@ -31,15 +31,15 @@ export const Route = createFileRoute("/pearl-work")({
 });
 
 const staticGalleryImages = [
-  { src: p01, alt: "Pearl Work - Delicate check pattern design 1" },
-  { src: p02, alt: "Pearl Work - Detailed surface pattern 2" },
-  { src: p03, alt: "Pearl Work - Diamond lattice detail 3" },
-  { src: p04, alt: "Pearl Work - Bridal fabric swatch 4" },
-  { src: p05, alt: "Pearl Work - Couture glass beads detail 5" },
-  { src: p06, alt: "Pearl Work - Traditional flower motif 6" },
-  { src: p07, alt: "Pearl Work - Hand-sewn micro composition 7" },
-  { src: p08, alt: "Pearl Work - Elegant white beadwork 8" },
-  { src: p09, alt: "Pearl Work - Intricate mesh layout 9" },
+  { src: p01, alt: "Delicate Pearl Check Grid Pattern" },
+  { src: p02, alt: "Hand-Stitched Pearl Surface Texture" },
+  { src: p03, alt: "Diamond Pearl & Beadwork Lattice" },
+  { src: p04, alt: "Bridal Ivory Pearl Fabric Swatch" },
+  { src: p05, alt: "Couture Glass Bead & Seed Pearl Composition" },
+  { src: p06, alt: "Traditional Pearl Flower Motif" },
+  { src: p07, alt: "Hand-Sewn Micro Pearl & Bead Cluster" },
+  { src: p08, alt: "Elegant White Pearl & Crystal Accents" },
+  { src: p09, alt: "Intricate Pearl Mesh Layout for Couture" },
 ];
 
 const stats = [
@@ -274,15 +274,20 @@ function PearlWorkPage() {
 
           {/* Main Image */}
           <div
-            className="flex flex-col items-center max-h-[85vh] max-w-[88vw] overflow-hidden"
+            className="flex flex-col items-center max-h-[88vh] max-w-[88vw] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={galleryImages[lightbox].src}
               alt={galleryImages[lightbox].alt}
-              className="max-h-[80vh] max-w-[88vw] object-contain shadow-2xl"
+              className="max-h-[78vh] max-w-[88vw] object-contain shadow-2xl"
               style={{ border: "1px solid rgba(201,168,76,0.1)" }}
             />
+            {galleryImages[lightbox].alt && (
+              <p className="mt-3 font-serif text-lg text-[#F5F0E8] text-center max-w-[60ch]">
+                {galleryImages[lightbox].alt}
+              </p>
+            )}
           </div>
 
           {/* Right Arrow */}

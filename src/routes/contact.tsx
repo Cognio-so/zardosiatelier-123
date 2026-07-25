@@ -5,8 +5,8 @@ import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
 import { createEnquiry, getSettings } from "@/lib/admin-data";
 
-import contactHeroV2 from "@/assets/contact-hero-v2.webp";
-import contactSecond from "@/assets/contact-hero.webp";
+import portfolioHero from "@/assets/portfolio-hero.webp";
+import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact - Zardosi Atelier" },
       { property: "og:description", content: "Begin a project with our embroidery atelier." },
       { property: "og:url", content: "/contact" },
-      { property: "og:image", content: contactHeroV2 },
+      { property: "og:image", content: portfolioHero },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/contact" }],
   }),
@@ -69,7 +69,7 @@ function ContactPage() {
         title="Request a"
         italic="feasibility review."
         description="Share your project and our atelier will respond within two working days with a tailored proposal."
-        image={contactHeroV2}
+        image={portfolioHero}
       />
 
       <section style={{ background: "#F4EFE7" }}>
@@ -94,8 +94,8 @@ function ContactPage() {
             }}
           >
             <img
-              src={contactSecond}
-              alt="Fountain pen, wax seal and gold-embroidered silk swatch - luxury atelier still-life"
+              src={zardoziPaisley}
+              alt="Intricate gold zardozi paisley embroidery - luxury atelier craftsmanship"
               className="w-full object-cover"
               style={{
                 maxHeight: "360px",
@@ -145,10 +145,6 @@ function ContactPage() {
                 >
                   {phoneNumber}
                 </a>
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Studio</p>
-                <p className="mt-2 font-serif text-xl">{address}</p>
               </div>
             </div>
           </Reveal>

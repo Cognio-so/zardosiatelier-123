@@ -372,15 +372,20 @@ function ZardoziPage() {
 
           {/* Image */}
           <div
-            className="flex flex-col items-center max-h-[85vh] max-w-[88vw] overflow-hidden"
+            className="flex flex-col items-center max-h-[88vh] max-w-[88vw] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={galleryImages[lightbox].src}
               alt={galleryImages[lightbox].alt}
-              className="max-h-[82vh] max-w-[88vw] object-contain shadow-2xl"
+              className="max-h-[78vh] max-w-[88vw] object-contain shadow-2xl"
               style={{ border: "1px solid rgba(201,168,76,0.15)" }}
             />
+            {galleryImages[lightbox].alt && (
+              <p className="mt-3 font-serif text-lg text-[#F5F0E8] text-center max-w-[60ch]">
+                {galleryImages[lightbox].alt}
+              </p>
+            )}
           </div>
 
           {/* Next */}

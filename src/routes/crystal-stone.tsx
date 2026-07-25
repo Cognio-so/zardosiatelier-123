@@ -47,27 +47,27 @@ export const Route = createFileRoute("/crystal-stone")({
 });
 
 const staticGalleryImages = [
-  { src: c01, alt: "Crystal & Stone Work - Amethyst floral scrollwork on silk" },
-  { src: c02, alt: "Crystal & Stone Work - Multi-stone couture panel detail 2" },
-  { src: c03, alt: "Crystal & Stone Work - Gold zircon cluster motif 3" },
-  { src: c04, alt: "Crystal & Stone Work - Hand-set Swarovski embellishments 4" },
-  { src: c05, alt: "Crystal & Stone Work - Cutdana bugle bead border 5" },
-  { src: c06, alt: "Crystal & Stone Work - Dimensional crystal lattice work 6" },
-  { src: c07, alt: "Crystal & Stone Work - Scattered stone and sequin mix 7" },
-  { src: c08, alt: "Crystal & Stone Work - Stone paisley motif swatch 8" },
-  { src: c09, alt: "Crystal & Stone Work - Full panel stonework 9" },
-  { src: c10, alt: "Crystal & Stone Work - Mirror & crystal embroidery 10" },
-  { src: c11, alt: "Crystal & Stone Work - Delicate zircon overlay 11" },
-  { src: c12, alt: "Crystal & Stone Work - Symmetrical mandala stonework 12" },
-  { src: c13, alt: "Crystal & Stone Work - Couture gown embellishment 13" },
-  { src: c14, alt: "Crystal & Stone Work - Lace and stone bridal border 14" },
-  { src: c15, alt: "Crystal & Stone Work - Full-coverage crystal netting 15" },
-  { src: c16, alt: "Crystal & Stone Work - Burgundy stone inlay detail 16" },
-  { src: c17, alt: "Crystal & Stone Work - Fine crystal mesh closeup 17" },
-  { src: c18, alt: "Crystal & Stone Work - Floral stone cluster motif 18" },
-  { src: c19, alt: "Crystal & Stone Work - Emerald tone stone panel 19" },
-  { src: c20, alt: "Crystal & Stone Work - Dual-tone crystal scatter 20" },
-  { src: c21, alt: "Crystal & Stone Work - Rich jewel-tone embroidery swatch 21" },
+  { src: c01, alt: "Amethyst Floral Scrollwork on Silk" },
+  { src: c02, alt: "Multi-Stone Couture Panel Detail" },
+  { src: c03, alt: "Gold Zircon Cluster Motif" },
+  { src: c04, alt: "Hand-Set Swarovski Embellishments" },
+  { src: c05, alt: "Cutdana Bugle Bead Border" },
+  { src: c06, alt: "Dimensional Crystal Lattice Work" },
+  { src: c07, alt: "Scattered Stone and Sequin Mix" },
+  { src: c08, alt: "Stone Paisley Motif Swatch" },
+  { src: c09, alt: "Full Panel Stonework Composition" },
+  { src: c10, alt: "Mirror & Crystal Hand Embroidery" },
+  { src: c11, alt: "Delicate Zircon Surface Overlay" },
+  { src: c12, alt: "Symmetrical Mandala Stonework" },
+  { src: c13, alt: "Couture Gown Crystal Embellishment" },
+  { src: c14, alt: "Lace and Stone Bridal Border" },
+  { src: c15, alt: "Full-Coverage Crystal Netting" },
+  { src: c16, alt: "Burgundy Stone Inlay Detail" },
+  { src: c17, alt: "Fine Crystal Mesh Close-up" },
+  { src: c18, alt: "Floral Stone Cluster Motif" },
+  { src: c19, alt: "Emerald-Tone Stone Panel" },
+  { src: c20, alt: "Dual-Tone Crystal Scatter Swatch" },
+  { src: c21, alt: "Rich Jewel-Tone Crystal Embroidery" },
 ];
 
 const stats = [
@@ -367,15 +367,20 @@ function CrystalStonePage() {
 
           {/* Main Image */}
           <div
-            className="flex flex-col items-center max-h-[85vh] max-w-[88vw] overflow-hidden"
+            className="flex flex-col items-center max-h-[88vh] max-w-[88vw] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={galleryImages[lightbox].src}
               alt={galleryImages[lightbox].alt}
-              className="max-h-[80vh] max-w-[88vw] object-contain shadow-2xl"
+              className="max-h-[78vh] max-w-[88vw] object-contain shadow-2xl"
               style={{ border: "1px solid rgba(201,168,76,0.12)" }}
             />
+            {galleryImages[lightbox].alt && (
+              <p className="mt-3 font-serif text-lg text-[#F5F0E8] text-center max-w-[60ch]">
+                {galleryImages[lightbox].alt}
+              </p>
+            )}
           </div>
 
           {/* Right Arrow */}

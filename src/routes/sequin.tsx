@@ -28,12 +28,12 @@ export const Route = createFileRoute("/sequin")({
 });
 
 const staticGalleryImages = [
-  { src: sequin1, alt: "Sequin embroidery - maroon gold lattice pattern 1" },
-  { src: sequin2, alt: "Sequin embroidery - maroon gold lattice pattern 2" },
-  { src: sequin3, alt: "Sequin embroidery - 3D floral sequin close-up" },
-  { src: sequin4, alt: "Sequin embroidery - full floral sequin panel" },
-  { src: sequin5, alt: "Sequin embroidery - beaded metallic floral work" },
-  { src: sequin6, alt: "Sequin embroidery - 3D floral embellishment detail" },
+  { src: sequin1, alt: "Maroon & Gold Sequin Lattice Pattern" },
+  { src: sequin2, alt: "Geometric Sequin & Metallic Beadwork" },
+  { src: sequin3, alt: "3D Floral Sequin & Micro-Bead Close-up" },
+  { src: sequin4, alt: "Full Couture Floral Sequin Panel" },
+  { src: sequin5, alt: "Beaded Metallic Floral Sequin Work" },
+  { src: sequin6, alt: "Dimensional 3D Sequin Blossom Detail" },
 ];
 
 function SequinPage() {
@@ -134,9 +134,10 @@ function SequinPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/92" onClick={closeLightbox}>
           <button onClick={closeLightbox} className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white hover:text-white" aria-label="Close"><X size={20} /></button>
           <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white hover:text-white sm:left-8" aria-label="Previous image"><ChevronLeft size={24} /></button>
-          <div className="max-h-[88vh] max-w-[90vw] overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <img src={galleryImages[lightbox].src} alt={galleryImages[lightbox].alt} className="max-h-[88vh] max-w-[90vw] object-contain shadow-2xl" />
-            <p className="mt-3 text-center text-[11px] font-bold uppercase tracking-[0.3em] text-white/50">{lightbox + 1} / {galleryImages.length}</p>
+          <div className="flex flex-col items-center max-h-[88vh] max-w-[90vw] overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <img src={galleryImages[lightbox].src} alt={galleryImages[lightbox].alt} className="max-h-[80vh] max-w-[90vw] object-contain shadow-2xl" />
+            <p className="mt-3 font-serif text-lg text-[#F5F0E8] text-center max-w-[60ch]">{galleryImages[lightbox].alt}</p>
+            <p className="mt-1 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white/50">{lightbox + 1} / {galleryImages.length}</p>
           </div>
           <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white hover:text-white sm:right-8" aria-label="Next image"><ChevronRight size={24} /></button>
         </div>

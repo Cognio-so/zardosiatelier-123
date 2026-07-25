@@ -45,29 +45,29 @@ export const Route = createFileRoute("/resham-zari")({
 });
 
 const staticGalleryImages = [
-  { src: r01, alt: "Resham & Zari Work - Masterpiece design 1" },
-  { src: r02, alt: "Resham & Zari Work - Masterpiece design 2" },
-  { src: r03, alt: "Resham & Zari Work - Masterpiece design 3" },
-  { src: r04, alt: "Resham & Zari Work - Masterpiece design 4" },
-  { src: r05, alt: "Resham & Zari Work - Masterpiece design 5" },
-  { src: r06, alt: "Resham & Zari Work - Masterpiece design 6" },
-  { src: r07, alt: "Resham & Zari Work - Masterpiece design 7" },
-  { src: r08, alt: "Resham & Zari Work - Masterpiece design 8" },
-  { src: r09, alt: "Resham & Zari Work - Masterpiece design 9" },
-  { src: r10, alt: "Resham & Zari Work - Masterpiece design 10" },
-  { src: r11, alt: "Resham & Zari Work - Masterpiece design 11" },
-  { src: r12, alt: "Resham & Zari Work - Masterpiece design 12" },
-  { src: r13, alt: "Resham & Zari Work - Masterpiece design 13" },
-  { src: r14, alt: "Resham & Zari Work - Masterpiece design 14" },
-  { src: r15, alt: "Resham & Zari Work - Masterpiece design 15" },
-  { src: r16, alt: "Resham & Zari Work - Masterpiece design 16" },
-  { src: r17, alt: "Resham & Zari Work - Masterpiece design 17" },
-  { src: r18, alt: "Resham & Zari Work - Masterpiece design 18" },
-  { src: r19, alt: "Resham & Zari Work - Masterpiece design 19" },
-  { src: r20, alt: "Resham & Zari Work - Masterpiece design 20" },
-  { src: r21, alt: "Resham & Zari Work - Masterpiece design 21" },
-  { src: r22, alt: "Resham & Zari Work - Masterpiece design 22" },
-  { src: r23, alt: "Resham & Zari Work - Masterpiece design 23" },
+  { src: r01, alt: "Fine Silk Resham Floral Spray on Cream Ground" },
+  { src: r02, alt: "Gold Zari & Silk Threadwork Border Detail" },
+  { src: r03, alt: "Intricate Resham Leaf & Vine Composition" },
+  { src: r04, alt: "Multi-Color Silk Resham Medallion Motif" },
+  { src: r05, alt: "Gold Zari Surface Stitching Swatch" },
+  { src: r06, alt: "Dual-Tone Resham & Zari Floral Pattern" },
+  { src: r07, alt: "Traditional Paisley Motif in Gold Zari" },
+  { src: r08, alt: "Fine Silk Threadwork Fill & Shading" },
+  { src: r09, alt: "Ornate Zari Threaded Architectural Motif" },
+  { src: r10, alt: "High-Density Silk Resham Border Study" },
+  { src: r11, alt: "Geometric Zari & Silk Grid Embroidery" },
+  { src: r12, alt: "Botanical Silk Resham Embroidery Panel" },
+  { src: r13, alt: "Gold Zari Filigree with Silk Accents" },
+  { src: r14, alt: "Delicate Resham Stitching on Sheer Base" },
+  { src: r15, alt: "Heritage Zari Threadwork Composition" },
+  { src: r16, alt: "Contrast Resham Floral Embroidery Swatch" },
+  { src: r17, alt: "Luminous Gold Zari Grid & Floral Fill" },
+  { src: r18, alt: "Master Karigar Resham Thread Shading" },
+  { src: r19, alt: "Symmetrical Silk Resham Crest Motif" },
+  { src: r20, alt: "Gold Zari & Silk Threadwork Band" },
+  { src: r21, alt: "Fine Resham Micro-Stitch Floral Swatch" },
+  { src: r22, alt: "Rich Resham & Gold Zari Couture Surface" },
+  { src: r23, alt: "Full Resham & Zari Tapestry Panel" },
 ];
 
 const stats = [
@@ -302,15 +302,20 @@ function ReshamZariPage() {
 
           {/* Main Image */}
           <div
-            className="flex flex-col items-center max-h-[85vh] max-w-[88vw] overflow-hidden"
+            className="flex flex-col items-center max-h-[88vh] max-w-[88vw] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={galleryImages[lightbox].src}
               alt={galleryImages[lightbox].alt}
-              className="max-h-[80vh] max-w-[88vw] object-contain shadow-2xl"
+              className="max-h-[78vh] max-w-[88vw] object-contain shadow-2xl"
               style={{ border: "1px solid rgba(201,168,76,0.1)" }}
             />
+            {galleryImages[lightbox].alt && (
+              <p className="mt-3 font-serif text-lg text-[#F5F0E8] text-center max-w-[60ch]">
+                {galleryImages[lightbox].alt}
+              </p>
+            )}
           </div>
 
           {/* Right Arrow */}

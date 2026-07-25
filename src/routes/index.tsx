@@ -281,15 +281,15 @@ function HomePage() {
                 A vocabulary of luxury hand-craft.
               </Text3DFlip>
             </div>
-            <Link to="/services" className="gold-link text-[10px] uppercase tracking-[0.3em]">
-              All Services
+            <Link to="/portfolio" className="gold-link text-[10px] uppercase tracking-[0.3em]">
+              Explore Portfolio
             </Link>
           </Reveal>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             {techniques.map((item, i) => {
               const cardInner = (
-                <article className="group cursor-pointer">
+                <article className="group cursor-pointer text-center">
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
                     <Lens zoomFactor={2.2} lensSize={130} isStatic={false}>
                       <img
@@ -378,7 +378,7 @@ function HomePage() {
             <div className="grid gap-8 border-y border-ink/10 py-8 text-center md:grid-cols-3">
               <div>
                 <p className="font-serif text-5xl text-gold sm:text-6xl">
-                  <CountUp target={120} suffix="+" duration={2000} />
+                  <CountUp target={150} suffix="+" duration={2000} />
                 </p>
                 <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
                   Collections Supported
@@ -577,14 +577,6 @@ function LeadSection() {
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="space-y-5">
-              <a
-                href={`tel:${phoneDigits}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block border border-gold bg-gold px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#120c09] transition hover:bg-transparent"
-              >
-                Call {phoneNumber}
-              </a>
               <a
                 href={`mailto:${email}`}
                 className="block border border-ink/25 px-8 py-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-ink transition hover:border-gold hover:text-gold"

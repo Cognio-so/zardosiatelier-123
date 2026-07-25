@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZardoziRouteImport } from './routes/zardozi'
-import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SequinRouteImport } from './routes/sequin'
 import { Route as ReshamZariRouteImport } from './routes/resham-zari'
 import { Route as ProcessRouteImport } from './routes/process'
@@ -38,11 +37,6 @@ import { Route as PortfolioItemIdRouteImport } from './routes/portfolio.item.$id
 const ZardoziRoute = ZardoziRouteImport.update({
   id: '/zardozi',
   path: '/zardozi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SequinRoute = SequinRouteImport.update({
@@ -175,7 +169,6 @@ export interface FileRoutesByFullPath {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
-  '/services': typeof ServicesRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -201,7 +194,6 @@ export interface FileRoutesByTo {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
-  '/services': typeof ServicesRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -229,7 +221,6 @@ export interface FileRoutesById {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
-  '/services': typeof ServicesRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -258,7 +249,6 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
-    | '/services'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -284,7 +274,6 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
-    | '/services'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -311,7 +300,6 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
-    | '/services'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -339,7 +327,6 @@ export interface RootRouteChildren {
   ProcessRoute: typeof ProcessRoute
   ReshamZariRoute: typeof ReshamZariRoute
   SequinRoute: typeof SequinRoute
-  ServicesRoute: typeof ServicesRoute
   ZardoziRoute: typeof ZardoziRoute
 }
 
@@ -350,13 +337,6 @@ declare module '@tanstack/react-router' {
       path: '/zardozi'
       fullPath: '/zardozi'
       preLoaderRoute: typeof ZardoziRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sequin': {
@@ -575,7 +555,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProcessRoute: ProcessRoute,
   ReshamZariRoute: ReshamZariRoute,
   SequinRoute: SequinRoute,
-  ServicesRoute: ServicesRoute,
   ZardoziRoute: ZardoziRoute,
 }
 export const routeTree = rootRouteImport
