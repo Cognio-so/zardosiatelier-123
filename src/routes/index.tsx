@@ -324,25 +324,25 @@ function HomePage() {
           <Reveal delay={120} className="mt-4 px-0 py-8">
             <div className="grid gap-10 border-y border-ink/10 py-14 text-center sm:py-20 md:grid-cols-3">
               <div>
-                <p className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={150} suffix="+" duration={2000} />
-                </p>
+                </div>
                 <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Collections Supported
                 </p>
               </div>
               <div>
-                <p className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={18} duration={1600} />
-                </p>
+                </div>
                 <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Markets Served
                 </p>
               </div>
               <div>
-                <p className="font-serif text-[64px] sm:text-[92px] md:text-[112px] italic font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[64px] sm:text-[92px] md:text-[112px] italic font-light leading-none text-[#D4AF37]">
                   Fast-track
-                </p>
+                </div>
                 <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
                   Sampling Turnaround
                 </p>
@@ -558,3 +558,4 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
