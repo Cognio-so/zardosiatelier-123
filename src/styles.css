@@ -1,5 +1,5 @@
 @import "tailwindcss" source(none);
-@source "../src";
+@source '../src';
 @import "tw-animate-css";
 
 /* Local Font Families (Latin Subset only) */
@@ -1260,7 +1260,26 @@
   opacity: 0.2 !important;
 }
 
-/* Mobile readability and crisp typography pass */
+/* Responsive luxury typography system */
+:root {
+  --font-heading: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-brand: "Cormorant Garamond", Georgia, serif;
+  --type-hero: clamp(42px, 6vw, 72px);
+  --type-page-title: clamp(34px, 5vw, 56px);
+  --type-section-title: clamp(28px, 4vw, 42px);
+  --type-card-title: clamp(24px, 3vw, 32px);
+  --type-body: clamp(18px, 2vw, 22px);
+  --type-paragraph: clamp(17px, 2vw, 20px);
+  --type-nav: 18px;
+  --type-button: 18px;
+  --type-footer-heading: 22px;
+  --type-footer-link: 18px;
+  --type-footer-description: 18px;
+  --type-form-label: 18px;
+  --type-form-placeholder: 17px;
+  --content-readable: 78ch;
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
@@ -1274,82 +1293,259 @@
   }
 
   main {
-    font-size: 16px;
+    font-size: var(--type-body);
   }
 
-  main :is(p, li, label, input, textarea, summary) {
-    font-weight: 500;
-  }
-
-  main :is(h1, h2, h3),
-  main .font-serif {
+  main :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-heading);
+    letter-spacing: 0;
+    text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: geometricPrecision;
   }
 
-  main :is(h1, h2, h3) {
-    font-weight: 600;
-  }
-}
-
-@media (max-width: 640px) {
-  main {
-    font-size: 17px;
+  main h1 {
+    font-size: var(--type-hero) !important;
+    font-weight: 700 !important;
+    line-height: 1.04 !important;
   }
 
-  main :is(p, li) {
-    font-size: max(15px, 0.95rem);
-    line-height: 1.75;
+  main section:not(:first-child) h1,
+  main article h1 {
+    font-size: var(--type-page-title) !important;
   }
 
-  main :is(label, input, textarea, button, a, summary) {
-    -webkit-font-smoothing: antialiased;
-    font-size: max(12px, 0.78rem);
-  }
-
-  main [class*="text-[9px]"],
-  main [class*="text-[10px]"],
-  main [class*="text-[11px]"] {
-    font-size: 12px !important;
-    line-height: 1.45 !important;
-  }
-
-  main [class*="text-[12px]"] {
-    font-size: 13px !important;
-    line-height: 1.55 !important;
-  }
-
-  main [class*="text-[13px]"] {
-    font-size: 14px !important;
-    line-height: 1.6 !important;
-  }
-
-  main .eyebrow,
-  main .gold-link,
-  main [class*="uppercase"] {
-    letter-spacing: 0.16em !important;
-  }
-
-  main :is(button, .gold-link, a[class*="border"], input, textarea) {
-    font-weight: 700;
-  }
-
-  main :is(h1, h2) {
-    line-height: 1.04;
+  main h2 {
+    font-size: var(--type-section-title) !important;
+    font-weight: 600 !important;
+    line-height: 1.12 !important;
   }
 
   main h3 {
-    line-height: 1.12;
+    font-size: var(--type-card-title) !important;
+    font-weight: 600 !important;
+    line-height: 1.16 !important;
   }
 
-  main .font-serif {
-    font-weight: 600;
-  }
-
-  main em.font-serif,
-  main em,
-  main .italic {
+  main :is(p, li) {
+    max-width: var(--content-readable);
+    font-size: var(--type-paragraph) !important;
     font-weight: 500;
+    line-height: 1.8 !important;
+    text-rendering: optimizeLegibility;
+  }
+
+  main :is(label, input, textarea, select) {
+    font-size: var(--type-form-label) !important;
+    line-height: 1.6 !important;
+  }
+
+  main :is(input, textarea, select) {
+    font-weight: 500;
+  }
+
+  main :is(input, textarea)::placeholder {
+    font-size: var(--type-form-placeholder);
+    opacity: 0.78;
+  }
+
+  main button,
+  main a.border,
+  main a.bg-\[\#100c09\] {
+    min-height: 54px;
+    padding: 16px 32px;
+    font-size: var(--type-button) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+  }
+
+  main button[aria-label],
+  main button.size-10,
+  main button.h-10,
+  main button.h-12 {
+    min-height: revert;
+    padding: revert;
+  }
+
+  main .eyebrow,
+  main .uppercase {
+    font-size: clamp(13px, 1.15vw, 16px) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+    line-height: 1.45 !important;
+  }
+
+  main .font-serif:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-family: var(--font-brand);
+  }
+}
+
+/* Header navigation */
+header nav a,
+header nav + a {
+  font-size: var(--type-nav) !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.16em !important;
+}
+
+header nav + a {
+  padding: 16px 32px !important;
+}
+
+header > div > a:first-child,
+header > div > a:first-child * {
+  font-family: var(--font-brand);
+}
+
+header button {
+  padding: 4px !important;
+}
+
+/* Homepage and portfolio cards */
+main article h3,
+main [data-preview-image] + h3,
+main article h3 {
+  font-size: 26px !important;
+  line-height: 1.2 !important;
+}
+
+main article p,
+main article p {
+  font-size: 18px !important;
+  line-height: 1.8 !important;
+}
+
+/* Footer typography */
+footer h2,
+footer h3 {
+  font-family: var(--font-heading);
+  font-size: var(--type-footer-heading) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+}
+
+footer p,
+footer li,
+footer a,
+footer span {
+  font-size: var(--type-footer-link) !important;
+  line-height: 1.75 !important;
+}
+
+footer p {
+  font-size: var(--type-footer-description) !important;
+}
+
+footer .font-serif {
+  font-family: var(--font-brand);
+}
+
+/* Responsive spacing to support larger type without changing layout structure */
+main section {
+  padding-top: max(var(--section-pt, 0px), 56px);
+  padding-bottom: max(var(--section-pb, 0px), 56px);
+}
+
+main section:first-child {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+main :is(h1, h2, h3) + p,
+main .eyebrow + :is(h1, h2, h3) {
+  margin-top: clamp(14px, 2vw, 24px) !important;
+}
+
+main article,
+main form,
+main details,
+main .border {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --type-hero: 36px;
+    --type-page-title: 32px;
+    --type-section-title: 28px;
+    --type-card-title: 26px;
+    --type-body: 18px;
+    --type-paragraph: 18px;
+    --type-nav: 18px;
+    --type-button: 18px;
+    --type-footer-heading: 22px;
+    --type-footer-link: 18px;
+    --type-footer-description: 18px;
+  }
+
+  main {
+    font-size: 18px;
+  }
+
+  main :is(p, li, label, input, textarea, select, summary) {
+    font-size: 18px !important;
+    line-height: 1.8 !important;
+  }
+
+  main button,
+  main a.border,
+  main a.bg-\[\#100c09\] {
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 24px !important;
+    font-size: 18px !important;
+  }
+
+  main button[aria-label],
+  main button.size-10,
+  main button.h-10,
+  main button.h-12 {
+    width: auto;
+    min-height: revert;
+    padding: revert !important;
+  }
+
+  main .text-\[9px\],
+  main .text-\[10px\],
+  main .text-\[11px\],
+  main .text-\[12px\],
+  main .text-\[13px\] {
+    font-size: 18px !important;
+    line-height: 1.8 !important;
+  }
+
+  main .eyebrow,
+  main .uppercase {
+    font-size: 14px !important;
+    letter-spacing: 0.14em !important;
+  }
+
+  main section {
+    padding-top: max(var(--section-pt, 0px), 64px);
+    padding-bottom: max(var(--section-pb, 0px), 64px);
+  }
+
+  main section:first-child {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  main article,
+  main form,
+  main details,
+  main .border {
+    padding: max(20px, 1.25rem);
+  }
+
+  header nav a,
+  header nav + a {
+    font-size: 18px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  footer :is(p, li, a, span) {
+    font-size: 18px !important;
+    line-height: 1.8 !important;
   }
 }
