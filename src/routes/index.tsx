@@ -307,34 +307,38 @@ function HomePage() {
                   key={item.title}
                   className="min-h-[112px] border border-gold/25 bg-ivory px-5 py-5"
                 >
-                  <Icon name={item.icon} className="size-5 text-gold" />
-                  <p className="mt-6 text-sm font-medium text-ink">{item.title}</p>
+                  <Icon name={item.icon} className="size-6 text-gold" />
+                  <p className="mt-6 text-[18px] font-medium leading-relaxed text-ink sm:text-[20px]">
+                    `r`n {item.title}`r`n{" "}
+                  </p>
                 </div>
               ))}
             </div>
           </Reveal>
 
           <Reveal delay={120} className="mt-4 px-0 py-8">
-            <div className="grid gap-8 border-y border-ink/10 py-8 text-center md:grid-cols-3">
+            <div className="grid gap-10 border-y border-ink/10 py-10 text-center sm:py-12 md:grid-cols-3">
               <div>
-                <p className="font-serif text-5xl text-gold sm:text-6xl">
+                <p className="font-serif text-[clamp(44px,5vw,72px)] leading-none text-gold">
                   <CountUp target={150} suffix="+" duration={2000} />
                 </p>
-                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
+                <p className="mt-5 text-[16px] font-bold uppercase leading-relaxed tracking-[0.18em] text-ink-soft sm:text-[18px]">
                   Collections Supported
                 </p>
               </div>
               <div>
-                <p className="font-serif text-5xl text-gold sm:text-6xl">
+                <p className="font-serif text-[clamp(44px,5vw,72px)] leading-none text-gold">
                   <CountUp target={18} duration={1600} />
                 </p>
-                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
+                <p className="mt-5 text-[16px] font-bold uppercase leading-relaxed tracking-[0.18em] text-ink-soft sm:text-[18px]">
                   Markets Served
                 </p>
               </div>
               <div>
-                <p className="font-serif text-5xl italic text-gold sm:text-6xl">Fast-track</p>
-                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft">
+                <p className="font-serif text-[clamp(38px,4.5vw,68px)] leading-none italic text-gold">
+                  Fast-track
+                </p>
+                <p className="mt-5 text-[16px] font-bold uppercase leading-relaxed tracking-[0.18em] text-ink-soft sm:text-[18px]">
                   Sampling Turnaround
                 </p>
               </div>
