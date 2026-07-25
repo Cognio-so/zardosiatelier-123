@@ -168,15 +168,15 @@ export function Navigation() {
       }}
       className="fixed top-0 z-50 w-full border-b"
     >
-      <div className="mx-auto flex h-24 max-w-[1600px] items-center justify-between px-8 lg:px-12">
+      <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:h-[86px] lg:px-10">
         {/* Brand logo - clicking logo does NOT navigate; use the Home nav link instead */}
         <Link
           to="/"
-          className="flex items-center gap-3 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl"
+          className="flex items-center gap-2.5 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl"
           aria-label="Zardosi Atelier homepage"
         >
           {/* Logo Icon (Cropped bottom text to display high-quality monogram only) */}
-          <div className="relative overflow-hidden h-[44px] w-[83px] lg:h-[52px] lg:w-[98px] shrink-0">
+          <div className="relative overflow-hidden h-[38px] w-[72px] lg:h-[44px] lg:w-[83px] shrink-0">
             <img
               src={zaLogo}
               alt="ZA Monogram"
@@ -187,7 +187,7 @@ export function Navigation() {
           {/* Crisp HTML Brand Text */}
           <div className="flex flex-col items-start">
             <span
-              className="font-serif text-xl uppercase leading-none tracking-[0.22em] font-normal lg:text-2xl"
+              className="font-serif text-lg uppercase leading-none tracking-[0.2em] font-normal lg:text-xl"
               style={{
                 color: theme.logoText,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -196,7 +196,7 @@ export function Navigation() {
               Zardosi
             </span>
             <span
-              className="mt-1 text-[9px] font-bold uppercase tracking-[0.45em] lg:text-[10px]"
+              className="mt-1 text-[8px] font-bold uppercase tracking-[0.4em] lg:text-[9px]"
               style={{
                 color: theme.logoSub,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -208,9 +208,9 @@ export function Navigation() {
         </Link>
 
         {/* Desktop nav links + CTA */}
-        <div className="flex items-center gap-10 z-10">
+        <div className="flex items-center gap-8 z-10">
           <nav
-            className="hidden items-center gap-11 text-[12px] font-bold uppercase tracking-[0.28em] lg:flex xl:text-[13px]"
+            className="hidden items-center gap-9 text-[12px] font-bold uppercase tracking-[0.24em] lg:flex xl:text-[13px]"
             aria-label="Main navigation menu"
           >
             {navLinks.map((l) => {
@@ -237,7 +237,7 @@ export function Navigation() {
           {/* CTA button */}
           <Link
             to="/contact"
-            className="hidden px-9 py-4 text-[11px] font-bold uppercase tracking-[0.28em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 md:inline-block xl:text-[12px]"
+            className="hidden px-7 py-3 text-[10px] font-bold uppercase tracking-[0.24em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 md:inline-block xl:text-[11px]"
             style={{
               border: `1px solid ${theme.ctaBorder}`,
               color: theme.ctaText,
