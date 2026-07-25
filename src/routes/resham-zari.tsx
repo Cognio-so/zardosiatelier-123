@@ -144,7 +144,7 @@ function ReshamZariPage() {
             <span className="inline-block text-[10px] font-bold uppercase tracking-[0.5em] mb-4 text-[#C9A84C]">
               Embroidery Technique
             </span>
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-white tracking-wide mb-5">
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white tracking-wide mb-5">
               Resham & Zari
             </h1>
             <p className="mx-auto max-w-[54ch] text-base leading-relaxed text-white/70 sm:text-lg mb-10">

@@ -217,7 +217,7 @@ function HomePage() {
           <Reveal className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end lg:mb-10">
             <div className="max-w-[980px]">
               <span className="eyebrow text-[11px]">Embroidery Techniques</span>
-              <h2 className="mt-3 font-serif text-[58px] leading-[0.95] text-ink sm:text-[86px] lg:text-[104px]">
+              <h2 className="mt-3 font-serif text-[38px] leading-[1.05] text-ink sm:text-[52px] lg:text-[68px]">
                 A vocabulary of luxury hand-craft.
               </h2>
             </div>
