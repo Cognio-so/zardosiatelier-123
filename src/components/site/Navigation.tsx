@@ -14,17 +14,17 @@ const navLinks = [
  * All colours are kept inside the dark-charcoal family so the luxury feel is preserved.
  */
 type NavTheme = {
-  bg: string;               // CSS background value for the header
-  border: string;           // bottom border colour
-  logoText: string;         // "Zardosi" word colour
-  logoSub: string;          // "Atelier" sub-label colour
-  linkText: string;         // default nav link colour
-  linkHover: string;        // hover colour (always gold)
-  ctaBorder: string;        // CTA button border
-  ctaText: string;          // CTA button text
-  ctaHoverBg: string;       // CTA button hover bg
-  ctaHoverText: string;     // CTA button hover text
-  hamburgerColor: string;   // mobile hamburger line colour
+  bg: string; // CSS background value for the header
+  border: string; // bottom border colour
+  logoText: string; // "Zardosi" word colour
+  logoSub: string; // "Atelier" sub-label colour
+  linkText: string; // default nav link colour
+  linkHover: string; // hover colour (always gold)
+  ctaBorder: string; // CTA button border
+  ctaText: string; // CTA button text
+  ctaHoverBg: string; // CTA button hover bg
+  ctaHoverText: string; // CTA button hover text
+  hamburgerColor: string; // mobile hamburger line colour
 };
 
 const themes: Record<string, NavTheme> = {
@@ -169,9 +169,12 @@ export function Navigation() {
       className="fixed top-0 z-50 w-full border-b"
     >
       <div className="mx-auto flex h-24 max-w-[1600px] items-center justify-between px-8 lg:px-12">
-
         {/* Brand logo - clicking logo does NOT navigate; use the Home nav link instead */}
-        <Link to="/" className="flex items-center gap-3 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl" aria-label="Zardosi Atelier homepage">
+        <Link
+          to="/"
+          className="flex items-center gap-3 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl"
+          aria-label="Zardosi Atelier homepage"
+        >
           {/* Logo Icon (Cropped bottom text to display high-quality monogram only) */}
           <div className="relative overflow-hidden h-[44px] w-[83px] lg:h-[52px] lg:w-[98px] shrink-0">
             <img
@@ -184,7 +187,7 @@ export function Navigation() {
           {/* Crisp HTML Brand Text */}
           <div className="flex flex-col items-start">
             <span
-              className="font-serif text-lg lg:text-xl tracking-[0.22em] uppercase leading-none font-normal"
+              className="font-serif text-xl uppercase leading-none tracking-[0.22em] font-normal lg:text-2xl"
               style={{
                 color: theme.logoText,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -193,7 +196,7 @@ export function Navigation() {
               Zardosi
             </span>
             <span
-              className="mt-1 text-[8px] lg:text-[9px] font-bold uppercase tracking-[0.45em]"
+              className="mt-1 text-[9px] font-bold uppercase tracking-[0.45em] lg:text-[10px]"
               style={{
                 color: theme.logoSub,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -206,7 +209,10 @@ export function Navigation() {
 
         {/* Desktop nav links + CTA */}
         <div className="flex items-center gap-10 z-10">
-          <nav className="hidden lg:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.32em]" aria-label="Main navigation menu">
+          <nav
+            className="hidden items-center gap-11 text-[12px] font-bold uppercase tracking-[0.28em] lg:flex xl:text-[13px]"
+            aria-label="Main navigation menu"
+          >
             {navLinks.map((l) => {
               const isActive = pathname === l.to;
               return (
@@ -228,11 +234,10 @@ export function Navigation() {
             })}
           </nav>
 
-
           {/* CTA button */}
           <Link
             to="/contact"
-            className="hidden md:inline-block px-8 py-3 text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2"
+            className="hidden px-9 py-4 text-[11px] font-bold uppercase tracking-[0.28em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 md:inline-block xl:text-[12px]"
             style={{
               border: `1px solid ${theme.ctaBorder}`,
               color: theme.ctaText,
