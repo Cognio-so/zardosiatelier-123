@@ -263,14 +263,14 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#EFE8DD] py-8 sm:py-10">
+      <section className="bg-[#EFE8DD] py-10 sm:py-14">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
-          <Reveal className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
-            <div>
-              <span className="eyebrow">Embroidery Techniques</span>
+          <Reveal className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end lg:mb-10">
+            <div className="max-w-[980px]">
+              <span className="eyebrow text-[11px]">Embroidery Techniques</span>
               <Text3DFlip
                 as="h2"
-                className="mt-2 font-serif text-5xl leading-tight sm:text-7xl text-ink"
+                className="mt-3 font-serif text-[58px] leading-[0.95] text-ink sm:text-[86px] lg:text-[104px]"
                 textClassName="text-ink"
                 flipTextClassName="text-gold-soft"
                 rotateDirection="top"
@@ -281,12 +281,15 @@ function HomePage() {
                 A vocabulary of luxury hand-craft.
               </Text3DFlip>
             </div>
-            <Link to="/portfolio" className="gold-link text-[10px] uppercase tracking-[0.3em]">
+            <Link
+              to="/portfolio"
+              className="gold-link shrink-0 text-[11px] font-bold uppercase tracking-[0.32em]"
+            >
               Explore Portfolio
             </Link>
           </Reveal>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
             {techniques.map((item, i) => {
               const cardInner = (
                 <article className="group cursor-pointer text-center">
@@ -307,8 +310,10 @@ function HomePage() {
                       </div>
                     )}
                   </div>
-                  <h3 className="mt-2 font-serif text-xl leading-snug text-ink">{item.name}</h3>
-                  <p className="mt-1 text-[12px] font-medium leading-5 text-ink-soft">
+                  <h3 className="mt-4 font-serif text-[26px] leading-tight text-ink sm:text-[28px]">
+                    {item.name}
+                  </h3>
+                  <p className="mx-auto mt-2 max-w-[26ch] text-[14px] font-medium leading-6 text-ink-soft sm:text-[15px]">
                     {item.desc}
                   </p>
                 </article>
@@ -606,7 +611,10 @@ function LeadSection() {
                   </div>
                   <Field label="Project Type" name="subject" />
                   <div>
-                    <label htmlFor="project-details-index" className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft">
+                    <label
+                      htmlFor="project-details-index"
+                      className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft"
+                    >
                       Project Details
                     </label>
                     <textarea
@@ -669,6 +677,3 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
-
-
-
