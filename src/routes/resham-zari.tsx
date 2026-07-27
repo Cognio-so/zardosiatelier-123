@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
@@ -119,7 +120,7 @@ function ReshamZariPage() {
       {/* Hero Banner */}
       <section className="relative min-h-[50vh] overflow-hidden bg-[#120e0b] flex items-center">
         {/* Background Collage */}
-        <div className="absolute inset-0 grid grid-cols-4 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 grid grid-cols-4 opacity-38 pointer-events-none">
           {[r03, r06, r11, r16].map((src, i) => (
             <div key={i} className="overflow-hidden">
               <img src={src} alt="" className="h-full w-full object-cover" />
@@ -128,7 +129,7 @@ function ReshamZariPage() {
         </div>
         {/* Dark gold gradient overlay */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(18,14,11,0.95) 0%, rgba(18,14,11,0.8) 50%, rgba(18,14,11,0.95) 100%)"
+          background: "linear-gradient(to bottom, rgba(18,14,11,0.84) 0%, rgba(18,14,11,0.52) 50%, rgba(18,14,11,0.84) 100%)"
         }} />
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9A84C]/45 to-transparent" />
 
@@ -195,7 +196,8 @@ function ReshamZariPage() {
                   className="group relative block w-full mb-4 overflow-hidden focus:outline-none break-inside-avoid"
                   aria-label={`View ${img.alt}`}
                 >
-                  <div className="relative overflow-hidden bg-[#ECE5D8] rounded-[2px]">
+                  <Lens zoomFactor={2.2} lensSize={132} isStatic={false}>
+                    <div className="relative overflow-hidden bg-[#ECE5D8] rounded-[2px]">
                     <img
                       src={img.src}
                       alt={img.alt}
@@ -210,6 +212,7 @@ function ReshamZariPage() {
                     </div>
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full bg-[#C9A84C]" />
                   </div>
+                </Lens>
                 </button>
               </Reveal>
             ))}
@@ -331,3 +334,8 @@ function ReshamZariPage() {
     </PageShell>
   );
 }
+
+
+
+
+

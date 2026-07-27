@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { sendEnquiryNotificationEmail } from "./email.server";
 import { hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
 function getAdminPass() {
@@ -140,7 +141,18 @@ export const createEnquiry = createServerFn({ method: "POST" })
         createdAt: new Date().toISOString(),
       };
       await writeBlob(KEYS.enquiries, [newEnquiry, ...enquiries]);
-      return { success: true, enquiry: newEnquiry };
+      let notification: { sent: boolean; skipped: boolean; reason?: string };
+      try {
+        notification = await sendEnquiryNotificationEmail(newEnquiry);
+      } catch (error) {
+        console.error("enquiry notification email error:", error);
+        notification = {
+          sent: false,
+          skipped: false,
+          reason: error instanceof Error ? error.message : String(error),
+        };
+      }
+      return { success: true, enquiry: newEnquiry, notification };
     } catch (err: any) {
       console.error("createEnquiry error:", err);
       return { success: false, error: err.message || String(err) };
@@ -600,4 +612,5 @@ export const deleteAdminUser = createServerFn({ method: "POST" })
       return { success: false, error: err.message || String(err) };
     }
   });
+
 

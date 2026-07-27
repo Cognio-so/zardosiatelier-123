@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import { useMemo, useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
@@ -93,13 +94,15 @@ function SequinPage() {
             {galleryImages.map((img, idx) => (
               <Reveal key={idx} delay={idx * 60}>
                 <button onClick={() => openLightbox(idx)} className="group relative block w-full overflow-hidden focus:outline-none" aria-label={`View ${img.alt}`}>
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#E5D8C8]">
+                  <Lens zoomFactor={2.2} lensSize={132} isStatic={false}>
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#E5D8C8]">
                     <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-500 group-hover:bg-black/30">
                       <span className="translate-y-4 text-[10px] font-bold uppercase tracking-[0.35em] text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">View Full</span>
                     </div>
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-700 group-hover:w-full" style={{ backgroundColor: "#C9A84C" }} />
-                  </div>
+                    </div>
+                  </Lens>
                 </button>
               </Reveal>
             ))}
@@ -145,3 +148,7 @@ function SequinPage() {
     </PageShell>
   );
 }
+
+
+
+

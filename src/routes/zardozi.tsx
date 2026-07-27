@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
@@ -147,7 +148,7 @@ function ZardoziPage() {
       {/* ── Hero ── */}
       <section className="relative min-h-[55vh] overflow-hidden bg-[#0d0a07] flex items-center">
         {/* Background collage */}
-        <div className="absolute inset-0 grid grid-cols-4 opacity-25 pointer-events-none">
+        <div className="absolute inset-0 grid grid-cols-4 opacity-40 pointer-events-none">
           {[z08, z12, z17, z22].map((src, i) => (
             <div key={i} className="overflow-hidden">
               <img src={src} alt="" className="h-full w-full object-cover" />
@@ -156,7 +157,7 @@ function ZardoziPage() {
         </div>
         {/* Gradient overlay */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(135deg, rgba(13,10,7,0.97) 0%, rgba(13,10,7,0.75) 50%, rgba(13,10,7,0.97) 100%)"
+          background: "linear-gradient(135deg, rgba(13,10,7,0.88) 0%, rgba(13,10,7,0.56) 48%, rgba(13,10,7,0.88) 100%)"
         }} />
         {/* Gold border lines */}
         <div className="absolute left-0 top-0 bottom-0 w-[3px]" style={{ background: "linear-gradient(to bottom, transparent, #C9A84C, transparent)" }} />
@@ -238,7 +239,8 @@ function ZardoziPage() {
                   className="group relative block w-full mb-4 overflow-hidden focus:outline-none break-inside-avoid"
                   aria-label={`View: ${img.alt}`}
                 >
-                  <div className="relative overflow-hidden bg-[#EDE5D8]" style={{ borderRadius: "1px" }}>
+                  <Lens zoomFactor={2.2} lensSize={132} isStatic={false}>
+                    <div className="relative overflow-hidden bg-[#EDE5D8]" style={{ borderRadius: "1px" }}>
                     <img
                       src={img.src}
                       alt={img.alt}
@@ -256,6 +258,7 @@ function ZardoziPage() {
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-600 group-hover:w-full"
                       style={{ backgroundColor: "#C9A84C" }} />
                   </div>
+                </Lens>
                 </button>
               </Reveal>
             ))}
@@ -401,3 +404,8 @@ function ZardoziPage() {
     </PageShell>
   );
 }
+
+
+
+
+

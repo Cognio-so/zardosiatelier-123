@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { Lens } from "@/registry/magicui/lens";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { getPortfolioItems } from "@/lib/portfolio-admin";
@@ -130,7 +131,7 @@ function CrystalStonePage() {
       {/* ── Hero Banner ─────────────────────────── */}
       <section className="relative min-h-[56vh] overflow-hidden flex items-center" style={{ backgroundColor: "#0D0B10" }}>
         {/* Background mosaic of crystal images */}
-        <div className="absolute inset-0 grid grid-cols-5 opacity-[0.12] pointer-events-none">
+        <div className="absolute inset-0 grid grid-cols-5 opacity-[0.28] pointer-events-none">
           {[c01, c05, c09, c13, c17].map((src, i) => (
             <div key={i} className="overflow-hidden">
               <img src={src} alt="" className="h-full w-full object-cover" />
@@ -143,7 +144,7 @@ function CrystalStonePage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(120,60,180,0.15) 0%, transparent 70%), linear-gradient(to bottom, rgba(13,11,16,0.97) 0%, rgba(13,11,16,0.80) 50%, rgba(13,11,16,0.97) 100%)",
+              "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(120,60,180,0.18) 0%, transparent 70%), linear-gradient(to bottom, rgba(13,11,16,0.86) 0%, rgba(13,11,16,0.54) 50%, rgba(13,11,16,0.86) 100%)",
           }}
         />
         {/* Gold bottom line */}
@@ -229,7 +230,8 @@ function CrystalStonePage() {
                   className="group relative block w-full mb-4 overflow-hidden focus:outline-none break-inside-avoid"
                   aria-label={`View ${img.alt}`}
                 >
-                  <div className="relative overflow-hidden bg-[#ECE5D8] rounded-[2px]">
+                  <Lens zoomFactor={2.2} lensSize={132} isStatic={false}>
+                    <div className="relative overflow-hidden bg-[#ECE5D8] rounded-[2px]">
                     <img
                       src={img.src}
                       alt={img.alt}
@@ -248,6 +250,7 @@ function CrystalStonePage() {
                     {/* Gold bottom sweep */}
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full bg-[#C9A84C]" />
                   </div>
+                </Lens>
                 </button>
               </Reveal>
             ))}
@@ -396,3 +399,8 @@ function CrystalStonePage() {
     </PageShell>
   );
 }
+
+
+
+
+

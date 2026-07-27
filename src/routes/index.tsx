@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
-import { TypingAnimation } from "@/registry/magicui/typing-animation";
+import { Lens } from "@/registry/magicui/lens";
 import { createEnquiry } from "@/lib/admin-data";
 import {
   Crown,
@@ -15,8 +15,11 @@ import {
   Users,
   ShieldCheck,
   Zap,
+  ArrowUpRight,
+  PhoneCall,
 } from "lucide-react";
 import heroEmbroidery from "@/assets/hero-embroidery.webp";
+import heroVideo from "@/assets/hero-video.mp4";
 import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 import reshamZariCard from "@/assets/resham-zari-card-opt.webp";
 import pearlWorkCard from "@/assets/pearl-work-card-opt.webp";
@@ -141,8 +144,20 @@ function HomePage() {
           alt="Hand embroidery craftsmanship header background"
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-80"
+          className="absolute inset-0 h-full w-full object-cover opacity-70"
         />
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={heroEmbroidery}
+          aria-hidden="true"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
 
         {/* Cinematic Dark Gradient Overlay */}
         <div
@@ -154,47 +169,51 @@ function HomePage() {
         />
 
         {/* Content Area with Glass Panel */}
-        <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 pb-28 pt-32 sm:pt-36 lg:pt-32">
+        <div className="absolute inset-y-0 left-0 z-0 w-full max-w-[860px] backdrop-blur-[24px]" style={{ background: "linear-gradient(90deg, rgba(12,9,7,0.52) 0%, rgba(12,9,7,0.34) 62%, rgba(12,9,7,0.08) 100%)" }} />
+
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 pb-28 pt-32 sm:px-10 sm:pt-36 lg:px-14 lg:pt-32">
           <div
-            className="w-full max-w-[700px] border border-white/10 p-8 backdrop-blur-[12px] sm:p-12 lg:p-12 animate-fade-in"
+            className="w-full max-w-[800px] border border-white/8 px-8 py-10 backdrop-blur-[18px] sm:px-12 sm:py-12 lg:px-16 lg:py-16 animate-fade-in"
             style={{
-              backgroundColor: "rgba(15,15,15,0.28)",
+              background: "linear-gradient(135deg, rgba(16,12,10,0.34) 0%, rgba(16,12,10,0.20) 100%)",
             }}
           >
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-gold-soft">
+              <p className="animate-fade-up font-sans text-[13px] font-medium uppercase tracking-[0.42em] text-[#C7A26A]/88 sm:text-[14px]">
                 Haute Couture Embroidery - India
               </p>
-              <TypingAnimation
-                as="h1"
-                duration={28}
-                delay={250}
-                className="mt-6 font-serif text-[40px] font-normal leading-[1.04] tracking-normal text-white sm:text-[56px] lg:text-[66px]"
+              <h1
+                className="mt-7 max-w-[820px] animate-fade-up font-serif text-[46px] font-normal leading-[0.9] tracking-[-0.055em] text-[#F7F4EF] sm:text-[64px] md:text-[80px] xl:text-[96px]"
+                style={{ WebkitFontSmoothing: "antialiased", MozOsxFontSmoothing: "grayscale", textShadow: "0 1px 18px rgba(0, 0, 0, 0.18)", animationDuration: "0.8s", animationTimingFunction: "cubic-bezier(0.19, 1, 0.22, 1)" }}
               >
-                {"Hand embroidery for the world's *finest labels.*"}
-              </TypingAnimation>
-              <p className="mt-8 max-w-[50ch] text-base font-medium leading-relaxed text-white/90 sm:text-lg">
+                Hand embroidery
+                <br />
+                for the world's <span className="font-normal italic text-[#C7A26A]">finest</span>
+                <br />
+                labels.
+              </h1>
+              <p className="mt-10 max-w-[620px] animate-fade-up font-sans text-[19px] font-light leading-[1.8] text-[#DDD8D2]/90 sm:text-[21px] lg:text-[22px]">
                 We craft and export luxury embroidered pieces for couture houses, designers and
-                premium brands - every stitch finished by master karigars and checked twice before
-                it ships.
+                premium brands. Every stitch is finished by master karigars and checked twice
+                before it ships.
               </p>
-              <p className="mt-6 font-serif text-lg italic text-gold-soft/90">
+              <p className="mt-9 animate-fade-up font-serif text-[18px] italic font-normal leading-[1.6] text-[#C7A26A]/92 sm:text-[20px]">
                 Patches / Bags / Headbands / Gowns / Bespoke commissions
               </p>
-              <div className="mt-10 flex flex-wrap gap-5">
+              <div className="mt-12 flex flex-nowrap items-center gap-3 sm:gap-4">
                 <Link
                   to="/contact"
-                  className="w-full border border-gold bg-gold px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-[#120c09] transition-all hover:bg-transparent hover:text-white sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#CDA56A] bg-[#CDA56A] px-6 py-4 text-[10px] font-medium uppercase tracking-[0.24em] text-[#120c09] shadow-[0_10px_30px_rgba(205,165,106,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(205,165,106,0.28)] sm:px-7"
                 >
-                  Start With a Sample
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />
+                  <span className="whitespace-nowrap">Start With a Sample</span>
                 </Link>
                 <a
                   href={`tel:${phoneDigits}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full border border-white/40 bg-white/5 px-10 py-5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white backdrop-blur-sm transition-all hover:bg-white hover:text-[#120c09] sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-white/20 bg-white/6 px-5 py-4 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-[0_12px_30px_rgba(0,0,0,0.18)] sm:px-6"
                 >
-                  Call the Atelier
+                  <PhoneCall className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />
+                  <span className="whitespace-nowrap">Call the Atelier</span>
                 </a>
               </div>
             </div>
@@ -233,6 +252,7 @@ function HomePage() {
             {techniques.map((item, i) => {
               const cardInner = (
                 <article className="group cursor-pointer text-center">
+                  <Lens zoomFactor={2.1} lensSize={120} isStatic={false}>
                   <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
                     <img
                       src={item.image}
@@ -249,7 +269,8 @@ function HomePage() {
                         </span>
                       </div>
                     )}
-                  </div>
+                    </div>
+                  </Lens>
                   <h3 className="mt-4 font-serif text-[26px] leading-tight text-ink sm:text-[28px]">
                     {item.name}
                   </h3>
@@ -558,4 +579,15 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
+
+
+
+
+
+
+
+
+
+
 
