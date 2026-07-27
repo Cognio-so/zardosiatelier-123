@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { PageShell, PageHero } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { createEnquiry, getSettings } from "@/lib/admin-data";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { getSettings } from "@/lib/admin-data";
 
 import portfolioHero from "@/assets/portfolio-hero.webp";
 import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
@@ -33,34 +33,11 @@ function ContactPage() {
     queryFn: () => getSettings(),
     staleTime: 0,
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
 
-  const email = settings?.email ?? "zardosiatelier@gmail.com";
+  const email = settings?.email ?? "info@zardosiatelier.com";
   const phoneNumber = settings?.phone ?? "8826023527";
   const phoneHref = `tel:${phoneNumber.replace(/\D/g, "")}`;
-  const address = settings?.address ?? "New Delhi - Paris - New York";
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSubmitting(true);
-    try {
-      const form = new FormData(e.currentTarget);
-      const attachment = form.get("file") as File | null;
-      const attachmentLine = attachment?.name ? `\nAttachment filename: ${attachment.name}` : "";
-      await createEnquiry({
-        data: {
-          name: String(form.get("name") ?? ""),
-          email: String(form.get("email") ?? ""),
-          phone: String(form.get("whatsapp") ?? ""),
-          message: `Brand: ${String(form.get("brand") ?? "")}\nCountry: ${String(form.get("country") ?? "")}\n\n${String(form.get("brief") ?? "")}${attachmentLine}`,
-        },
-      });
-      setSubmitted(true);
-    } finally {
-      setSubmitting(false);
-    }
-  }
+  const address = settings?.address ?? "Mumbai, Maharashtra, India";
 
   return (
     <PageShell>
@@ -146,75 +123,18 @@ function ContactPage() {
                   {phoneNumber}
                 </a>
               </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Address</p>
+                <p className="mt-2 font-serif text-xl text-ink">{address}</p>
+              </div>
             </div>
           </Reveal>
 
           <Reveal delay={120}>
-            {submitted ? (
-              <div className="border border-gold/20 bg-champagne p-8 text-center">
-                <span className="eyebrow">Thank You</span>
-                <h3 className="mt-4 font-serif text-3xl">Inquiry Received</h3>
-                <p className="mt-3 text-sm text-ink-soft">
-                  Our atelier team will contact you shortly.
-                </p>
-              </div>
-            ) : (
-              <form className="border border-gold/20 bg-champagne p-5 sm:p-8" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {[
-                    ["Full Name", "name", "text"],
-                    ["Brand / Maison", "brand", "text"],
-                    ["Country", "country", "text"],
-                    ["Email", "email", "email"],
-                    ["WhatsApp", "whatsapp", "text"],
-                    ["Upload Design", "file", "file"],
-                  ].map(([label, name, type]) => (
-                    <div key={name}>
-                      <label
-                        htmlFor={`input-${name}`}
-                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft"
-                      >
-                        {label}
-                      </label>
-                      <input
-                        id={`input-${name}`}
-                        name={name}
-                        type={type}
-                        required={type !== "file"}
-                        className="w-full border-b border-ink/25 bg-transparent py-2 text-[15px] font-medium transition-colors file:mr-3 file:border-0 file:bg-transparent file:text-[10px] file:uppercase file:tracking-[0.2em] file:text-gold focus:border-gold focus:outline-none"
-                      />
-                    </div>
-                  ))}
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="input-brief"
-                      className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-ink-soft"
-                    >
-                      Project Brief
-                    </label>
-                    <textarea
-                      id="input-brief"
-                      name="brief"
-                      rows={4}
-                      required
-                      className="w-full border-b border-ink/25 bg-transparent py-2 text-[15px] font-medium transition-colors focus:border-gold focus:outline-none"
-                    />
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="mt-8 w-full border border-ink bg-ink px-8 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-ivory transition-colors hover:border-gold hover:bg-gold hover:text-[#120c09] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {submitting ? "Sending..." : "Send Request"}
-                </button>
-              </form>
-            )}
+            <EnquiryForm source="contact-page" variant="contact" submitLabel="Send Request" />
           </Reveal>
         </div>
       </section>
     </PageShell>
   );
 }
-
-

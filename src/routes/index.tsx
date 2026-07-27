@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
-import { createEnquiry } from "@/lib/admin-data";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
 import {
   Crown,
   Layers,
@@ -168,16 +168,38 @@ function HomePage() {
           }}
         />
 
-        {/* Content Area with Glass Panel */}
-        <div className="absolute inset-y-0 left-0 z-0 w-full max-w-[860px] backdrop-blur-[24px]" style={{ background: "linear-gradient(90deg, rgba(12,9,7,0.52) 0%, rgba(12,9,7,0.34) 62%, rgba(12,9,7,0.08) 100%)" }} />
+        {/* Content Area with anchored left veil */}
+        <div
+          className="absolute inset-y-0 left-0 z-0 w-full max-w-[980px] backdrop-blur-[22px]"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(8,6,5,0.88) 0%, rgba(13,10,8,0.72) 38%, rgba(18,12,9,0.48) 68%, rgba(18,12,9,0.08) 100%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-0 w-[52vw] min-w-[320px] max-w-[760px]"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(11,8,6,0.9) 0%, rgba(11,8,6,0.76) 44%, rgba(11,8,6,0.36) 82%, rgba(11,8,6,0) 100%)",
+          }}
+        />
 
         <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] items-center px-6 pb-28 pt-32 sm:px-10 sm:pt-36 lg:px-14 lg:pt-32">
           <div
-            className="w-full max-w-[800px] border border-white/8 px-8 py-10 backdrop-blur-[18px] sm:px-12 sm:py-12 lg:px-16 lg:py-16 animate-fade-in"
+            className="relative w-full max-w-[800px] overflow-hidden border border-white/7 px-8 py-10 backdrop-blur-[14px] sm:px-12 sm:py-12 lg:px-16 lg:py-16 animate-fade-in"
             style={{
-              background: "linear-gradient(135deg, rgba(16,12,10,0.34) 0%, rgba(16,12,10,0.20) 100%)",
+              background:
+                "linear-gradient(135deg, rgba(17,13,10,0.58) 0%, rgba(17,13,10,0.42) 54%, rgba(17,13,10,0.28) 100%)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)",
             }}
           >
+            <div
+              className="pointer-events-none absolute inset-y-0 -left-24 w-[58%]"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(8,6,5,0.52) 0%, rgba(8,6,5,0.24) 58%, rgba(8,6,5,0) 100%)",
+              }}
+            />
             <div>
               <p className="animate-fade-up font-sans text-[13px] font-medium uppercase tracking-[0.42em] text-[#C7A26A]/88 sm:text-[14px]">
                 Haute Couture Embroidery - India
@@ -451,25 +473,7 @@ function CountUp({
 }
 
 function LeadSection() {
-  const [submitted, setSubmitted] = useState(false);
-  const email = "zardosiatelier@gmail.com";
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const projectType = String(form.get("subject") ?? "");
-    await createEnquiry({
-      data: {
-        name: String(form.get("name") ?? ""),
-        email: String(form.get("email") ?? ""),
-        phone: String(form.get("phone") ?? ""),
-        message: projectType
-          ? `Project Type: ${projectType}\n\n${String(form.get("message") ?? "")}`
-          : String(form.get("message") ?? ""),
-      },
-    });
-    setSubmitted(true);
-  };
+  const email = "info@zardosiatelier.com";
 
   return (
     <section className="luxury-silk-bg pb-12 sm:pb-16" id="quote">
@@ -497,69 +501,12 @@ function LeadSection() {
             </div>
 
             <div className="border border-ink/10 bg-ivory p-6 sm:p-8">
-              {submitted ? (
-                <div className="py-16 text-center">
-                  <span className="eyebrow">Thank You</span>
-                  <h3 className="mt-4 font-serif text-3xl">Inquiry Received</h3>
-                  <p className="mt-3 text-sm text-ink-soft">
-                    Our atelier team will contact you shortly.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <Field label="Full Name" name="name" />
-                    <Field label="Email Address" name="email" type="email" />
-                  </div>
-                  <Field label="Project Type" name="subject" />
-                  <div>
-                    <label
-                      htmlFor="project-details-index"
-                      className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft"
-                    >
-                      Project Details
-                    </label>
-                    <textarea
-                      id="project-details-index"
-                      name="message"
-                      rows={4}
-                      required
-                      className="w-full resize-none border-b border-ink/15 bg-transparent py-2 text-sm outline-none transition focus:border-gold"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-ink px-8 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition hover:bg-gold hover:text-[#120c09] sm:w-auto"
-                  >
-                    Submit Inquiry
-                  </button>
-                </form>
-              )}
+              <EnquiryForm source="homepage" variant="lead" submitLabel="Submit Inquiry" />
             </div>
           </div>
         </Reveal>
       </div>
     </section>
-  );
-}
-
-function Field({ label, name, type = "text" }: { label: string; name: string; type?: string }) {
-  return (
-    <div>
-      <label
-        htmlFor={`field-${name}`}
-        className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-ink-soft"
-      >
-        {label}
-      </label>
-      <input
-        id={`field-${name}`}
-        name={name}
-        type={type}
-        required
-        className="w-full border-b border-ink/15 bg-transparent py-2 text-sm outline-none transition focus:border-gold"
-      />
-    </div>
   );
 }
 
@@ -579,6 +526,8 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
+
 
 
 
