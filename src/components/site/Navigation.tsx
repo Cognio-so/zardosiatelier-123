@@ -29,8 +29,8 @@ type NavTheme = {
 
 const themes: Record<string, NavTheme> = {
   "/": {
-    bg: "rgba(0,0,0,0)",
-    border: "rgba(255,255,255,0.06)",
+    bg: "rgba(0, 0, 0, 0.96)",
+    border: "rgba(212,175,55,0.12)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
     linkText: "rgba(255,255,255,0.88)",
@@ -42,7 +42,7 @@ const themes: Record<string, NavTheme> = {
     hamburgerColor: "#F5F0E8",
   },
   "/portfolio": {
-    bg: "rgba(18,14,11,0.98)",
+    bg: "linear-gradient(180deg, rgba(32,18,11,0.96) 0%, rgba(23,14,10,0.97) 100%)",
     border: "rgba(212,175,55,0.12)",
     logoText: "#FFFFFF",
     logoSub: "#C9A84C",
@@ -85,7 +85,7 @@ const themes: Record<string, NavTheme> = {
   "/process": {
     // deep matte black - matches process matte-black table image
     bg: "rgba(10,10,10,0.98)",
-    border: "rgba(212,175,55,0.15)",
+    border: "rgba(199,162,106,0.18)",
     logoText: "#FFFFFF",
     logoSub: "#D4AF37",
     linkText: "rgba(235,230,218,0.82)",
@@ -113,8 +113,8 @@ const themes: Record<string, NavTheme> = {
 };
 
 const scrolledTheme: NavTheme = {
-  bg: "rgba(18,14,11,0.98)",
-  border: "rgba(212,175,55,0.15)",
+  bg: "linear-gradient(180deg, rgba(31,18,11,0.86) 0%, rgba(20,12,8,0.78) 100%)",
+  border: "rgba(199,162,106,0.16)",
   logoText: "#FFFFFF",
   logoSub: "#C9A84C",
   linkText: "rgba(245,240,232,0.85)",
@@ -161,22 +161,22 @@ export function Navigation() {
       style={{
         background: theme.bg,
         borderBottomColor: theme.border,
-        backdropFilter: "blur(18px) saturate(140%)",
-        WebkitBackdropFilter: "blur(18px) saturate(140%)",
+        backdropFilter: scrolled || open ? "blur(18px) saturate(145%)" : "blur(8px) saturate(115%)",
+        WebkitBackdropFilter: scrolled || open ? "blur(18px) saturate(145%)" : "blur(8px) saturate(115%)",
         transition:
           "background 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
       }}
       className="fixed top-0 z-50 w-full border-b"
     >
-      <div className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:h-[86px] lg:px-10">
+      <div className="mx-auto flex h-[76px] max-w-[1520px] items-center justify-between px-5 sm:h-[84px] sm:px-8 lg:px-10">
         {/* Brand logo - clicking logo does NOT navigate; use the Home nav link instead */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 z-10 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded-xl"
+          className="z-10 flex select-none items-center gap-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4"
           aria-label="Zardosi Atelier homepage"
         >
           {/* Logo Icon (Cropped bottom text to display high-quality monogram only) */}
-          <div className="relative overflow-hidden h-[38px] w-[72px] lg:h-[44px] lg:w-[83px] shrink-0">
+          <div className="relative h-[42px] w-[78px] shrink-0 overflow-hidden sm:h-[48px] sm:w-[90px]">
             <img
               src={zaLogo}
               alt="ZA Monogram"
@@ -187,7 +187,7 @@ export function Navigation() {
           {/* Crisp HTML Brand Text */}
           <div className="flex flex-col items-start">
             <span
-              className="font-serif text-lg uppercase leading-none tracking-[0.2em] font-normal lg:text-xl"
+              className="font-serif text-[20px] font-normal uppercase leading-none tracking-[0.24em] sm:text-[22px]"
               style={{
                 color: theme.logoText,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -196,7 +196,7 @@ export function Navigation() {
               Zardosi
             </span>
             <span
-              className="mt-1 text-[8px] font-bold uppercase tracking-[0.4em] lg:text-[9px]"
+              className="mt-1.5 text-[8px] font-bold uppercase tracking-[0.4em] sm:text-[9px]"
               style={{
                 color: theme.logoSub,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -208,9 +208,9 @@ export function Navigation() {
         </Link>
 
         {/* Desktop nav links + CTA */}
-        <div className="flex items-center gap-8 z-10">
+        <div className="z-10 flex items-center gap-7">
           <nav
-            className="hidden items-center gap-9 text-[12px] font-bold uppercase tracking-[0.24em] lg:flex xl:text-[13px]"
+            className="hidden items-center gap-9 text-[12px] font-semibold uppercase tracking-[0.24em] lg:flex xl:gap-11"
             aria-label="Main navigation menu"
           >
             {navLinks.map((l) => {
@@ -222,11 +222,11 @@ export function Navigation() {
                   style={{
                     color: isActive ? "#D4AF37" : theme.linkText,
                     transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
-                    fontWeight: isActive ? "800" : "700",
-                    borderBottom: isActive ? "1.5px solid #D4AF37" : "1.5px solid transparent",
-                    paddingBottom: "2px",
+                    fontWeight: isActive ? "700" : "600",
+                    borderBottom: isActive ? "1px solid #D4AF37" : "1px solid transparent",
+                    paddingBottom: "5px",
                   }}
-                  className="transition-all duration-700 hover:!text-[#D4AF37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4 rounded"
+                  className="rounded px-1 transition-all duration-500 hover:-translate-y-0.5 hover:!text-[#D4AF37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-4"
                 >
                   {l.label}
                 </Link>
@@ -237,11 +237,11 @@ export function Navigation() {
           {/* CTA button */}
           <Link
             to="/contact"
-            className="hidden px-7 py-3 text-[10px] font-bold uppercase tracking-[0.24em] transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 md:inline-block xl:text-[11px]"
+            className="hidden rounded-sm px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.24em] transition-all duration-500 hover:-translate-y-0.5 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 md:inline-block"
             style={{
               border: `1px solid ${theme.ctaBorder}`,
               color: theme.ctaText,
-              background: "rgba(255,255,255,0.03)",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
               transition:
                 "color 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
             }}
@@ -308,7 +308,7 @@ export function Navigation() {
           <Link
             to="/contact"
             onClick={() => setOpen(false)}
-            className="mt-4 inline-block border border-gold bg-gold px-5 py-3 text-center text-[10px] uppercase tracking-[0.28em] text-[#120C09]"
+            className="mt-4 inline-block rounded-md border border-gold bg-gold px-5 py-3 text-center text-[10px] uppercase tracking-[0.28em] text-[#120C09] transition-transform duration-300 hover:-translate-y-0.5"
           >
             Book Consultation
           </Link>
@@ -317,3 +317,4 @@ export function Navigation() {
     </header>
   );
 }
+

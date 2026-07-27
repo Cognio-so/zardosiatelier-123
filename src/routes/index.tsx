@@ -138,114 +138,79 @@ function HomePage() {
 
   return (
     <SiteShell>
-      <section className="relative min-h-screen w-full overflow-hidden bg-[#160f0b]">
-        <img
-          src={heroEmbroidery}
-          alt="Hand embroidery craftsmanship header background"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-85"
-        />
+      {/* ═══ HERO SECTION ═══ */}
+      <section className="za-hero">
+        {/* Background video */}
         <video
-          className="absolute inset-0 h-full w-full object-cover brightness-[1.08]"
+          className="za-hero__bg-video"
+          src={heroVideo}
+          poster={heroEmbroidery}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
-          poster={heroEmbroidery}
+          preload="metadata"
           aria-hidden="true"
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-
-        {/* Editorial readability overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(10,7,5,0.3) 0%, rgba(10,7,5,0.18) 32%, rgba(10,7,5,0.12) 58%, rgba(10,7,5,0.24) 100%), linear-gradient(180deg, rgba(10,7,5,0.22) 0%, rgba(10,7,5,0.12) 36%, rgba(10,7,5,0.28) 100%)",
-          }}
         />
 
-        <div className="relative z-10 flex min-h-screen items-start px-7 pb-28 pt-20 sm:px-12 sm:pt-24 lg:px-[88px] lg:pt-[96px] xl:px-[104px] xl:pt-[104px]">
-          <div
-            className="w-full max-w-[720px] animate-fade-in text-left"
-            style={{
-              background: "rgba(0, 0, 0, 0.25)",
-              border: "none",
-              boxShadow: "none",
-              backdropFilter: "none",
-            }}
-          >
-            <div className="px-0 py-0 text-left">
-              <p className="animate-fade-up text-left font-sans text-[12px] font-medium uppercase tracking-[0.34em] text-[#C7A26A] sm:text-[13px]">
-                Haute Couture Embroidery - India
-              </p>
-              <h1
-                className="mt-8 max-w-[700px] animate-fade-up text-left text-[#F7F4EF] sm:text-[72px] lg:text-[92px]"
-                style={{
-                  fontFamily: '"Instrument Serif", "Times New Roman", serif',
-                  fontWeight: 400,
-                  lineHeight: 0.92,
-                  letterSpacing: "-2px",
-                  textShadow: "none",
-                  WebkitFontSmoothing: "antialiased",
-                  MozOsxFontSmoothing: "grayscale",
-                  animationDuration: "0.8s",
-                  animationTimingFunction: "cubic-bezier(0.19, 1, 0.22, 1)",
-                }}
-              >
-                Hand embroidery
-                <br />
-                for the world's <span style={{ color: "#C7A26A", fontStyle: "italic", textShadow: "none" }}>finest</span>
-                <br />
-                labels.
-              </h1>
-              <p className="mt-9 max-w-[580px] animate-fade-up text-left font-sans text-[18px] font-light leading-[1.75] text-white/82 sm:text-[20px] lg:text-[22px]">
-                We craft and export luxury embroidered pieces for couture houses, designers and
-                premium brands. Every stitch is finished by master karigars and checked twice
-                before it ships.
-              </p>
-              <p
-                className="mt-10 animate-fade-up text-left text-[#C7A26A]/95"
-                style={{
-                  fontFamily: '"Instrument Serif", "Times New Roman", serif',
-                  fontStyle: "italic",
-                  fontSize: "18px",
-                  lineHeight: 1.55,
-                }}
-              >
-                Patches / Bags / Headbands / Gowns / Bespoke commissions
-              </p>
-              <div className="mt-12 flex flex-wrap items-center gap-3 sm:gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex h-[58px] items-center justify-center gap-2 rounded-[8px] border border-[#CDA56A] bg-[#CDA56A] px-10 text-[10px] font-medium uppercase tracking-[0.24em] text-[#120c09] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#dfbe82] hover:bg-[#dfbe82]"
-                >
-                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />
-                  <span className="whitespace-nowrap">Start With a Sample</span>
-                </Link>
-                <a
-                  href={`tel:${phoneDigits}`}
-                  className="inline-flex h-[58px] items-center justify-center gap-2 rounded-[8px] border border-white/28 bg-transparent px-10 text-[10px] font-medium uppercase tracking-[0.22em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[#CDA56A] hover:bg-[#CDA56A] hover:text-[#120c09]"
-                >
-                  <PhoneCall className="h-3.5 w-3.5 shrink-0" strokeWidth={1.6} />
-                  <span className="whitespace-nowrap">Call the Atelier</span>
-                </a>
-              </div>
-            </div>
+        {/* Dark overlay — left to right */}
+        <div className="za-hero__overlay" />
+
+        {/* ── Card ── */}
+        <div className="za-hero__card" role="main">
+
+          {/* Decorative gold line */}
+          <div className="za-hero__gold-line" />
+
+          {/* Eyebrow */}
+          <p className="za-hero__eyebrow">
+            Haute Couture Embroidery — India
+          </p>
+
+          {/* Main heading */}
+          <h1 className="za-hero__heading">
+            Hand embroidery
+            <br />
+            for the world's
+            <br />
+            <em className="za-hero__heading-em">finest</em> labels.
+          </h1>
+
+          {/* Description */}
+          <p className="za-hero__desc">
+            We craft and export luxury embroidered pieces for couture houses,
+            designers and premium brands. Every stitch is finished by master
+            karigars and checked twice before it ships.
+          </p>
+
+          {/* Service tags */}
+          <p className="za-hero__tags">
+            Patches&nbsp;/&nbsp;Bags&nbsp;/&nbsp;Headbands&nbsp;/&nbsp;Gowns&nbsp;/&nbsp;Bespoke&nbsp;/&nbsp;Commissions
+          </p>
+
+          {/* CTA buttons */}
+          <div className="za-hero__btns">
+            <Link to="/contact" className="za-hero__btn za-hero__btn--primary">
+              Start With a Sample
+              <ArrowUpRight className="za-hero__btn-icon" strokeWidth={2.2} />
+            </Link>
+            <a href={`tel:${phoneDigits}`} className="za-hero__btn za-hero__btn--secondary">
+              Call the Atelier
+              <PhoneCall className="za-hero__btn-icon" strokeWidth={2.2} />
+            </a>
           </div>
+
         </div>
 
-        {/* Bottom ticker bar */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-black/40 py-5 backdrop-blur-md">
-          <div className="mx-auto flex max-w-[1400px] flex-wrap justify-between gap-6 px-6 text-[9px] font-bold uppercase tracking-[0.35em] text-ivory/80">
-            <span>Low MOQ & Sampling</span>
-            <span className="hidden sm:inline">Artwork Development</span>
-            <span className="hidden md:inline">In-House Design & QC</span>
-            <span>Express Worldwide Shipping</span>
-          </div>
+        {/* Bottom ticker */}
+        <div className="za-hero__ticker">
+          <span>Low MOQ &amp; Sampling</span>
+          <span className="za-hero__ticker-dot" />
+          <span>Artwork Development</span>
+          <span className="za-hero__ticker-dot" />
+          <span>In-House Design &amp; QC</span>
+          <span className="za-hero__ticker-dot" />
+          <span>Express Worldwide Shipping</span>
         </div>
       </section>
 
@@ -361,28 +326,28 @@ function HomePage() {
           </Reveal>
 
           <Reveal delay={120} className="mt-4 px-0 py-8">
-            <div className="grid gap-10 border-y border-ink/10 py-14 text-center sm:py-20 md:grid-cols-3">
+            <div className="grid items-end gap-8 border-y border-ink/10 py-12 text-center sm:py-16 md:grid-cols-3 md:gap-6">
               <div>
-                <div className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[52px] sm:text-[68px] md:text-[78px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={150} suffix="+" duration={2000} />
                 </div>
-                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
+                <p className="mt-4 text-[11px] font-bold uppercase leading-relaxed tracking-[0.22em] text-[#A69C98] sm:text-[12px]">
                   Collections Supported
                 </p>
               </div>
               <div>
-                <div className="font-serif text-[86px] sm:text-[120px] md:text-[150px] font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[52px] sm:text-[68px] md:text-[78px] font-light leading-none text-[#D4AF37]">
                   <CountUp target={18} duration={1600} />
                 </div>
-                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
+                <p className="mt-4 text-[11px] font-bold uppercase leading-relaxed tracking-[0.22em] text-[#A69C98] sm:text-[12px]">
                   Markets Served
                 </p>
               </div>
               <div>
-                <div className="font-serif text-[64px] sm:text-[92px] md:text-[112px] italic font-light leading-none text-[#D4AF37]">
+                <div className="font-serif text-[38px] sm:text-[48px] md:text-[56px] italic font-light leading-none text-[#D4AF37]">
                   Fast-track
                 </div>
-                <p className="mt-6 text-[13px] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#A69C98]">
+                <p className="mt-4 text-[11px] font-bold uppercase leading-relaxed tracking-[0.22em] text-[#A69C98] sm:text-[12px]">
                   Sampling Turnaround
                 </p>
               </div>
@@ -522,6 +487,21 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
