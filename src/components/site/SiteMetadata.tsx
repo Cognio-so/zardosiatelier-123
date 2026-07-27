@@ -3,6 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { getSeoEntries } from "@/lib/admin-data";
 
+const siteUrl = "https://www.zardosiatelier.com";
+const fallbackShareImage = `${siteUrl}/social-share.png`;
+
 function normalizePage(pathname: string) {
   if (pathname === "/") return "Home";
   if (pathname.startsWith("/portfolio")) return "Portfolio";
@@ -36,13 +39,25 @@ export function SiteMetadata() {
       seoEntries.find((seo) => seo.id.toLowerCase() === page.toLowerCase());
     if (!entry) return;
 
+    const pageUrl = pathname === "/" ? siteUrl : `${siteUrl}${pathname}`;
+    const shareImage = entry.ogImage || fallbackShareImage;
+
     document.title = entry.metaTitle;
     upsertMeta('meta[name="description"]', "name", "description", entry.metaDescription);
     upsertMeta('meta[name="keywords"]', "name", "keywords", entry.keywords);
     upsertMeta('meta[property="og:title"]', "property", "og:title", entry.metaTitle);
     upsertMeta('meta[property="og:description"]', "property", "og:description", entry.metaDescription);
+    upsertMeta('meta[property="og:url"]', "property", "og:url", pageUrl);
+    upsertMeta('meta[property="og:image"]', "property", "og:image", shareImage);
+    upsertMeta('meta[property="og:image:secure_url"]', "property", "og:image:secure_url", shareImage);
+    upsertMeta('meta[property="og:image:alt"]', "property", "og:image:alt", "Zardosi Atelier logo");
+    upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", entry.metaTitle);
+    upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", entry.metaDescription);
+    upsertMeta('meta[name="twitter:image"]', "name", "twitter:image", shareImage);
+    upsertMeta('meta[name="twitter:image:alt"]', "name", "twitter:image:alt", "Zardosi Atelier logo");
     upsertMeta('meta[name="robots"]', "name", "robots", entry.robots);
-    if (entry.ogImage) upsertMeta('meta[property="og:image"]', "property", "og:image", entry.ogImage);
+    const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) canonical.href = pageUrl;
   }, [pathname, seoEntries]);
 
   return null;
