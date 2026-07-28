@@ -13,13 +13,15 @@ const SCRIPT_ID = "google-recaptcha-v3";
 
 export function useRecaptchaV3() {
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
-  const [ready, setReady] = useState(false);
+  const enabled = Boolean(siteKey);
+  const [ready, setReady] = useState(!enabled);
   const [error, setError] = useState<string | null>(null);
   const requested = useRef(false);
 
   useEffect(() => {
     if (!siteKey) {
-      setError("reCAPTCHA site key is missing.");
+      setReady(true);
+      setError(null);
       return;
     }
 
@@ -36,6 +38,10 @@ export function useRecaptchaV3() {
       existing.addEventListener("load", () => {
         window.grecaptcha?.ready(() => setReady(true));
       });
+      existing.addEventListener("error", () => {
+        setReady(true);
+        setError("Security check could not load; protected fallback is enabled.");
+      });
       return;
     }
 
@@ -48,16 +54,17 @@ export function useRecaptchaV3() {
       window.grecaptcha?.ready(() => setReady(true));
     };
     script.onerror = () => {
-      setError("Unable to load reCAPTCHA.");
+      setReady(true);
+      setError("Security check could not load; protected fallback is enabled.");
     };
     document.head.appendChild(script);
   }, [siteKey]);
 
   async function execute(action: string) {
-    if (!siteKey) throw new Error("reCAPTCHA site key is missing.");
-    if (!window.grecaptcha) throw new Error("reCAPTCHA is not available.");
+    if (!siteKey) return "recaptcha-not-configured";
+    if (!window.grecaptcha) return "recaptcha-unavailable";
     return window.grecaptcha.execute(siteKey, { action });
   }
 
-  return { ready, error, execute };
+  return { enabled, ready, error, execute };
 }

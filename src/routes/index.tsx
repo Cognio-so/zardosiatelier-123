@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
 import { Lens } from "@/registry/magicui/lens";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { getSettings } from "@/lib/admin-data";
 import {
   Crown,
   Layers,
@@ -29,21 +31,13 @@ import sequin3 from "@/assets/sequin-3-opt.webp";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Zardosi Atelier - Luxury Hand Embroidery & Export Atelier" },
-      {
-        name: "description",
-        content:
-          "Zardosi Atelier creates couture-grade hand embroidery, zardosi, crystal work and beadwork for luxury brands, couture designers and bridal houses.",
-      },
-      { property: "og:title", content: "Zardosi Atelier - Luxury Hand Embroidery" },
-      {
-        property: "og:description",
-        content:
-          "Hand embroidery for the world's finest labels - from sampling to production and global delivery.",
-      },
-      { property: "og:url", content: "/" },
-      { property: "og:image", content: heroEmbroidery },
-      { property: "twitter:image", content: heroEmbroidery },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
+      { name: "twitter:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/" }],
   }),
@@ -134,7 +128,14 @@ const faqs = [
 ];
 
 function HomePage() {
-  const phoneDigits = "8826023527";
+  const { data: settings } = useQuery({
+    queryKey: ["settings-public"],
+    queryFn: () => getSettings(),
+    staleTime: 0,
+  });
+
+  const whatsappDigits = (settings?.whatsappNumber || settings?.phone || "8826023527").replace(/\D/g, "");
+  const whatsappHref = 'https://wa.me/' + whatsappDigits + '?text=' + encodeURIComponent('Hello Zardosi Atelier, I would like to discuss a couture embroidery project.');
 
   return (
     <SiteShell>
@@ -169,11 +170,9 @@ function HomePage() {
 
           {/* Main heading */}
           <h1 className="za-hero__heading">
-            Hand embroidery
-            <br />
-            for the world's
-            <br />
-            <em className="za-hero__heading-em">finest</em> labels.
+            <span className="za-hero__heading-line za-hero__heading-line--major">Hand embroidery</span>
+            <span className="za-hero__heading-line za-hero__heading-line--minor">for the world's</span>
+            <span className="za-hero__heading-line za-hero__heading-line--major"><em className="za-hero__heading-em">finest</em> labels.</span>
           </h1>
 
           {/* Description */}
@@ -194,7 +193,7 @@ function HomePage() {
               Start With a Sample
               <ArrowUpRight className="za-hero__btn-icon" strokeWidth={2.2} />
             </Link>
-            <a href={`tel:${phoneDigits}`} className="za-hero__btn za-hero__btn--secondary">
+            <a href={whatsappHref} className="za-hero__btn za-hero__btn--secondary">
               Call the Atelier
               <PhoneCall className="za-hero__btn-icon" strokeWidth={2.2} />
             </a>
@@ -215,28 +214,13 @@ function HomePage() {
       </section>
 
       <section className="bg-[#EFE8DD] py-10 sm:py-14">
-        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
-          <Reveal className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end lg:mb-10">
-            <div className="max-w-[980px]">
-              <span className="eyebrow text-[11px]">Embroidery Techniques</span>
-              <h2 className="mt-3 font-serif text-4xl leading-[1.05] text-ink sm:text-6xl lg:text-7xl">
-                A vocabulary of luxury hand-craft.
-              </h2>
-            </div>
-            <Link
-              to="/portfolio"
-              className="gold-link shrink-0 text-[11px] font-bold uppercase tracking-[0.32em]"
-            >
-              Explore Portfolio
-            </Link>
-          </Reveal>
-
-          <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mx-auto max-w-[1380px] px-3 sm:px-4 lg:px-5">
+          <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 xl:gap-4">
             {techniques.map((item, i) => {
               const cardInner = (
-                <article className="group cursor-pointer text-center">
+                <article className="group flex h-full w-full max-w-[260px] cursor-pointer flex-col items-center text-center">
                   <Lens zoomFactor={2.1} lensSize={120} isStatic={false}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-[#E5D8C8]">
+                  <div className="relative aspect-square w-full overflow-hidden bg-[#E5D8C8]">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -254,10 +238,12 @@ function HomePage() {
                     )}
                     </div>
                   </Lens>
-                  <h3 className="mt-4 font-serif text-[26px] leading-tight text-ink sm:text-[28px]">
+
+                  <h3 className="mx-auto mt-4 flex min-h-[48px] w-full items-center justify-center px-1 text-center font-serif text-[20px] font-medium leading-[1.15] tracking-[-0.02em] text-[#2B241F]">
                     {item.name}
                   </h3>
-                  <p className="mx-auto mt-2 max-w-[26ch] text-[14px] font-medium leading-6 text-ink-soft sm:text-[15px]">
+
+                  <p className="mx-auto mt-3 max-w-[220px] text-center text-[14px] font-normal leading-[1.5] text-[#5E554D]">
                     {item.desc}
                   </p>
                 </article>
@@ -280,7 +266,7 @@ function HomePage() {
       </section>
 
       <section className="bg-[#1A100B] py-12 text-ivory sm:py-16">
-        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1320px] px-4 sm:px-5 lg:px-8">
           <Reveal>
             <span className="eyebrow !text-gold-soft">Our Process</span>
             <h2 className="mt-3 font-serif text-4xl leading-tight text-white sm:text-5xl">
@@ -304,7 +290,7 @@ function HomePage() {
       </section>
 
       <section className="luxury-silk-bg py-10 sm:py-12">
-        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1320px] px-4 sm:px-5 lg:px-8">
           <Reveal className="px-0 py-8">
             <span className="eyebrow">Why Zardosi Atelier</span>
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
@@ -357,7 +343,7 @@ function HomePage() {
       </section>
 
       <section className="luxury-silk-bg py-10 sm:py-12">
-        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1320px] px-4 sm:px-5 lg:px-8">
           <Reveal className="px-0 py-8">
             <span className="eyebrow">Questions</span>
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
@@ -438,7 +424,7 @@ function LeadSection() {
 
   return (
     <section className="luxury-silk-bg pb-12 sm:pb-16" id="quote">
-      <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1720px] px-5 sm:px-6 lg:px-10 xl:px-12">
         <Reveal className="border border-gold/25 bg-[#fffdf9] px-5 py-8 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-3xl text-center">
             <span className="eyebrow">Begin a Commission</span>
@@ -487,6 +473,26 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

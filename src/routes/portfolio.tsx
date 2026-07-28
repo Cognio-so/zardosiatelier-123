@@ -9,16 +9,12 @@ import portfolioHero from "@/assets/portfolio-hero.webp";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio - Couture Embroidery Archive | Zardosi Atelier" },
-      {
-        name: "description",
-        content:
-          "Selected couture embroidery work pulled directly from the Zardosi Atelier admin portfolio.",
-      },
-      { property: "og:title", content: "Portfolio - Zardosi Atelier" },
-      { property: "og:description", content: "A curated archive of luxury hand embroidery work." },
-      { property: "og:url", content: "/portfolio" },
-      { property: "og:image", content: portfolioHero },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/portfolio" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/portfolio" }],
   }),

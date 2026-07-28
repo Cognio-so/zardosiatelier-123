@@ -20,11 +20,11 @@ import p09 from "@/assets/pearl-work-page-9.jpeg";
 export const Route = createFileRoute("/pearl-work")({
   head: () => ({
     meta: [
-      { title: "Pearl Work & Seed Bead Embroidery | Zardosi Atelier" },
-      { name: "description", content: "Intricate pearl and seed-bead compositions stitched by hand. Explore our gallery of bespoke pearl work for bridalwear and couture." },
-      { property: "og:title", content: "Pearl Work Embroidery - Zardosi Atelier" },
-      { property: "og:url", content: "/pearl-work" },
-      { property: "og:image", content: p01 },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:url", content: "https://www.zardosiatelier.com/pearl-work" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/pearl-work" }],
   }),
@@ -306,6 +306,7 @@ function PearlWorkPage() {
     </PageShell>
   );
 }
+
 
 
 

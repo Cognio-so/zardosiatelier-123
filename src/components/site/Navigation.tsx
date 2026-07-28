@@ -196,7 +196,7 @@ export function Navigation() {
               Zardosi
             </span>
             <span
-              className="mt-1.5 text-[8px] font-bold uppercase tracking-[0.4em] sm:text-[9px]"
+              className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.34em] sm:text-[9px] sm:tracking-[0.4em]"
               style={{
                 color: theme.logoSub,
                 transition: "color 0.7s cubic-bezier(0.4,0,0.2,1)",
@@ -317,4 +317,5 @@ export function Navigation() {
     </header>
   );
 }
+
 

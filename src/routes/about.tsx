@@ -8,19 +8,12 @@ import aboutQuality from "@/assets/about-quality.png";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About - Zardosi Atelier | Founded 2002, Luxury Embroidery Manufacturer" },
-      {
-        name: "description",
-        content:
-          "Founded in 2002 by Shalini and Sajal Jain, Zardosi Atelier is a trusted manufacturer and exporter of premium hand and machine embroidery - serving fashion houses, designers, and global brands for over two decades.",
-      },
-      { property: "og:title", content: "About - Zardosi Atelier" },
-      {
-        property: "og:description",
-        content: "A luxury embroidery atelier founded in 2002, combining traditional Indian craft with international quality standards.",
-      },
-      { property: "og:url", content: "/about" },
-      { property: "og:image", content: aboutHero },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/about" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/about" }],
   }),
@@ -243,3 +236,4 @@ function AboutPage() {
     </PageShell>
   );
 }
+

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/portfolio/$category")({
     const category = categoryBySlug(params.category);
     return {
       meta: [
-        { title: `${category?.name ?? "Portfolio"} - Zardosi Atelier` },
+        { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
         {
           name: "description",
           content: category?.description ?? "Explore Zardosi Atelier portfolio work by category.",

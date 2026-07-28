@@ -32,15 +32,11 @@ import c21 from "@/assets/crystal-21.jpeg";
 export const Route = createFileRoute("/crystal-stone")({
   head: () => ({
     meta: [
-      { title: "Crystal & Stone Work Embroidery | Zardosi Atelier" },
-      {
-        name: "description",
-        content:
-          "Hand-set crystals, zircons, Swarovski stones and Cutdana beads for couture brilliance. Explore our gallery of bespoke crystal and stone embroidery.",
-      },
-      { property: "og:title", content: "Crystal & Stone Work - Zardosi Atelier" },
-      { property: "og:url", content: "/crystal-stone" },
-      { property: "og:image", content: c01 },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:url", content: "https://www.zardosiatelier.com/crystal-stone" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/crystal-stone" }],
   }),
@@ -399,6 +395,7 @@ function CrystalStonePage() {
     </PageShell>
   );
 }
+
 
 
 

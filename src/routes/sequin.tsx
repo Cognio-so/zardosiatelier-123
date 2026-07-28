@@ -17,11 +17,11 @@ import sequin6 from "@/assets/sequin-6.jpg";
 export const Route = createFileRoute("/sequin")({
   head: () => ({
     meta: [
-      { title: "Sequin Embroidery - Hand-Stitched Couture | Zardosi Atelier" },
-      { name: "description", content: "Thousands of hand-stitched sequins catching couture light with every movement. Explore our sequin embroidery work at Zardosi Atelier." },
-      { property: "og:title", content: "Sequin Embroidery - Zardosi Atelier" },
-      { property: "og:url", content: "/sequin" },
-      { property: "og:image", content: sequin1 },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:url", content: "https://www.zardosiatelier.com/sequin" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/sequin" }],
   }),
@@ -148,6 +148,7 @@ function SequinPage() {
     </PageShell>
   );
 }
+
 
 
 

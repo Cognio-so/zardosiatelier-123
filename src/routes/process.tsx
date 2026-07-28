@@ -7,19 +7,12 @@ import processHero from "@/assets/process-hero.webp";
 export const Route = createFileRoute("/process")({
   head: () => ({
     meta: [
-      { title: "Process - From Design to Delivery | Zardosi Atelier" },
-      {
-        name: "description",
-        content:
-          "Our six-step embroidery process: design share, technical review, sampling, approval, production, and global delivery.",
-      },
-      { property: "og:title", content: "Process - Zardosi Atelier" },
-      {
-        property: "og:description",
-        content: "How we partner from design share to global delivery.",
-      },
-      { property: "og:url", content: "/process" },
-      { property: "og:image", content: processHero },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/process" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/process" }],
   }),
@@ -151,3 +144,4 @@ function ProcessPage() {
     </PageShell>
   );
 }
+

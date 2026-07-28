@@ -48,11 +48,11 @@ import z37 from "@/assets/zardozi-37.jpeg";
 export const Route = createFileRoute("/zardozi")({
   head: () => ({
     meta: [
-      { title: "Zardozi Embroidery - Metallic Gold Threadwork | Zardosi Atelier" },
-      { name: "description", content: "Centuries-old zardozi metallic gold threadwork crafted by master karigars. Explore our complete gallery of zardozi embroidery for luxury couture." },
-      { property: "og:title", content: "Zardozi Embroidery - Zardosi Atelier" },
-      { property: "og:url", content: "/zardozi" },
-      { property: "og:image", content: z01 },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:url", content: "https://www.zardosiatelier.com/zardozi" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/zardozi" }],
   }),
@@ -404,6 +404,7 @@ function ZardoziPage() {
     </PageShell>
   );
 }
+
 
 
 

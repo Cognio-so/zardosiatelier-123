@@ -12,11 +12,26 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteMetadata } from "@/components/site/SiteMetadata";
+import { SEO_DESCRIPTION, SEO_KEYWORDS, SEO_TITLE, SITE_URL } from "@/lib/seo";
 
-const siteUrl = "https://www.zardosiatelier.com";
-const shareImage = `${siteUrl}/social-share.png`;
-const favicon = `${siteUrl}/favicon.png`;
-const appleTouchIcon = `${siteUrl}/apple-touch-icon.png`;
+const siteUrl = SITE_URL;
+const brandImage = `${siteUrl}/icon-512.png`;
+const favicon = "/favicon.ico";
+const iconPng = "/icon.png";
+const appleTouchIcon = "/apple-touch-icon.png";
+const manifest = "/manifest.webmanifest";
+const maskIcon = "/mask-icon.svg";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Zardosi Atelier",
+  description: SEO_DESCRIPTION,
+  url: siteUrl,
+  logo: brandImage,
+  image: brandImage,
+  sameAs: ["https://www.instagram.com/reel/DaUjL2Mp4qF/?igsh=amUyNnNnbWJudzQz"],
+};
 
 function NotFoundComponent() {
   return (
@@ -77,41 +92,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zardosi Atelier | Luxury Hand Embroidery" },
-      {
-        name: "description",
-        content:
-          "Luxury hand embroidery and couture manufacturing by Zardosi Atelier for global fashion houses, designers, and premium brands.",
-      },
+      { title: SEO_TITLE },
+      { name: "description", content: SEO_DESCRIPTION },
+      { name: "keywords", content: SEO_KEYWORDS.join(", ") },
       { name: "author", content: "Zardosi Atelier" },
       { name: "robots", content: "index,follow" },
+      { name: "theme-color", content: "#1A100B" },
+      { name: "application-name", content: "Zardosi Atelier" },
       { property: "og:site_name", content: "Zardosi Atelier" },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery" },
-      {
-        property: "og:description",
-        content:
-          "Luxury hand embroidery and couture manufacturing by Zardosi Atelier for global fashion houses, designers, and premium brands.",
-      },
+      { property: "og:title", content: SEO_TITLE },
+      { property: "og:description", content: SEO_DESCRIPTION },
       { property: "og:url", content: siteUrl },
-      { property: "og:image", content: shareImage },
-      { property: "og:image:secure_url", content: shareImage },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
+      { property: "og:image:secure_url", content: brandImage },
       { property: "og:image:alt", content: "Zardosi Atelier logo" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Zardosi Atelier | Luxury Hand Embroidery" },
-      {
-        name: "twitter:description",
-        content:
-          "Luxury hand embroidery and couture manufacturing by Zardosi Atelier for global fashion houses, designers, and premium brands.",
-      },
-      { name: "twitter:image", content: shareImage },
+      { name: "twitter:title", content: SEO_TITLE },
+      { name: "twitter:description", content: SEO_DESCRIPTION },
+      { name: "twitter:image", content: brandImage },
       { name: "twitter:image:alt", content: "Zardosi Atelier logo" },
     ],
     links: [
-      { rel: "canonical", href: siteUrl },
-      { rel: "icon", type: "image/png", href: favicon },
+      { rel: "icon", href: favicon, sizes: "any" },
       { rel: "shortcut icon", href: favicon },
-      { rel: "apple-touch-icon", href: appleTouchIcon },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: iconPng },
+      { rel: "apple-touch-icon", sizes: "180x180", href: appleTouchIcon },
+      { rel: "manifest", href: manifest },
+      { rel: "mask-icon", href: maskIcon, color: "#1A100B" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -146,6 +154,10 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body>
         {children}
@@ -165,4 +177,12 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
+
+
+
+
+
+
+
 

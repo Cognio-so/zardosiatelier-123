@@ -13,19 +13,12 @@ import p1 from "@/assets/portfolio-1.webp";
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
-      { title: "Category - Who We Serve | Zardosi Atelier" },
-      {
-        name: "description",
-        content:
-          "Couture houses, bridal labels, designer menswear, accessory brands - the categories our atelier serves.",
-      },
-      { property: "og:title", content: "Category - Zardosi Atelier" },
-      {
-        property: "og:description",
-        content: "Categories served by our luxury embroidery atelier.",
-      },
-      { property: "og:url", content: "/industries" },
-      { property: "og:image", content: categoryHero },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/industries" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/industries" }],
   }),
@@ -226,3 +219,4 @@ function IndustriesPage() {
     </PageShell>
   );
 }
+

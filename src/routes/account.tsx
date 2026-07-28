@@ -7,8 +7,8 @@ import { User, Package, Settings, LogOut, ChevronRight } from "lucide-react";
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
-      { title: "Account - Client Portal | Zardosi Atelier" },
-      { name: "description", content: "Client portal for Zardosi Atelier - view your hand embroidery commissions, samples and orders." },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/account" }],
   }),

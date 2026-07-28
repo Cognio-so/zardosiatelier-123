@@ -7,7 +7,7 @@ import { categoryForTag } from "@/lib/portfolio-categories";
 
 export const Route = createFileRoute("/portfolio/item/$id")({
   head: () => ({
-    meta: [{ title: "Portfolio Item - Zardosi Atelier" }],
+    meta: [{ title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" }],
   }),
   component: PortfolioItemPage,
 });

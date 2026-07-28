@@ -34,11 +34,11 @@ import r23 from "@/assets/resham-zari-page-23.png";
 export const Route = createFileRoute("/resham-zari")({
   head: () => ({
     meta: [
-      { title: "Resham & Zari Embroidery - Fine Silk & Metallic Threadwork | Zardosi Atelier" },
-      { name: "description", content: "Explore our collection of hand-stitched Resham and Zari embroidery, blending fine silk and gold zari threads into intricate patterns." },
-      { property: "og:title", content: "Resham & Zari Embroidery - Zardosi Atelier" },
-      { property: "og:url", content: "/resham-zari" },
-      { property: "og:image", content: r01 },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:url", content: "https://www.zardosiatelier.com/resham-zari" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/resham-zari" }],
   }),
@@ -334,6 +334,7 @@ function ReshamZariPage() {
     </PageShell>
   );
 }
+
 
 
 

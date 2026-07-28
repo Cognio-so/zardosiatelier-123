@@ -269,8 +269,8 @@
 
   background:
     radial-gradient(circle at 10% 7%, rgba(226, 177, 105, 0.16), transparent 34%),
-    linear-gradient(145deg, rgba(61, 34, 22, 0.94) 0%, rgba(36, 20, 14, 0.92) 100%);
-  border: 1px solid rgba(211, 154, 63, 0.55);
+    linear-gradient(145deg, rgba(255, 250, 242, 0.93) 0%, rgba(246, 235, 220, 0.88) 100%);
+  border: 1px solid rgba(198, 138, 42, 0.42);
   border-radius: 26px;
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.34),
@@ -323,12 +323,17 @@
 
 /* ── Main heading ── */
 .za-hero__heading {
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  font-size: clamp(42px, 4vw, 60px);
+  font-family: 'Cormorant Garamond', 'EB Garamond', 'Libre Baskerville', Georgia, serif;
+  font-style: italic;
+  font-size: 82px;
   font-weight: 600;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  color: #FFF6EA;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-align: left;
+  color: #1F1A17;
+  max-width: 680px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   margin: 0 0 14px;
   overflow-wrap: break-word;
   hyphens: none;
@@ -336,12 +341,24 @@
   text-wrap: balance;
 }
 
+.za-hero__heading-line {
+  display: block;
+}
+
+.za-hero__heading-line--major {
+  font-size: 1.06em;
+}
+
+.za-hero__heading-line--minor {
+  font-size: 0.88em;
+}
+
 /* ── "finest" italic gold em ── */
 .za-hero__heading-em {
   font-style: italic;
   color: #C68A2A;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 500;
+  font-family: inherit;
+  font-weight: 600;
 }
 
 /* ── Description ── */
@@ -350,7 +367,7 @@
   font-size: 15px;
   font-weight: 400;
   line-height: 1.65;
-  color: rgba(255, 246, 234, 0.82);
+  color: rgba(31, 26, 23, 0.78);
   margin: 0 0 14px;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -429,7 +446,7 @@
 /* ── Secondary button ── */
 .za-hero__btn--secondary {
   background: rgba(255, 255, 255, 0.04);
-  color: #FFF6EA;
+  color: #1F1A17;
   border: 1px solid rgba(255, 246, 234, 0.42);
 }
 
@@ -502,7 +519,7 @@
   }
 
   .za-hero__heading {
-    font-size: clamp(42px, 5.4vw, 58px);
+    font-size: 56px;
   }
 }
 
@@ -527,7 +544,8 @@
   }
 
   .za-hero__heading {
-    font-size: clamp(34px, 8vw, 44px);
+    font-size: 40px;
+    line-height: 1.05;
   }
 
   .za-hero__desc {
@@ -564,7 +582,8 @@
   }
 
   .za-hero__heading {
-    font-size: 26px;
+    font-size: 34px;
+    line-height: 1;
     margin-bottom: 14px;
   }
 
@@ -2247,3 +2266,471 @@ main .border {
 
 
 
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .za-hero__heading {
+    font-size: 72px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .za-hero__heading {
+    font-size: 56px;
+  }
+}
+
+
+/* Hero card: compact espresso-gold couture treatment */
+.za-hero__card {
+  width: min(620px, calc(100vw - 56px));
+  min-height: 410px;
+  padding: 26px 34px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(218, 157, 55, 0.22), transparent 31%),
+    radial-gradient(circle at 88% 8%, rgba(255, 238, 197, 0.09), transparent 28%),
+    linear-gradient(145deg, rgba(47, 25, 15, 0.92) 0%, rgba(26, 14, 9, 0.9) 58%, rgba(77, 44, 24, 0.86) 100%);
+  border: 1px solid rgba(200, 150, 76, 0.58);
+  border-radius: 34px 18px 34px 18px;
+  box-shadow:
+    0 22px 58px rgba(10, 5, 2, 0.42),
+    0 0 0 1px rgba(255, 235, 189, 0.08) inset,
+    0 12px 34px rgba(184, 118, 36, 0.14);
+  color: #fff6ea;
+}
+
+.za-hero__card::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  border: 1px solid rgba(217, 166, 88, 0.22);
+  border-radius: 26px 12px 26px 12px;
+}
+
+.za-hero__heading {
+  color: #fff4e6;
+}
+
+.za-hero__heading-em,
+.za-hero__eyebrow,
+.za-hero__tags {
+  color: #d79b3f;
+}
+
+.za-hero__desc {
+  color: rgba(255, 246, 234, 0.82);
+}
+
+.za-hero__btn--secondary {
+  color: #fff4e6;
+  border-color: rgba(215, 155, 63, 0.38);
+  background: rgba(255, 246, 234, 0.045);
+}
+
+.za-hero__btn--secondary:hover {
+  color: #1f120b;
+  background: #d79b3f;
+  border-color: #d79b3f;
+}
+
+@media (max-width: 1024px) {
+  .za-hero__card {
+    width: min(590px, calc(100vw - 48px));
+    min-height: 390px;
+    padding: 28px 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .za-hero__card {
+    width: calc(100% - 32px);
+    border-radius: 28px 14px 28px 14px;
+    padding: 24px 22px;
+  }
+}
+
+/* Hero card spacing refinement: keep the card away from section edges */
+.za-hero__card {
+  left: clamp(32px, 5.5vw, 88px);
+  top: calc(50% + 10px);
+  width: min(570px, calc(100vw - 96px));
+  min-height: 380px;
+  padding: 24px 32px;
+}
+
+@media (max-width: 1024px) {
+  .za-hero__card {
+    left: 50%;
+    width: min(540px, calc(100vw - 80px));
+    min-height: 360px;
+    padding: 24px 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .za-hero__card {
+    width: calc(100% - 44px);
+    max-height: calc(100svh - 132px);
+    padding: 22px 20px;
+  }
+}
+
+/* Hero card proportion pass: wider, shorter, clear of navbar */
+.za-hero__card {
+  top: calc(50% + 38px);
+  width: min(650px, calc(100vw - 110px));
+  min-height: 0;
+  max-height: calc(100svh - 176px);
+  padding: 20px 32px;
+  justify-content: center;
+}
+
+.za-hero__gold-line {
+  margin-bottom: 12px;
+}
+
+.za-hero__eyebrow {
+  margin-bottom: 10px;
+  line-height: 1.15;
+}
+
+.za-hero__heading {
+  margin-bottom: 12px;
+}
+
+.za-hero__desc {
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+
+.za-hero__tags {
+  margin-bottom: 14px;
+}
+
+.za-hero__btn {
+  min-height: 46px;
+}
+
+@media (max-width: 1024px) {
+  .za-hero__card {
+    top: calc(50% + 34px);
+    width: min(620px, calc(100vw - 80px));
+    max-height: calc(100svh - 162px);
+    padding: 22px 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .za-hero__card {
+    top: calc(50% + 32px);
+    width: calc(100% - 44px);
+    max-height: calc(100svh - 150px);
+    padding: 20px 20px;
+    overflow-y: auto;
+  }
+}
+
+/* Hero card bottom clearance: keep CTA area above ticker */
+.za-hero__card {
+  top: calc(50% + 24px);
+  width: min(650px, calc(100vw - 120px));
+  max-height: calc(100svh - 210px);
+  padding: 18px 30px;
+}
+
+.za-hero__heading {
+  font-size: 74px;
+}
+
+.za-hero__heading-line--major {
+  font-size: 1.03em;
+}
+
+.za-hero__heading-line--minor {
+  font-size: 0.84em;
+}
+
+.za-hero__desc {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.za-hero__tags {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.za-hero__btn {
+  min-height: 42px;
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .za-hero__heading {
+    font-size: 66px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .za-hero__card {
+    top: calc(50% + 22px);
+    max-height: calc(100svh - 190px);
+  }
+
+  .za-hero__heading {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 767px) {
+  .za-hero__card {
+    top: calc(50% + 18px);
+    max-height: calc(100svh - 170px);
+  }
+}
+
+/* Phone hero fit: keep full card and buttons visible */
+@media (max-width: 767px) {
+  .za-hero {
+    min-height: 100svh;
+  }
+
+  .za-hero__card {
+    top: calc(50% + 22px);
+    width: min(330px, calc(100% - 44px));
+    min-height: 0;
+    max-height: calc(100svh - 108px);
+    padding: 16px 18px;
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+
+  .za-hero__card::before {
+    inset: 8px;
+  }
+
+  .za-hero__gold-line {
+    width: 46px;
+    margin-bottom: 8px;
+  }
+
+  .za-hero__eyebrow {
+    font-size: 10px;
+    line-height: 1.35;
+    letter-spacing: 0.22em;
+    margin-bottom: 8px;
+  }
+
+  .za-hero__heading {
+    font-size: 31px;
+    line-height: 0.98;
+    margin-bottom: 10px;
+  }
+
+  .za-hero__heading-line--major {
+    font-size: 1.02em;
+  }
+
+  .za-hero__heading-line--minor {
+    font-size: 0.82em;
+  }
+
+  .za-hero__desc {
+    font-size: 13px;
+    line-height: 1.42;
+    margin-bottom: 9px;
+  }
+
+  .za-hero__tags {
+    font-size: 13px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .za-hero__btns {
+    gap: 8px;
+  }
+
+  .za-hero__btn {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (max-width: 380px) {
+  .za-hero__heading {
+    font-size: 29px;
+  }
+
+  .za-hero__desc {
+    font-size: 12.5px;
+  }
+}
+
+/* Remove visible underscore/underline styling across the public UI */
+a,
+a:hover,
+a:focus,
+button,
+button:hover,
+button:focus {
+  text-decoration: none !important;
+}
+
+.gold-link::after,
+.gold-link:hover::after {
+  display: none !important;
+  width: 0 !important;
+}
+
+nav a::after,
+nav a:hover::after,
+header a::after,
+header a:hover::after {
+  display: none !important;
+}
+
+.hover\:underline:hover {
+  text-decoration: none !important;
+}
+
+/* Hero bottom ticker: larger premium label text */
+.za-hero__ticker {
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  font-weight: 800;
+}
+
+@media (min-width: 1280px) {
+  .za-hero__ticker {
+    font-size: 13px;
+    letter-spacing: 0.28em;
+  }
+}
+
+/* Phone hero: full card visible without internal scrolling */
+@media (max-width: 767px) {
+  .za-hero__card {
+    top: calc(50% + 28px);
+    width: min(350px, calc(100% - 28px));
+    max-height: none;
+    padding: 14px 16px;
+    overflow: visible;
+    justify-content: center;
+  }
+
+  .za-hero__card::before {
+    inset: 7px;
+  }
+
+  .za-hero__gold-line {
+    width: 42px;
+    margin-bottom: 7px;
+  }
+
+  .za-hero__eyebrow {
+    font-size: 9px;
+    line-height: 1.25;
+    letter-spacing: 0.2em;
+    margin-bottom: 7px;
+  }
+
+  .za-hero__heading {
+    font-size: 27px;
+    line-height: 0.96;
+    margin-bottom: 8px;
+  }
+
+  .za-hero__heading-line--major {
+    font-size: 1em;
+  }
+
+  .za-hero__heading-line--minor {
+    font-size: 0.82em;
+  }
+
+  .za-hero__desc {
+    font-size: 11.5px;
+    line-height: 1.42;
+    margin-bottom: 8px;
+  }
+
+  .za-hero__tags {
+    font-size: 11.5px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .za-hero__btns {
+    gap: 7px;
+  }
+
+  .za-hero__btn {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+  }
+
+  .za-hero__btn-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .za-hero__card {
+    width: min(326px, calc(100% - 24px));
+    padding: 13px 15px;
+  }
+
+  .za-hero__heading {
+    font-size: 25px;
+  }
+
+  .za-hero__desc {
+    font-size: 11px;
+  }
+
+  .za-hero__tags {
+    font-size: 11px;
+  }
+}
+
+/* Phone hero CTA buttons: clearer, readable, high contrast */
+@media (max-width: 767px) {
+  .za-hero__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .za-hero__btn {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 11px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .za-hero__btn--primary {
+    background: linear-gradient(135deg, #e0a13a 0%, #c68022 100%);
+    color: #fffaf0;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+  }
+
+  .za-hero__btn--secondary {
+    background: rgba(255, 246, 234, 0.12);
+    color: #fff7ea;
+    border: 1px solid rgba(224, 161, 58, 0.65);
+  }
+
+  .za-hero__btn-icon {
+    width: 13px;
+    height: 13px;
+  }
+}

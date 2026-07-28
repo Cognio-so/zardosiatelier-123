@@ -43,7 +43,7 @@ export const enquirySchema = z.object({
   projectType: z.string().max(MAX_LINE_LENGTH).optional().default(""),
   projectBrief: z.string().min(1).max(MAX_BRIEF_LENGTH),
   honeypot: z.string().max(0).optional().default(""),
-  recaptchaToken: z.string().min(1),
+  recaptchaToken: z.string().optional().default(""),
   startedAt: z.number().int().positive(),
   formNonce: z.string().min(12).max(120),
   fileName: z.string().max(MAX_FILE_NAME_LENGTH).optional(),
@@ -117,10 +117,12 @@ function validateBusinessEmail(email: string) {
 async function verifyRecaptcha(token: string, action: string, remoteIp: string) {
   const secret = process.env.RECAPTCHA_SECRET_KEY ?? "";
   if (!secret) {
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("RECAPTCHA_SECRET_KEY is missing.");
-    }
-    return { success: true, score: 0.9 };
+    console.warn("RECAPTCHA_SECRET_KEY is not configured; using protected fallback checks.");
+    return { success: true, score: undefined };
+  }
+
+  if (!token || token.startsWith("recaptcha-")) {
+    throw new Error("Security verification is temporarily unavailable. Please try again.");
   }
 
   const body = new URLSearchParams({
@@ -290,7 +292,13 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
   const fingerprintHash = sha256([name, brand, country, email, whatsapp, projectType, projectBrief].join("|"));
   const ipHash = sha256(ipAddress || "unknown");
 
-  const recaptcha = await verifyRecaptcha(data.recaptchaToken, "enquiry_submit", ipAddress);
+  let recaptcha: { success: boolean; score?: number };
+  try {
+    recaptcha = await verifyRecaptcha(data.recaptchaToken, "enquiry_submit", ipAddress);
+  } catch (error) {
+    console.error("submitEnquiry recaptcha error:", error);
+    return { success: false, error: "Security verification failed. Please try again." };
+  }
 
   const currentMeta = pruneMeta(await readBlob<ContactMeta>(CONTACT_META_KEY, { submissions: [] }));
   if (isRateLimited(currentMeta, ipHash)) {
@@ -348,6 +356,8 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
       message,
       error && typeof error === "object" ? String((error as { code?: string }).code ?? "") : undefined,
     );
-    return { success: false, error: "Your enquiry was saved, but the confirmation email could not be sent." };
+    return { success: false, error: "Your inquiry was saved, but the email notification could not be sent. Please try again or contact us on WhatsApp." };
   }
 }
+
+

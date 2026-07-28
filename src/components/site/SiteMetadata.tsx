@@ -2,9 +2,10 @@ import { useRouterState } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { getSeoEntries } from "@/lib/admin-data";
+import { SEO_DESCRIPTION, SEO_TITLE, SITE_URL } from "@/lib/seo";
 
-const siteUrl = "https://www.zardosiatelier.com";
-const fallbackShareImage = `${siteUrl}/social-share.png`;
+const siteUrl = SITE_URL;
+const fallbackShareImage = `${siteUrl}/icon-512.png`;
 
 function normalizePage(pathname: string) {
   if (pathname === "/") return "Home";
@@ -42,17 +43,17 @@ export function SiteMetadata() {
     const pageUrl = pathname === "/" ? siteUrl : `${siteUrl}${pathname}`;
     const shareImage = entry.ogImage || fallbackShareImage;
 
-    document.title = entry.metaTitle;
-    upsertMeta('meta[name="description"]', "name", "description", entry.metaDescription);
+    document.title = SEO_TITLE;
+    upsertMeta('meta[name="description"]', "name", "description", SEO_DESCRIPTION);
     upsertMeta('meta[name="keywords"]', "name", "keywords", entry.keywords);
-    upsertMeta('meta[property="og:title"]', "property", "og:title", entry.metaTitle);
-    upsertMeta('meta[property="og:description"]', "property", "og:description", entry.metaDescription);
+    upsertMeta('meta[property="og:title"]', "property", "og:title", SEO_TITLE);
+    upsertMeta('meta[property="og:description"]', "property", "og:description", SEO_DESCRIPTION);
     upsertMeta('meta[property="og:url"]', "property", "og:url", pageUrl);
     upsertMeta('meta[property="og:image"]', "property", "og:image", shareImage);
     upsertMeta('meta[property="og:image:secure_url"]', "property", "og:image:secure_url", shareImage);
     upsertMeta('meta[property="og:image:alt"]', "property", "og:image:alt", "Zardosi Atelier logo");
-    upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", entry.metaTitle);
-    upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", entry.metaDescription);
+    upsertMeta('meta[name="twitter:title"]', "name", "twitter:title", SEO_TITLE);
+    upsertMeta('meta[name="twitter:description"]', "name", "twitter:description", SEO_DESCRIPTION);
     upsertMeta('meta[name="twitter:image"]', "name", "twitter:image", shareImage);
     upsertMeta('meta[name="twitter:image:alt"]', "name", "twitter:image:alt", "Zardosi Atelier logo");
     upsertMeta('meta[name="robots"]', "name", "robots", entry.robots);
@@ -62,3 +63,8 @@ export function SiteMetadata() {
 
   return null;
 }
+
+
+
+
+

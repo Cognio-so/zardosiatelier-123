@@ -11,16 +11,12 @@ import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact - Request a Quote | Zardosi Atelier" },
-      {
-        name: "description",
-        content:
-          "Request a quote or book a consultation with our embroidery atelier - response within two working days.",
-      },
-      { property: "og:title", content: "Contact - Zardosi Atelier" },
-      { property: "og:description", content: "Begin a project with our embroidery atelier." },
-      { property: "og:url", content: "/contact" },
-      { property: "og:image", content: portfolioHero },
+      { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
+      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      { property: "og:url", content: "https://www.zardosiatelier.com/contact" },
+      { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.zardosiatelier.com/contact" }],
   }),
@@ -138,3 +134,4 @@ function ContactPage() {
     </PageShell>
   );
 }
+
