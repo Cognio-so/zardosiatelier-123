@@ -213,12 +213,12 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#EFE8DD] py-10 sm:py-14">
+      <section className="bg-[#EFE8DD] py-6 sm:py-14">
         <div className="mx-auto max-w-[1380px] px-3 sm:px-4 lg:px-5">
-          <div className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 xl:gap-4">
+          <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-5 lg:gap-3 xl:gap-4">
             {techniques.map((item, i) => {
               const cardInner = (
-                <article className="group flex h-full w-full max-w-[260px] cursor-pointer flex-col items-center text-center">
+                <article className="group flex h-full w-full max-w-[390px] cursor-pointer flex-col items-center text-center sm:max-w-[300px] lg:max-w-[260px]">
                   <Lens zoomFactor={2.1} lensSize={120} isStatic={false}>
                   <div className="relative aspect-square w-full overflow-hidden bg-[#E5D8C8]">
                     <img
@@ -239,11 +239,11 @@ function HomePage() {
                     </div>
                   </Lens>
 
-                  <h3 className="mx-auto mt-4 flex min-h-[48px] w-full items-center justify-center px-1 text-center font-serif text-[20px] font-medium leading-[1.15] tracking-[-0.02em] text-[#2B241F]">
+                  <h3 className="mx-auto mt-3 flex min-h-[44px] w-full items-center justify-center px-1 text-center font-serif text-[20px] font-medium leading-[1.15] tracking-[-0.02em] text-[#2B241F]">
                     {item.name}
                   </h3>
 
-                  <p className="mx-auto mt-3 max-w-[220px] text-center text-[14px] font-normal leading-[1.5] text-[#5E554D]">
+                  <p className="mx-auto mt-2 max-w-[250px] text-center text-[14px] font-normal leading-[1.5] text-[#5E554D]">
                     {item.desc}
                   </p>
                 </article>
@@ -473,6 +473,7 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
+
 
 
 
