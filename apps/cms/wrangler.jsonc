@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zardosiatelier-cms-prod",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-02-24",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "cms.zardosiatelier.com",
+      "custom_domain": true,
+    },
+  ],
+  "vars": {
+    "EMDASH_SITE_URL": "https://cms.zardosiatelier.com",
+    "PUBLIC_SITE_URL": "https://www.zardosiatelier.com",
+    "SITE_ID": "zardosiatelier",
+    "EMDASH_PREVIEW_PATH_PATTERN": "/preview/{id}",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "zardosiatelier-cms-db-prod",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "zardosiatelier-cms-media-prod",
+    },
+  ],
+  // Sandboxed plugins require Worker Loader, available on Workers paid plans. Uncomment to enable:
+  // "worker_loaders": [{ "binding": "LOADER" }],
+  // General maintenance cron trigger
+  "triggers": {
+    "crons": ["* * * * *"],
+  },
+}

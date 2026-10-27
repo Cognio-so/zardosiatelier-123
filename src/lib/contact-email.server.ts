@@ -51,7 +51,7 @@ function getMailConfig(): MailConfig {
   const smtpUser = (process.env.SMTP_USER ?? process.env.GMAIL_USER ?? "").trim();
   const smtpPass = (process.env.SMTP_PASS ?? process.env.GMAIL_APP_PASSWORD ?? "").trim();
   const fromValue = (process.env.MAIL_FROM_EMAIL ?? process.env.MAIL_FROM ?? smtpUser).trim();
-  const fromEmail = parseMailbox(fromValue || "aryanthealgohype@gmail.com");
+  const fromEmail = parseMailbox(fromValue || "zardosiatelier@gmail.com");
   const fromName = (process.env.MAIL_FROM_NAME ?? "Zardosi Atelier").trim();
   const host = (process.env.SMTP_HOST ?? "smtp.gmail.com").trim();
   const port = Number(process.env.SMTP_PORT ?? "465");
@@ -69,7 +69,7 @@ function getMailConfig(): MailConfig {
     businessInbox: (
       process.env.BUSINESS_INBOX ??
       process.env.NOTIFICATION_EMAIL ??
-      "aryanthealgohype@gmail.com"
+      "zardosiatelier@gmail.com"
     ).trim(),
     replyInbox: (process.env.REPLY_INBOX ?? fromEmail).trim(),
   };
@@ -196,7 +196,7 @@ export async function sendEnquiryEmails(enquiry: StoredEnquiry): Promise<Deliver
   await withRetry(async () => {
     await transporter.sendMail({
       from,
-      to: "aryanthealgohype@gmail.com",
+      to: config.businessInbox,
       replyTo: enquiry.email,
       subject: "New Commission Inquiry | Zardosi Atelier",
       text: adminBody,
@@ -210,7 +210,7 @@ export async function sendEnquiryEmails(enquiry: StoredEnquiry): Promise<Deliver
     await transporter.sendMail({
       from,
       to: enquiry.email,
-      replyTo: "aryanthealgohype@gmail.com",
+      replyTo: config.replyInbox,
       subject: "Thank You for Contacting Zardosi Atelier",
       text: customerBody,
       html: textToHtml(customerBody),

@@ -1,0 +1,19 @@
+{
+  "siteId": "zardosiatelier",
+  "siteName": "Zardosi Atelier",
+  "publicOrigin": "https://www.zardosiatelier.com",
+  "cmsOrigin": "https://cms.zardosiatelier.com",
+  "defaultLocale": "en",
+  "collection": "posts",
+  "blogPath": "/blog",
+  "cloudflare": {
+    "worker": "zardosiatelier-cms-prod",
+    "database": "zardosiatelier-cms-db-prod",
+    "mediaBucket": "zardosiatelier-cms-media-prod"
+  },
+  "vercel": {
+    "scope": "algo-hype-analytics",
+    "project": "zarodsi-atelelier-website",
+    "projectId": "prj_ewdlpE57m4EbcNABZz1TmiuVWUat"
+  }
+}

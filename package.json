@@ -13,7 +13,12 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cms:dev": "pnpm --dir apps/cms dev",
+    "cms:build": "pnpm --dir apps/cms build",
+    "cms:typecheck": "pnpm --dir apps/cms typecheck",
+    "cms:doctor": "pnpm --dir apps/cms emdash doctor",
+    "cms:deploy": "pnpm --dir apps/cms deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

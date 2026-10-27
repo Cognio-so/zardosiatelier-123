@@ -1,0 +1,95 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "Zardosi Atelier Journal",
+    "description": "Editorial content for the Zardosi Atelier website",
+    "author": "Zardosi Atelier"
+  },
+  "settings": {
+    "title": "Zardosi Atelier Journal",
+    "tagline": "Stories of hand embroidery, couture craft, and the artisans behind every stitch",
+    "timezone": "Asia/Kolkata",
+    "dateFormat": "d MMMM yyyy"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "urlPattern": "https://www.zardosiatelier.com/blog/{slug}",
+      "supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
+      "commentsEnabled": false,
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "featured_image",
+          "label": "Cover Image",
+          "type": "image"
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text",
+          "searchable": true
+        },
+        {
+          "slug": "content",
+          "label": "Article",
+          "type": "portableText",
+          "required": true,
+          "searchable": true
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": true,
+      "collections": ["posts"],
+      "terms": [
+        { "slug": "craft-stories", "label": "Craft Stories" },
+        { "slug": "techniques", "label": "Techniques" },
+        { "slug": "atelier-notes", "label": "Atelier Notes" },
+        { "slug": "couture", "label": "Couture" }
+      ]
+    },
+    {
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": ["posts"],
+      "terms": []
+    }
+  ],
+  "bylines": [
+    {
+      "id": "byline-zardosi-editorial",
+      "slug": "zardosi-atelier",
+      "displayName": "Zardosi Atelier"
+    }
+  ],
+  "menus": [
+    {
+      "name": "primary",
+      "label": "Primary Navigation",
+      "items": [
+        { "type": "custom", "label": "Website", "url": "https://www.zardosiatelier.com" },
+        { "type": "custom", "label": "Journal", "url": "https://www.zardosiatelier.com/blog" }
+      ]
+    }
+  ],
+  "content": {
+    "posts": []
+  }
+}

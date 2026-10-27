@@ -2,12 +2,7 @@
 
 ## Required Mailbox
 
-Use a real mailbox on the sending domain:
-
-- `info@zardosiatelier.com`
-- or `contact@zardosiatelier.com`
-
-Do not authenticate SMTP with a personal Gmail account if you want SPF and DKIM alignment to pass for `zardosiatelier.com`.
+The current setup uses the authenticated Gmail mailbox `zardosiatelier@gmail.com` for low-volume enquiry notifications. For higher volume, use a mailbox on `zardosiatelier.com` so SPF and DKIM can align with the website domain.
 
 ## Required Environment Variables
 
@@ -15,14 +10,14 @@ Do not authenticate SMTP with a personal Gmail account if you want SPF and DKIM 
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=465
 SMTP_SECURE=true
-SMTP_USER=info@zardosiatelier.com
+SMTP_USER=zardosiatelier@gmail.com
 SMTP_PASS=your_google_app_password
-MAIL_FROM_EMAIL=info@zardosiatelier.com
+MAIL_FROM_EMAIL=zardosiatelier@gmail.com
 MAIL_FROM_NAME=Zardosi Atelier
-BUSINESS_INBOX=info@zardosiatelier.com
-REPLY_INBOX=info@zardosiatelier.com
+BUSINESS_INBOX=zardosiatelier@gmail.com
+NOTIFICATION_EMAIL=zardosiatelier@gmail.com
+REPLY_INBOX=zardosiatelier@gmail.com
 WEBSITE_URL=https://www.zardosiatelier.com
-EMAIL_LOGO_URL=https://www.zardosiatelier.com/email-logo.png
 COMPANY_NAME=Zardosi Atelier
 COMPANY_ADDRESS=Mumbai, Maharashtra, India
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret

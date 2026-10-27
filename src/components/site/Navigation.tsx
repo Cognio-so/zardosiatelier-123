@@ -5,6 +5,7 @@ import zaLogo from "@/assets/za-logo-opt.webp";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/portfolio", label: "Portfolio" },
+  { to: "/blog", label: "Journal" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -162,7 +163,8 @@ export function Navigation() {
         background: theme.bg,
         borderBottomColor: theme.border,
         backdropFilter: scrolled || open ? "blur(18px) saturate(145%)" : "blur(8px) saturate(115%)",
-        WebkitBackdropFilter: scrolled || open ? "blur(18px) saturate(145%)" : "blur(8px) saturate(115%)",
+        WebkitBackdropFilter:
+          scrolled || open ? "blur(18px) saturate(145%)" : "blur(8px) saturate(115%)",
         transition:
           "background 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
       }}
@@ -214,7 +216,8 @@ export function Navigation() {
             aria-label="Main navigation menu"
           >
             {navLinks.map((l) => {
-              const isActive = pathname === l.to;
+              const isActive =
+                pathname === l.to || (l.to !== "/" && pathname.startsWith(`${l.to}/`));
               return (
                 <Link
                   key={l.to}
@@ -241,7 +244,8 @@ export function Navigation() {
             style={{
               border: `1px solid ${theme.ctaBorder}`,
               color: theme.ctaText,
-              background: "linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
               transition:
                 "color 0.7s cubic-bezier(0.4,0,0.2,1), border-color 0.7s cubic-bezier(0.4,0,0.2,1)",
             }}
@@ -292,7 +296,7 @@ export function Navigation() {
       >
         <nav className="flex flex-col px-6 py-8 gap-5">
           {navLinks.map((l) => {
-            const isActive = pathname === l.to;
+            const isActive = pathname === l.to || (l.to !== "/" && pathname.startsWith(`${l.to}/`));
             return (
               <Link
                 key={l.to}
@@ -317,5 +321,3 @@ export function Navigation() {
     </header>
   );
 }
-
-

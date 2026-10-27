@@ -9,89 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ZardoziRouteImport } from './routes/zardozi'
-import { Route as SequinRouteImport } from './routes/sequin'
-import { Route as ReshamZariRouteImport } from './routes/resham-zari'
-import { Route as ProcessRouteImport } from './routes/process'
-import { Route as PortfolioRouteImport } from './routes/portfolio'
-import { Route as PearlWorkRouteImport } from './routes/pearl-work'
-import { Route as IndustriesRouteImport } from './routes/industries'
-import { Route as CrystalStoneRouteImport } from './routes/crystal-stone'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AdminLoginRouteImport } from './routes/admin-login'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AccountRouteImport } from './routes/account'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CrystalStoneRouteImport } from './routes/crystal-stone'
+import { Route as IndustriesRouteImport } from './routes/industries'
+import { Route as PearlWorkRouteImport } from './routes/pearl-work'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as ProcessRouteImport } from './routes/process'
+import { Route as ReshamZariRouteImport } from './routes/resham-zari'
+import { Route as SequinRouteImport } from './routes/sequin'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ZardoziRouteImport } from './routes/zardozi'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as PortfolioCategoryRouteImport } from './routes/portfolio.$category'
-import { Route as AdminUsersRouteImport } from './routes/admin/users'
-import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
-import { Route as AdminSeoRouteImport } from './routes/admin/seo'
-import { Route as AdminPortfolioRouteImport } from './routes/admin/portfolio'
-import { Route as AdminHomepageRouteImport } from './routes/admin/homepage'
-import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminEnquiriesRouteImport } from './routes/admin/enquiries'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
+import { Route as AdminHomepageRouteImport } from './routes/admin/homepage'
+import { Route as AdminPortfolioRouteImport } from './routes/admin/portfolio'
+import { Route as AdminSeoRouteImport } from './routes/admin/seo'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as PortfolioCategoryRouteImport } from './routes/portfolio.$category'
+import { Route as ApiCmsPreviewRouteImport } from './routes/api.cms.preview'
+import { Route as ApiCmsRevalidateRouteImport } from './routes/api.cms.revalidate'
 import { Route as PortfolioItemIdRouteImport } from './routes/portfolio.item.$id'
+import { Route as PreviewPostsIdRouteImport } from './routes/preview.posts.$id'
+import { Route as ApiCmsPreviewExitRouteImport } from './routes/api.cms.preview.exit'
 
-const ZardoziRoute = ZardoziRouteImport.update({
-  id: '/zardozi',
-  path: '/zardozi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SequinRoute = SequinRouteImport.update({
-  id: '/sequin',
-  path: '/sequin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReshamZariRoute = ReshamZariRouteImport.update({
-  id: '/resham-zari',
-  path: '/resham-zari',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProcessRoute = ProcessRouteImport.update({
-  id: '/process',
-  path: '/process',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PortfolioRoute = PortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PearlWorkRoute = PearlWorkRouteImport.update({
-  id: '/pearl-work',
-  path: '/pearl-work',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndustriesRoute = IndustriesRouteImport.update({
-  id: '/industries',
-  path: '/industries',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CrystalStoneRoute = CrystalStoneRouteImport.update({
-  id: '/crystal-stone',
-  path: '/crystal-stone',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin-login',
-  path: '/admin-login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccountRoute = AccountRouteImport.update({
-  id: '/account',
-  path: '/account',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -99,9 +51,74 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CrystalStoneRoute = CrystalStoneRouteImport.update({
+  id: '/crystal-stone',
+  path: '/crystal-stone',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesRoute = IndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PearlWorkRoute = PearlWorkRouteImport.update({
+  id: '/pearl-work',
+  path: '/pearl-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcessRoute = ProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReshamZariRoute = ReshamZariRouteImport.update({
+  id: '/resham-zari',
+  path: '/resham-zari',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SequinRoute = SequinRouteImport.update({
+  id: '/sequin',
+  path: '/sequin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZardoziRoute = ZardoziRouteImport.update({
+  id: '/zardozi',
+  path: '/zardozi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -109,34 +126,9 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const PortfolioCategoryRoute = PortfolioCategoryRouteImport.update({
-  id: '/$category',
-  path: '/$category',
-  getParentRoute: () => PortfolioRoute,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSeoRoute = AdminSeoRouteImport.update({
-  id: '/seo',
-  path: '/seo',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPortfolioRoute = AdminPortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminHomepageRoute = AdminHomepageRouteImport.update({
-  id: '/homepage',
-  path: '/homepage',
+const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
+  id: '/enquiries',
+  path: '/enquiries',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminGalleryRoute = AdminGalleryRouteImport.update({
@@ -144,15 +136,65 @@ const AdminGalleryRoute = AdminGalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminEnquiriesRoute = AdminEnquiriesRouteImport.update({
-  id: '/enquiries',
-  path: '/enquiries',
+const AdminHomepageRoute = AdminHomepageRouteImport.update({
+  id: '/homepage',
+  path: '/homepage',
   getParentRoute: () => AdminRoute,
+} as any)
+const AdminPortfolioRoute = AdminPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSeoRoute = AdminSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const PortfolioCategoryRoute = PortfolioCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => PortfolioRoute,
+} as any)
+const ApiCmsPreviewRoute = ApiCmsPreviewRouteImport.update({
+  id: '/api/cms/preview',
+  path: '/api/cms/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCmsRevalidateRoute = ApiCmsRevalidateRouteImport.update({
+  id: '/api/cms/revalidate',
+  path: '/api/cms/revalidate',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PortfolioItemIdRoute = PortfolioItemIdRouteImport.update({
   id: '/item/$id',
   path: '/item/$id',
   getParentRoute: () => PortfolioRoute,
+} as any)
+const PreviewPostsIdRoute = PreviewPostsIdRouteImport.update({
+  id: '/preview/posts/$id',
+  path: '/preview/posts/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCmsPreviewExitRoute = ApiCmsPreviewExitRouteImport.update({
+  id: '/exit',
+  path: '/exit',
+  getParentRoute: () => ApiCmsPreviewRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -161,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
@@ -169,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -177,15 +221,21 @@ export interface FileRoutesByFullPath {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/cms/preview': typeof ApiCmsPreviewRouteWithChildren
+  '/api/cms/revalidate': typeof ApiCmsRevalidateRoute
   '/portfolio/item/$id': typeof PortfolioItemIdRoute
+  '/preview/posts/$id': typeof PreviewPostsIdRoute
+  '/api/cms/preview/exit': typeof ApiCmsPreviewExitRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
@@ -194,6 +244,7 @@ export interface FileRoutesByTo {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -202,9 +253,14 @@ export interface FileRoutesByTo {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin': typeof AdminIndexRoute
+  '/api/cms/preview': typeof ApiCmsPreviewRouteWithChildren
+  '/api/cms/revalidate': typeof ApiCmsRevalidateRoute
   '/portfolio/item/$id': typeof PortfolioItemIdRoute
+  '/preview/posts/$id': typeof PreviewPostsIdRoute
+  '/api/cms/preview/exit': typeof ApiCmsPreviewExitRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -213,6 +269,7 @@ export interface FileRoutesById {
   '/account': typeof AccountRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/crystal-stone': typeof CrystalStoneRoute
   '/industries': typeof IndustriesRoute
@@ -221,6 +278,7 @@ export interface FileRoutesById {
   '/process': typeof ProcessRoute
   '/resham-zari': typeof ReshamZariRoute
   '/sequin': typeof SequinRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/zardozi': typeof ZardoziRoute
   '/admin/enquiries': typeof AdminEnquiriesRoute
   '/admin/gallery': typeof AdminGalleryRoute
@@ -229,9 +287,14 @@ export interface FileRoutesById {
   '/admin/seo': typeof AdminSeoRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/portfolio/$category': typeof PortfolioCategoryRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/cms/preview': typeof ApiCmsPreviewRouteWithChildren
+  '/api/cms/revalidate': typeof ApiCmsRevalidateRoute
   '/portfolio/item/$id': typeof PortfolioItemIdRoute
+  '/preview/posts/$id': typeof PreviewPostsIdRoute
+  '/api/cms/preview/exit': typeof ApiCmsPreviewExitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -241,6 +304,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/admin-login'
+    | '/blog'
     | '/contact'
     | '/crystal-stone'
     | '/industries'
@@ -249,6 +313,7 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
+    | '/sitemap.xml'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -257,15 +322,21 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/blog/$slug'
     | '/portfolio/$category'
     | '/admin/'
+    | '/api/cms/preview'
+    | '/api/cms/revalidate'
     | '/portfolio/item/$id'
+    | '/preview/posts/$id'
+    | '/api/cms/preview/exit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/account'
     | '/admin-login'
+    | '/blog'
     | '/contact'
     | '/crystal-stone'
     | '/industries'
@@ -274,6 +345,7 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
+    | '/sitemap.xml'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -282,9 +354,14 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/blog/$slug'
     | '/portfolio/$category'
     | '/admin'
+    | '/api/cms/preview'
+    | '/api/cms/revalidate'
     | '/portfolio/item/$id'
+    | '/preview/posts/$id'
+    | '/api/cms/preview/exit'
   id:
     | '__root__'
     | '/'
@@ -292,6 +369,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/admin-login'
+    | '/blog'
     | '/contact'
     | '/crystal-stone'
     | '/industries'
@@ -300,6 +378,7 @@ export interface FileRouteTypes {
     | '/process'
     | '/resham-zari'
     | '/sequin'
+    | '/sitemap.xml'
     | '/zardozi'
     | '/admin/enquiries'
     | '/admin/gallery'
@@ -308,9 +387,14 @@ export interface FileRouteTypes {
     | '/admin/seo'
     | '/admin/settings'
     | '/admin/users'
+    | '/blog/$slug'
     | '/portfolio/$category'
     | '/admin/'
+    | '/api/cms/preview'
+    | '/api/cms/revalidate'
     | '/portfolio/item/$id'
+    | '/preview/posts/$id'
+    | '/api/cms/preview/exit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -319,6 +403,7 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   AdminRoute: typeof AdminRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   CrystalStoneRoute: typeof CrystalStoneRoute
   IndustriesRoute: typeof IndustriesRoute
@@ -327,93 +412,20 @@ export interface RootRouteChildren {
   ProcessRoute: typeof ProcessRoute
   ReshamZariRoute: typeof ReshamZariRoute
   SequinRoute: typeof SequinRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ZardoziRoute: typeof ZardoziRoute
+  ApiCmsPreviewRoute: typeof ApiCmsPreviewRouteWithChildren
+  ApiCmsRevalidateRoute: typeof ApiCmsRevalidateRoute
+  PreviewPostsIdRoute: typeof PreviewPostsIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/zardozi': {
-      id: '/zardozi'
-      path: '/zardozi'
-      fullPath: '/zardozi'
-      preLoaderRoute: typeof ZardoziRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sequin': {
-      id: '/sequin'
-      path: '/sequin'
-      fullPath: '/sequin'
-      preLoaderRoute: typeof SequinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resham-zari': {
-      id: '/resham-zari'
-      path: '/resham-zari'
-      fullPath: '/resham-zari'
-      preLoaderRoute: typeof ReshamZariRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/process': {
-      id: '/process'
-      path: '/process'
-      fullPath: '/process'
-      preLoaderRoute: typeof ProcessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/portfolio': {
-      id: '/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pearl-work': {
-      id: '/pearl-work'
-      path: '/pearl-work'
-      fullPath: '/pearl-work'
-      preLoaderRoute: typeof PearlWorkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/industries': {
-      id: '/industries'
-      path: '/industries'
-      fullPath: '/industries'
-      preLoaderRoute: typeof IndustriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/crystal-stone': {
-      id: '/crystal-stone'
-      path: '/crystal-stone'
-      fullPath: '/crystal-stone'
-      preLoaderRoute: typeof CrystalStoneRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin-login': {
-      id: '/admin-login'
-      path: '/admin-login'
-      fullPath: '/admin-login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/account': {
-      id: '/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AccountRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -423,11 +435,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crystal-stone': {
+      id: '/crystal-stone'
+      path: '/crystal-stone'
+      fullPath: '/crystal-stone'
+      preLoaderRoute: typeof CrystalStoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries': {
+      id: '/industries'
+      path: '/industries'
+      fullPath: '/industries'
+      preLoaderRoute: typeof IndustriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pearl-work': {
+      id: '/pearl-work'
+      path: '/pearl-work'
+      fullPath: '/pearl-work'
+      preLoaderRoute: typeof PearlWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/process': {
+      id: '/process'
+      path: '/process'
+      fullPath: '/process'
+      preLoaderRoute: typeof ProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resham-zari': {
+      id: '/resham-zari'
+      path: '/resham-zari'
+      fullPath: '/resham-zari'
+      preLoaderRoute: typeof ReshamZariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sequin': {
+      id: '/sequin'
+      path: '/sequin'
+      fullPath: '/sequin'
+      preLoaderRoute: typeof SequinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zardozi': {
+      id: '/zardozi'
+      path: '/zardozi'
+      fullPath: '/zardozi'
+      preLoaderRoute: typeof ZardoziRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -437,46 +540,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/portfolio/$category': {
-      id: '/portfolio/$category'
-      path: '/$category'
-      fullPath: '/portfolio/$category'
-      preLoaderRoute: typeof PortfolioCategoryRouteImport
-      parentRoute: typeof PortfolioRoute
-    }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/seo': {
-      id: '/admin/seo'
-      path: '/seo'
-      fullPath: '/admin/seo'
-      preLoaderRoute: typeof AdminSeoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/portfolio': {
-      id: '/admin/portfolio'
-      path: '/portfolio'
-      fullPath: '/admin/portfolio'
-      preLoaderRoute: typeof AdminPortfolioRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/homepage': {
-      id: '/admin/homepage'
-      path: '/homepage'
-      fullPath: '/admin/homepage'
-      preLoaderRoute: typeof AdminHomepageRouteImport
+    '/admin/enquiries': {
+      id: '/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AdminEnquiriesRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/gallery': {
@@ -486,12 +554,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminGalleryRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/enquiries': {
-      id: '/admin/enquiries'
-      path: '/enquiries'
-      fullPath: '/admin/enquiries'
-      preLoaderRoute: typeof AdminEnquiriesRouteImport
+    '/admin/homepage': {
+      id: '/admin/homepage'
+      path: '/homepage'
+      fullPath: '/admin/homepage'
+      preLoaderRoute: typeof AdminHomepageRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/admin/portfolio': {
+      id: '/admin/portfolio'
+      path: '/portfolio'
+      fullPath: '/admin/portfolio'
+      preLoaderRoute: typeof AdminPortfolioRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/seo': {
+      id: '/admin/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminSeoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/portfolio/$category': {
+      id: '/portfolio/$category'
+      path: '/$category'
+      fullPath: '/portfolio/$category'
+      preLoaderRoute: typeof PortfolioCategoryRouteImport
+      parentRoute: typeof PortfolioRoute
+    }
+    '/api/cms/preview': {
+      id: '/api/cms/preview'
+      path: '/api/cms/preview'
+      fullPath: '/api/cms/preview'
+      preLoaderRoute: typeof ApiCmsPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cms/revalidate': {
+      id: '/api/cms/revalidate'
+      path: '/api/cms/revalidate'
+      fullPath: '/api/cms/revalidate'
+      preLoaderRoute: typeof ApiCmsRevalidateRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/portfolio/item/$id': {
       id: '/portfolio/item/$id'
@@ -499,6 +623,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/portfolio/item/$id'
       preLoaderRoute: typeof PortfolioItemIdRouteImport
       parentRoute: typeof PortfolioRoute
+    }
+    '/preview/posts/$id': {
+      id: '/preview/posts/$id'
+      path: '/preview/posts/$id'
+      fullPath: '/preview/posts/$id'
+      preLoaderRoute: typeof PreviewPostsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cms/preview/exit': {
+      id: '/api/cms/preview/exit'
+      path: '/exit'
+      fullPath: '/api/cms/preview/exit'
+      preLoaderRoute: typeof ApiCmsPreviewExitRouteImport
+      parentRoute: typeof ApiCmsPreviewRoute
     }
   }
 }
@@ -527,6 +665,16 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 interface PortfolioRouteChildren {
   PortfolioCategoryRoute: typeof PortfolioCategoryRoute
   PortfolioItemIdRoute: typeof PortfolioItemIdRoute
@@ -541,12 +689,25 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
   PortfolioRouteChildren,
 )
 
+interface ApiCmsPreviewRouteChildren {
+  ApiCmsPreviewExitRoute: typeof ApiCmsPreviewExitRoute
+}
+
+const ApiCmsPreviewRouteChildren: ApiCmsPreviewRouteChildren = {
+  ApiCmsPreviewExitRoute: ApiCmsPreviewExitRoute,
+}
+
+const ApiCmsPreviewRouteWithChildren = ApiCmsPreviewRoute._addFileChildren(
+  ApiCmsPreviewRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
   AdminRoute: AdminRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   CrystalStoneRoute: CrystalStoneRoute,
   IndustriesRoute: IndustriesRoute,
@@ -555,7 +716,11 @@ const rootRouteChildren: RootRouteChildren = {
   ProcessRoute: ProcessRoute,
   ReshamZariRoute: ReshamZariRoute,
   SequinRoute: SequinRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ZardoziRoute: ZardoziRoute,
+  ApiCmsPreviewRoute: ApiCmsPreviewRouteWithChildren,
+  ApiCmsRevalidateRoute: ApiCmsRevalidateRoute,
+  PreviewPostsIdRoute: PreviewPostsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
