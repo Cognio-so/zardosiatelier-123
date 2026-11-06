@@ -6,7 +6,10 @@ import type { StoredEnquiry } from "./contact-types";
 type DeliveryResult = {
   adminMessageId?: string;
   clientMessageId?: string;
+  confirmationSent: boolean;
 };
+
+export type EmailAttachment = { fileName: string; fileType: string; buffer: Buffer };
 
 type MailConfig = {
   host: string;
@@ -47,10 +50,14 @@ function parseMailbox(value: string) {
 }
 
 function getMailConfig(): MailConfig {
-  const websiteUrl = (process.env.WEBSITE_URL ?? "https://www.zardosiatelier.com").replace(/\/$/, "");
-  const smtpUser = (process.env.SMTP_USER ?? process.env.GMAIL_USER ?? "").trim();
-  const smtpPass = (process.env.SMTP_PASS ?? process.env.GMAIL_APP_PASSWORD ?? "").trim();
-  const fromValue = (process.env.MAIL_FROM_EMAIL ?? process.env.MAIL_FROM ?? smtpUser).trim();
+  const websiteUrl = (process.env.WEBSITE_URL ?? "https://www.zardosiatelier.com").replace(
+    /\/$/,
+    "",
+  );
+  const smtpUser = process.env.SMTP_USER?.trim() || process.env.GMAIL_USER?.trim() || "";
+  const smtpPass = process.env.SMTP_PASS?.trim() || process.env.GMAIL_APP_PASSWORD?.trim() || "";
+  const fromValue =
+    process.env.MAIL_FROM_EMAIL?.trim() || process.env.MAIL_FROM?.trim() || smtpUser;
   const fromEmail = parseMailbox(fromValue || "zardosiatelier@gmail.com");
   const fromName = (process.env.MAIL_FROM_NAME ?? "Zardosi Atelier").trim();
   const host = (process.env.SMTP_HOST ?? "smtp.gmail.com").trim();
@@ -121,6 +128,18 @@ function adminText(enquiry: StoredEnquiry, config: MailConfig) {
     "Project Type:",
     enquiry.projectType || "Not provided",
     "",
+    "Brand / Maison:",
+    enquiry.brand || "Not provided",
+    "",
+    "Country:",
+    enquiry.country || "Not provided",
+    "",
+    "WhatsApp:",
+    enquiry.whatsapp || "Not provided",
+    "",
+    "Design File:",
+    enquiry.file?.fileName || "Not attached",
+    "",
     "Project Details:",
     enquiry.projectBrief,
     "",
@@ -180,7 +199,10 @@ async function withRetry<T>(task: () => Promise<T>) {
   throw lastError;
 }
 
-export async function sendEnquiryEmails(enquiry: StoredEnquiry): Promise<DeliveryResult> {
+export async function sendEnquiryEmails(
+  enquiry: StoredEnquiry,
+  attachment?: EmailAttachment | null,
+): Promise<DeliveryResult> {
   const config = getMailConfig();
   ensureMailConfig(config);
 
@@ -201,23 +223,36 @@ export async function sendEnquiryEmails(enquiry: StoredEnquiry): Promise<Deliver
       subject: "New Commission Inquiry | Zardosi Atelier",
       text: adminBody,
       html: textToHtml(adminBody),
+      attachments: attachment
+        ? [
+            {
+              filename: attachment.fileName,
+              content: attachment.buffer,
+              contentType: attachment.fileType,
+            },
+          ]
+        : [],
       messageId: adminMessageId,
       date: new Date(),
     });
   });
 
-  await withRetry(async () => {
-    await transporter.sendMail({
-      from,
-      to: enquiry.email,
-      replyTo: config.replyInbox,
-      subject: "Thank You for Contacting Zardosi Atelier",
-      text: customerBody,
-      html: textToHtml(customerBody),
-      messageId: clientMessageId,
-      date: new Date(),
+  try {
+    await withRetry(async () => {
+      await transporter.sendMail({
+        from,
+        to: enquiry.email,
+        replyTo: config.replyInbox,
+        subject: "Thank You for Contacting Zardosi Atelier",
+        text: customerBody,
+        html: textToHtml(customerBody),
+        messageId: clientMessageId,
+        date: new Date(),
+      });
     });
-  });
-
-  return { adminMessageId, clientMessageId };
+    return { adminMessageId, clientMessageId, confirmationSent: true };
+  } catch (error) {
+    console.error("Enquiry confirmation email failed:", error);
+    return { adminMessageId, confirmationSent: false };
+  }
 }

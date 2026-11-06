@@ -39,6 +39,7 @@ export function EnquiryForm({
 }: EnquiryFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [confirmationSent, setConfirmationSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const submittedOnce = useRef(false);
   const { enabled: recaptchaEnabled, ready, error: recaptchaError, execute } = useRecaptchaV3();
@@ -80,8 +81,8 @@ export function EnquiryForm({
       let fileType: string | undefined;
 
       if (file && file.size > 0) {
-        if (file.size > 10 * 1024 * 1024) {
-          throw new Error("Please upload a file smaller than 10 MB.");
+        if (file.size > 3 * 1024 * 1024) {
+          throw new Error("Please upload a file smaller than 3 MB.");
         }
         fileBase64 = await fileToDataUrl(file);
         fileName = file.name;
@@ -114,11 +115,13 @@ export function EnquiryForm({
       }
 
       setSubmitted(true);
+      setConfirmationSent(result.confirmationSent ?? false);
       onSubmitted?.();
       currentForm.reset();
     } catch (submissionError) {
       submittedOnce.current = false;
-      const message = submissionError instanceof Error ? submissionError.message : "Failed to send inquiry.";
+      const message =
+        submissionError instanceof Error ? submissionError.message : "Failed to send inquiry.";
       console.error("Enquiry form submission failed:", submissionError);
       setError(message);
     } finally {
@@ -133,7 +136,9 @@ export function EnquiryForm({
           <span className="eyebrow">Inquiry Sent Successfully</span>
           <h3 className="mt-4 font-serif text-3xl">Thank You</h3>
           <p className="mt-3 text-sm text-ink-soft">
-            We have received your inquiry and sent a confirmation email to your inbox.
+            {confirmationSent
+              ? "We have received your inquiry and sent a confirmation email to your inbox."
+              : "We have received your inquiry. Our team will contact you soon."}
           </p>
         </div>
       </div>
@@ -142,7 +147,11 @@ export function EnquiryForm({
 
   if (variant === "contact") {
     return (
-      <form className={className ?? "border border-gold/20 bg-champagne p-5 sm:p-8"} onSubmit={handleSubmit} noValidate>
+      <form
+        className={className ?? "border border-gold/20 bg-champagne p-5 sm:p-8"}
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {[
             ["Full Name", "name", "text"],
@@ -163,15 +172,28 @@ export function EnquiryForm({
                 id={`input-${variant}-${name}`}
                 name={name}
                 type={type}
-                required={type !== "file" && name !== "brand" && name !== "country" && name !== "whatsapp"}
+                required={
+                  type !== "file" && name !== "brand" && name !== "country" && name !== "whatsapp"
+                }
                 accept={type === "file" ? ".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx" : undefined}
                 className="w-full border-b border-ink/25 bg-transparent py-2 text-[15px] font-medium transition-colors file:mr-3 file:border-0 file:bg-transparent file:text-[10px] file:uppercase file:tracking-[0.2em] file:text-gold focus:border-gold focus:outline-none"
               />
+              {name === "file" ? (
+                <p className="mt-2 text-xs text-ink-soft">
+                  PDF, image, or Word document up to 3 MB.
+                </p>
+              ) : null}
             </div>
           ))}
           <div className="hidden" aria-hidden="true">
             <label htmlFor={`input-${variant}-website`}>Website</label>
-            <input id={`input-${variant}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+            <input
+              id={`input-${variant}-website`}
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </div>
           <div className="sm:col-span-2">
             <label
@@ -191,14 +213,18 @@ export function EnquiryForm({
           </div>
         </div>
         {error ? <p className="mt-4 text-sm text-red-700">Failed to Send: {error}</p> : null}
-        {recaptchaEnabled && !ready && !error ? <p className="mt-4 text-xs text-ink-soft">Loading security check...</p> : null}
-        {recaptchaError && !error ? <p className="mt-4 text-xs text-ink-soft">{recaptchaError}</p> : null}
+        {recaptchaEnabled && !ready && !error ? (
+          <p className="mt-4 text-xs text-ink-soft">Loading security check...</p>
+        ) : null}
+        {recaptchaError && !error ? (
+          <p className="mt-4 text-xs text-ink-soft">{recaptchaError}</p>
+        ) : null}
         <button
           type="submit"
           disabled={submitting}
           className="mt-8 w-full border border-ink bg-ink px-8 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-ivory transition-colors hover:border-gold hover:bg-gold hover:text-[#120c09] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {submitting ? "Sending..." : submitLabel ?? "Send Request"}
+          {submitting ? "Sending..." : (submitLabel ?? "Send Request")}
         </button>
       </form>
     );
@@ -213,7 +239,13 @@ export function EnquiryForm({
       <Field label="Project Type" name="subject" />
       <div className="hidden" aria-hidden="true">
         <label htmlFor={`input-${variant}-website`}>Website</label>
-        <input id={`input-${variant}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+        <input
+          id={`input-${variant}-website`}
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
       <div>
         <label
@@ -232,14 +264,16 @@ export function EnquiryForm({
         />
       </div>
       {error ? <p className="text-sm text-red-700">Failed to Send: {error}</p> : null}
-      {recaptchaEnabled && !ready && !error ? <p className="text-xs text-ink-soft">Loading security check...</p> : null}
+      {recaptchaEnabled && !ready && !error ? (
+        <p className="text-xs text-ink-soft">Loading security check...</p>
+      ) : null}
       {recaptchaError && !error ? <p className="text-xs text-ink-soft">{recaptchaError}</p> : null}
       <button
         type="submit"
         disabled={submitting}
         className="w-full bg-ink px-8 py-4 text-[10px] uppercase tracking-[0.3em] text-ivory transition hover:bg-gold hover:text-[#120c09] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        {submitting ? "Sending..." : submitLabel ?? "Submit Inquiry"}
+        {submitting ? "Sending..." : (submitLabel ?? "Submit Inquiry")}
       </button>
     </form>
   );
@@ -264,4 +298,3 @@ function Field({ label, name, type = "text" }: { label: string; name: string; ty
     </div>
   );
 }
-
