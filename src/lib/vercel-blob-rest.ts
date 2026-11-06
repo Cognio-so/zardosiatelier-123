@@ -28,7 +28,7 @@ export type PutBlobOptions = {
 };
 
 const PLACEHOLDER_TOKEN = "your_vercel_blob_token_here";
-const BLOB_API_BASE = "https://vercel.com/api/blob";
+const BLOB_API_BASE = "https://blob.vercel-storage.com";
 const BLOB_API_VERSION = "12";
 
 export function hasBlobToken(token: string) {

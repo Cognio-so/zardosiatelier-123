@@ -73,21 +73,21 @@ function PortfolioCategoryPage() {
               <p className="mt-3 text-sm text-ink-soft">Upload one in Admin - Portfolio and choose {category.name}.</p>
             </div>
           ) : (
-            <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+            <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 xl:columns-4">
               {filtered.map((item, index) => (
-                <Reveal key={item.id} delay={Math.min(index * 40, 240)} className="mb-4 break-inside-avoid">
+                <Reveal key={item.id} delay={Math.min(index * 40, 240)} className="mb-3 break-inside-avoid">
                   <a href={`/portfolio/item/${item.id}`} className="group block overflow-hidden bg-[#EDE5D8]">
                     <img
                       src={item.thumbnailUrl ?? item.url}
                       alt={item.caption}
                       loading="lazy"
                       decoding="async"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
                       className="h-auto w-full object-cover transition duration-700 group-hover:scale-105"
                     />
-                    <div className="bg-[#1A100B] px-4 py-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">{item.tag}</p>
-                      <h3 className="mt-1 font-serif text-xl text-ivory">{item.caption}</h3>
+                    <div className="bg-[#1A100B] p-3 sm:p-4">
+                      <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#C9A84C] sm:text-[10px]">{item.tag}</p>
+                      <h3 className="mt-1 font-serif text-sm leading-snug text-ivory sm:text-lg lg:text-xl">{item.caption}</h3>
                     </div>
                   </a>
                 </Reveal>

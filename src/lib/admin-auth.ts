@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD ?? "palack@2026";
 const SESSION_KEY = "za_admin_session";
 
 export interface AdminSession {
@@ -71,6 +71,6 @@ export function getSessionToken(): string | null {
 }
 
 export function getStoredPassword(): string {
-  if (typeof window === "undefined") return "zardosi@admin2024";
-  return localStorage.getItem("za_admin_pass") ?? "zardosi@admin2024";
+  if (typeof window === "undefined") return "palack@2026";
+  return localStorage.getItem("za_admin_pass") ?? "palack@2026";
 }

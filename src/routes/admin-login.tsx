@@ -10,8 +10,11 @@ export const Route = createFileRoute("/admin-login")({
   component: AdminLoginPage,
 });
 
+const ADMIN_USERNAME = "palack@2026";
+
 function AdminLoginPage() {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,10 +30,14 @@ function AdminLoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!password.trim()) return;
+    if (!username.trim() || !password.trim()) return;
     setLoading(true);
     setError("");
     try {
+      // Validate username on client side before hitting server
+      if (username.trim() !== ADMIN_USERNAME) {
+        throw new Error("Invalid credentials");
+      }
       const session = await loginAdmin({ data: { password } });
       saveSession(session);
       if (typeof window !== "undefined") {
@@ -50,7 +57,7 @@ function AdminLoginPage() {
       }
       await navigate({ to: "/admin" });
     } catch {
-      setError("Invalid password. Please try again.");
+      setError("Invalid username or password. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -118,10 +125,26 @@ function AdminLoginPage() {
             Welcome back
           </h2>
           <p className="text-[#555] text-sm mb-6">
-            Enter your admin password to continue.
+            Enter your credentials to access the admin panel.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Username input */}
+            <div>
+              <label className="block text-[#666] text-xs uppercase tracking-wider mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter admin username"
+                autoFocus
+                autoComplete="username"
+                className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-4 py-3 text-white text-sm placeholder-[#333] focus:outline-none focus:border-[#C9A227]/60 focus:ring-1 focus:ring-[#C9A227]/20 transition-all"
+              />
+            </div>
+
             {/* Password input */}
             <div>
               <label className="block text-[#666] text-xs uppercase tracking-wider mb-2">
@@ -133,7 +156,7 @@ function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter admin password"
-                  autoFocus
+                  autoComplete="current-password"
                   className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-xl px-4 py-3 text-white text-sm placeholder-[#333] focus:outline-none focus:border-[#C9A227]/60 focus:ring-1 focus:ring-[#C9A227]/20 transition-all pr-11"
                 />
                 <button
@@ -164,7 +187,7 @@ function AdminLoginPage() {
             {/* Submit */}
             <button
               type="submit"
-              disabled={loading || !password.trim()}
+              disabled={loading || !username.trim() || !password.trim()}
               className="w-full py-3 rounded-xl bg-[#C9A227] text-black font-semibold text-sm hover:bg-[#B8911E] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(201,162,39,0.3)] hover:shadow-[0_4px_30px_rgba(201,162,39,0.4)]"
             >
               {loading ? (

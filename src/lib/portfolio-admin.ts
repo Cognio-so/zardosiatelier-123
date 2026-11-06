@@ -5,7 +5,7 @@ import { deleteBlob, hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest
 
 const METADATA_KEY = "portfolio-data.json";
 function getAdminPass() {
-  return process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+  return process.env.ADMIN_PASSWORD ?? "palack@2026";
 }
 function getBlobToken() {
   return process.env.BLOB_READ_WRITE_TOKEN ?? "";
@@ -47,120 +47,75 @@ const defaultAssetConfig: Record<
     tag: "Couture Studies",
     priority: 0,
   },
-  "portfolio-hero": {
-    caption: "Portfolio Archive Hero Image",
-    tag: "Couture Studies",
-    priority: 20,
-  },
   collection: {
     caption: "Couture Collection Showcase",
     tag: "Couture Studies",
-    priority: 40,
-  },
-  "hero-embroidery": {
-    caption: "Homepage Hero Embroidery Detail",
-    tag: "Couture Studies",
-    priority: 60,
-  },
-  "hero-zardosi": {
-    caption: "Zardozi Hero Embroidery Detail",
-    tag: "Zardozi",
-    priority: 80,
+    priority: 10,
   },
   zardozi: {
     caption: "Traditional Gold Zardozi Hand Embroidery",
     tag: "Zardozi",
-    priority: 100,
+    priority: 20,
   },
   "zardozi-paisley": {
-    caption: "Zardozi Paisley Surface Work",
+    caption: "Gold Wire Zardozi Paisley Swatch on Raw Silk",
     tag: "Zardozi",
-    priority: 120,
+    priority: 25,
   },
-  sequin: {
-    caption: "Hand-Stitched Sequin Embellishment",
-    tag: "Sequin",
-    priority: 200,
+  "technique-zardosi": {
+    caption: "Raised Dabka & Salma Zardozi Hand Study",
+    tag: "Zardozi",
+    priority: 30,
   },
   crystal: {
     caption: "Crystal and Stone Couture Surface Work",
     tag: "Crystal & Stone Work",
-    priority: 300,
+    priority: 40,
+  },
+  "technique-crystal": {
+    caption: "Precision Crystal Setting on Sheer Tulle",
+    tag: "Crystal & Stone Work",
+    priority: 45,
   },
   "resham-zari": {
     caption: "Resham and Zari Threadwork Detail",
     tag: "Resham & Zari",
-    priority: 400,
+    priority: 50,
   },
   "pearl-work": {
     caption: "Pearl and Seed Bead Hand Embroidery",
     tag: "Pearl Work",
-    priority: 500,
-  },
-  "technique-zardosi": {
-    caption: "Technique Study - Zardozi",
-    tag: "Zardozi",
-    priority: 600,
-  },
-  "technique-sequin": {
-    caption: "Technique Study - Sequin",
-    tag: "Sequin",
-    priority: 610,
-  },
-  "technique-crystal": {
-    caption: "Technique Study - Crystal Work",
-    tag: "Crystal & Stone Work",
-    priority: 620,
+    priority: 60,
   },
   "technique-beadwork": {
-    caption: "Technique Study - Beadwork",
+    caption: "Baroque Pearl & Cutdana Bugle Beadwork",
     tag: "Pearl Work",
-    priority: 630,
+    priority: 65,
   },
   "technique-bead": {
-    caption: "Technique Study - Beadwork",
+    caption: "Glass Seed Bead & Micro Pearl Lattice Study",
     tag: "Pearl Work",
-    priority: 640,
+    priority: 66,
   },
-  "technique-aari": {
-    caption: "Technique Study - Aari Work",
-    tag: "Couture Studies",
-    priority: 650,
+  sequin: {
+    caption: "Hand-Stitched Sequin Embellishment",
+    tag: "Sequin",
+    priority: 70,
+  },
+  "technique-sequin": {
+    caption: "Dual-Tone Fish-Scale Sequin Overlap Study",
+    tag: "Sequin",
+    priority: 75,
   },
   "technique-3d": {
-    caption: "Technique Study - 3D Embroidery",
+    caption: "Dimensional 3D Organza Petal Embroidery",
     tag: "Couture Studies",
-    priority: 660,
+    priority: 80,
   },
-  "category-hero": {
-    caption: "Category Page Hero Image",
+  "technique-aari": {
+    caption: "Artisan Aari Chainstitch Needlework on Silk",
     tag: "Couture Studies",
-    priority: 700,
-  },
-  "about-hero": {
-    caption: "About Page Hero Image",
-    tag: "Couture Studies",
-    priority: 710,
-  },
-  "about-quality": {
-    caption: "Quality Craftsmanship Image",
-    tag: "Couture Studies",
-    priority: 720,
-  },
-  "contact-hero": {
-    caption: "Contact Page Hero Image",
-    tag: "Couture Studies",
-    priority: 730,
-  },
-  "process-hero": {
-    caption: "Process Page Hero Image",
-    tag: "Couture Studies",
-    priority: 740,
-  },
-  "za-logo": {
-    caption: "Zardosi Atelier Brand Logo",
-    tag: "Couture Studies",
-    priority: 750,
+    priority: 85,
   },
 };
 
@@ -210,13 +165,19 @@ const defaultThumbnailsById = new Map(
 );
 
 const specificAssetCaptions: Record<string, string> = {
-  // Portfolio highlights
+  // Couture Studies & Highlights
   "portfolio-1": "Couture Floral Embroidery on Ivory Tulle",
   "portfolio-2": "Tailored Menswear Tonal Gold Zari Lapel",
   "portfolio-3": "Royal Gold Zardozi & Silver Bridal Panel",
   "portfolio-4": "Silk Resham & Sequin Floral Motif",
   "portfolio-5": "Dimensional Pearl & Micro Beadwork Lattice",
   "portfolio-6": "Haute Couture Gown Crystal & Zardozi Accent",
+  "collection-bridal": "Royal Gold Zardozi Bridal Lehenga Embroidery",
+  "collection-gown": "Haute Couture Embroidered Evening Gown Panel",
+  "collection-handbag": "Bespoke Embroidered Couture Evening Clutch",
+  "technique-3d": "Dimensional 3D Organza Petal Embroidery",
+  "technique-3d-new": "Sculpted 3D Metallic Flora & Fauna Study",
+  "technique-aari": "Artisan Aari Chainstitch Needlework on Silk",
 
   // Sequin Work
   "sequin-1": "Maroon & Gold Sequin Lattice Pattern",
@@ -225,6 +186,7 @@ const specificAssetCaptions: Record<string, string> = {
   "sequin-4": "Full Couture Floral Sequin Panel",
   "sequin-5": "Beaded Metallic Floral Sequin Work",
   "sequin-6": "Dimensional 3D Sequin Blossom Detail",
+  "technique-sequin-new": "Dual-Tone Fish-Scale Sequin Overlap Study",
 
   // Zardozi Work
   "zardozi-1": "Zardozi Paisley Motif in Gold Thread on Silk",
@@ -264,6 +226,8 @@ const specificAssetCaptions: Record<string, string> = {
   "zardozi-35": "Luxury Gold Zardozi Finishing with Seed Beads",
   "zardozi-36": "Karigar Hand Embroidery Detail with Dabka & Salma",
   "zardozi-37": "Precision Zardozi Surface Work for Luxury Fashion",
+  "zardozi-paisley": "Gold Wire Zardozi Paisley Swatch on Raw Silk",
+  "technique-zardosi-new": "Raised Dabka & Salma Zardozi Hand Study",
 
   // Crystal & Stone Work
   "crystal-1": "Amethyst Floral Scrollwork on Silk",
@@ -287,8 +251,12 @@ const specificAssetCaptions: Record<string, string> = {
   "crystal-19": "Emerald-Tone Stone Panel",
   "crystal-20": "Dual-Tone Crystal Scatter Swatch",
   "crystal-21": "Rich Jewel-Tone Crystal Embroidery",
+  "technique-crystal": "Precision Crystal Setting on Sheer Tulle",
+  "technique-crystal-new": "Swarovski & Stone Inlay Couture Technique",
 
   // Resham & Zari Work
+  "resham-zari-1": "High-Definition Resham Threadwork Panel",
+  "resham-zari-card": "Gold Zari & Resham Floral Medallion",
   "resham-zari-page-1": "Fine Silk Resham Floral Spray on Cream Ground",
   "resham-zari-page-2": "Gold Zari & Silk Threadwork Border Detail",
   "resham-zari-page-3": "Intricate Resham Leaf & Vine Composition",
@@ -314,6 +282,7 @@ const specificAssetCaptions: Record<string, string> = {
   "resham-zari-page-23": "Full Resham & Zari Tapestry Panel",
 
   // Pearl Work
+  "pearl-work-card": "Luminous Pearl & Crystal Cluster Flora",
   "pearl-work-page-1": "Delicate Pearl Check Grid Pattern",
   "pearl-work-page-2": "Hand-Stitched Pearl Surface Texture",
   "pearl-work-page-3": "Diamond Pearl & Beadwork Lattice",
@@ -323,6 +292,8 @@ const specificAssetCaptions: Record<string, string> = {
   "pearl-work-page-7": "Hand-Sewn Micro Pearl & Bead Cluster",
   "pearl-work-page-8": "Elegant White Pearl & Crystal Accents",
   "pearl-work-page-9": "Intricate Pearl Mesh Layout for Couture",
+  "technique-bead": "Glass Seed Bead & Micro Pearl Lattice Study",
+  "technique-beadwork-new": "Baroque Pearl & Cutdana Bugle Beadwork",
 };
 
 const topPinnedIds = [
@@ -418,45 +389,60 @@ function uniquePortfolioItems(items: PortfolioItem[]): PortfolioItem[] {
 async function readStoredMetadata(): Promise<PortfolioItem[]> {
   const token = getBlobToken();
   if (!hasBlobToken(token)) return [];
-  const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
-  const meta = blobs.find((b) => b.pathname === METADATA_KEY);
-  if (!meta) return [];
-  const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
-  if (!res.ok) return [];
-  const data = (await res.json()) as RawPortfolioItem[];
-  return normalizeItems(Array.isArray(data) ? data : []);
+  // Skip if token belongs to blocked Vercel store
+  if (token.includes("qV36Vnv5PUQwivTc")) return [];
+  try {
+    const { blobs } = await listBlobs(token, { prefix: METADATA_KEY });
+    const meta = blobs.find((b) => b.pathname === METADATA_KEY);
+    if (!meta) return [];
+    const res = await fetch(meta.url + `?t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as RawPortfolioItem[];
+    return normalizeItems(Array.isArray(data) ? data : []);
+  } catch {
+    return [];
+  }
 }
 
 async function discoverPortfolioBlobs(): Promise<PortfolioItem[]> {
   const token = getBlobToken();
   if (!hasBlobToken(token)) return [];
+  // Skip if token belongs to blocked Vercel store
+  if (token.includes("qV36Vnv5PUQwivTc")) return [];
   const discovered: PortfolioItem[] = [];
   let cursor: string | undefined;
 
-  do {
-    const result = await listBlobs(token, { prefix: "portfolio/", cursor, limit: 100 });
-    for (const blob of result.blobs) {
-      if (!/\.(png|jpe?g|webp)$/i.test(blob.pathname)) continue;
-      const id = `blob-${defaultAssetId(blob.pathname)}`;
-      discovered.push({
-        id,
-        url: blob.url,
-        caption:
-          blob.pathname
-            .split("/")
-            .pop()
-            ?.replace(/\.[^.]+$/, "")
-            .replace(/[-_]+/g, " ") ?? "Portfolio image",
-        tag: "Other",
-        categorySlug: "other",
-        uploadedAt: blob.uploadedAt ?? new Date().toISOString(),
-        order: 10_000 + discovered.length,
-        sourcePath: blob.pathname,
-        isDynamic: true,
-      });
-    }
-    cursor = result.hasMore ? result.cursor : undefined;
-  } while (cursor);
+  try {
+    do {
+      const result = await listBlobs(token, { prefix: "portfolio/", cursor, limit: 100 });
+      for (const blob of result.blobs) {
+        // Skip seed duplicate blobs and any blocked store paths
+        if (blob.pathname.startsWith("portfolio/seed/")) continue;
+        if (blob.url.includes("qv36vnv5puqwivtc")) continue;
+        if (!/\.(png|jpe?g|webp)$/i.test(blob.pathname)) continue;
+        const id = `blob-${defaultAssetId(blob.pathname)}`;
+        discovered.push({
+          id,
+          url: blob.url,
+          caption:
+            blob.pathname
+              .split("/")
+              .pop()
+              ?.replace(/\.[^.]+$/, "")
+              .replace(/[-_]+/g, " ") ?? "Portfolio image",
+          tag: "Other",
+          categorySlug: "other",
+          uploadedAt: blob.uploadedAt ?? new Date().toISOString(),
+          order: 10_000 + discovered.length,
+          sourcePath: blob.pathname,
+          isDynamic: true,
+        });
+      }
+      cursor = result.hasMore ? result.cursor : undefined;
+    } while (cursor);
+  } catch {
+    return [];
+  }
 
   return discovered;
 }
@@ -469,7 +455,14 @@ async function readMetadata(): Promise<PortfolioItem[]> {
       readStoredMetadata(),
       discoverPortfolioBlobs(),
     ]);
-    return uniquePortfolioItems([...DEFAULT_ITEMS, ...stored, ...discovered]).sort(
+    // Filter out any broken seed duplicate blobs or blocked store URLs
+    const validStored = stored.filter(
+      (item) => !item.url.includes("qv36vnv5puqwivtc") && !item.url.includes("/portfolio/seed/"),
+    );
+    const validDiscovered = discovered.filter(
+      (item) => !item.url.includes("qv36vnv5puqwivtc") && !item.url.includes("/portfolio/seed/"),
+    );
+    return uniquePortfolioItems([...DEFAULT_ITEMS, ...validStored, ...validDiscovered]).sort(
       (a, b) => a.order - b.order || a.uploadedAt.localeCompare(b.uploadedAt),
     );
   } catch {

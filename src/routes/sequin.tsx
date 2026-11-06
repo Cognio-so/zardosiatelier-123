@@ -90,7 +90,7 @@ function SequinPage() {
             <h2 className="mt-2 font-serif text-4xl leading-tight text-[#1A1A1A] sm:text-5xl">The craft, up close.</h2>
             <p className="mt-3 max-w-[60ch] text-[15px] font-medium leading-7 text-[#4A3F35]">Click any image to explore it in detail.</p>
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {galleryImages.map((img, idx) => (
               <Reveal key={idx} delay={idx * 60}>
                 <button onClick={() => openLightbox(idx)} className="group relative block w-full overflow-hidden focus:outline-none" aria-label={`View ${img.alt}`}>

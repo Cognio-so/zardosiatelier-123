@@ -218,12 +218,12 @@ function CrystalStonePage() {
           </Reveal>
 
           {/* Pinterest masonry grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+          <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 xl:columns-4">
             {galleryImages.map((img, idx) => (
               <Reveal key={idx} delay={Math.min(idx * 35, 280)}>
                 <button
                   onClick={() => openLightbox(idx)}
-                  className="group relative block w-full mb-4 overflow-hidden focus:outline-none break-inside-avoid"
+                  className="group relative block w-full mb-3 overflow-hidden focus:outline-none break-inside-avoid"
                   aria-label={`View ${img.alt}`}
                 >
                   <Lens zoomFactor={2.2} lensSize={132} isStatic={false}>

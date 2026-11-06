@@ -221,8 +221,8 @@ export default function GalleryAdmin() {
       </div>
 
       {isLoading ? (
-        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 2xl:columns-4" aria-busy="true" aria-label="Loading gallery images">
-          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="admin-glass mb-5 h-72 break-inside-avoid animate-pulse" />)}
+        <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 2xl:columns-4" aria-busy="true" aria-label="Loading gallery images">
+          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="admin-glass mb-3 h-48 break-inside-avoid animate-pulse sm:h-72" />)}
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="admin-glass flex flex-col items-center justify-center py-20 text-center">
@@ -231,7 +231,7 @@ export default function GalleryAdmin() {
           <p className="mt-1 text-xs text-slate-500">Upload images from the Portfolio section</p>
         </div>
       ) : (
-        <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 2xl:columns-4">
+        <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 2xl:columns-4">
           {filteredItems.map((item) => (
             <GalleryItemCard
               key={item.id}

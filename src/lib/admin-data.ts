@@ -4,7 +4,7 @@ import { sendEnquiryNotificationEmail } from "./email.server";
 import { hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 
 function getAdminPass() {
-  return process.env.ADMIN_PASSWORD ?? "zardosi@admin2024";
+  return process.env.ADMIN_PASSWORD ?? "palack@2026";
 }
 function getBlobToken() {
   return process.env.BLOB_READ_WRITE_TOKEN ?? "";

@@ -160,7 +160,7 @@ function PearlWorkPage() {
           </Reveal>
 
           {/* Pinterest-style columns grid */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-0">
+          <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 space-y-0">
             {galleryImages.map((img, idx) => (
               <Reveal key={idx} delay={Math.min(idx * 40, 300)}>
                 <button

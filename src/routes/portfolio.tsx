@@ -62,7 +62,7 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
           alt={item.caption}
           loading="lazy"
           decoding="async"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
           className="block h-auto w-full object-cover transition duration-[1400ms] group-hover:scale-[1.07]"
         />
       </DeferredLens>
@@ -73,11 +73,11 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
             "linear-gradient(to top, rgba(8,5,3,0.88) 0%, rgba(8,5,3,0.30) 40%, transparent 100%)",
         }}
       />
-      <div className="absolute bottom-0 left-0 right-0 translate-y-3 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:p-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">
+      <div className="absolute bottom-0 left-0 right-0 translate-y-3 p-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:p-5 lg:p-6">
+        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#C9A84C] sm:text-[10px]">
           {item.tag}
         </p>
-        <h2 className="mt-2 font-serif text-3xl leading-tight text-[#F5F0E8]">{item.caption}</h2>
+        <h2 className="mt-1 font-serif text-sm leading-tight text-[#F5F0E8] sm:mt-2 sm:text-2xl lg:text-3xl">{item.caption}</h2>
       </div>
     </a>
   );
@@ -106,9 +106,9 @@ function PortfolioPage() {
       <section className="luxury-silk-bg py-10 sm:py-12">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
           {isLoading ? (
-            <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+            <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 xl:columns-4">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="mb-6 h-80 break-inside-avoid animate-pulse bg-[#E9DFD1]" />
+                <div key={i} className="mb-3 h-48 break-inside-avoid animate-pulse bg-[#E9DFD1] sm:h-80" />
               ))}
             </div>
           ) : items.length === 0 ? (
@@ -120,9 +120,9 @@ function PortfolioPage() {
               </p>
             </div>
           ) : (
-            <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+            <div className="columns-2 gap-3 sm:columns-2 lg:columns-3 xl:columns-4">
               {items.map((item, i) => (
-                <Reveal key={item.id} delay={(i % 3) * 100} className="mb-6 break-inside-avoid">
+                <Reveal key={item.id} delay={(i % 3) * 100} className="mb-3 break-inside-avoid">
                   <PortfolioCard item={item} />
                 </Reveal>
               ))}
