@@ -77,7 +77,14 @@ function PortfolioCategoryPage() {
               {filtered.map((item, index) => (
                 <Reveal key={item.id} delay={Math.min(index * 40, 240)} className="mb-4 break-inside-avoid">
                   <a href={`/portfolio/item/${item.id}`} className="group block overflow-hidden bg-[#EDE5D8]">
-                    <img src={item.url} alt={item.caption} loading="lazy" className="h-auto w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <img
+                      src={item.thumbnailUrl ?? item.url}
+                      alt={item.caption}
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="h-auto w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
                     <div className="bg-[#1A100B] px-4 py-4">
                       <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C9A84C]">{item.tag}</p>
                       <h3 className="mt-1 font-serif text-xl text-ivory">{item.caption}</h3>

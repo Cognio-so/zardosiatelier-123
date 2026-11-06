@@ -2,17 +2,31 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { Lens } from "@/registry/magicui/lens";
+import { DeferredLens } from "@/components/site/DeferredLens";
 import { getPortfolioItems, type PortfolioItem } from "@/lib/portfolio-admin";
 import portfolioHero from "@/assets/portfolio-hero.webp";
+import portfolioHeroAvif from "@/assets/portfolio-hero.avif";
+import portfolioHeroSmall from "@/assets/portfolio-hero-640.webp";
+import portfolioHeroSmallAvif from "@/assets/portfolio-hero-640.avif";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
       { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
-      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      {
+        name: "description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
+      {
+        property: "og:title",
+        content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier",
+      },
+      {
+        property: "og:description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
       { property: "og:url", content: "https://www.zardosiatelier.com/portfolio" },
       { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
@@ -42,15 +56,16 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
         el.style.boxShadow = "none";
       }}
     >
-      <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+      <DeferredLens zoomFactor={2.2} lensSize={140} isStatic={false}>
         <img
-          src={item.url}
+          src={item.thumbnailUrl ?? item.url}
           alt={item.caption}
           loading="lazy"
           decoding="async"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="block h-auto w-full object-cover transition duration-[1400ms] group-hover:scale-[1.07]"
         />
-      </Lens>
+      </DeferredLens>
       <div
         className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
@@ -59,7 +74,9 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
         }}
       />
       <div className="absolute bottom-0 left-0 right-0 translate-y-3 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:p-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">{item.tag}</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C9A84C]">
+          {item.tag}
+        </p>
         <h2 className="mt-2 font-serif text-3xl leading-tight text-[#F5F0E8]">{item.caption}</h2>
       </div>
     </a>
@@ -82,11 +99,12 @@ function PortfolioPage() {
         italic="work."
         description="A curated archive of recent commissions - couture, bridal, accessories and atelier studies."
         image={portfolioHero}
+        imageAvif={portfolioHeroAvif}
+        imageSmallAvif={portfolioHeroSmallAvif}
+        imageSmallWebp={portfolioHeroSmall}
       />
       <section className="luxury-silk-bg py-10 sm:py-12">
         <div className="mx-auto max-w-[1320px] px-5 sm:px-6 lg:px-10">
-
-
           {isLoading ? (
             <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
               {Array.from({ length: 6 }).map((_, i) => (

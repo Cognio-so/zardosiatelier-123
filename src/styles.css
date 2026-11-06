@@ -674,9 +674,9 @@
   --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --animate-fade-up: fade-up 1.2s cubic-bezier(0.19, 1, 0.22, 1) both;
-  --animate-fade-in: fade-in 1.4s cubic-bezier(0.19, 1, 0.22, 1) both;
-  --animate-mask-reveal: mask-reveal 1.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+  --animate-fade-up: fade-up 260ms ease-out both;
+  --animate-fade-in: fade-in 220ms ease-out both;
+  --animate-mask-reveal: mask-reveal 280ms ease-out both;
 
   @keyframes fade-up {
     from {
@@ -765,6 +765,27 @@
   z-index: 0;
   filter: blur(2.5px) saturate(1.03) contrast(0.98);
   transform: scale(1.025);
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+
+.za-hero__bg-video--ready {
+  opacity: 1;
+}
+
+.za-hero__poster,
+.za-hero__poster img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.za-hero__poster img {
+  object-fit: cover;
+  object-position: center;
+  filter: blur(2.5px) saturate(1.03) contrast(0.98);
+  transform: scale(1.025);
 }
 
 @keyframes za-hero-zoom {
@@ -833,7 +854,7 @@
   flex-direction: column;
   justify-content: center;
 
-  animation: za-hero-card-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: za-hero-card-in 240ms ease-out both;
 }
 
 .za-hero__card::-webkit-scrollbar {
@@ -842,8 +863,8 @@
 
 @keyframes za-hero-card-in {
   from {
-    opacity: 0;
-    transform: translateY(-46%);
+    opacity: 0.88;
+    transform: translateY(-49%);
   }
   to {
     opacity: 1;
@@ -1131,6 +1152,33 @@
 
   .za-hero__ticker {
     display: none;
+  }
+}
+
+/* Content is visible in the server-rendered HTML; this is enhancement only. */
+.za-reveal {
+  animation: za-reveal-in 240ms ease-out both;
+}
+
+@keyframes za-reveal-in {
+  from {
+    opacity: 0.88;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .za-reveal,
+  .za-hero__card {
+    animation: none;
+  }
+
+  .za-hero__bg-video {
+    transition: none;
   }
 }
 

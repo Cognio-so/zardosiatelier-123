@@ -6,15 +6,29 @@ import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { getSettings } from "@/lib/admin-data";
 
 import portfolioHero from "@/assets/portfolio-hero.webp";
+import portfolioHeroAvif from "@/assets/portfolio-hero.avif";
+import portfolioHeroSmall from "@/assets/portfolio-hero-640.webp";
+import portfolioHeroSmallAvif from "@/assets/portfolio-hero-640.avif";
 import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
-      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      {
+        name: "description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
+      {
+        property: "og:title",
+        content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier",
+      },
+      {
+        property: "og:description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
       { property: "og:url", content: "https://www.zardosiatelier.com/contact" },
       { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
@@ -43,6 +57,9 @@ function ContactPage() {
         italic="feasibility review."
         description="Share your project and our atelier will respond within two working days with a tailored proposal."
         image={portfolioHero}
+        imageAvif={portfolioHeroAvif}
+        imageSmallAvif={portfolioHeroSmallAvif}
+        imageSmallWebp={portfolioHeroSmall}
       />
 
       <section style={{ background: "#F4EFE7" }}>
@@ -69,6 +86,10 @@ function ContactPage() {
             <img
               src={zardoziPaisley}
               alt="Intricate gold zardozi paisley embroidery - luxury atelier craftsmanship"
+              width={800}
+              height={1067}
+              loading="lazy"
+              decoding="async"
               className="w-full object-cover"
               style={{
                 maxHeight: "360px",
@@ -104,7 +125,10 @@ function ContactPage() {
             <div className="mt-7 space-y-6 text-[15px] font-medium">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Email</p>
-                <a href={`mailto:${email}`} className="mt-2 inline-block font-serif text-xl gold-link">
+                <a
+                  href={`mailto:${email}`}
+                  className="mt-2 inline-block font-serif text-xl gold-link"
+                >
                   {email}
                 </a>
               </div>
@@ -134,4 +158,3 @@ function ContactPage() {
     </PageShell>
   );
 }
-

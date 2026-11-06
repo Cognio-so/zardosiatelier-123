@@ -81,6 +81,13 @@ function BlogIndexPage() {
                         width={post.image.width}
                         height={post.image.height}
                         loading={index === 0 ? "eager" : "lazy"}
+                        fetchPriority={index === 0 ? "high" : "auto"}
+                        decoding="async"
+                        sizes={
+                          index === 0
+                            ? "(min-width: 900px) 58vw, 100vw"
+                            : "(min-width: 900px) 33vw, 100vw"
+                        }
                       />
                     ) : (
                       <span className="journal-card__placeholder">

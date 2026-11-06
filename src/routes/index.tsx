@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { Reveal } from "@/components/site/Reveal";
-import { Lens } from "@/registry/magicui/lens";
+import { DeferredLens } from "@/components/site/DeferredLens";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { getSettings } from "@/lib/admin-data";
 import {
@@ -21,7 +21,10 @@ import {
   PhoneCall,
 } from "lucide-react";
 import heroEmbroidery from "@/assets/hero-embroidery.webp";
-import heroVideo from "@/assets/hero-video.mp4";
+import heroEmbroideryAvif from "@/assets/hero-embroidery.avif";
+import heroEmbroiderySmall from "@/assets/hero-embroidery-720.webp";
+import heroEmbroiderySmallAvif from "@/assets/hero-embroidery-720.avif";
+import heroVideo from "@/assets/hero-video-720.mp4";
 import zardoziPaisley from "@/assets/zardozi-paisley-opt.webp";
 import reshamZariCard from "@/assets/resham-zari-card-opt.webp";
 import pearlWorkCard from "@/assets/pearl-work-card-opt.webp";
@@ -32,9 +35,20 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
-      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      {
+        name: "description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
+      {
+        property: "og:title",
+        content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier",
+      },
+      {
+        property: "og:description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
       { property: "og:url", content: "https://www.zardosiatelier.com/" },
       { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
       { name: "twitter:image", content: "https://www.zardosiatelier.com/icon-512.png" },
@@ -128,30 +142,75 @@ const faqs = [
 ];
 
 function HomePage() {
+  const [heroVideoSrc, setHeroVideoSrc] = useState<string>();
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
   const { data: settings } = useQuery({
     queryKey: ["settings-public"],
     queryFn: () => getSettings(),
     staleTime: 0,
   });
 
-  const whatsappDigits = (settings?.whatsappNumber || settings?.phone || "8826023527").replace(/\D/g, "");
-  const whatsappHref = 'https://wa.me/' + whatsappDigits + '?text=' + encodeURIComponent('Hello Zardosi Atelier, I would like to discuss a couture embroidery project.');
+  const whatsappDigits = (settings?.whatsappNumber || settings?.phone || "8826023527").replace(
+    /\D/g,
+    "",
+  );
+  const whatsappHref =
+    "https://wa.me/" +
+    whatsappDigits +
+    "?text=" +
+    encodeURIComponent(
+      "Hello Zardosi Atelier, I would like to discuss a couture embroidery project.",
+    );
+
+  useEffect(() => {
+    const loadVideo = () => setHeroVideoSrc(heroVideo);
+
+    if (document.readyState === "complete") {
+      loadVideo();
+      return;
+    }
+
+    window.addEventListener("load", loadVideo, { once: true });
+    return () => window.removeEventListener("load", loadVideo);
+  }, []);
 
   return (
     <SiteShell>
       {/* ═══ HERO SECTION ═══ */}
       <section className="za-hero">
-        {/* Background video */}
+        <picture className="za-hero__poster" aria-hidden="true">
+          <source
+            type="image/avif"
+            srcSet={`${heroEmbroiderySmallAvif} 720w, ${heroEmbroideryAvif} 1400w`}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${heroEmbroiderySmall} 720w, ${heroEmbroidery} 1400w`}
+            sizes="100vw"
+          />
+          <img
+            src={heroEmbroidery}
+            alt=""
+            width={1400}
+            height={788}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+
+        {/* The video starts after page load so it cannot compete with the first paint. */}
         <video
-          className="za-hero__bg-video"
-          src={heroVideo}
-          poster={heroEmbroidery}
+          className={`za-hero__bg-video${heroVideoReady ? " za-hero__bg-video--ready" : ""}`}
+          src={heroVideoSrc}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
           aria-hidden="true"
+          onCanPlay={() => setHeroVideoReady(true)}
         />
 
         {/* Dark overlay — left to right */}
@@ -159,27 +218,29 @@ function HomePage() {
 
         {/* ── Card ── */}
         <div className="za-hero__card" role="main">
-
           {/* Decorative gold line */}
           <div className="za-hero__gold-line" />
 
           {/* Eyebrow */}
-          <p className="za-hero__eyebrow">
-            Haute Couture Embroidery — India
-          </p>
+          <p className="za-hero__eyebrow">Haute Couture Embroidery — India</p>
 
           {/* Main heading */}
           <h1 className="za-hero__heading">
-            <span className="za-hero__heading-line za-hero__heading-line--major">Hand embroidery</span>
-            <span className="za-hero__heading-line za-hero__heading-line--minor">for the world's</span>
-            <span className="za-hero__heading-line za-hero__heading-line--major"><em className="za-hero__heading-em">finest</em> labels.</span>
+            <span className="za-hero__heading-line za-hero__heading-line--major">
+              Hand embroidery
+            </span>
+            <span className="za-hero__heading-line za-hero__heading-line--minor">
+              for the world's
+            </span>
+            <span className="za-hero__heading-line za-hero__heading-line--major">
+              <em className="za-hero__heading-em">finest</em> labels.
+            </span>
           </h1>
 
           {/* Description */}
           <p className="za-hero__desc">
-            We craft and export luxury embroidered pieces for couture houses,
-            designers and premium brands. Every stitch is finished by master
-            karigars and checked twice before it ships.
+            We craft and export luxury embroidered pieces for couture houses, designers and premium
+            brands. Every stitch is finished by master karigars and checked twice before it ships.
           </p>
 
           {/* Service tags */}
@@ -198,7 +259,6 @@ function HomePage() {
               <PhoneCall className="za-hero__btn-icon" strokeWidth={2.2} />
             </a>
           </div>
-
         </div>
 
         {/* Bottom ticker */}
@@ -219,25 +279,25 @@ function HomePage() {
             {techniques.map((item, i) => {
               const cardInner = (
                 <article className="group flex h-full w-full max-w-[390px] cursor-pointer flex-col items-center text-center sm:max-w-[300px] lg:max-w-[260px]">
-                  <Lens zoomFactor={2.1} lensSize={120} isStatic={false}>
-                  <div className="relative aspect-square w-full overflow-hidden bg-[#E5D8C8]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    {/* View hint for sequin card */}
-                    {"href" in item && (
-                      <div className="absolute inset-0 flex items-end justify-center pb-10 pointer-events-none">
-                        <span className="translate-y-2 text-[9px] font-bold uppercase tracking-[0.35em] text-white bg-black/50 px-3 py-1.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                          View All Images →
-                        </span>
-                      </div>
-                    )}
+                  <DeferredLens zoomFactor={2.1} lensSize={120} isStatic={false}>
+                    <div className="relative aspect-square w-full overflow-hidden bg-[#E5D8C8]">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      {/* View hint for sequin card */}
+                      {"href" in item && (
+                        <div className="absolute inset-0 flex items-end justify-center pb-10 pointer-events-none">
+                          <span className="translate-y-2 text-[9px] font-bold uppercase tracking-[0.35em] text-white bg-black/50 px-3 py-1.5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                            View All Images →
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  </Lens>
+                  </DeferredLens>
 
                   <h3 className="mx-auto mt-3 flex min-h-[44px] w-full items-center justify-center px-1 text-center font-serif text-[20px] font-medium leading-[1.15] tracking-[-0.02em] text-[#2B241F]">
                     {item.name}
@@ -473,54 +533,3 @@ function Icon({ name, className }: { name: string; className?: string }) {
   const Component = icons[name] || Crown;
   return <Component className={className} strokeWidth={1.5} />;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

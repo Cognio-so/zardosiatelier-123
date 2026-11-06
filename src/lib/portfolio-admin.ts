@@ -14,6 +14,7 @@ function getBlobToken() {
 export type PortfolioItem = {
   id: string;
   url: string;
+  thumbnailUrl?: string;
   caption: string;
   tag: string;
   categorySlug: string;
@@ -25,6 +26,11 @@ export type PortfolioItem = {
 
 const defaultAssetModules = import.meta.glob<string>(
   ["../assets/*.{jpg,jpeg,png,webp}", "!../assets/*.tmp"],
+  { eager: true, import: "default", query: "?url" },
+);
+
+const defaultThumbnailModules = import.meta.glob<string>(
+  "../assets/portfolio-thumbs/*.webp",
   { eager: true, import: "default", query: "?url" },
 );
 
@@ -189,6 +195,7 @@ function defaultAssetVariantRank(path: string) {
 }
 
 const defaultAssetEntries = Object.entries(defaultAssetModules)
+  .filter(([path]) => !/-(640|720)\.webp$/i.test(path))
   .sort(([pathA], [pathB]) => defaultAssetVariantRank(pathA) - defaultAssetVariantRank(pathB))
   .filter(([path], index, entries) => {
     const id = defaultAssetId(path).replace(/-opt$/, "");
@@ -197,6 +204,10 @@ const defaultAssetEntries = Object.entries(defaultAssetModules)
       index
     );
   });
+
+const defaultThumbnailsById = new Map(
+  Object.entries(defaultThumbnailModules).map(([path, url]) => [defaultAssetId(path), url]),
+);
 
 const specificAssetCaptions: Record<string, string> = {
   // Portfolio highlights
@@ -347,6 +358,7 @@ export const DEFAULT_ITEMS: PortfolioItem[] = defaultAssetEntries
     return {
       id: fullId,
       url,
+      thumbnailUrl: defaultThumbnailsById.get(baseId),
       caption,
       tag: config.tag,
       categorySlug: slug,
@@ -381,6 +393,7 @@ function normalizeItems(items: RawPortfolioItem[]): PortfolioItem[] {
     .map((item, index) => ({
       id: item.id,
       url: item.url,
+      thumbnailUrl: item.thumbnailUrl,
       caption: item.caption ?? "",
       tag: canonicalTag(item.tag ?? "Other"),
       categorySlug: item.categorySlug ?? slugifyPortfolioTag(item.tag ?? "Other"),

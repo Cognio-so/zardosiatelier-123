@@ -9,13 +9,15 @@ import { hasBlobToken, listBlobs, putBlob } from "./vercel-blob-rest";
 const ENQUIRIES_KEY = "admin-data/enquiries.json";
 const CONTACT_META_KEY = "admin-data/contact-meta.json";
 const CONTACT_ERRORS_KEY = "admin-data/contact-mail-errors.json";
-const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
 const MAX_BRIEF_LENGTH = 4000;
 const MAX_NAME_LENGTH = 120;
 const MAX_LINE_LENGTH = 160;
 const MAX_UA_LENGTH = 512;
 const MAX_FILE_NAME_LENGTH = 180;
 const RECAPTCHA_MIN_SCORE = Number(process.env.RECAPTCHA_MIN_SCORE ?? "0.5");
+// eslint-disable-next-line no-control-regex
+const CONTROL_CHARS_REGEX = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
 
 type ContactMeta = {
   submissions: Array<{
@@ -48,7 +50,10 @@ export const enquirySchema = z.object({
   formNonce: z.string().min(12).max(120),
   fileName: z.string().max(MAX_FILE_NAME_LENGTH).optional(),
   fileType: z.string().max(120).optional(),
-  fileBase64: z.string().max(Math.ceil((MAX_ATTACHMENT_BYTES * 4) / 3) + 512).optional(),
+  fileBase64: z
+    .string()
+    .max(Math.ceil((MAX_ATTACHMENT_BYTES * 4) / 3) + 512)
+    .optional(),
 });
 
 export type EnquirySubmissionInput = z.infer<typeof enquirySchema>;
@@ -87,17 +92,13 @@ function sha256(value: string) {
 }
 
 function sanitizeLine(value: string, maxLength: number) {
-  return value
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, maxLength);
+  return value.replace(CONTROL_CHARS_REGEX, "").replace(/\s+/g, " ").trim().slice(0, maxLength);
 }
 
 function sanitizeParagraph(value: string, maxLength: number) {
   return value
     .replace(/\r\n/g, "\n")
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .replace(CONTROL_CHARS_REGEX, "")
     .split("\n")
     .map((line) => sanitizeLine(line, 240))
     .filter(Boolean)
@@ -194,7 +195,13 @@ function pruneMeta(meta: ContactMeta): ContactMeta {
   };
 }
 
-function buildMessage(source: EnquirySource, projectType: string, brand: string, country: string, brief: string) {
+function buildMessage(
+  source: EnquirySource,
+  projectType: string,
+  brand: string,
+  country: string,
+  brief: string,
+) {
   const parts = [
     `Source: ${source}`,
     projectType ? `Project Type: ${projectType}` : "",
@@ -219,7 +226,7 @@ function parseAttachment(data: EnquirySubmissionInput) {
   const buffer = Buffer.from(matches[2], "base64");
 
   if (buffer.byteLength > MAX_ATTACHMENT_BYTES) {
-    throw new Error("Attachment exceeds the 10 MB limit.");
+    throw new Error("Attachment exceeds the 3 MB limit.");
   }
 
   return {
@@ -229,7 +236,9 @@ function parseAttachment(data: EnquirySubmissionInput) {
   };
 }
 
-async function uploadAttachment(attachment: { fileName: string; fileType: string; buffer: Buffer } | null): Promise<EnquiryAttachment | undefined> {
+async function uploadAttachment(
+  attachment: { fileName: string; fileType: string; buffer: Buffer } | null,
+): Promise<EnquiryAttachment | undefined> {
   if (!attachment) return undefined;
   const token = getBlobToken();
   if (!hasBlobToken(token)) {
@@ -289,7 +298,9 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
     return { success: false, error: "Please enter a valid email address." };
   }
 
-  const fingerprintHash = sha256([name, brand, country, email, whatsapp, projectType, projectBrief].join("|"));
+  const fingerprintHash = sha256(
+    [name, brand, country, email, whatsapp, projectType, projectBrief].join("|"),
+  );
   const ipHash = sha256(ipAddress || "unknown");
 
   let recaptcha: { success: boolean; score?: number };
@@ -310,9 +321,6 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
   }
 
   const attachment = parseAttachment(data);
-  const file = await uploadAttachment(attachment);
-
-  const enquiries = await readBlob<StoredEnquiry[]>(ENQUIRIES_KEY, []);
   const enquiry: StoredEnquiry = {
     id: `enq_${Date.now()}`,
     source: data.source,
@@ -327,7 +335,14 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
     projectType,
     projectBrief,
     message: buildMessage(data.source, projectType, brand, country, projectBrief),
-    file,
+    file: attachment
+      ? {
+          fileName: attachment.fileName,
+          fileType: attachment.fileType,
+          fileSizeBytes: attachment.buffer.byteLength,
+          fileUrl: "",
+        }
+      : undefined,
     ipAddress,
     browser,
     userAgent,
@@ -335,29 +350,57 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
     dedupeHash: fingerprintHash,
   };
 
-  await writeBlob(ENQUIRIES_KEY, [enquiry, ...enquiries]);
-  await writeBlob(CONTACT_META_KEY, pruneMeta({
-    submissions: [
-      { formNonce: data.formNonce, fingerprintHash, ipHash, createdAt: enquiry.createdAt },
-      ...currentMeta.submissions,
-    ],
-  }));
+  let delivery: Awaited<ReturnType<typeof sendEnquiryEmails>>;
+  try {
+    delivery = await sendEnquiryEmails(enquiry, attachment);
+  } catch (error) {
+    console.error("submitEnquiry email error:", error);
+    try {
+      await logMailError(
+        error instanceof Error ? error.message : String(error),
+        error && typeof error === "object"
+          ? String((error as { code?: string }).code ?? "")
+          : undefined,
+      );
+    } catch (storageError) {
+      console.error("submitEnquiry error log unavailable:", storageError);
+    }
+    return {
+      success: false,
+      error: "We could not send your inquiry. Please try again or email zardosiatelier@gmail.com.",
+    };
+  }
+
+  enquiry.adminEmailSentAt = new Date().toISOString();
+  if (delivery.confirmationSent) enquiry.clientEmailSentAt = new Date().toISOString();
+
+  if (attachment) {
+    try {
+      enquiry.file = await uploadAttachment(attachment);
+    } catch (storageError) {
+      console.error(
+        "submitEnquiry attachment storage unavailable; file was emailed:",
+        storageError,
+      );
+      enquiry.file = undefined;
+    }
+  }
 
   try {
-    const delivery = await sendEnquiryEmails(enquiry);
-    enquiry.adminEmailSentAt = new Date().toISOString();
-    enquiry.clientEmailSentAt = new Date().toISOString();
+    const enquiries = await readBlob<StoredEnquiry[]>(ENQUIRIES_KEY, []);
     await writeBlob(ENQUIRIES_KEY, [enquiry, ...enquiries]);
-    return { success: true, enquiryId: enquiry.id, delivery };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.error("submitEnquiry email error:", error);
-    await logMailError(
-      message,
-      error && typeof error === "object" ? String((error as { code?: string }).code ?? "") : undefined,
+    await writeBlob(
+      CONTACT_META_KEY,
+      pruneMeta({
+        submissions: [
+          { formNonce: data.formNonce, fingerprintHash, ipHash, createdAt: enquiry.createdAt },
+          ...currentMeta.submissions,
+        ],
+      }),
     );
-    return { success: false, error: "Your inquiry was saved, but the email notification could not be sent. Please try again or contact us on WhatsApp." };
+  } catch (storageError) {
+    console.error("submitEnquiry storage unavailable; email was delivered:", storageError);
   }
+
+  return { success: true, enquiryId: enquiry.id, confirmationSent: delivery.confirmationSent };
 }
-
-

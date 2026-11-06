@@ -1,17 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, PageHero, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
-import { Lens } from "@/registry/magicui/lens";
+import { DeferredLens } from "@/components/site/DeferredLens";
 import aboutHero from "@/assets/about-hero.webp";
+import aboutHeroAvif from "@/assets/about-hero.avif";
+import aboutHeroSmall from "@/assets/about-hero-640.webp";
+import aboutHeroSmallAvif from "@/assets/about-hero-640.avif";
 import aboutQuality from "@/assets/about-quality.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { name: "description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
-      { property: "og:title", content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier" },
-      { property: "og:description", content: "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export." },
+      {
+        name: "description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
+      {
+        property: "og:title",
+        content: "Zardosi Atelier | Luxury Hand Embroidery & Export Atelier",
+      },
+      {
+        property: "og:description",
+        content:
+          "Zardosi Atelier creates luxury handcrafted Zardozi, Resham, Crystal, Pearl, and Sequin embroidery for couture fashion, bridal collections, designer labels, and premium global export.",
+      },
       { property: "og:url", content: "https://www.zardosiatelier.com/about" },
       { property: "og:image", content: "https://www.zardosiatelier.com/icon-512.png" },
     ],
@@ -42,6 +56,9 @@ function AboutPage() {
         italic="hands."
         description="Zardosi Atelier is built on multi-generational embroidery - restrained, considered, and held to the standards of the houses we serve."
         image={aboutHero}
+        imageAvif={aboutHeroAvif}
+        imageSmallAvif={aboutHeroSmallAvif}
+        imageSmallWebp={aboutHeroSmall}
       />
 
       {/* ══════════════════════════════════════════
@@ -49,7 +66,6 @@ function AboutPage() {
       ══════════════════════════════════════════ */}
       <section className="luxury-silk-bg py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
-
           {/* Left - Text */}
           <Reveal>
             <span className="eyebrow">Our Approach</span>
@@ -57,10 +73,17 @@ function AboutPage() {
               About Zardosi <span className="italic">Atelier.</span>
             </h2>
             <p className="mt-6 text-[16px] font-medium leading-[1.85] text-ink-soft">
-              Founded in 2002 by <strong className="text-ink font-semibold">Shalini and Sajal Jain</strong>, Zardosi Atelier was created from a shared passion for sartorial excellence, intricate craftsmanship, and the timeless art of Indian embroidery.
+              Founded in 2002 by{" "}
+              <strong className="text-ink font-semibold">Shalini and Sajal Jain</strong>, Zardosi
+              Atelier was created from a shared passion for sartorial excellence, intricate
+              craftsmanship, and the timeless art of Indian embroidery.
             </p>
             <p className="mt-5 text-[16px] font-medium leading-[1.85] text-ink-soft">
-              Today, Zardosi Atelier is a trusted manufacturer and exporter of premium hand and machine embroidery, serving fashion houses, designers, wholesalers, retailers, and private-label brands across international markets. For more than two decades, we have combined traditional Indian embroidery techniques with contemporary design and dependable production capabilities to create products of exceptional quality.
+              Today, Zardosi Atelier is a trusted manufacturer and exporter of premium hand and
+              machine embroidery, serving fashion houses, designers, wholesalers, retailers, and
+              private-label brands across international markets. For more than two decades, we have
+              combined traditional Indian embroidery techniques with contemporary design and
+              dependable production capabilities to create products of exceptional quality.
             </p>
           </Reveal>
 
@@ -70,12 +93,14 @@ function AboutPage() {
               className="aspect-[4/5] overflow-hidden"
               style={{
                 border: "1px solid rgba(212,175,55,0.22)",
-                transition: "border-color 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.7s cubic-bezier(0.4,0,0.2,1)",
+                transition:
+                  "border-color 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.7s cubic-bezier(0.4,0,0.2,1)",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.borderColor = "rgba(212,175,55,0.70)";
-                el.style.boxShadow = "0 0 0 1px rgba(212,175,55,0.35), 0 16px 56px rgba(0,0,0,0.22)";
+                el.style.boxShadow =
+                  "0 0 0 1px rgba(212,175,55,0.35), 0 16px 56px rgba(0,0,0,0.22)";
                 const img = el.querySelector("img") as HTMLElement | null;
                 if (img) img.style.transform = "scale(1.06)";
               }}
@@ -87,15 +112,16 @@ function AboutPage() {
                 if (img) img.style.transform = "scale(1)";
               }}
             >
-              <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+              <DeferredLens zoomFactor={2.2} lensSize={140} isStatic={false}>
                 <img
                   src={aboutHero}
                   alt="Artisan hands hand-stitching zardosi embroidery on an adda frame"
+                  loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover"
                   style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
                 />
-              </Lens>
+              </DeferredLens>
             </div>
           </Reveal>
         </div>
@@ -109,7 +135,6 @@ function AboutPage() {
         style={{ background: "linear-gradient(180deg, #EDE8DF 0%, #F4EFE7 100%)" }}
       >
         <div className="mx-auto max-w-[1180px] px-5 sm:px-6 lg:px-10">
-
           {/* Expertise text */}
           <Reveal>
             <div className="max-w-[820px]">
@@ -118,24 +143,28 @@ function AboutPage() {
                 Our <span className="italic">Expertise.</span>
               </h2>
               <p className="mt-6 text-[16px] font-medium leading-[1.85] text-ink-soft">
-                Our embroidery expertise includes <em>Resham work, Zardozi, Nakshi metal thread, Dabka and bullion work, appliqué, 3D embroidery, cutwork, Zari, sequins, pearls, Cutdana bugle beads, glass stones, zircons, Swarovski embellishments</em>, and other specialised decorative techniques.
+                Our embroidery expertise includes{" "}
+                <em>
+                  Resham work, Zardozi, Nakshi metal thread, Dabka and bullion work, appliqué, 3D
+                  embroidery, cutwork, Zari, sequins, pearls, Cutdana bugle beads, glass stones,
+                  zircons, Swarovski embellishments
+                </em>
+                , and other specialised decorative techniques.
               </p>
             </div>
           </Reveal>
 
           {/* Divider */}
           <Reveal delay={80}>
-            <div
-              className="my-12"
-              style={{ borderTop: "1px solid rgba(180,148,60,0.25)" }}
-            />
+            <div className="my-12" style={{ borderTop: "1px solid rgba(180,148,60,0.25)" }} />
           </Reveal>
 
           {/* What We Create */}
           <Reveal delay={120}>
             <span className="eyebrow">What We Create</span>
             <h3 className="mt-3 font-serif text-3xl leading-[1.08] sm:text-4xl">
-              Supported by a team of highly skilled artisans and craftsmen, we manufacture and export:
+              Supported by a team of highly skilled artisans and craftsmen, we manufacture and
+              export:
             </h3>
           </Reveal>
 
@@ -166,19 +195,20 @@ function AboutPage() {
       ══════════════════════════════════════════ */}
       <section className="luxury-silk-bg py-20 sm:py-28">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
-
           {/* Left - Image */}
           <Reveal>
             <div
               className="aspect-[4/3] overflow-hidden"
               style={{
                 border: "1px solid rgba(212,175,55,0.22)",
-                transition: "border-color 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.7s cubic-bezier(0.4,0,0.2,1)",
+                transition:
+                  "border-color 0.7s cubic-bezier(0.4,0,0.2,1), box-shadow 0.7s cubic-bezier(0.4,0,0.2,1)",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.borderColor = "rgba(212,175,55,0.70)";
-                el.style.boxShadow = "0 0 0 1px rgba(212,175,55,0.35), 0 16px 56px rgba(0,0,0,0.22)";
+                el.style.boxShadow =
+                  "0 0 0 1px rgba(212,175,55,0.35), 0 16px 56px rgba(0,0,0,0.22)";
                 const img = el.querySelector("img") as HTMLElement | null;
                 if (img) img.style.transform = "scale(1.06)";
               }}
@@ -190,15 +220,16 @@ function AboutPage() {
                 if (img) img.style.transform = "scale(1)";
               }}
             >
-              <Lens zoomFactor={2.2} lensSize={140} isStatic={false}>
+              <DeferredLens zoomFactor={2.2} lensSize={140} isStatic={false}>
                 <img
                   src={aboutQuality}
                   alt="Quality inspection of gold zardosi embroidery at Zardosi Atelier"
+                  loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover"
                   style={{ transition: "transform 1.3s cubic-bezier(0.19,1,0.22,1)" }}
                 />
-              </Lens>
+              </DeferredLens>
             </div>
           </Reveal>
 
@@ -209,10 +240,16 @@ function AboutPage() {
               Quality in <span className="italic">Every Stitch.</span>
             </h2>
             <p className="mt-6 text-[16px] font-medium leading-[1.85] text-ink-soft">
-              At Zardosi Atelier, quality is built into every stage of production. From material selection and embroidery detailing to finishing, measurement and final inspection, every order undergoes careful quality control before dispatch. Our focus is not merely on producing beautiful embroidery, but on delivering consistency, durability and precision across every piece and every production batch.
+              At Zardosi Atelier, quality is built into every stage of production. From material
+              selection and embroidery detailing to finishing, measurement and final inspection,
+              every order undergoes careful quality control before dispatch. Our focus is not merely
+              on producing beautiful embroidery, but on delivering consistency, durability and
+              precision across every piece and every production batch.
             </p>
             <p className="mt-5 text-[16px] font-medium leading-[1.85] text-ink-soft">
-              Whether you require bespoke embroidery, private-label manufacturing, sampling, small-batch development or bulk production, Zardosi Atelier offers the craftsmanship, flexibility and attention to detail needed to bring your designs to life.
+              Whether you require bespoke embroidery, private-label manufacturing, sampling,
+              small-batch development or bulk production, Zardosi Atelier offers the craftsmanship,
+              flexibility and attention to detail needed to bring your designs to life.
             </p>
 
             {/* Pull-quote */}
@@ -224,7 +261,8 @@ function AboutPage() {
                 className="font-serif text-[19px] italic leading-[1.65]"
                 style={{ color: "#7A5C28" }}
               >
-                "Traditional craftsmanship. International quality. Embroidery made for exceptional brands."
+                "Traditional craftsmanship. International quality. Embroidery made for exceptional
+                brands."
               </p>
             </blockquote>
           </Reveal>
@@ -236,4 +274,3 @@ function AboutPage() {
     </PageShell>
   );
 }
-

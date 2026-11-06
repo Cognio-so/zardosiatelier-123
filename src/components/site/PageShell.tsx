@@ -9,35 +9,55 @@ export function PageHero({
   italic,
   description,
   image,
+  imageAvif,
+  imageSmallAvif,
+  imageSmallWebp,
 }: {
   eyebrow: string;
   title: string;
   italic?: string;
   description: string;
   image: string;
+  imageAvif?: string;
+  imageSmallAvif?: string;
+  imageSmallWebp?: string;
 }) {
   return (
     <section className="relative h-[58vh] min-h-[420px] overflow-hidden bg-ink sm:h-[62vh]">
-      <img
-        src={image}
-        alt=""
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover opacity-70"
-      />
+      <picture>
+        {imageAvif && (
+          <source
+            type="image/avif"
+            srcSet={imageSmallAvif ? `${imageSmallAvif} 640w, ${imageAvif} 1024w` : imageAvif}
+            sizes="100vw"
+          />
+        )}
+        {imageSmallWebp && (
+          <source
+            type="image/webp"
+            srcSet={`${imageSmallWebp} 640w, ${image} 1024w`}
+            sizes="100vw"
+          />
+        )}
+        <img
+          src={image}
+          alt=""
+          width={1024}
+          height={1024}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-70"
+        />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-b from-ink/35 via-ink/10 to-ink/72" />
       <div className="relative z-10 flex h-full items-end pb-12 sm:pb-16">
         <div className="mx-auto w-full max-w-[1360px] px-5 sm:px-6 lg:px-10">
-          <p className="eyebrow !text-gold-soft animate-fade-up">{eyebrow}</p>
-          <h1
-            className="mt-4 max-w-4xl font-serif text-4xl leading-[1.02] text-ivory animate-fade-up sm:text-6xl lg:text-7xl"
-            style={{ animationDelay: "200ms" }}
-          >
+          <p className="eyebrow !text-gold-soft">{eyebrow}</p>
+          <h1 className="mt-4 max-w-4xl font-serif text-4xl leading-[1.02] text-ivory sm:text-6xl lg:text-7xl">
             {title} {italic ? <span className="italic font-normal">{italic}</span> : null}
           </h1>
-          <p
-            className="mt-5 max-w-2xl text-base font-medium leading-7 text-ivory/90 animate-fade-up sm:text-lg"
-            style={{ animationDelay: "400ms" }}
-          >
+          <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-ivory/90 sm:text-lg">
             {description}
           </p>
         </div>
