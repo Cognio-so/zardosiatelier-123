@@ -28,6 +28,10 @@ dist-ssr
 !.env.example
 !.env.sample
 
+# Local data and attachments
+data/
+data/*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

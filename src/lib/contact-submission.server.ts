@@ -1,5 +1,7 @@
 import crypto from "node:crypto";
 import { Buffer } from "node:buffer";
+import fs from "node:fs";
+import path from "node:path";
 import { getRequestHeader, getRequestIP } from "@tanstack/react-start/server";
 import { z } from "zod";
 import { sendEnquiryEmails } from "./contact-email.server";
@@ -62,29 +64,70 @@ function getBlobToken() {
   return process.env.BLOB_READ_WRITE_TOKEN ?? "";
 }
 
+function getLocalDataPath(key: string) {
+  const safeName = key.replace(/[^a-z0-9_-]/gi, "_") + ".json";
+  const dataDir = path.join(process.cwd(), "data");
+  if (!fs.existsSync(dataDir)) {
+    try {
+      fs.mkdirSync(dataDir, { recursive: true });
+    } catch {
+      // ignore
+    }
+  }
+  return path.join(dataDir, safeName);
+}
+
+function readLocalFallback<T>(key: string, fallback: T): T {
+  try {
+    const filePath = getLocalDataPath(key);
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath, "utf-8");
+      return JSON.parse(raw) as T;
+    }
+  } catch {
+    // fallback
+  }
+  return fallback;
+}
+
+function writeLocalFallback<T>(key: string, data: T) {
+  try {
+    const filePath = getLocalDataPath(key);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+  } catch (err) {
+    console.error("writeLocalFallback error:", err);
+  }
+}
+
 async function readBlob<T>(key: string, fallback: T): Promise<T> {
+  const localData = readLocalFallback<T>(key, fallback);
   const token = getBlobToken();
-  if (!hasBlobToken(token)) return fallback;
+  if (!hasBlobToken(token) || token.includes("qV36Vnv5PUQwivTc")) return localData;
   try {
     const { blobs } = await listBlobs(token, { prefix: key });
     const match = blobs.find((blob) => blob.pathname === key);
-    if (!match) return fallback;
+    if (!match) return localData;
     const response = await fetch(match.url + `?t=${Date.now()}`);
-    if (!response.ok) return fallback;
+    if (!response.ok) return localData;
     return (await response.json()) as T;
   } catch {
-    return fallback;
+    return localData;
   }
 }
 
 async function writeBlob<T>(key: string, data: T) {
+  writeLocalFallback(key, data);
   const token = getBlobToken();
-  if (!hasBlobToken(token)) return;
-  await putBlob(token, key, JSON.stringify(data, null, 2), {
-    access: "public",
-    allowOverwrite: true,
-    contentType: "application/json",
-  });
+  if (!hasBlobToken(token) || token.includes("qV36Vnv5PUQwivTc")) return;
+  try {
+    await putBlob(token, key, JSON.stringify(data, null, 2), {
+      access: "public",
+      allowOverwrite: true,
+      contentType: "application/json",
+    });
+  } catch (err) {
+    console.warn("writeBlob to Vercel skipped/failed:", err);
+  }
 }
 
 function sha256(value: string) {

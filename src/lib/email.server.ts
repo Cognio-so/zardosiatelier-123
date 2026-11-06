@@ -5,7 +5,7 @@ function getEmailConfig() {
   return {
     gmailUser: process.env.GMAIL_USER ?? "",
     gmailAppPassword: process.env.GMAIL_APP_PASSWORD ?? "",
-    notificationEmail: process.env.NOTIFICATION_EMAIL ?? "aryanthealgohype@gmail.com",
+    notificationEmail: process.env.BUSINESS_INBOX ?? process.env.NOTIFICATION_EMAIL ?? "zardosiatelier@gmail.com",
     mailFrom: process.env.MAIL_FROM ?? process.env.GMAIL_USER ?? "zardosiatelier@gmail.com",
   };
 }
@@ -54,13 +54,52 @@ function buildHtmlBody(enquiry: Enquiry) {
 }
 
 export async function sendEnquiryNotificationEmail(enquiry: Enquiry) {
-  const { gmailUser, gmailAppPassword, notificationEmail, mailFrom } = getEmailConfig();
+  const apiKey = (process.env.RESEND_API_KEY ?? "").trim();
+  const notificationEmail = (
+    process.env.BUSINESS_INBOX ??
+    process.env.NOTIFICATION_EMAIL ??
+    "zardosiatelier@gmail.com"
+  ).trim();
+  const fromEmail = (
+    process.env.RESEND_FROM_EMAIL ??
+    process.env.MAIL_FROM_EMAIL ??
+    "Zardosi Atelier <contact@spatially.pro>"
+  ).trim();
+
+  if (apiKey) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: [notificationEmail],
+          reply_to: enquiry.email,
+          subject: `New Client Enquiry from ${enquiry.name}`,
+          text: buildTextBody(enquiry),
+          html: buildHtmlBody(enquiry),
+        }),
+      });
+      if (res.ok) {
+        return { sent: true, skipped: false };
+      }
+      const err = await res.text();
+      console.warn("Resend notification failed:", res.status, err);
+    } catch (err) {
+      console.error("Resend enquiry notification error:", err);
+    }
+  }
+
+  const { gmailUser, gmailAppPassword, mailFrom } = getEmailConfig();
 
   if (!gmailUser || !gmailAppPassword) {
     return {
       sent: false,
       skipped: true,
-      reason: "GMAIL_USER or GMAIL_APP_PASSWORD is not configured.",
+      reason: "Neither RESEND_API_KEY nor GMAIL credentials are configured.",
     };
   }
 
