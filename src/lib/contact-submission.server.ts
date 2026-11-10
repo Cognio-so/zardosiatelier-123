@@ -393,42 +393,7 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
     dedupeHash: fingerprintHash,
   };
 
-  let delivery: Awaited<ReturnType<typeof sendEnquiryEmails>>;
-  try {
-    delivery = await sendEnquiryEmails(enquiry, attachment);
-  } catch (error) {
-    console.error("submitEnquiry email error:", error);
-    try {
-      await logMailError(
-        error instanceof Error ? error.message : String(error),
-        error && typeof error === "object"
-          ? String((error as { code?: string }).code ?? "")
-          : undefined,
-      );
-    } catch (storageError) {
-      console.error("submitEnquiry error log unavailable:", storageError);
-    }
-    return {
-      success: false,
-      error: "We could not send your inquiry. Please try again or email zardosiatelier@gmail.com.",
-    };
-  }
-
-  enquiry.adminEmailSentAt = new Date().toISOString();
-  if (delivery.confirmationSent) enquiry.clientEmailSentAt = new Date().toISOString();
-
-  if (attachment) {
-    try {
-      enquiry.file = await uploadAttachment(attachment);
-    } catch (storageError) {
-      console.error(
-        "submitEnquiry attachment storage unavailable; file was emailed:",
-        storageError,
-      );
-      enquiry.file = undefined;
-    }
-  }
-
+  // 1. Immediately store the enquiry so client data is NEVER lost
   try {
     const enquiries = await readBlob<StoredEnquiry[]>(ENQUIRIES_KEY, []);
     await writeBlob(ENQUIRIES_KEY, [enquiry, ...enquiries]);
@@ -442,7 +407,45 @@ export async function handleContactSubmission(data: EnquirySubmissionInput) {
       }),
     );
   } catch (storageError) {
-    console.error("submitEnquiry storage unavailable; email was delivered:", storageError);
+    console.error("submitEnquiry storage error:", storageError);
+  }
+
+  // 2. Upload file attachment if present
+  if (attachment) {
+    try {
+      enquiry.file = await uploadAttachment(attachment);
+    } catch (storageError) {
+      console.warn("submitEnquiry attachment storage unavailable; file was emailed:", storageError);
+    }
+  }
+
+  // 3. Send email notifications via Resend / SMTP
+  let delivery: Awaited<ReturnType<typeof sendEnquiryEmails>> = { confirmationSent: false };
+  try {
+    delivery = await sendEnquiryEmails(enquiry, attachment);
+    enquiry.adminEmailSentAt = new Date().toISOString();
+    if (delivery.confirmationSent) enquiry.clientEmailSentAt = new Date().toISOString();
+
+    // Update stored enquiry with email sent timestamps
+    try {
+      const enquiries = await readBlob<StoredEnquiry[]>(ENQUIRIES_KEY, []);
+      const updated = enquiries.map((e) => (e.id === enquiry.id ? enquiry : e));
+      await writeBlob(ENQUIRIES_KEY, updated);
+    } catch {
+      // non-critical
+    }
+  } catch (emailError) {
+    console.error("submitEnquiry email delivery error:", emailError);
+    try {
+      await logMailError(
+        emailError instanceof Error ? emailError.message : String(emailError),
+        emailError && typeof emailError === "object"
+          ? String((emailError as { code?: string }).code ?? "")
+          : undefined,
+      );
+    } catch (logError) {
+      console.error("submitEnquiry error log unavailable:", logError);
+    }
   }
 
   return { success: true, enquiryId: enquiry.id, confirmationSent: delivery.confirmationSent };

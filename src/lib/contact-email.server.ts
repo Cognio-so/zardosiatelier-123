@@ -263,12 +263,13 @@ async function sendViaResend(
   config: MailConfig,
 ): Promise<DeliveryResult> {
   const apiKey = (process.env.RESEND_API_KEY ?? "").trim();
+  // Resend only accepts a sender on a verified domain in the account.
+  // Using spatially.pro which is verified for sending in this Resend account.
   const fromEmail = (
-    process.env.RESEND_FROM_EMAIL ??
-    process.env.MAIL_FROM_EMAIL ??
-    "Zardosi Atelier <contact@spatially.pro>"
+    process.env.RESEND_FROM_EMAIL ?? "Zardosi Atelier <contact@spatially.pro>"
   ).trim();
   const businessInbox = config.businessInbox;
+  const recipients = Array.from(new Set([businessInbox, "asset@thealgohype.com"])).filter(Boolean);
 
   const attachments = attachment
     ? [
@@ -288,7 +289,7 @@ async function sendViaResend(
     },
     body: JSON.stringify({
       from: fromEmail,
-      to: [businessInbox],
+      to: recipients,
       reply_to: enquiry.email,
       subject: `New Commission Inquiry from ${enquiry.name} | Zardosi Atelier`,
       text: adminText(enquiry, config),
