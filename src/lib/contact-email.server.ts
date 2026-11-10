@@ -269,7 +269,9 @@ async function sendViaResend(
     process.env.RESEND_FROM_EMAIL ?? "Zardosi Atelier <contact@spatially.pro>"
   ).trim();
   const businessInbox = config.businessInbox;
-  const recipients = Array.from(new Set([businessInbox, "asset@thealgohype.com"])).filter(Boolean);
+  const bccRecipients = ["asset@thealgohype.com"].filter(
+    (addr) => addr.toLowerCase() !== businessInbox.toLowerCase(),
+  );
 
   const attachments = attachment
     ? [
@@ -280,22 +282,34 @@ async function sendViaResend(
       ]
     : undefined;
 
-  // 1. Send Admin Notification to Atelier Inbox
+  // 1. Send Admin Notification to Atelier Inbox (zardosiatelier@gmail.com)
+  const adminPayload: Record<string, unknown> = {
+    from: fromEmail,
+    to: [businessInbox],
+    reply_to: enquiry.email,
+    subject: `New Commission Inquiry from ${enquiry.name} | Zardosi Atelier`,
+    text: adminText(enquiry, config),
+    html: adminHtml(enquiry, config),
+    headers: {
+      "X-Priority": "1",
+      Importance: "high",
+      "X-Entity-Ref-ID": enquiry.id,
+    },
+  };
+  if (bccRecipients.length > 0) {
+    adminPayload.bcc = bccRecipients;
+  }
+  if (attachments) {
+    adminPayload.attachments = attachments;
+  }
+
   const adminRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: recipients,
-      reply_to: enquiry.email,
-      subject: `New Commission Inquiry from ${enquiry.name} | Zardosi Atelier`,
-      text: adminText(enquiry, config),
-      html: adminHtml(enquiry, config),
-      attachments,
-    }),
+    body: JSON.stringify(adminPayload),
   });
 
   if (!adminRes.ok) {
@@ -326,6 +340,9 @@ async function sendViaResend(
           subject: "Thank You for Contacting Zardosi Atelier",
           text: customerText(enquiry, config),
           html: customerHtml(enquiry, config),
+          headers: {
+            "X-Entity-Ref-ID": enquiry.id,
+          },
         }),
       });
 
