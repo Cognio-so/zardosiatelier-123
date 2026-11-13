@@ -30,7 +30,7 @@ const organizationSchema = {
   url: siteUrl,
   logo: brandImage,
   image: brandImage,
-  sameAs: ["https://www.instagram.com/reel/DaUjL2Mp4qF/?igsh=amUyNnNnbWJudzQz"],
+  sameAs: ["https://www.instagram.com/zardosi_atelier/"],
 };
 
 function NotFoundComponent() {

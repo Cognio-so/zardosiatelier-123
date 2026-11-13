@@ -1,6 +1,7 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
+import { FloatingWhatsApp } from "./FloatingWhatsApp";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -68,6 +69,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <Navigation />
       <main>{children}</main>
       <Footer />
+      <FloatingWhatsApp />
       {lightboxImage && (
         <div
           className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-black/95 p-4 backdrop-blur-md transition-opacity duration-300 md:p-12"

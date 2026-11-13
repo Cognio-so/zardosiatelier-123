@@ -242,7 +242,7 @@ function customerHtml(enquiry: StoredEnquiry, config: MailConfig) {
 
       <p style="margin-bottom: 0;">With warm regards,<br>
       <strong>Zardosi Atelier Team</strong><br>
-      <span style="font-size: 13px; color: #8a7662;">Mumbai, Maharashtra, India</span></p>
+      <span style="font-size: 13px; color: #8a7662;">Ghaziabad</span></p>
     </div>
     
     <div style="background-color: #120c08; padding: 14px 24px; text-align: center; font-size: 11px; color: #8a7662; font-family: Arial, sans-serif;">

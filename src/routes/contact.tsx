@@ -47,7 +47,7 @@ function ContactPage() {
   const email = settings?.email ?? "info@zardosiatelier.com";
   const phoneNumber = settings?.phone ?? "8826023527";
   const phoneHref = `tel:${phoneNumber.replace(/\D/g, "")}`;
-  const address = settings?.address ?? "Mumbai, Maharashtra, India";
+  const address = settings?.address ?? "Ghaziabad";
 
   return (
     <PageShell>
@@ -133,15 +133,26 @@ function ContactPage() {
                 </a>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Phone</p>
-                <a
-                  href={phoneHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block font-serif text-xl gold-link"
-                >
-                  {phoneNumber}
-                </a>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Phone / WhatsApp</p>
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <a
+                    href={phoneHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block font-serif text-xl gold-link"
+                  >
+                    +91 8826023527
+                  </a>
+                  <a
+                    href={`https://wa.me/${(settings?.whatsappNumber || phoneNumber).replace(/\D/g, "") || "918826023527"}?text=${encodeURIComponent("Hello Zardosi Atelier, I would like to discuss a couture embroidery project.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#25D366] bg-[#25D366]/10 px-3.5 py-1 text-xs font-semibold text-[#128C7E] transition-all hover:bg-[#25D366] hover:text-white"
+                  >
+                    <span className="size-2 rounded-full bg-[#25D366] animate-pulse" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                </div>
               </div>
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">Address</p>

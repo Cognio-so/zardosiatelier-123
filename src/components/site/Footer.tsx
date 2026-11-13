@@ -17,7 +17,7 @@ export function Footer() {
   const email = "zardosiatelier@gmail.com";
   const phone = "+91 88260 23527";
 
-  const instagramUrl = "https://www.instagram.com/reel/DaUjL2Mp4qF/?igsh=amUyNnNnbWJudzQz";
+  const instagramUrl = "https://www.instagram.com/zardosi_atelier/";
   const linkedinUrl = "https://www.linkedin.com/in/sajal-jain08";
   const whatsappUrl = `https://wa.me/${phone.replace(/\D/g, "") || "918826023527"}`;
 

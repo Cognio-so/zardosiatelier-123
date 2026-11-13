@@ -16,11 +16,11 @@ const SECTIONS = [
   { id: "contact", label: "Contact", icon: Phone, fields: [
     { key: "phone", label: "Phone Number", type: "text", placeholder: "+91 9876543210" },
     { key: "whatsappNumber", label: "WhatsApp Number", type: "text", placeholder: "+91 9876543210" },
-    { key: "address", label: "Address", type: "textarea", placeholder: "Mumbai, Maharashtra, India" },
+    { key: "address", label: "Address", type: "textarea", placeholder: "Ghaziabad" },
     { key: "googleMapsUrl", label: "Google Maps URL", type: "url", placeholder: "https://maps.google.com/..." },
   ] },
   { id: "social", label: "Social Media", icon: Share2, fields: [
-    { key: "instagramUrl", label: "Instagram URL", type: "url", placeholder: "https://instagram.com/zardosiatelier" },
+    { key: "instagramUrl", label: "Instagram URL", type: "url", placeholder: "https://www.instagram.com/zardosi_atelier/" },
     { key: "facebookUrl", label: "Facebook URL", type: "url", placeholder: "https://facebook.com/..." },
     { key: "linkedinUrl", label: "LinkedIn URL", type: "url", placeholder: "https://linkedin.com/company/..." },
     { key: "youtubeUrl", label: "YouTube URL", type: "url", placeholder: "https://youtube.com/@..." },

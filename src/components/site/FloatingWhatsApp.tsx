@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSettings } from "@/lib/admin-data";
 
-function whatsappHref(raw?: string) {
-  const digits = (raw ?? "+91 88260 23527").replace(/\D/g, "");
-  return `https://wa.me/${digits}?text=Hello%20Zardosi%20Atelier%2C%20I%27d%20like%20to%20discuss%20a%20couture%20embroidery%20project.`;
+function getWhatsappUrl(rawNumber?: string) {
+  const digits = (rawNumber || "+91 88260 23527").replace(/\D/g, "");
+  const number = digits.length === 10 ? `91${digits}` : digits;
+  const message = encodeURIComponent(
+    "Hello Zardosi Atelier, I would like to inquire about couture hand embroidery commissions.",
+  );
+  return `https://wa.me/${number}?text=${message}`;
 }
 
 export function FloatingWhatsApp() {
@@ -13,22 +17,50 @@ export function FloatingWhatsApp() {
     staleTime: 0,
   });
 
+  const href = getWhatsappUrl(settings?.whatsappNumber || settings?.phone);
+
   return (
-    <a
-      href={whatsappHref(settings?.whatsappNumber)}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat with us on WhatsApp"
-      className="group fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-[#128C7E] bg-[#128C7E] px-4 py-2 pl-2.5 transition-all duration-400 hover:scale-105 hover:bg-[#0e7065] shadow-lg shadow-black/10"
+    <aside
+      aria-label="Direct WhatsApp Contact"
+      className="fixed bottom-5 right-5 z-50 flex items-center"
     >
-      <span className="grid size-7 flex-shrink-0 place-items-center rounded-full bg-white/20 text-white transition-colors duration-400 group-hover:bg-white/30">
-        <svg viewBox="0 0 32 32" className="size-4" fill="currentColor" aria-hidden="true">
-          <path d="M16.001 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.255.59 4.466 1.71 6.4l-1.81 6.6 6.77-1.78a12.78 12.78 0 0 0 6.13 1.56h.005c7.07 0 12.8-5.73 12.8-12.8 0-3.42-1.331-6.633-3.749-9.05A12.738 12.738 0 0 0 16.001 3.2zm0 23.36a10.55 10.55 0 0 1-5.38-1.474l-.386-.23-4.018 1.057 1.073-3.918-.252-.402a10.55 10.55 0 0 1-1.616-5.61c0-5.84 4.752-10.59 10.59-10.59a10.52 10.52 0 0 1 7.49 3.105 10.52 10.52 0 0 1 3.098 7.49c-.001 5.838-4.755 10.572-10.6 10.572zm5.797-7.927c-.318-.16-1.88-.927-2.171-1.034-.291-.108-.503-.16-.715.16-.211.318-.82 1.034-1.005 1.246-.185.211-.37.238-.688.08-.318-.16-1.343-.495-2.558-1.578-.946-.844-1.585-1.886-1.77-2.204-.185-.318-.02-.49.14-.648.144-.143.318-.371.477-.557.16-.185.211-.318.318-.529.106-.211.053-.397-.027-.557-.08-.16-.715-1.724-.98-2.36-.258-.62-.52-.535-.715-.546l-.61-.011a1.17 1.17 0 0 0-.847.397c-.291.318-1.11 1.084-1.11 2.643 0 1.56 1.137 3.066 1.295 3.279.16.211 2.237 3.415 5.42 4.79.758.327 1.349.523 1.81.67.76.241 1.452.207 2 .126.61-.091 1.88-.768 2.144-1.51.265-.741.265-1.376.185-1.509-.08-.132-.291-.211-.61-.371z" />
-        </svg>
-      </span>
-      <span className="hidden text-[9px] font-semibold uppercase tracking-[0.2em] text-white sm:inline">
-        WhatsApp
-      </span>
-    </a>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Connect with Zardosi Atelier on WhatsApp"
+        className="group relative flex items-center gap-2.5 rounded-full bg-[#25D366] px-3.5 py-2.5 sm:px-4 sm:py-3 text-white shadow-[0_8px_24px_rgba(37,211,102,0.4)] transition-all duration-300 hover:scale-105 hover:bg-[#20ba5a] hover:shadow-[0_12px_32px_rgba(37,211,102,0.55)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
+      >
+        {/* Animated pulse halo */}
+        <span className="absolute -inset-1 rounded-full bg-[#25D366]/40 opacity-75 blur-sm transition-all group-hover:opacity-100 group-hover:blur animate-pulse" />
+
+        {/* WhatsApp Icon */}
+        <span className="relative flex size-6 items-center justify-center">
+          <svg
+            viewBox="0 0 24 24"
+            className="size-5 fill-current"
+            aria-hidden="true"
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c0-5.445 4.43-9.874 9.877-9.874 2.637 0 5.116 1.028 6.98 2.894A9.8 9.8 0 0122 11.986c0 5.448-4.43 9.877-9.949 9.877m0-18.177C6.545 3.608 2.3 7.854 2.3 13.31c0 1.963.513 3.877 1.488 5.561L2.25 24l5.297-1.39a10.97 10.97 0 005.495 1.461c5.454 0 9.899-4.446 9.899-9.899 0-2.645-1.03-5.133-2.9-7.003-1.87-1.87-4.357-2.9-7.002-2.9" />
+          </svg>
+        </span>
+
+        {/* Text Label */}
+        <span className="relative flex flex-col items-start leading-none pr-1">
+          <span className="text-[12px] font-bold tracking-wide sm:text-[13px]">
+            WhatsApp
+          </span>
+          <span className="hidden text-[9px] font-normal tracking-wider text-white/90 sm:inline mt-0.5">
+            Chat with Atelier
+          </span>
+        </span>
+
+        {/* Live green dot */}
+        <span className="relative flex size-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+          <span className="relative inline-flex size-2 rounded-full bg-white" />
+        </span>
+      </a>
+    </aside>
   );
 }
